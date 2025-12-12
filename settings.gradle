@@ -1,0 +1,3 @@
+rootProject.name = 'kard-financial-sdk'
+
+include 'sample-app'
