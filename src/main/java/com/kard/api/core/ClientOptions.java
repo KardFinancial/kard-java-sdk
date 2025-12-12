@@ -37,7 +37,7 @@ public final class ClientOptions {
             {
                 put("X-Fern-Language", "JAVA");
                 put("X-Fern-SDK-Name", "com.kard.fern:api-sdk");
-                put("X-Fern-SDK-Version", "0.0.79017");
+                put("X-Fern-SDK-Version", "0.0.79026");
             }
         });
         this.headerSuppliers = headerSuppliers;
