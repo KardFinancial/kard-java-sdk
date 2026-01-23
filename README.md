@@ -10,6 +10,7 @@ The Kard Java library provides convenient access to the Kard APIs from Java.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Authentication](#authentication)
 - [Environments](#environments)
 - [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
@@ -41,7 +42,7 @@ Add the dependency in your `pom.xml` file:
 <dependency>
   <groupId>com.getkard</groupId>
   <artifactId>kard-financial-sdk</artifactId>
-  <version>0.0.79659</version>
+  <version>0.0.79660</version>
 </dependency>
 ```
 
@@ -57,13 +58,11 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.kard.api.KardApiClient;
-import com.kard.api.resources.attributions.types.InternalApiAttribution;
-import com.kard.api.resources.attributions.types.InternalApiOfferAttribution;
-import com.kard.api.resources.attributions.types.InternalApiOfferAttributionAttributes;
-import com.kard.api.resources.attributions.types.InternalBulkCreateAttributionsRequest;
-import com.kard.api.resources.attributions.types.InternalEventCode;
-import com.kard.api.resources.attributions.types.InternalOfferMedium;
-import java.time.OffsetDateTime;
+import com.kard.api.resources.commons.types.EnrolledRewardsType;
+import com.kard.api.resources.users.types.CreateUsersObject;
+import com.kard.api.resources.users.types.UserRequestAttributes;
+import com.kard.api.resources.users.types.UserRequestData;
+import com.kard.api.resources.users.types.UserRequestDataUnion;
 import java.util.Arrays;
 
 public class Example {
@@ -74,39 +73,36 @@ public class Example {
             .clientSecret("<clientSecret>")
             .build();
 
-        client.attributions().internalBulkCreateAttributions(
-            InternalBulkCreateAttributionsRequest
+        client.users().create(
+            "organizationId",
+            CreateUsersObject
                 .builder()
                 .data(
                     Arrays.asList(
-                        InternalApiAttribution.offerAttribution(
-                            InternalApiOfferAttribution
+                        UserRequestDataUnion.user(
+                            UserRequestData
                                 .builder()
+                                .id("id")
                                 .attributes(
-                                    InternalApiOfferAttributionAttributes
+                                    UserRequestAttributes
                                         .builder()
-                                        .issuerId("issuerId")
-                                        .userId("userId")
-                                        .entityId("entityId")
-                                        .eventCode(InternalEventCode.IMPRESSION)
-                                        .medium(InternalOfferMedium.BROWSE)
-                                        .eventDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                                        .enrolledRewards(
+                                            Arrays.asList(EnrolledRewardsType.CARDLINKED, EnrolledRewardsType.CARDLINKED)
+                                        )
                                         .build()
                                 )
                                 .build()
                         ),
-                        InternalApiAttribution.offerAttribution(
-                            InternalApiOfferAttribution
+                        UserRequestDataUnion.user(
+                            UserRequestData
                                 .builder()
+                                .id("id")
                                 .attributes(
-                                    InternalApiOfferAttributionAttributes
+                                    UserRequestAttributes
                                         .builder()
-                                        .issuerId("issuerId")
-                                        .userId("userId")
-                                        .entityId("entityId")
-                                        .eventCode(InternalEventCode.IMPRESSION)
-                                        .medium(InternalOfferMedium.BROWSE)
-                                        .eventDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                                        .enrolledRewards(
+                                            Arrays.asList(EnrolledRewardsType.CARDLINKED, EnrolledRewardsType.CARDLINKED)
+                                        )
                                         .build()
                                 )
                                 .build()
@@ -118,6 +114,30 @@ public class Example {
     }
 }
 ```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+KardApiClient client = KardApiClient.withToken("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+KardApiClient client = KardApiClient.withCredentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
+```
+
 ## Authentication
 
 This SDK supports two authentication methods:
@@ -177,7 +197,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.kard.api.core.KardApiApiException;
 
 try{
-    client.attributions().internalBulkCreateAttributions(...);
+    client.users().create(...);
 } catch (KardApiApiException e){
     // Do something with the API exception...
 }
@@ -241,7 +261,7 @@ KardApiClient client = KardApiClient
     .build();
 
 // Request level
-client.attributions().internalBulkCreateAttributions(
+client.users().create(
     ...,
     RequestOptions
         .builder()
@@ -267,7 +287,7 @@ KardApiClient client = KardApiClient
 ;
 
 // Request level
-client.attributions().internalBulkCreateAttributions(
+client.users().create(
     ...,
     RequestOptions
         .builder()
@@ -283,7 +303,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-InternalBulkCreateAttributionsHttpResponse response = client.attributions().withRawResponse().internalBulkCreateAttributions(...);
+CreateHttpResponse response = client.users().withRawResponse().create(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

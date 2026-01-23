@@ -5,97 +5,41 @@ package com.kard.api;
 
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.Suppliers;
-import com.kard.api.resources.attributions.AsyncAttributionsClient;
 import com.kard.api.resources.auth.AsyncAuthClient;
-import com.kard.api.resources.billingagent.AsyncBillingAgentClient;
-import com.kard.api.resources.billingservice.AsyncBillingServiceClient;
-import com.kard.api.resources.eligibilitybroker.AsyncEligibilityBrokerClient;
-import com.kard.api.resources.experiments.AsyncExperimentsClient;
 import com.kard.api.resources.files.AsyncFilesClient;
 import com.kard.api.resources.notifications.AsyncNotificationsClient;
-import com.kard.api.resources.offers.AsyncOffersClient;
 import com.kard.api.resources.ping.AsyncPingClient;
-import com.kard.api.resources.queuedispatcher.AsyncQueueDispatcherClient;
-import com.kard.api.resources.segmentusers.AsyncSegmentUsersClient;
 import com.kard.api.resources.transactions.AsyncTransactionsClient;
-import com.kard.api.resources.txnmapservice.AsyncTxnMapServiceClient;
 import com.kard.api.resources.users.AsyncUsersClient;
 import java.util.function.Supplier;
 
 public class AsyncKardApiClient {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<AsyncAttributionsClient> attributionsClient;
-
     protected final Supplier<AsyncAuthClient> authClient;
-
-    protected final Supplier<AsyncBillingAgentClient> billingAgentClient;
-
-    protected final Supplier<AsyncBillingServiceClient> billingServiceClient;
-
-    protected final Supplier<AsyncEligibilityBrokerClient> eligibilityBrokerClient;
-
-    protected final Supplier<AsyncExperimentsClient> experimentsClient;
 
     protected final Supplier<AsyncFilesClient> filesClient;
 
     protected final Supplier<AsyncNotificationsClient> notificationsClient;
 
-    protected final Supplier<AsyncOffersClient> offersClient;
-
     protected final Supplier<AsyncPingClient> pingClient;
 
-    protected final Supplier<AsyncQueueDispatcherClient> queueDispatcherClient;
-
-    protected final Supplier<AsyncSegmentUsersClient> segmentUsersClient;
-
     protected final Supplier<AsyncTransactionsClient> transactionsClient;
-
-    protected final Supplier<AsyncTxnMapServiceClient> txnMapServiceClient;
 
     protected final Supplier<AsyncUsersClient> usersClient;
 
     public AsyncKardApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.attributionsClient = Suppliers.memoize(() -> new AsyncAttributionsClient(clientOptions));
         this.authClient = Suppliers.memoize(() -> new AsyncAuthClient(clientOptions));
-        this.billingAgentClient = Suppliers.memoize(() -> new AsyncBillingAgentClient(clientOptions));
-        this.billingServiceClient = Suppliers.memoize(() -> new AsyncBillingServiceClient(clientOptions));
-        this.eligibilityBrokerClient = Suppliers.memoize(() -> new AsyncEligibilityBrokerClient(clientOptions));
-        this.experimentsClient = Suppliers.memoize(() -> new AsyncExperimentsClient(clientOptions));
         this.filesClient = Suppliers.memoize(() -> new AsyncFilesClient(clientOptions));
         this.notificationsClient = Suppliers.memoize(() -> new AsyncNotificationsClient(clientOptions));
-        this.offersClient = Suppliers.memoize(() -> new AsyncOffersClient(clientOptions));
         this.pingClient = Suppliers.memoize(() -> new AsyncPingClient(clientOptions));
-        this.queueDispatcherClient = Suppliers.memoize(() -> new AsyncQueueDispatcherClient(clientOptions));
-        this.segmentUsersClient = Suppliers.memoize(() -> new AsyncSegmentUsersClient(clientOptions));
         this.transactionsClient = Suppliers.memoize(() -> new AsyncTransactionsClient(clientOptions));
-        this.txnMapServiceClient = Suppliers.memoize(() -> new AsyncTxnMapServiceClient(clientOptions));
         this.usersClient = Suppliers.memoize(() -> new AsyncUsersClient(clientOptions));
-    }
-
-    public AsyncAttributionsClient attributions() {
-        return this.attributionsClient.get();
     }
 
     public AsyncAuthClient auth() {
         return this.authClient.get();
-    }
-
-    public AsyncBillingAgentClient billingAgent() {
-        return this.billingAgentClient.get();
-    }
-
-    public AsyncBillingServiceClient billingService() {
-        return this.billingServiceClient.get();
-    }
-
-    public AsyncEligibilityBrokerClient eligibilityBroker() {
-        return this.eligibilityBrokerClient.get();
-    }
-
-    public AsyncExperimentsClient experiments() {
-        return this.experimentsClient.get();
     }
 
     public AsyncFilesClient files() {
@@ -106,28 +50,12 @@ public class AsyncKardApiClient {
         return this.notificationsClient.get();
     }
 
-    public AsyncOffersClient offers() {
-        return this.offersClient.get();
-    }
-
     public AsyncPingClient ping() {
         return this.pingClient.get();
     }
 
-    public AsyncQueueDispatcherClient queueDispatcher() {
-        return this.queueDispatcherClient.get();
-    }
-
-    public AsyncSegmentUsersClient segmentUsers() {
-        return this.segmentUsersClient.get();
-    }
-
     public AsyncTransactionsClient transactions() {
         return this.transactionsClient.get();
-    }
-
-    public AsyncTxnMapServiceClient txnMapService() {
-        return this.txnMapServiceClient.get();
     }
 
     public AsyncUsersClient users() {

@@ -7,8 +7,6 @@ import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.files.requests.GetFilesMetadataRequest;
 import com.kard.api.resources.files.types.GetFilesMetadataResponse;
-import com.kard.api.resources.files.types.SaveFilesMetadataRequest;
-import com.kard.api.resources.files.types.SaveFilesMetadataResponseObject;
 
 public class FilesClient {
     protected final ClientOptions clientOptions;
@@ -25,23 +23,6 @@ public class FilesClient {
      */
     public RawFilesClient withRawResponse() {
         return this.rawClient;
-    }
-
-    /**
-     * Call this endpoint to save conciliation file metadata.
-     */
-    public SaveFilesMetadataResponseObject internalSaveFile(String organizationId, SaveFilesMetadataRequest request) {
-        return this.rawClient.internalSaveFile(organizationId, request).body();
-    }
-
-    /**
-     * Call this endpoint to save conciliation file metadata.
-     */
-    public SaveFilesMetadataResponseObject internalSaveFile(
-            String organizationId, SaveFilesMetadataRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .internalSaveFile(organizationId, request, requestOptions)
-                .body();
     }
 
     /**

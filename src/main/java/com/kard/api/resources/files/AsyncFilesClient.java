@@ -7,8 +7,6 @@ import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.files.requests.GetFilesMetadataRequest;
 import com.kard.api.resources.files.types.GetFilesMetadataResponse;
-import com.kard.api.resources.files.types.SaveFilesMetadataRequest;
-import com.kard.api.resources.files.types.SaveFilesMetadataResponseObject;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncFilesClient {
@@ -26,24 +24,6 @@ public class AsyncFilesClient {
      */
     public AsyncRawFilesClient withRawResponse() {
         return this.rawClient;
-    }
-
-    /**
-     * Call this endpoint to save conciliation file metadata.
-     */
-    public CompletableFuture<SaveFilesMetadataResponseObject> internalSaveFile(
-            String organizationId, SaveFilesMetadataRequest request) {
-        return this.rawClient.internalSaveFile(organizationId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Call this endpoint to save conciliation file metadata.
-     */
-    public CompletableFuture<SaveFilesMetadataResponseObject> internalSaveFile(
-            String organizationId, SaveFilesMetadataRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .internalSaveFile(organizationId, request, requestOptions)
-                .thenApply(response -> response.body());
     }
 
     /**

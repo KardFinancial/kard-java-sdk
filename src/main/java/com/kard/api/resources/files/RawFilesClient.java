@@ -8,7 +8,6 @@ import com.kard.api.core.ClientOptions;
 import com.kard.api.core.KardApiApiException;
 import com.kard.api.core.KardApiException;
 import com.kard.api.core.KardApiHttpResponse;
-import com.kard.api.core.MediaTypes;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.core.QueryStringMapper;
 import com.kard.api.core.RequestOptions;
@@ -19,14 +18,11 @@ import com.kard.api.resources.commons.types.ErrorResponse;
 import com.kard.api.resources.files.errors.ForbiddenError;
 import com.kard.api.resources.files.requests.GetFilesMetadataRequest;
 import com.kard.api.resources.files.types.GetFilesMetadataResponse;
-import com.kard.api.resources.files.types.SaveFilesMetadataRequest;
-import com.kard.api.resources.files.types.SaveFilesMetadataResponseObject;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -35,74 +31,6 @@ public class RawFilesClient {
 
     public RawFilesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-    }
-
-    /**
-     * Call this endpoint to save conciliation file metadata.
-     */
-    public KardApiHttpResponse<SaveFilesMetadataResponseObject> internalSaveFile(
-            String organizationId, SaveFilesMetadataRequest request) {
-        return internalSaveFile(organizationId, request, null);
-    }
-
-    /**
-     * Call this endpoint to save conciliation file metadata.
-     */
-    public KardApiHttpResponse<SaveFilesMetadataResponseObject> internalSaveFile(
-            String organizationId, SaveFilesMetadataRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("internal/files/issuers")
-                .addPathSegment(organizationId)
-                .addPathSegments("metadata")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new KardApiException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SaveFilesMetadataResponseObject.class),
-                        response);
-            }
-            try {
-                switch (response.code()) {
-                    case 400:
-                        throw new InvalidRequest(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 401:
-                        throw new UnauthorizedError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 500:
-                        throw new InternalServerError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new KardApiApiException(
-                    "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new KardApiException("Network error executing HTTP request", e);
-        }
     }
 
     /**
