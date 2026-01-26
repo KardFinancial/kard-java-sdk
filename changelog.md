@@ -1,3 +1,12 @@
+## 0.5.2 - 2026-01-26
+* chore: remove README.md documentation file
+* Remove the complete README.md file containing documentation for the Kard Java SDK library. This removes all user-facing documentation including installation instructions, usage examples, authentication guides, and API reference materials.
+* Key changes:
+* Remove 320-line README.md file with complete SDK documentation
+* Remove installation instructions for Gradle and Maven
+* Remove usage examples and authentication configuration guides
+* 🌿 Generated with Fern
+
 ## 0.5.1 - 2026-01-26
 * docs: add authentication documentation to README
 * Added comprehensive authentication documentation to the README file to help developers understand and implement the two supported authentication methods in the Kard Java SDK.
