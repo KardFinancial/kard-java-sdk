@@ -1,3 +1,15 @@
+## 0.11.0 - 2026-01-27
+* docs: add comprehensive README.md for Kard Java SDK
+* Add complete documentation for the Kard Java SDK including installation instructions, authentication methods, usage examples, and advanced configuration options. This README provides developers with all necessary information to integrate and use the SDK effectively.
+* Key changes:
+* Add installation guides for Maven and Gradle
+* Include complete usage examples with client instantiation and API calls
+* Document dual authentication methods (bearer token and OAuth credentials)
+* Add sections for environment configuration, exception handling, and advanced features
+* Include examples for custom HTTP clients, retries, timeouts, headers, and raw response access
+* Provide contributing guidelines for the generated SDK
+* 🌿 Generated with Fern
+
 ## 0.10.0 - 2026-01-27
 * feat: add webview authentication endpoint
 * Add new webview authentication functionality to enable OAuth token retrieval for webview integration. This provides a secure way for applications to authenticate users within embedded webviews.
