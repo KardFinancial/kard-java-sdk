@@ -7,6 +7,7 @@ import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.core.Suppliers;
 import com.kard.api.resources.users.attributions.AsyncAttributionsClient;
+import com.kard.api.resources.users.auth.AsyncAuthClient;
 import com.kard.api.resources.users.rewards.AsyncRewardsClient;
 import com.kard.api.resources.users.types.CreateUsersObject;
 import com.kard.api.resources.users.types.DeleteUserResponseObject;
@@ -22,6 +23,8 @@ public class AsyncUsersClient {
 
     protected final Supplier<AsyncAttributionsClient> attributionsClient;
 
+    protected final Supplier<AsyncAuthClient> authClient;
+
     protected final Supplier<AsyncRewardsClient> rewardsClient;
 
     protected final Supplier<AsyncUploadsClient> uploadsClient;
@@ -30,6 +33,7 @@ public class AsyncUsersClient {
         this.clientOptions = clientOptions;
         this.rawClient = new AsyncRawUsersClient(clientOptions);
         this.attributionsClient = Suppliers.memoize(() -> new AsyncAttributionsClient(clientOptions));
+        this.authClient = Suppliers.memoize(() -> new AsyncAuthClient(clientOptions));
         this.rewardsClient = Suppliers.memoize(() -> new AsyncRewardsClient(clientOptions));
         this.uploadsClient = Suppliers.memoize(() -> new AsyncUploadsClient(clientOptions));
     }
@@ -117,6 +121,10 @@ public class AsyncUsersClient {
 
     public AsyncAttributionsClient attributions() {
         return this.attributionsClient.get();
+    }
+
+    public AsyncAuthClient auth() {
+        return this.authClient.get();
     }
 
     public AsyncRewardsClient rewards() {

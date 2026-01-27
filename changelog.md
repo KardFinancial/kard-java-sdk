@@ -1,3 +1,13 @@
+## 0.10.0 - 2026-01-27
+* feat: add webview authentication endpoint
+* Add new webview authentication functionality to enable OAuth token retrieval for webview integration. This provides a secure way for applications to authenticate users within embedded webviews.
+* Key changes:
+* Add new auth client with getWebviewToken method under users resource
+* Create WebviewTokenResponse type for token data including access_token, expires_in, and token_type
+* Add comprehensive documentation and usage examples in reference.md
+* Remove outdated README.md file to streamline project documentation
+* 🌿 Generated with Fern
+
 ## 0.9.1 - 2026-01-27
 * docs: add authentication section to README
 * Add comprehensive authentication documentation to the README, providing clear guidance on the two supported authentication methods for the Kard Java SDK.

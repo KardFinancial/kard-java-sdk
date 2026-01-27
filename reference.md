@@ -1318,6 +1318,69 @@ client.users().attributions().create(
 </dl>
 </details>
 
+## Webview Authentication
+<details><summary><code>client.users.auth.getWebviewToken(organizationId, userId) -> WebviewTokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves an OAuth token for webview authentication.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().auth().getWebviewToken("organization-123", "user-123");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Rewards
 <details><summary><code>client.users.rewards.offers(organizationId, userId) -> OffersResponseObject</code></summary>
 <dl>

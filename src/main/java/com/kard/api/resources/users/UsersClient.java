@@ -7,6 +7,7 @@ import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.core.Suppliers;
 import com.kard.api.resources.users.attributions.AttributionsClient;
+import com.kard.api.resources.users.auth.AuthClient;
 import com.kard.api.resources.users.rewards.RewardsClient;
 import com.kard.api.resources.users.types.CreateUsersObject;
 import com.kard.api.resources.users.types.DeleteUserResponseObject;
@@ -21,6 +22,8 @@ public class UsersClient {
 
     protected final Supplier<AttributionsClient> attributionsClient;
 
+    protected final Supplier<AuthClient> authClient;
+
     protected final Supplier<RewardsClient> rewardsClient;
 
     protected final Supplier<UploadsClient> uploadsClient;
@@ -29,6 +32,7 @@ public class UsersClient {
         this.clientOptions = clientOptions;
         this.rawClient = new RawUsersClient(clientOptions);
         this.attributionsClient = Suppliers.memoize(() -> new AttributionsClient(clientOptions));
+        this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
         this.rewardsClient = Suppliers.memoize(() -> new RewardsClient(clientOptions));
         this.uploadsClient = Suppliers.memoize(() -> new UploadsClient(clientOptions));
     }
@@ -113,6 +117,10 @@ public class UsersClient {
 
     public AttributionsClient attributions() {
         return this.attributionsClient.get();
+    }
+
+    public AuthClient auth() {
+        return this.authClient.get();
     }
 
     public RewardsClient rewards() {
