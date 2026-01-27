@@ -1,3 +1,12 @@
+## 0.7.5 - 2026-01-27
+* docs: remove README.md file
+* Remove the README.md documentation file from the repository. This removes 320 lines of documentation including installation instructions, usage examples, authentication methods, and API reference information for the Kard Java SDK.
+* Key changes:
+* Remove complete README.md file with installation guides
+* Remove usage examples and code snippets
+* Remove authentication documentation and configuration options
+* 🌿 Generated with Fern
+
 ## 0.7.4 - 2026-01-26
 * docs: add comprehensive authentication documentation
 * Add detailed authentication documentation to README.md explaining both supported authentication methods with clear code examples and usage instructions.
