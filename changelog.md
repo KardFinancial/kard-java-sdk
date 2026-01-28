@@ -1,3 +1,15 @@
+## 0.15.2 - 2026-01-28
+* chore: remove README.md file
+* Complete removal of the project's README documentation file containing installation instructions, usage examples, and API reference documentation.
+* This removes comprehensive documentation that previously covered installation via Gradle and Maven, authentication methods (OAuth and direct bearer token), environment configuration, exception handling, and advanced usage patterns including custom clients, retries, timeouts, and custom headers.
+* Key changes:
+* Remove complete README.md file with 320 lines of documentation
+* Remove installation instructions for Gradle and Maven dependencies
+* Remove usage examples and code samples for the Kard Java SDK
+* Remove authentication setup documentation for both OAuth and bearer token methods
+* Remove advanced configuration examples including custom HTTP clients and retry logic
+* 🌿 Generated with Fern
+
 ## 0.15.1 - 2026-01-28
 * docs: add authentication section to README
 * Add comprehensive authentication documentation to the README with detailed
