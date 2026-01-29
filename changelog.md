@@ -1,3 +1,13 @@
+## 0.20.2 - 2026-01-29
+* chore: remove README.md file
+* Remove the entire README.md documentation file from the repository. This removes all user-facing documentation including installation instructions, usage examples, authentication methods, and configuration options.
+* Key changes:
+* Deleted complete README.md file (320 lines removed)
+* Removed installation guides for Gradle and Maven
+* Removed comprehensive usage examples and API reference links
+* Removed authentication, environment, and advanced configuration documentation
+* 🌿 Generated with Fern
+
 ## 0.20.1 - 2026-01-29
 * docs: add authentication section to README
 * This update enhances the SDK documentation by adding a comprehensive authentication section that explains the two supported authentication methods available to developers.
