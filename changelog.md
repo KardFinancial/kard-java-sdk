@@ -1,3 +1,13 @@
+## 0.22.1 - 2026-01-29
+* docs: add authentication section to README
+* This update enhances the documentation by adding a dedicated authentication section that clearly explains the two supported authentication methods available in the Kard Java SDK.
+* Key changes:
+* Add new Authentication section to table of contents
+* Document direct bearer token authentication method with code example
+* Document OAuth client credentials authentication method with code example
+* Provide clear guidance on when to use each authentication approach
+* 🌿 Generated with Fern
+
 ## 0.22.0 - 2026-01-29
 * docs: add comprehensive documentation and rename WebView-related components
 * Add complete README with installation instructions, usage examples, and API documentation. Rename WebviewTokenResponse to WebViewTokenResponse and getWebviewToken to getWebViewToken for improved naming consistency and readability.
