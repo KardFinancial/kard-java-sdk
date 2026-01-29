@@ -1318,7 +1318,7 @@ client.users().attributions().create(
 </dl>
 </details>
 
-## Webview Authentication
+## Webview
 <details><summary><code>client.users.auth.getWebviewToken(organizationId, userId) -> WebviewTokenResponse</code></summary>
 <dl>
 <dd>

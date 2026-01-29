@@ -1,3 +1,12 @@
+## 0.21.2 - 2026-01-29
+* docs: remove README.md and simplify reference navigation
+* Cleaned up repository documentation by removing the comprehensive README.md file and streamlining the API reference structure. This change improves the focus on the core SDK functionality.
+* Key changes:
+* Remove complete README.md with installation, usage examples, and configuration docs
+* Simplify "Webview Authentication" section title to "Webview" in reference documentation
+* Reduce documentation maintenance overhead
+* 🌿 Generated with Fern
+
 ## 0.21.1 - 2026-01-29
 * docs: add authentication section to README
 * Expand documentation to include comprehensive authentication guidance for both bearer token and OAuth client credentials methods.
