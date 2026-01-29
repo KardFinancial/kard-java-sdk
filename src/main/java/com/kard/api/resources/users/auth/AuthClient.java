@@ -5,7 +5,7 @@ package com.kard.api.resources.users.auth;
 
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
-import com.kard.api.resources.users.auth.types.WebviewTokenResponse;
+import com.kard.api.resources.users.auth.types.WebViewTokenResponse;
 
 public class AuthClient {
     protected final ClientOptions clientOptions;
@@ -27,16 +27,16 @@ public class AuthClient {
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public WebviewTokenResponse getWebviewToken(String organizationId, String userId) {
-        return this.rawClient.getWebviewToken(organizationId, userId).body();
+    public WebViewTokenResponse getWebViewToken(String organizationId, String userId) {
+        return this.rawClient.getWebViewToken(organizationId, userId).body();
     }
 
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public WebviewTokenResponse getWebviewToken(String organizationId, String userId, RequestOptions requestOptions) {
+    public WebViewTokenResponse getWebViewToken(String organizationId, String userId, RequestOptions requestOptions) {
         return this.rawClient
-                .getWebviewToken(organizationId, userId, requestOptions)
+                .getWebViewToken(organizationId, userId, requestOptions)
                 .body();
     }
 }

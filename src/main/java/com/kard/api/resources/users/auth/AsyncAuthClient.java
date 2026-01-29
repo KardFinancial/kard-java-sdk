@@ -5,7 +5,7 @@ package com.kard.api.resources.users.auth;
 
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
-import com.kard.api.resources.users.auth.types.WebviewTokenResponse;
+import com.kard.api.resources.users.auth.types.WebViewTokenResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncAuthClient {
@@ -28,17 +28,17 @@ public class AsyncAuthClient {
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public CompletableFuture<WebviewTokenResponse> getWebviewToken(String organizationId, String userId) {
-        return this.rawClient.getWebviewToken(organizationId, userId).thenApply(response -> response.body());
+    public CompletableFuture<WebViewTokenResponse> getWebViewToken(String organizationId, String userId) {
+        return this.rawClient.getWebViewToken(organizationId, userId).thenApply(response -> response.body());
     }
 
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public CompletableFuture<WebviewTokenResponse> getWebviewToken(
+    public CompletableFuture<WebViewTokenResponse> getWebViewToken(
             String organizationId, String userId, RequestOptions requestOptions) {
         return this.rawClient
-                .getWebviewToken(organizationId, userId, requestOptions)
+                .getWebViewToken(organizationId, userId, requestOptions)
                 .thenApply(response -> response.body());
     }
 }

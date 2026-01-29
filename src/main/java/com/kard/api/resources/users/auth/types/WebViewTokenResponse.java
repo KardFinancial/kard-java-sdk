@@ -17,8 +17,8 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = WebviewTokenResponse.Builder.class)
-public final class WebviewTokenResponse {
+@JsonDeserialize(builder = WebViewTokenResponse.Builder.class)
+public final class WebViewTokenResponse {
     private final String accessToken;
 
     private final int expiresIn;
@@ -27,7 +27,7 @@ public final class WebviewTokenResponse {
 
     private final Map<String, Object> additionalProperties;
 
-    private WebviewTokenResponse(
+    private WebViewTokenResponse(
             String accessToken, int expiresIn, String tokenType, Map<String, Object> additionalProperties) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
@@ -53,7 +53,7 @@ public final class WebviewTokenResponse {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof WebviewTokenResponse && equalTo((WebviewTokenResponse) other);
+        return other instanceof WebViewTokenResponse && equalTo((WebViewTokenResponse) other);
     }
 
     @JsonAnyGetter
@@ -61,7 +61,7 @@ public final class WebviewTokenResponse {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(WebviewTokenResponse other) {
+    private boolean equalTo(WebViewTokenResponse other) {
         return accessToken.equals(other.accessToken)
                 && expiresIn == other.expiresIn
                 && tokenType.equals(other.tokenType);
@@ -84,7 +84,7 @@ public final class WebviewTokenResponse {
     public interface AccessTokenStage {
         ExpiresInStage accessToken(@NotNull String accessToken);
 
-        Builder from(WebviewTokenResponse other);
+        Builder from(WebViewTokenResponse other);
     }
 
     public interface ExpiresInStage {
@@ -96,7 +96,7 @@ public final class WebviewTokenResponse {
     }
 
     public interface _FinalStage {
-        WebviewTokenResponse build();
+        WebViewTokenResponse build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -113,7 +113,7 @@ public final class WebviewTokenResponse {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(WebviewTokenResponse other) {
+        public Builder from(WebViewTokenResponse other) {
             accessToken(other.getAccessToken());
             expiresIn(other.getExpiresIn());
             tokenType(other.getTokenType());
@@ -142,8 +142,8 @@ public final class WebviewTokenResponse {
         }
 
         @java.lang.Override
-        public WebviewTokenResponse build() {
-            return new WebviewTokenResponse(accessToken, expiresIn, tokenType, additionalProperties);
+        public WebViewTokenResponse build() {
+            return new WebViewTokenResponse(accessToken, expiresIn, tokenType, additionalProperties);
         }
     }
 }

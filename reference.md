@@ -1318,8 +1318,8 @@ client.users().attributions().create(
 </dl>
 </details>
 
-## Webview
-<details><summary><code>client.users.auth.getWebviewToken(organizationId, userId) -> WebviewTokenResponse</code></summary>
+## WebView
+<details><summary><code>client.users.auth.getWebViewToken(organizationId, userId) -> WebViewTokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -1346,7 +1346,7 @@ Retrieves an OAuth token for webview authentication.
 <dd>
 
 ```java
-client.users().auth().getWebviewToken("organization-123", "user-123");
+client.users().auth().getWebViewToken("organization-123", "user-123");
 ```
 </dd>
 </dl>

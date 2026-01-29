@@ -13,7 +13,7 @@ import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.commons.errors.InternalServerError;
 import com.kard.api.resources.commons.errors.UnauthorizedError;
 import com.kard.api.resources.commons.types.ErrorResponse;
-import com.kard.api.resources.users.auth.types.WebviewTokenResponse;
+import com.kard.api.resources.users.auth.types.WebViewTokenResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -33,14 +33,14 @@ public class RawAuthClient {
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public KardApiHttpResponse<WebviewTokenResponse> getWebviewToken(String organizationId, String userId) {
-        return getWebviewToken(organizationId, userId, null);
+    public KardApiHttpResponse<WebViewTokenResponse> getWebViewToken(String organizationId, String userId) {
+        return getWebViewToken(organizationId, userId, null);
     }
 
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public KardApiHttpResponse<WebviewTokenResponse> getWebviewToken(
+    public KardApiHttpResponse<WebViewTokenResponse> getWebViewToken(
             String organizationId, String userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -65,7 +65,7 @@ public class RawAuthClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, WebviewTokenResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, WebViewTokenResponse.class), response);
             }
             try {
                 switch (response.code()) {

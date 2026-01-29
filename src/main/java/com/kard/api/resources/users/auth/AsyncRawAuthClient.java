@@ -13,7 +13,7 @@ import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.commons.errors.InternalServerError;
 import com.kard.api.resources.commons.errors.UnauthorizedError;
 import com.kard.api.resources.commons.types.ErrorResponse;
-import com.kard.api.resources.users.auth.types.WebviewTokenResponse;
+import com.kard.api.resources.users.auth.types.WebViewTokenResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -37,15 +37,15 @@ public class AsyncRawAuthClient {
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public CompletableFuture<KardApiHttpResponse<WebviewTokenResponse>> getWebviewToken(
+    public CompletableFuture<KardApiHttpResponse<WebViewTokenResponse>> getWebViewToken(
             String organizationId, String userId) {
-        return getWebviewToken(organizationId, userId, null);
+        return getWebViewToken(organizationId, userId, null);
     }
 
     /**
      * Retrieves an OAuth token for webview authentication.
      */
-    public CompletableFuture<KardApiHttpResponse<WebviewTokenResponse>> getWebviewToken(
+    public CompletableFuture<KardApiHttpResponse<WebViewTokenResponse>> getWebViewToken(
             String organizationId, String userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -65,7 +65,7 @@ public class AsyncRawAuthClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<KardApiHttpResponse<WebviewTokenResponse>> future = new CompletableFuture<>();
+        CompletableFuture<KardApiHttpResponse<WebViewTokenResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -73,7 +73,7 @@ public class AsyncRawAuthClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, WebviewTokenResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, WebViewTokenResponse.class),
                                 response));
                         return;
                     }

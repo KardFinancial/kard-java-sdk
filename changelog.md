@@ -1,3 +1,14 @@
+## 0.22.0 - 2026-01-29
+* docs: add comprehensive documentation and rename WebView-related components
+* Add complete README with installation instructions, usage examples, and API documentation. Rename WebviewTokenResponse to WebViewTokenResponse and getWebviewToken to getWebViewToken for improved naming consistency and readability.
+* Key changes:
+* Add comprehensive README with installation, usage, and configuration examples
+* Add complete API reference documentation
+* Rename WebviewTokenResponse class to WebViewTokenResponse
+* Rename getWebviewToken methods to getWebViewToken across all client implementations
+* Update import statements and type references to use new naming
+* 🌿 Generated with Fern
+
 ## 0.21.2 - 2026-01-29
 * docs: remove README.md and simplify reference navigation
 * Cleaned up repository documentation by removing the comprehensive README.md file and streamlining the API reference structure. This change improves the focus on the core SDK functionality.
