@@ -1,3 +1,13 @@
+## 0.18.3 - 2026-01-29
+* docs: add comprehensive README for Kard Java SDK
+* Add complete documentation including installation, usage examples, authentication methods, and advanced configuration options for the Kard Java SDK library.
+* Key changes:
+* Add README with Maven Central badge and installation instructions
+* Include usage examples with client initialization and API calls
+* Document dual authentication methods (bearer token and OAuth client credentials)
+* Add advanced configuration sections for custom client, retries, timeouts, headers, and raw responses
+* 🌿 Generated with Fern
+
 ## 0.18.2 - 2026-01-29
 * docs: remove README.md file
 * This commit removes the entire README.md file from the repository. This represents a significant documentation change that removes all project setup instructions, usage examples, authentication guides, and API reference information.
