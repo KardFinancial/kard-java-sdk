@@ -1,3 +1,13 @@
+## 0.19.2 - 2026-01-29
+* chore: remove README.md file
+* The README.md file has been completely removed from the repository, eliminating all documentation including installation instructions, usage examples, authentication guides, and contribution guidelines.
+* Key changes:
+* Remove entire README.md file with 320 lines of content
+* Remove installation instructions for Gradle and Maven
+* Remove usage examples and authentication documentation
+* Remove advanced configuration guides and contributing guidelines
+* 🌿 Generated with Fern
+
 ## 0.19.1 - 2026-01-29
 * docs: add comprehensive authentication documentation
 * Enhance the README with detailed authentication guidance covering both bearer token and OAuth client credentials methods. This provides developers with clear examples and usage patterns for different authentication scenarios.
