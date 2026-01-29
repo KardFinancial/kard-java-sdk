@@ -1,3 +1,13 @@
+## 0.17.2 - 2026-01-29
+* refactor: remove README.md file
+* Remove the complete README.md documentation file from the repository. This change eliminates all user-facing documentation including installation instructions, usage examples, authentication methods, and API reference information.
+* Key changes:
+* Removed entire README.md file (320 lines)
+* Eliminated installation instructions for Gradle and Maven
+* Removed usage examples and code samples
+* Deleted authentication documentation and environment configuration details
+* 🌿 Generated with Fern
+
 ## 0.17.1 - 2026-01-29
 * docs: add authentication section to README
 * Added comprehensive authentication documentation to help developers understand the two available authentication methods for the Kard SDK. This improves developer experience by providing clear examples and usage patterns for both bearer token and OAuth client credentials authentication.
