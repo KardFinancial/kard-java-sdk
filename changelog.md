@@ -1,3 +1,14 @@
+## 0.18.2 - 2026-01-29
+* docs: remove README.md file
+* This commit removes the entire README.md file from the repository. This represents a significant documentation change that removes all project setup instructions, usage examples, authentication guides, and API reference information.
+* Key changes:
+* Remove complete README.md with 320 lines of documentation
+* Remove installation instructions for Maven and Gradle
+* Remove all usage examples and code snippets
+* Remove authentication configuration documentation
+* Remove environment setup and configuration guides
+* 🌿 Generated with Fern
+
 ## 0.18.1 - 2026-01-29
 * docs: add authentication section to README
 * Added comprehensive authentication documentation to help developers understand
