@@ -1,3 +1,13 @@
+## 0.22.2 - 2026-01-30
+* refactor: remove README.md file
+* Removed the comprehensive README.md file that contained documentation for the Kard Java library. This appears to be part of a refactoring effort to either consolidate documentation or migrate it to a different location.
+* Key changes:
+* Removed complete README.md file with all library documentation
+* Removed installation instructions for Gradle and Maven
+* Removed usage examples and authentication methods
+* Removed documentation for environments, error handling, and advanced features
+* 🌿 Generated with Fern
+
 ## 0.22.1 - 2026-01-29
 * docs: add authentication section to README
 * This update enhances the documentation by adding a dedicated authentication section that clearly explains the two supported authentication methods available in the Kard Java SDK.
