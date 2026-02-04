@@ -1,3 +1,16 @@
+## 0.23.0 - 2026-02-04
+* feat: add UI component support to rewards API endpoints
+* Add support for UI component types in the rewards API to enable customizable offer and location presentations. This update introduces new component types and query parameters that allow clients to request specific UI elements like descriptions, CTAs, and tags.
+* Key changes:
+* Add supportedComponents query parameter to offers and locations endpoints
+* Introduce ComponentType enum with values for shortDescription, longDescription, cta, tags, and detailTags
+* Create OfferComponents class with optional UI component fields
+* Add CtaComponent and ButtonStyle classes for call-to-action buttons
+* Extend offer models to include components field for UI data
+* Remove entire README.md file (replaced or relocated)
+* Update API reference documentation with new parameter descriptions
+* 🌿 Generated with Fern
+
 ## 0.22.1 - 2026-01-29
 * docs: add authentication section to README
 * This update enhances the documentation by adding a dedicated authentication section that clearly explains the two supported authentication methods available in the Kard Java SDK.

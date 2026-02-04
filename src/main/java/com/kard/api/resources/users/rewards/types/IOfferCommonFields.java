@@ -38,4 +38,6 @@ public interface IOfferCommonFields {
     Optional<String> getWebsiteUrl();
 
     Optional<String> getDescription();
+
+    Optional<OfferComponents> getComponents();
 }

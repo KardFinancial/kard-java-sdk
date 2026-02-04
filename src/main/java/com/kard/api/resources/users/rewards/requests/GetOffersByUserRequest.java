@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.resources.commons.types.CategoryOption;
 import com.kard.api.resources.commons.types.PurchaseChannel;
+import com.kard.api.resources.users.rewards.types.ComponentType;
 import com.kard.api.resources.users.rewards.types.OfferSortOptions;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public final class GetOffersByUserRequest {
     private final Optional<List<OfferSortOptions>> sort;
 
     private final Optional<List<String>> include;
+
+    private final Optional<List<ComponentType>> supportedComponents;
 
     private final Optional<Integer> pageSize;
 
@@ -46,6 +49,7 @@ public final class GetOffersByUserRequest {
     private GetOffersByUserRequest(
             Optional<List<OfferSortOptions>> sort,
             Optional<List<String>> include,
+            Optional<List<ComponentType>> supportedComponents,
             Optional<Integer> pageSize,
             Optional<String> pageAfter,
             Optional<String> pageBefore,
@@ -55,6 +59,7 @@ public final class GetOffersByUserRequest {
             Map<String, Object> additionalProperties) {
         this.sort = sort;
         this.include = include;
+        this.supportedComponents = supportedComponents;
         this.pageSize = pageSize;
         this.pageAfter = pageAfter;
         this.pageBefore = pageBefore;
@@ -78,6 +83,14 @@ public final class GetOffersByUserRequest {
     @JsonProperty("include")
     public Optional<List<String>> getInclude() {
         return include;
+    }
+
+    /**
+     * @return UI component types to include in the response. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
+     */
+    @JsonProperty("supportedComponents")
+    public Optional<List<ComponentType>> getSupportedComponents() {
+        return supportedComponents;
     }
 
     @JsonProperty("page[size]")
@@ -124,6 +137,7 @@ public final class GetOffersByUserRequest {
     private boolean equalTo(GetOffersByUserRequest other) {
         return sort.equals(other.sort)
                 && include.equals(other.include)
+                && supportedComponents.equals(other.supportedComponents)
                 && pageSize.equals(other.pageSize)
                 && pageAfter.equals(other.pageAfter)
                 && pageBefore.equals(other.pageBefore)
@@ -137,6 +151,7 @@ public final class GetOffersByUserRequest {
         return Objects.hash(
                 this.sort,
                 this.include,
+                this.supportedComponents,
                 this.pageSize,
                 this.pageAfter,
                 this.pageBefore,
@@ -160,6 +175,8 @@ public final class GetOffersByUserRequest {
 
         private Optional<List<String>> include = Optional.empty();
 
+        private Optional<List<ComponentType>> supportedComponents = Optional.empty();
+
         private Optional<Integer> pageSize = Optional.empty();
 
         private Optional<String> pageAfter = Optional.empty();
@@ -180,6 +197,7 @@ public final class GetOffersByUserRequest {
         public Builder from(GetOffersByUserRequest other) {
             sort(other.getSort());
             include(other.getInclude());
+            supportedComponents(other.getSupportedComponents());
             pageSize(other.getPageSize());
             pageAfter(other.getPageAfter());
             pageBefore(other.getPageBefore());
@@ -224,6 +242,25 @@ public final class GetOffersByUserRequest {
 
         public Builder include(String include) {
             this.include = Optional.of(Collections.singletonList(include));
+            return this;
+        }
+
+        /**
+         * <p>UI component types to include in the response. Valid values are shortDescription, longDescription, cta, tags, and detailTags.</p>
+         */
+        @JsonSetter(value = "supportedComponents", nulls = Nulls.SKIP)
+        public Builder supportedComponents(Optional<List<ComponentType>> supportedComponents) {
+            this.supportedComponents = supportedComponents;
+            return this;
+        }
+
+        public Builder supportedComponents(List<ComponentType> supportedComponents) {
+            this.supportedComponents = Optional.ofNullable(supportedComponents);
+            return this;
+        }
+
+        public Builder supportedComponents(ComponentType supportedComponents) {
+            this.supportedComponents = Optional.of(Collections.singletonList(supportedComponents));
             return this;
         }
 
@@ -297,6 +334,7 @@ public final class GetOffersByUserRequest {
             return new GetOffersByUserRequest(
                     sort,
                     include,
+                    supportedComponents,
                     pageSize,
                     pageAfter,
                     pageBefore,
