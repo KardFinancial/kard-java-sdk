@@ -55,6 +55,8 @@ public final class OfferCommonFields implements IOfferCommonFields {
 
     private final Optional<String> description;
 
+    private final Optional<OfferComponents> components;
+
     private final Map<String, Object> additionalProperties;
 
     private OfferCommonFields(
@@ -73,6 +75,7 @@ public final class OfferCommonFields implements IOfferCommonFields {
             Optional<Amount> maxRewardAmount,
             Optional<String> websiteUrl,
             Optional<String> description,
+            Optional<OfferComponents> components,
             Map<String, Object> additionalProperties) {
         this.terms = terms;
         this.maxRedemptions = maxRedemptions;
@@ -89,6 +92,7 @@ public final class OfferCommonFields implements IOfferCommonFields {
         this.maxRewardAmount = maxRewardAmount;
         this.websiteUrl = websiteUrl;
         this.description = description;
+        this.components = components;
         this.additionalProperties = additionalProperties;
     }
 
@@ -221,6 +225,15 @@ public final class OfferCommonFields implements IOfferCommonFields {
         return description;
     }
 
+    /**
+     * @return UI component data for the offer, returned when supportedComponents query parameter is provided
+     */
+    @JsonProperty("components")
+    @java.lang.Override
+    public Optional<OfferComponents> getComponents() {
+        return components;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -247,7 +260,8 @@ public final class OfferCommonFields implements IOfferCommonFields {
                 && minRewardAmount.equals(other.minRewardAmount)
                 && maxRewardAmount.equals(other.maxRewardAmount)
                 && websiteUrl.equals(other.websiteUrl)
-                && description.equals(other.description);
+                && description.equals(other.description)
+                && components.equals(other.components);
     }
 
     @java.lang.Override
@@ -267,7 +281,8 @@ public final class OfferCommonFields implements IOfferCommonFields {
                 this.minRewardAmount,
                 this.maxRewardAmount,
                 this.websiteUrl,
-                this.description);
+                this.description,
+                this.components);
     }
 
     @java.lang.Override
@@ -386,6 +401,13 @@ public final class OfferCommonFields implements IOfferCommonFields {
         _FinalStage description(Optional<String> description);
 
         _FinalStage description(String description);
+
+        /**
+         * <p>UI component data for the offer, returned when supportedComponents query parameter is provided</p>
+         */
+        _FinalStage components(Optional<OfferComponents> components);
+
+        _FinalStage components(OfferComponents components);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -408,6 +430,8 @@ public final class OfferCommonFields implements IOfferCommonFields {
         private OffsetDateTime expirationDate;
 
         private boolean isTargeted;
+
+        private Optional<OfferComponents> components = Optional.empty();
 
         private Optional<String> description = Optional.empty();
 
@@ -449,6 +473,7 @@ public final class OfferCommonFields implements IOfferCommonFields {
             maxRewardAmount(other.getMaxRewardAmount());
             websiteUrl(other.getWebsiteUrl());
             description(other.getDescription());
+            components(other.getComponents());
             return this;
         }
 
@@ -516,6 +541,26 @@ public final class OfferCommonFields implements IOfferCommonFields {
         @JsonSetter("isTargeted")
         public _FinalStage isTargeted(boolean isTargeted) {
             this.isTargeted = isTargeted;
+            return this;
+        }
+
+        /**
+         * <p>UI component data for the offer, returned when supportedComponents query parameter is provided</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage components(OfferComponents components) {
+            this.components = Optional.ofNullable(components);
+            return this;
+        }
+
+        /**
+         * <p>UI component data for the offer, returned when supportedComponents query parameter is provided</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "components", nulls = Nulls.SKIP)
+        public _FinalStage components(Optional<OfferComponents> components) {
+            this.components = components;
             return this;
         }
 
@@ -736,6 +781,7 @@ public final class OfferCommonFields implements IOfferCommonFields {
                     maxRewardAmount,
                     websiteUrl,
                     description,
+                    components,
                     additionalProperties);
         }
     }
