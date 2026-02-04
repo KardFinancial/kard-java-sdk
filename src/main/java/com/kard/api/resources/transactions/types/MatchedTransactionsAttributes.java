@@ -146,7 +146,7 @@ public final class MatchedTransactionsAttributes {
     }
 
     /**
-     * @return Timestamp for transaction event. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code>
+     * @return Timestamp for transaction event. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code>
      */
     @JsonProperty("authorizationDate")
     public OffsetDateTime getAuthorizationDate() {
@@ -376,7 +376,7 @@ public final class MatchedTransactionsAttributes {
 
     public interface AuthorizationDateStage {
         /**
-         * <p>Timestamp for transaction event. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for transaction event. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
          */
         PaymentTypeStage authorizationDate(@NotNull OffsetDateTime authorizationDate);
     }
@@ -624,8 +624,8 @@ public final class MatchedTransactionsAttributes {
         }
 
         /**
-         * <p>Timestamp for transaction event. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
-         * <p>Timestamp for transaction event. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for transaction event. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for transaction event. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

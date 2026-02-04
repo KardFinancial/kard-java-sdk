@@ -1,3 +1,15 @@
+## 0.26.0 - 2026-02-04
+* feat: add core transaction support and improve documentation
+* Introduce support for core banking transaction processing with new transaction type and enhanced API documentation. This update adds a new `coreTransaction` type to support transactions from core banking systems with limited card-level data, expanding the platform's transaction processing capabilities.
+* Key changes:
+* Add new `coreTransaction` transaction type for core banking systems with limited card data
+* Introduce `CoreTransactionRequest`, `CoreTransactionAttributes`, and supporting models
+* Add `CoreMerchant` and `FinancialInstitution` models for core transaction metadata
+* Update API documentation to include core transaction type description
+* Standardize timestamp documentation to specify ISO 8601 format across all transaction types
+* Add comprehensive README.md with installation, usage, and authentication documentation
+* 🌿 Generated with Fern
+
 ## 0.25.2 - 2026-02-04
 * chore: remove README.md documentation file
 * Remove the complete README.md file containing SDK documentation, installation instructions, usage examples, and configuration details for the Kard Java library.

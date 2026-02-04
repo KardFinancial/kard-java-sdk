@@ -57,7 +57,8 @@ public class AsyncRawTransactionsClient {
      * Please use the correct type when calling the endpoint:
      * <ul>
      * <li><code>transaction</code>: These incoming transactions will be processed and matched by the Kard system. Learn more about the <a href="https://github.com/kard-financial/kard-postman#c-transaction-clo-matching">Transaction CLO Matching</a> flow here.</li>
-     * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.&lt;br/&gt;</li>
+     * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
+     * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.&lt;br/&gt;</li>
      * </ul>
      * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>&lt;br/&gt;
      * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be created per request</code>.</p>
@@ -72,7 +73,8 @@ public class AsyncRawTransactionsClient {
      * Please use the correct type when calling the endpoint:
      * <ul>
      * <li><code>transaction</code>: These incoming transactions will be processed and matched by the Kard system. Learn more about the <a href="https://github.com/kard-financial/kard-postman#c-transaction-clo-matching">Transaction CLO Matching</a> flow here.</li>
-     * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.&lt;br/&gt;</li>
+     * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
+     * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.&lt;br/&gt;</li>
      * </ul>
      * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>&lt;br/&gt;
      * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be created per request</code>.</p>

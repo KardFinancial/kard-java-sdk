@@ -34,12 +34,20 @@ public final class Transactions {
         return new Transactions(new MatchedTransactionValue(value));
     }
 
+    public static Transactions coreTransaction(CoreTransactionRequest value) {
+        return new Transactions(new CoreTransactionValue(value));
+    }
+
     public boolean isTransaction() {
         return value instanceof TransactionValue;
     }
 
     public boolean isMatchedTransaction() {
         return value instanceof MatchedTransactionValue;
+    }
+
+    public boolean isCoreTransaction() {
+        return value instanceof CoreTransactionValue;
     }
 
     public boolean _isUnknown() {
@@ -56,6 +64,13 @@ public final class Transactions {
     public Optional<MatchedTransactionsRequest> getMatchedTransaction() {
         if (isMatchedTransaction()) {
             return Optional.of(((MatchedTransactionValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CoreTransactionRequest> getCoreTransaction() {
+        if (isCoreTransaction()) {
+            return Optional.of(((CoreTransactionValue) value).value);
         }
         return Optional.empty();
     }
@@ -77,11 +92,17 @@ public final class Transactions {
 
         T visitMatchedTransaction(MatchedTransactionsRequest matchedTransaction);
 
+        T visitCoreTransaction(CoreTransactionRequest coreTransaction);
+
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
-    @JsonSubTypes({@JsonSubTypes.Type(TransactionValue.class), @JsonSubTypes.Type(MatchedTransactionValue.class)})
+    @JsonSubTypes({
+        @JsonSubTypes.Type(TransactionValue.class),
+        @JsonSubTypes.Type(MatchedTransactionValue.class),
+        @JsonSubTypes.Type(CoreTransactionValue.class)
+    })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
@@ -151,6 +172,45 @@ public final class Transactions {
         }
 
         private boolean equalTo(MatchedTransactionValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Transactions{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("coreTransaction")
+    @JsonIgnoreProperties("type")
+    private static final class CoreTransactionValue implements Value {
+        @JsonUnwrapped
+        private CoreTransactionRequest value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private CoreTransactionValue() {}
+
+        private CoreTransactionValue(CoreTransactionRequest value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitCoreTransaction(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof CoreTransactionValue && equalTo((CoreTransactionValue) other);
+        }
+
+        private boolean equalTo(CoreTransactionValue other) {
             return value.equals(other.value);
         }
 

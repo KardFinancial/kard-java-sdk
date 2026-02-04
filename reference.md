@@ -482,7 +482,8 @@ client.ping().ping();
 Call this endpoint to send all transactions made by all your enrolled users in your rewards program. The request body will depend on the transaction type.<br/>
 Please use the correct type when calling the endpoint:
 - `transaction`: These incoming transactions will be processed and matched by the Kard system. Learn more about the [Transaction CLO Matching](https://github.com/kard-financial/kard-postman#c-transaction-clo-matching) flow here.
-- `matchedTransaction`: For pre-matched transactions that need validation on match by the Kard system.<br/>
+- `matchedTransaction`: For pre-matched transactions that need validation on match by the Kard system.
+- `coreTransaction`: For transactions from core banking systems with limited card-level data.<br/>
 
 <b>Required scopes:</b> `transaction:write`<br/>
 <b>Note:</b> `Maximum of 500 transactions can be created per request`.

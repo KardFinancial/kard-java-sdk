@@ -214,7 +214,7 @@ public final class TransactionsAttributes {
     }
 
     /**
-     * @return Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code>
+     * @return Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code>
      */
     @JsonProperty("transactionDate")
     public Optional<OffsetDateTime> getTransactionDate() {
@@ -222,7 +222,7 @@ public final class TransactionsAttributes {
     }
 
     /**
-     * @return Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code>
+     * @return Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code>
      */
     @JsonProperty("authorizationDate")
     public Optional<OffsetDateTime> getAuthorizationDate() {
@@ -230,7 +230,7 @@ public final class TransactionsAttributes {
     }
 
     /**
-     * @return Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code>
+     * @return Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code>
      */
     @JsonProperty("settledDate")
     public Optional<OffsetDateTime> getSettledDate() {
@@ -553,21 +553,21 @@ public final class TransactionsAttributes {
         _FinalStage coreProviderId(String coreProviderId);
 
         /**
-         * <p>Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
          */
         _FinalStage transactionDate(Optional<OffsetDateTime> transactionDate);
 
         _FinalStage transactionDate(OffsetDateTime transactionDate);
 
         /**
-         * <p>Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
          */
         _FinalStage authorizationDate(Optional<OffsetDateTime> authorizationDate);
 
         _FinalStage authorizationDate(OffsetDateTime authorizationDate);
 
         /**
-         * <p>Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
          */
         _FinalStage settledDate(Optional<OffsetDateTime> settledDate);
 
@@ -1099,7 +1099,7 @@ public final class TransactionsAttributes {
         }
 
         /**
-         * <p>Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1109,7 +1109,7 @@ public final class TransactionsAttributes {
         }
 
         /**
-         * <p>Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;SETTLED&lt;/b&gt; transaction event, &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
          */
         @java.lang.Override
         @JsonSetter(value = "settledDate", nulls = Nulls.SKIP)
@@ -1119,7 +1119,7 @@ public final class TransactionsAttributes {
         }
 
         /**
-         * <p>Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1129,7 +1129,7 @@ public final class TransactionsAttributes {
         }
 
         /**
-         * <p>Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;APPROVED&lt;/b&gt; transaction event; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;APPROVED&lt;/b&gt; status, and &lt;b&gt;HIGHLY RECOMMENDED&lt;/b&gt; to include for transactions with a &lt;b&gt;SETTLED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</code></p>
          */
         @java.lang.Override
         @JsonSetter(value = "authorizationDate", nulls = Nulls.SKIP)
@@ -1139,7 +1139,7 @@ public final class TransactionsAttributes {
         }
 
         /**
-         * <p>Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -1149,7 +1149,7 @@ public final class TransactionsAttributes {
         }
 
         /**
-         * <p>Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
+         * <p>Timestamp for &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; transaction events; &lt;b&gt;REQUIRED&lt;/b&gt; for transactions with &lt;b&gt;REVERSED, RETURNED, DECLINED&lt;/b&gt; status. Date string should be in ISO 8601 format i.e.<code>'YYYY-MM-DDThh:mm:ss.sTZD'</code> where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. <code>1994-11-05T08:15:30-05:00</code> OR <code>1994-11-05T08:15:30Z</code></p>
          */
         @java.lang.Override
         @JsonSetter(value = "transactionDate", nulls = Nulls.SKIP)
