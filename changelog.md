@@ -1,3 +1,13 @@
+## 0.25.2 - 2026-02-04
+* docs: remove README.md file
+* Complete removal of the README.md documentation file from the repository. This file contained comprehensive documentation including installation instructions, usage examples, authentication methods, and advanced configuration options.
+* Key changes:
+* Remove entire README.md file (320 lines)
+* Remove installation guides for Gradle and Maven
+* Remove usage examples and authentication documentation
+* Remove advanced configuration and contributing sections
+* 🌿 Generated with Fern
+
 ## 0.25.1 - 2026-02-04
 * docs: add comprehensive authentication section to README
 * This change enhances the documentation by adding a dedicated authentication section that clearly explains the two supported authentication methods: direct bearer token usage and OAuth client credentials flow.
