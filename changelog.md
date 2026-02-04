@@ -1,3 +1,15 @@
+## 0.24.0 - 2026-02-04
+* docs: add comprehensive README documentation for Kard Java SDK
+* Add complete project documentation including installation instructions, usage examples, authentication methods, and advanced configuration options.
+* Key changes:
+* Added Maven Central badge and installation instructions for Gradle/Maven
+* Included comprehensive usage examples with client instantiation
+* Documented two authentication methods: direct bearer token and OAuth client credentials
+* Added sections for environment configuration, custom base URLs, and exception handling
+* Provided advanced configuration examples for custom clients, retries, timeouts, headers, and raw response access
+* Established contributing guidelines for generated SDK
+* 🌿 Generated with Fern
+
 ## 0.23.0 - 2026-02-04
 * feat: add UI component support to rewards API endpoints
 * Add support for UI component types in the rewards API to enable customizable offer and location presentations. This update introduces new component types and query parameters that allow clients to request specific UI elements like descriptions, CTAs, and tags.
