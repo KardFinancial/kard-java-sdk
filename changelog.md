@@ -1,3 +1,15 @@
+## 0.23.0 - 2026-02-04
+* feat: add UI component support and remove README
+* Add support for UI component filtering in rewards endpoints and remove the README file to clean up repository structure.
+* Key changes:
+* Add supportedComponents parameter to offers and locations endpoints
+* Create new ComponentType enum with values for shortDescription, longDescription, cta, tags, and detailTags
+* Add OfferComponents class with component data fields
+* Create CtaComponent and ButtonStyle types for call-to-action buttons
+* Update request classes to support component filtering
+* Remove README.md file from repository
+* 🌿 Generated with Fern
+
 ## 0.22.1 - 2026-01-29
 * docs: add authentication section to README
 * This update enhances the documentation by adding a dedicated authentication section that clearly explains the two supported authentication methods available in the Kard Java SDK.

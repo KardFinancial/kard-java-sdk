@@ -1515,6 +1515,14 @@ client.users().rewards().offers(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**supportedComponents:** `Optional<ComponentType>` — UI component types to include in the response. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1697,6 +1705,14 @@ client.users().rewards().locations(
 <dd>
 
 **include:** `Optional<String>` — CSV list of included resources in the response (e.g "offers,categories"). Allowed values are `offers` and `categories`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**supportedComponents:** `Optional<ComponentType>` — UI component types to include in included offers. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
     
 </dd>
 </dl>

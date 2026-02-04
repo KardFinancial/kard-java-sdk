@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.resources.commons.types.CategoryOption;
 import com.kard.api.resources.commons.types.State;
+import com.kard.api.resources.users.rewards.types.ComponentType;
 import com.kard.api.resources.users.rewards.types.LocationSortOptions;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public final class GetLocationsByUserRequest {
     private final Optional<List<LocationSortOptions>> sort;
 
     private final Optional<List<String>> include;
+
+    private final Optional<List<ComponentType>> supportedComponents;
 
     private final Optional<Integer> pageSize;
 
@@ -56,6 +59,7 @@ public final class GetLocationsByUserRequest {
     private GetLocationsByUserRequest(
             Optional<List<LocationSortOptions>> sort,
             Optional<List<String>> include,
+            Optional<List<ComponentType>> supportedComponents,
             Optional<Integer> pageSize,
             Optional<String> pageAfter,
             Optional<String> pageBefore,
@@ -70,6 +74,7 @@ public final class GetLocationsByUserRequest {
             Map<String, Object> additionalProperties) {
         this.sort = sort;
         this.include = include;
+        this.supportedComponents = supportedComponents;
         this.pageSize = pageSize;
         this.pageAfter = pageAfter;
         this.pageBefore = pageBefore;
@@ -98,6 +103,14 @@ public final class GetLocationsByUserRequest {
     @JsonProperty("include")
     public Optional<List<String>> getInclude() {
         return include;
+    }
+
+    /**
+     * @return UI component types to include in included offers. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
+     */
+    @JsonProperty("supportedComponents")
+    public Optional<List<ComponentType>> getSupportedComponents() {
+        return supportedComponents;
     }
 
     @JsonProperty("page[size]")
@@ -169,6 +182,7 @@ public final class GetLocationsByUserRequest {
     private boolean equalTo(GetLocationsByUserRequest other) {
         return sort.equals(other.sort)
                 && include.equals(other.include)
+                && supportedComponents.equals(other.supportedComponents)
                 && pageSize.equals(other.pageSize)
                 && pageAfter.equals(other.pageAfter)
                 && pageBefore.equals(other.pageBefore)
@@ -187,6 +201,7 @@ public final class GetLocationsByUserRequest {
         return Objects.hash(
                 this.sort,
                 this.include,
+                this.supportedComponents,
                 this.pageSize,
                 this.pageAfter,
                 this.pageBefore,
@@ -214,6 +229,8 @@ public final class GetLocationsByUserRequest {
         private Optional<List<LocationSortOptions>> sort = Optional.empty();
 
         private Optional<List<String>> include = Optional.empty();
+
+        private Optional<List<ComponentType>> supportedComponents = Optional.empty();
 
         private Optional<Integer> pageSize = Optional.empty();
 
@@ -245,6 +262,7 @@ public final class GetLocationsByUserRequest {
         public Builder from(GetLocationsByUserRequest other) {
             sort(other.getSort());
             include(other.getInclude());
+            supportedComponents(other.getSupportedComponents());
             pageSize(other.getPageSize());
             pageAfter(other.getPageAfter());
             pageBefore(other.getPageBefore());
@@ -294,6 +312,25 @@ public final class GetLocationsByUserRequest {
 
         public Builder include(String include) {
             this.include = Optional.of(Collections.singletonList(include));
+            return this;
+        }
+
+        /**
+         * <p>UI component types to include in included offers. Valid values are shortDescription, longDescription, cta, tags, and detailTags.</p>
+         */
+        @JsonSetter(value = "supportedComponents", nulls = Nulls.SKIP)
+        public Builder supportedComponents(Optional<List<ComponentType>> supportedComponents) {
+            this.supportedComponents = supportedComponents;
+            return this;
+        }
+
+        public Builder supportedComponents(List<ComponentType> supportedComponents) {
+            this.supportedComponents = Optional.ofNullable(supportedComponents);
+            return this;
+        }
+
+        public Builder supportedComponents(ComponentType supportedComponents) {
+            this.supportedComponents = Optional.of(Collections.singletonList(supportedComponents));
             return this;
         }
 
@@ -422,6 +459,7 @@ public final class GetLocationsByUserRequest {
             return new GetLocationsByUserRequest(
                     sort,
                     include,
+                    supportedComponents,
                     pageSize,
                     pageAfter,
                     pageBefore,

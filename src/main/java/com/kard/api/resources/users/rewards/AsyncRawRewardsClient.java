@@ -113,6 +113,13 @@ public class AsyncRawRewardsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "include", request.getInclude().get(), true);
         }
+        if (request.getSupportedComponents().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "supportedComponents",
+                    request.getSupportedComponents().get(),
+                    true);
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -276,6 +283,13 @@ public class AsyncRawRewardsClient {
         if (request.getInclude().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "include", request.getInclude().get(), true);
+        }
+        if (request.getSupportedComponents().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "supportedComponents",
+                    request.getSupportedComponents().get(),
+                    true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
