@@ -38,8 +38,7 @@ public class RawRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a> endpoint with the
-     * <code>includeLocal</code> query parameter.&lt;br/&gt;
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
      * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
      */
     public KardApiHttpResponse<OffersResponseObject> offers(String organizationId, String userId) {
@@ -49,8 +48,7 @@ public class RawRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a> endpoint with the
-     * <code>includeLocal</code> query parameter.&lt;br/&gt;
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
      * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
      */
     public KardApiHttpResponse<OffersResponseObject> offers(
@@ -61,8 +59,7 @@ public class RawRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a> endpoint with the
-     * <code>includeLocal</code> query parameter.&lt;br/&gt;
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
      * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
      */
     public KardApiHttpResponse<OffersResponseObject> offers(
@@ -160,8 +157,7 @@ public class RawRewardsClient {
     }
 
     /**
-     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. To
-     * include local locations, add the <code>includeLocal</code> query parameter to your api call. Use this endpoint to build
+     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
      * pattern.&lt;br/&gt;
@@ -174,8 +170,7 @@ public class RawRewardsClient {
     }
 
     /**
-     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. To
-     * include local locations, add the <code>includeLocal</code> query parameter to your api call. Use this endpoint to build
+     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
      * pattern.&lt;br/&gt;
@@ -188,8 +183,7 @@ public class RawRewardsClient {
     }
 
     /**
-     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. To
-     * include local locations, add the <code>includeLocal</code> query parameter to your api call. Use this endpoint to build
+     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
      * pattern.&lt;br/&gt;

@@ -1,3 +1,13 @@
+## 0.28.2 - 2026-02-05
+* docs: remove README.md and update API documentation
+* This commit removes the README.md file completely and updates API documentation for rewards endpoints to simplify the language around local offers and locations.
+* Key changes:
+* Remove entire README.md file with installation, usage, and configuration instructions
+* Update offers endpoint documentation to remove reference to includeLocal query parameter
+* Simplify locations endpoint documentation to remove specific instructions about includeLocal parameter
+* Update Javadoc comments across all rewards client classes (sync and async, raw and regular)
+* 🌿 Generated with Fern
+
 ## 0.28.1 - 2026-02-05
 * docs: add authentication section to README
 * Enhanced SDK documentation by adding a comprehensive authentication guide that explains both bearer token and OAuth client credentials methods.
