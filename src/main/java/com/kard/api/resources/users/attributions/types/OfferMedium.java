@@ -13,6 +13,8 @@ public final class OfferMedium {
 
     public static final OfferMedium EMAIL = new OfferMedium(Value.EMAIL, "EMAIL");
 
+    public static final OfferMedium CTA = new OfferMedium(Value.CTA, "CTA");
+
     public static final OfferMedium MAP = new OfferMedium(Value.MAP, "MAP");
 
     private final Value value;
@@ -52,6 +54,8 @@ public final class OfferMedium {
                 return visitor.visitBrowse();
             case EMAIL:
                 return visitor.visitEmail();
+            case CTA:
+                return visitor.visitCta();
             case MAP:
                 return visitor.visitMap();
             case UNKNOWN:
@@ -69,6 +73,8 @@ public final class OfferMedium {
                 return BROWSE;
             case "EMAIL":
                 return EMAIL;
+            case "CTA":
+                return CTA;
             case "MAP":
                 return MAP;
             default:
@@ -85,6 +91,8 @@ public final class OfferMedium {
 
         SEARCH,
 
+        CTA,
+
         UNKNOWN
     }
 
@@ -96,6 +104,8 @@ public final class OfferMedium {
         T visitMap();
 
         T visitSearch();
+
+        T visitCta();
 
         T visitUnknown(String unknownType);
     }

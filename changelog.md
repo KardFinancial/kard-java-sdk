@@ -1,3 +1,17 @@
+## 0.30.0 - 2026-02-05
+* feat: add offer activation endpoint and authentication documentation
+* Add a new endpoint for recording offer activation events that creates attribution
+* events with eventCode=ACTIVATE and medium=CTA. This endpoint helps track user
+* engagement with offers by recording when users activate them through
+* call-to-action buttons.
+* Key changes:
+* Add activate() method to AttributionsClient with three overloaded variants
+* Create ActivateOfferRequest, ActivateOfferResponse, and related types
+* Add ACTIVATE event code and CTA medium to existing enums
+* Update documentation with authentication section covering bearer tokens and OAuth
+* Add ActivateOfferIncludeOption enum supporting "offer" include parameter
+* 🌿 Generated with Fern
+
 ## 0.29.0 - 2026-02-05
 * docs: add comprehensive README for Kard Java SDK
 * Add complete documentation for the Kard Java SDK including installation instructions, usage examples, authentication methods, and advanced configuration options. The README provides detailed guidance for Maven/Gradle setup, OAuth and bearer token authentication, environment configuration, exception handling, and advanced features like custom HTTP clients, retries, timeouts, and custom headers.

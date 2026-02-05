@@ -1319,6 +1319,100 @@ client.users().attributions().create(
 </dl>
 </details>
 
+<details><summary><code>client.users.attributions.activate(organizationId, userId, offerId) -> ActivateOfferResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Record when a user activates an offer. Creates an attribution event with eventCode=ACTIVATE and medium=CTA.
+Optionally include the offer data by passing `include=offer`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().attributions().activate(
+    "organization-123",
+    "user-123",
+    "offer-456",
+    ActivateOfferRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offerId:** `String` — The unique identifier of the offer being activated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**supportedComponents:** `Optional<ComponentType>` — UI component types to include in the offer response (when include=offer).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `Optional<ActivateOfferIncludeOption>` — Related resources to include in the response. Allowed value is `offer`.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## WebView
 <details><summary><code>client.users.auth.getWebViewToken(organizationId, userId) -> WebViewTokenResponse</code></summary>
 <dl>

@@ -5,6 +5,8 @@ package com.kard.api.resources.users.attributions;
 
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
+import com.kard.api.resources.users.attributions.requests.ActivateOfferRequest;
+import com.kard.api.resources.users.attributions.types.ActivateOfferResponse;
 import com.kard.api.resources.users.attributions.types.CreateAttributionRequestObject;
 import com.kard.api.resources.users.attributions.types.CreateAttributionResponse;
 import java.util.concurrent.CompletableFuture;
@@ -46,6 +48,38 @@ public class AsyncAttributionsClient {
             RequestOptions requestOptions) {
         return this.rawClient
                 .create(organizationId, userId, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Record when a user activates an offer. Creates an attribution event with eventCode=ACTIVATE and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<ActivateOfferResponse> activate(String organizationId, String userId, String offerId) {
+        return this.rawClient.activate(organizationId, userId, offerId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Record when a user activates an offer. Creates an attribution event with eventCode=ACTIVATE and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<ActivateOfferResponse> activate(
+            String organizationId, String userId, String offerId, ActivateOfferRequest request) {
+        return this.rawClient.activate(organizationId, userId, offerId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Record when a user activates an offer. Creates an attribution event with eventCode=ACTIVATE and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<ActivateOfferResponse> activate(
+            String organizationId,
+            String userId,
+            String offerId,
+            ActivateOfferRequest request,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .activate(organizationId, userId, offerId, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 }

@@ -6,18 +6,14 @@ package com.kard.api.resources.users.attributions.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class EventCode {
-    public static final EventCode ACTIVATE = new EventCode(Value.ACTIVATE, "ACTIVATE");
-
-    public static final EventCode IMPRESSION = new EventCode(Value.IMPRESSION, "IMPRESSION");
-
-    public static final EventCode VIEW = new EventCode(Value.VIEW, "VIEW");
+public final class ActivateOfferIncludeOption {
+    public static final ActivateOfferIncludeOption OFFER = new ActivateOfferIncludeOption(Value.OFFER, "offer");
 
     private final Value value;
 
     private final String string;
 
-    EventCode(Value value, String string) {
+    ActivateOfferIncludeOption(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -34,7 +30,9 @@ public final class EventCode {
 
     @java.lang.Override
     public boolean equals(Object other) {
-        return (this == other) || (other instanceof EventCode && this.string.equals(((EventCode) other).string));
+        return (this == other)
+                || (other instanceof ActivateOfferIncludeOption
+                        && this.string.equals(((ActivateOfferIncludeOption) other).string));
     }
 
     @java.lang.Override
@@ -44,12 +42,8 @@ public final class EventCode {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case ACTIVATE:
-                return visitor.visitActivate();
-            case IMPRESSION:
-                return visitor.visitImpression();
-            case VIEW:
-                return visitor.visitView();
+            case OFFER:
+                return visitor.visitOffer();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -57,35 +51,23 @@ public final class EventCode {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static EventCode valueOf(String value) {
+    public static ActivateOfferIncludeOption valueOf(String value) {
         switch (value) {
-            case "ACTIVATE":
-                return ACTIVATE;
-            case "IMPRESSION":
-                return IMPRESSION;
-            case "VIEW":
-                return VIEW;
+            case "offer":
+                return OFFER;
             default:
-                return new EventCode(Value.UNKNOWN, value);
+                return new ActivateOfferIncludeOption(Value.UNKNOWN, value);
         }
     }
 
     public enum Value {
-        IMPRESSION,
-
-        VIEW,
-
-        ACTIVATE,
+        OFFER,
 
         UNKNOWN
     }
 
     public interface Visitor<T> {
-        T visitImpression();
-
-        T visitView();
-
-        T visitActivate();
+        T visitOffer();
 
         T visitUnknown(String unknownType);
     }
