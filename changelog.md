@@ -1,3 +1,13 @@
+## 0.28.5 - 2026-02-05
+* docs: remove README.md file
+* Complete removal of the README.md documentation file from the repository. This removes all installation instructions, usage examples, authentication guides, and SDK documentation that was previously available.
+* Key changes:
+* Remove entire README.md file with 320 lines of documentation
+* Remove installation instructions for Gradle and Maven
+* Remove usage examples and authentication methods documentation
+* Remove advanced configuration options and exception handling guides
+* 🌿 Generated with Fern
+
 ## 0.28.4 - 2026-02-05
 * docs: add authentication documentation to README
 * Added comprehensive authentication guide to the README to help users understand the two available authentication methods in the SDK.
