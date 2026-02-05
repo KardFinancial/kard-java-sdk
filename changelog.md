@@ -1,3 +1,15 @@
+## 0.30.2 - 2026-02-05
+* fix: correct API endpoint path for offer activation
+* Fix incorrect URL path construction in the offer activation endpoints by adding
+* the missing "attributions" segment. This ensures the API calls route to the
+* correct attribution-specific offer activation endpoints instead of the generic
+* offer endpoints.
+* Key changes:
+* Update AsyncRawAttributionsClient to use "attributions/offers" path instead of "offers"
+* Update RawAttributionsClient to use "attributions/offers" path instead of "offers"
+* Add comprehensive README documentation for the Java SDK
+* 🌿 Generated with Fern
+
 ## 0.30.1 - 2026-02-05
 * chore: remove README.md file
 * Remove the complete README.md documentation file from the Java SDK. This includes removal of all installation instructions, usage examples, authentication methods, configuration options, and contributing guidelines.

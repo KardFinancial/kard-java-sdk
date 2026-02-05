@@ -145,7 +145,7 @@ public class RawAttributionsClient {
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
                 .addPathSegment(userId)
-                .addPathSegments("offers")
+                .addPathSegments("attributions/offers")
                 .addPathSegment(offerId)
                 .addPathSegments("activate");
         if (request.getSupportedComponents().isPresent()) {
