@@ -1,3 +1,13 @@
+## 0.30.1 - 2026-02-05
+* chore: remove README.md file
+* Remove the complete README.md documentation file from the Java SDK. This includes removal of all installation instructions, usage examples, authentication methods, configuration options, and contributing guidelines.
+* Key changes:
+* Remove comprehensive documentation covering installation, usage, and configuration
+* Delete Maven and Gradle dependency examples
+* Remove authentication method documentation (Bearer token and OAuth client credentials)
+* Remove advanced configuration examples (custom client, retries, timeouts, headers)
+* 🌿 Generated with Fern
+
 ## 0.30.0 - 2026-02-05
 * feat: add offer activation endpoint and authentication documentation
 * Add a new endpoint for recording offer activation events that creates attribution
