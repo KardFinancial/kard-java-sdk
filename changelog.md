@@ -1,3 +1,13 @@
+## 0.26.1 - 2026-02-05
+* docs: add authentication section to README
+* Enhance developer experience by documenting the two authentication methods available in the SDK. This addition helps users understand how to properly authenticate with the Kard API using either direct bearer tokens or OAuth client credentials flow.
+* Key changes:
+* Add Authentication section to table of contents
+* Document direct bearer token authentication method
+* Document OAuth client credentials authentication method
+* Provide clear code examples for both authentication approaches
+* 🌿 Generated with Fern
+
 ## 0.26.0 - 2026-02-04
 * feat: add core transaction support and improve documentation
 * Introduce support for core banking transaction processing with new transaction type and enhanced API documentation. This update adds a new `coreTransaction` type to support transactions from core banking systems with limited card-level data, expanding the platform's transaction processing capabilities.
