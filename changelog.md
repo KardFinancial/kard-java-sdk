@@ -1,3 +1,13 @@
+## 0.27.2 - 2026-02-05
+* docs: remove README.md file
+* The README.md file has been completely removed from the repository. This removes all documentation including installation instructions, usage examples, authentication methods, configuration options, and API reference information.
+* Key changes:
+* Removed complete README.md file containing library documentation
+* Eliminated installation instructions for Gradle and Maven
+* Removed usage examples and authentication configuration guides
+* Deleted documentation for advanced features like custom clients, retries, and timeouts
+* 🌿 Generated with Fern
+
 ## 0.27.1 - 2026-02-05
 * docs: add authentication section to README
 * Enhance documentation by adding comprehensive authentication guidance for users. The new section explains the two supported authentication methods available in the SDK.
