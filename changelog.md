@@ -1,3 +1,16 @@
+## 0.28.3 - 2026-02-05
+* docs: add comprehensive README with usage examples and configuration options
+* This commit introduces a complete README file for the Kard Java SDK, providing developers with comprehensive documentation and examples to get started quickly.
+* The README includes detailed sections covering installation instructions for both Gradle and Maven build systems, complete usage examples with authentication methods, and advanced configuration options for production deployments.
+* Key changes:
+* Add installation instructions for Gradle and Maven
+* Include complete usage examples with client instantiation and API calls
+* Document authentication methods (Bearer token and OAuth credentials)
+* Add configuration sections for environments, custom base URLs, and exception handling
+* Provide advanced configuration examples for custom clients, retries, timeouts, and headers
+* Include raw response access patterns and contribution guidelines
+* 🌿 Generated with Fern
+
 ## 0.28.2 - 2026-02-05
 * docs: remove README.md and update API documentation
 * This commit removes the README.md file completely and updates API documentation for rewards endpoints to simplify the language around local offers and locations.
