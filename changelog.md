@@ -1,3 +1,12 @@
+## 0.31.0 - 2026-02-06
+* feat: add CTA action capability and remove README
+* Enhanced CTA components with interactive button actions and streamlined project by removing comprehensive README documentation.
+* Key changes:
+* Add new CtaAction class with url and method fields for button click handling
+* Extend CtaComponent with optional action property for interactive functionality
+* Remove complete README.md with all installation, usage, and documentation content
+* 🌿 Generated with Fern
+
 ## 0.30.6 - 2026-02-06
 * docs: add authentication section to README
 * Added comprehensive authentication documentation to the README to help developers understand the two available authentication methods for the Kard SDK.

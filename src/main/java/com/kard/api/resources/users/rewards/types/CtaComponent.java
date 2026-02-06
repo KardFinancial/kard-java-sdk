@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -23,11 +25,18 @@ public final class CtaComponent {
 
     private final ButtonStyle buttonStyle;
 
+    private final Optional<CtaAction> action;
+
     private final Map<String, Object> additionalProperties;
 
-    private CtaComponent(String buttonText, ButtonStyle buttonStyle, Map<String, Object> additionalProperties) {
+    private CtaComponent(
+            String buttonText,
+            ButtonStyle buttonStyle,
+            Optional<CtaAction> action,
+            Map<String, Object> additionalProperties) {
         this.buttonText = buttonText;
         this.buttonStyle = buttonStyle;
+        this.action = action;
         this.additionalProperties = additionalProperties;
     }
 
@@ -47,6 +56,14 @@ public final class CtaComponent {
         return buttonStyle;
     }
 
+    /**
+     * @return Action to perform when the button is clicked
+     */
+    @JsonProperty("action")
+    public Optional<CtaAction> getAction() {
+        return action;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -59,12 +76,14 @@ public final class CtaComponent {
     }
 
     private boolean equalTo(CtaComponent other) {
-        return buttonText.equals(other.buttonText) && buttonStyle.equals(other.buttonStyle);
+        return buttonText.equals(other.buttonText)
+                && buttonStyle.equals(other.buttonStyle)
+                && action.equals(other.action);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.buttonText, this.buttonStyle);
+        return Objects.hash(this.buttonText, this.buttonStyle, this.action);
     }
 
     @java.lang.Override
@@ -94,6 +113,13 @@ public final class CtaComponent {
 
     public interface _FinalStage {
         CtaComponent build();
+
+        /**
+         * <p>Action to perform when the button is clicked</p>
+         */
+        _FinalStage action(Optional<CtaAction> action);
+
+        _FinalStage action(CtaAction action);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -101,6 +127,8 @@ public final class CtaComponent {
         private String buttonText;
 
         private ButtonStyle buttonStyle;
+
+        private Optional<CtaAction> action = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -111,6 +139,7 @@ public final class CtaComponent {
         public Builder from(CtaComponent other) {
             buttonText(other.getButtonText());
             buttonStyle(other.getButtonStyle());
+            action(other.getAction());
             return this;
         }
 
@@ -138,9 +167,29 @@ public final class CtaComponent {
             return this;
         }
 
+        /**
+         * <p>Action to perform when the button is clicked</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage action(CtaAction action) {
+            this.action = Optional.ofNullable(action);
+            return this;
+        }
+
+        /**
+         * <p>Action to perform when the button is clicked</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "action", nulls = Nulls.SKIP)
+        public _FinalStage action(Optional<CtaAction> action) {
+            this.action = action;
+            return this;
+        }
+
         @java.lang.Override
         public CtaComponent build() {
-            return new CtaComponent(buttonText, buttonStyle, additionalProperties);
+            return new CtaComponent(buttonText, buttonStyle, action, additionalProperties);
         }
     }
 }
