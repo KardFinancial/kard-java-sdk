@@ -1,3 +1,14 @@
+## 0.35.2 - 2026-02-06
+* chore: remove README.md documentation file
+* This change removes the existing README.md file which contained SDK documentation, usage examples, and installation instructions.
+* The removal of the README.md file indicates this may be part of a documentation restructuring, migration to a different documentation system, or preparation for a new README with updated content.
+* Key changes:
+* Remove complete README.md file with all SDK documentation
+* Remove installation instructions for Gradle and Maven
+* Remove usage examples and authentication documentation
+* Remove advanced configuration examples and contributing guidelines
+* 🌿 Generated with Fern
+
 ## 0.35.1 - 2026-02-06
 * docs: add authentication section to README
 * Enhance documentation by adding a dedicated authentication section that clearly explains the two supported authentication methods for the Kard SDK. This improves developer onboarding and reduces confusion around authentication setup.
