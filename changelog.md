@@ -1,3 +1,14 @@
+## 0.36.4 - 2026-02-06
+* refactor: remove changelog dispatch workflow and add authentication docs
+* Remove unnecessary GitHub workflow for changelog synchronization with kard-core
+* repository and enhance the README with comprehensive authentication documentation.
+* Key changes:
+* Remove .github/workflows/changelog-dispatch.yml workflow file that handled automatic changelog syncing
+* Add new Authentication section to README with detailed setup instructions
+* Document two authentication methods: direct bearer token and OAuth client credentials
+* Include code examples for both authentication approaches
+* 🌿 Generated with Fern
+
 ## 0.36.3 - 2026-02-06
 * docs: add comprehensive README for Kard Java SDK
 * Add complete documentation for the Kard Java library including installation, usage examples, authentication methods, and advanced configuration options. The README provides detailed guidance for developers integrating with the Kard APIs.
