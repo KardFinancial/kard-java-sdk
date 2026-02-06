@@ -1,11 +1,17 @@
-name: Dispatch README sync to kard-core
+name: Dispatch doc sync to kard-core (CHANGELOG)
 
 on:
   push:
     branches: [ main ]
     paths:
-      - "README.md"
+      - "CHANGELOG.md"
+      - "changelog.md"
   workflow_dispatch:
+    inputs:
+      ref:
+        description: "Source ref (branch, tag, or SHA)"
+        required: false
+        default: "main"
 
 jobs:
   dispatch:
@@ -16,11 +22,12 @@ jobs:
           GH_TOKEN: ${{ secrets.KARD_CORE_DISPATCH_TOKEN }}
           OWNER: KardFinancial
           TARGET_REPO: kard-core
-          EVENT_TYPE: sdk-readme-updated
+          EVENT_TYPE: sdk-doc-updated
           SOURCE_REPO: kard-java-sdk
           SOURCE_REF: ${{ inputs.ref || github.ref_name }}
           SOURCE_SHA: ${{ github.sha }}
           SDK_ID: java-sdk
+          DOC_TYPE: changelog
         run: |
           set -euo pipefail
 
@@ -35,4 +42,5 @@ jobs:
               --arg source_ref "${SOURCE_REF}" \
               --arg source_sha "${SOURCE_SHA}" \
               --arg sdk_id "${SDK_ID}" \
-              '{event_type: $event_type, client_payload: {sdk_id: $sdk_id, source_repo: $source_repo, source_ref: $source_ref, source_sha: $source_sha}}')"
+              --arg doc_type "${DOC_TYPE}" \
+              '{event_type: $event_type, client_payload: {doc_type: $doc_type, sdk_id: $sdk_id, source_repo: $source_repo, source_ref: $source_ref, source_sha: $source_sha}}')"
