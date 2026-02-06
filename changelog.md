@@ -1,3 +1,13 @@
+## 0.37.1 - 2026-02-06
+* docs: add authentication section to README
+* Added comprehensive authentication documentation to help users understand the available authentication methods for the Kard Java SDK. The new section provides clear examples and guidance for both direct bearer token and OAuth client credentials authentication patterns.
+* Key changes:
+* Add Authentication section to table of contents
+* Document direct bearer token authentication method with code example
+* Document OAuth client credentials authentication method with code example
+* Provide clear guidance on when to use each authentication approach
+* 🌿 Generated with Fern
+
 ## 0.37.0 - 2026-02-06
 * docs: add comprehensive README documentation
 * Add complete README.md documentation for the Kard Java library including installation instructions, usage examples, authentication methods, and advanced configuration options.
