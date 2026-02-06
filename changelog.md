@@ -1,3 +1,13 @@
+## 0.36.5 - 2026-02-06
+* chore: remove README.md documentation file
+* The README.md file containing comprehensive SDK documentation and usage examples has been removed from the repository. This removes 320 lines of content including installation instructions, authentication setup, usage examples, and API reference information.
+* Key changes:
+* Removed complete README.md documentation file
+* Eliminated installation guides for Gradle and Maven
+* Removed code examples and authentication methods documentation
+* Deleted sections on environments, error handling, and advanced configuration
+* 🌿 Generated with Fern
+
 ## 0.36.4 - 2026-02-06
 * refactor: remove changelog dispatch workflow and add authentication docs
 * Remove unnecessary GitHub workflow for changelog synchronization with kard-core
