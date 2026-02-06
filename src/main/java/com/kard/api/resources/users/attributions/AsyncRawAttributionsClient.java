@@ -170,7 +170,7 @@ public class AsyncRawAttributionsClient {
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
                 .addPathSegment(userId)
-                .addPathSegments("attributions/offers")
+                .addPathSegments("offers")
                 .addPathSegment(offerId)
                 .addPathSegments("activate");
         if (request.getSupportedComponents().isPresent()) {

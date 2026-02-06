@@ -1,3 +1,14 @@
+## 0.30.4 - 2026-02-06
+* fix: correct API endpoint path for offer activation
+* Fixed the API endpoint path for activating offers by removing duplicate
+* "attributions" segment from the URL path. This ensures the correct endpoint
+* is called when activating user offers.
+* Key changes:
+* Updated endpoint path from "/attributions/offers/{offerId}/activate" to "/offers/{offerId}/activate"
+* Applied fix to both AsyncRawAttributionsClient and RawAttributionsClient
+* Removed entire README.md documentation file
+* 🌿 Generated with Fern
+
 ## 0.30.3 - 2026-02-06
 * docs: add authentication section to README
 * Add comprehensive documentation for the two available authentication methods
