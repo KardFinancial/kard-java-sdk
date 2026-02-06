@@ -1,3 +1,16 @@
+## 0.30.3 - 2026-02-06
+* docs: add authentication section to README
+* Add comprehensive documentation for the two available authentication methods
+* in the Kard Java SDK. This improves developer experience by clearly explaining
+* how to authenticate API requests using either direct bearer tokens or OAuth
+* client credentials with automatic token management.
+* Key changes:
+* Add Authentication section to table of contents
+* Document bearer token authentication method with code example
+* Document OAuth client credentials authentication with code example
+* Explain automatic token acquisition and refresh capabilities
+* 🌿 Generated with Fern
+
 ## 0.30.2 - 2026-02-05
 * fix: correct API endpoint path for offer activation
 * Fix incorrect URL path construction in the offer activation endpoints by adding
