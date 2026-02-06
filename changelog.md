@@ -1,3 +1,12 @@
+## 0.30.5 - 2026-02-06
+* feat: add README documentation and fix offer activation endpoint
+* Add comprehensive documentation for the Kard Java Library including installation instructions, usage examples, and advanced configuration options. Fix API endpoint path for offer activation by removing redundant path segment.
+* Key changes:
+* Add complete README with installation, authentication, and usage examples
+* Include documentation for Maven Central integration and environment configuration
+* Fix offer activation endpoint path from "attributions/offers/{id}/activate" to "offers/{id}/activate"
+* 🌿 Generated with Fern
+
 ## 0.30.4 - 2026-02-06
 * chore: remove SDK documentation file
 * Remove the main README.md documentation file for the Kard Java SDK, which contained comprehensive installation instructions, usage examples, and API reference documentation.
