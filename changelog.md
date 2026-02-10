@@ -1,3 +1,16 @@
+## 0.40.3 - 2026-02-10
+* docs: add comprehensive README for Kard Java SDK
+* Add complete documentation for the Kard Java library including installation instructions, usage examples, and configuration options. The README provides detailed guidance on authentication methods, environment configuration, and advanced features.
+* Key changes:
+* Add Maven Central badge and library description
+* Include Gradle and Maven installation instructions
+* Provide comprehensive usage examples with authentication options
+* Document environment configuration and custom base URL setup
+* Add sections for exception handling, retries, timeouts, and custom headers
+* Include advanced configuration examples for custom HTTP clients
+* Add contributing guidelines and raw response access documentation
+* 🌿 Generated with Fern
+
 ## 0.40.2 - 2026-02-10
 * chore: remove README.md file
 * Remove the complete README.md file from the repository, including all documentation about installation, usage, authentication, environments, exception handling, and advanced configuration options.

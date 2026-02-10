@@ -47,7 +47,7 @@ java {
 
 group = 'com.getkard'
 
-version = '0.40.2'
+version = '0.40.3'
 
 jar {
     dependsOn(":generatePomFileForMavenPublication")
@@ -78,7 +78,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.getkard'
             artifactId = 'kard-financial-sdk'
-            version = '0.40.2'
+            version = '0.40.3'
             from components.java
             pom {
                 name = 'kard'
