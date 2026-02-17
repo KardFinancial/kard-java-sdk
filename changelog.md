@@ -1,3 +1,15 @@
+## 1.0.0 - 2026-02-17
+* refactor: simplify transaction data model and remove agent skills
+* Refactor the transaction data model by removing nested objects and simplifying the structure. The CoreTransactionAttributes now uses a simple string for financial institution name instead of a complex FinancialInstitution object, and merchant details have been removed entirely. This change makes the API response structure more straightforward and easier to consume.
+* Additionally, clean up the project by removing deprecated agent skills directory and associated documentation, and add authentication documentation to the README.
+* Key changes:
+* Replace FinancialInstitution object with financialInstitutionName string field
+* Remove CoreMerchant class and merchant property from CoreTransactionAttributes
+* Delete deprecated .agents/skills/add-custom-function skill and associated symlink
+* Add comprehensive authentication documentation with examples for both bearer token and OAuth credentials
+* Clean up .gitignore to remove .claude references
+* 🌿 Generated with Fern
+
 ## 0.40.3 - 2026-02-10
 * docs: add comprehensive README for Kard Java SDK
 * Add complete documentation for the Kard Java library including installation instructions, usage examples, and configuration options. The README provides detailed guidance on authentication methods, environment configuration, and advanced features.
