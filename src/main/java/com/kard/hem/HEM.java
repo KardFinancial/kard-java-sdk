@@ -3,7 +3,9 @@ package com.kard.hem;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -19,7 +21,8 @@ import java.util.Set;
  */
 public final class HEM {
 
-    private static final Set<String> GMAIL_DOMAINS = Set.of("gmail.com", "googlemail.com");
+    private static final Set<String> GMAIL_DOMAINS = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList("gmail.com", "googlemail.com")));
 
     /**
      * Normalize an email address for HEM generation.
@@ -73,6 +76,18 @@ public final class HEM {
         return local + "@" + domain;
     }
 
+    private static final char[] HEX_CHARS = "0123456789abcdef".toCharArray();
+
+    private static String bytesToHex(byte[] bytes) {
+        char[] hex = new char[bytes.length * 2];
+        for (int i = 0; i < bytes.length; i++) {
+            int v = bytes[i] & 0xFF;
+            hex[i * 2] = HEX_CHARS[v >>> 4];
+            hex[i * 2 + 1] = HEX_CHARS[v & 0x0F];
+        }
+        return new String(hex);
+    }
+
     /**
      * Return the lowercase hex SHA-256 digest of the normalized, UTF-8-encoded email.
      */
@@ -80,7 +95,7 @@ public final class HEM {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(normalizeEmail(raw).getBytes(StandardCharsets.UTF_8));
-            return HexFormat.of().formatHex(hash);
+            return bytesToHex(hash);
         } catch (NoSuchAlgorithmException e) {
             throw new AssertionError("SHA-256 not available", e);
         }
