@@ -22,6 +22,8 @@ import java.util.Set;
  */
 public final class HEM {
 
+    private HEM() {}
+
     private static final Set<String> GMAIL_DOMAINS = Collections.unmodifiableSet(
             new HashSet<>(Arrays.asList("gmail.com", "googlemail.com")));
 
