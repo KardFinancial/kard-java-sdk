@@ -51,20 +51,20 @@ public final class HEM {
         }
 
         if (atCount == 0) {
-            throw new IllegalArgumentException("Email address must contain '@': " + raw.trim());
+            throw new IllegalArgumentException("Invalid email format: missing '@'");
         }
         if (atCount > 1) {
-            throw new IllegalArgumentException("Email address must contain exactly one '@': " + raw.trim());
+            throw new IllegalArgumentException("Invalid email format: multiple '@' characters");
         }
 
         String local = email.substring(0, atIndex);
         String domain = email.substring(atIndex + 1);
 
         if (local.isEmpty()) {
-            throw new IllegalArgumentException("Email local-part must not be empty: " + raw.trim());
+            throw new IllegalArgumentException("Invalid email format: empty local-part");
         }
         if (domain.isEmpty()) {
-            throw new IllegalArgumentException("Email domain must not be empty: " + raw.trim());
+            throw new IllegalArgumentException("Invalid email format: empty domain");
         }
 
         if (GMAIL_DOMAINS.contains(domain)) {
@@ -75,7 +75,7 @@ public final class HEM {
 
             if (local.isEmpty()) {
                 throw new IllegalArgumentException(
-                        "Email local-part is empty after Gmail normalization: " + raw.trim());
+                        "Invalid email format: empty local-part after Gmail normalization");
             }
         }
 
