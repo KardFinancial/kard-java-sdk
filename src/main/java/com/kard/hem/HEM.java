@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +35,7 @@ public final class HEM {
             throw new IllegalArgumentException("Email address must not be null or empty");
         }
 
-        String email = raw.replaceAll("\\s", "").toLowerCase();
+        String email = raw.replaceAll("\\s", "").toLowerCase(Locale.ROOT);
 
         if (email.isEmpty()) {
             throw new IllegalArgumentException("Email address must not be blank");
@@ -71,6 +72,11 @@ public final class HEM {
             if (plus >= 0) local = local.substring(0, plus);
             local = local.replace(".", "");
             domain = "gmail.com";
+
+            if (local.isEmpty()) {
+                throw new IllegalArgumentException(
+                        "Email local-part is empty after Gmail normalization: " + raw.trim());
+            }
         }
 
         return local + "@" + domain;
