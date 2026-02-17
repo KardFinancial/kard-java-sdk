@@ -36,9 +36,7 @@ public final class CoreTransactionAttributes {
 
     private final OffsetDateTime authorizationDate;
 
-    private final FinancialInstitution financialInstitution;
-
-    private final CoreMerchant merchant;
+    private final String financialInstitutionName;
 
     private final Map<String, Object> additionalProperties;
 
@@ -51,8 +49,7 @@ public final class CoreTransactionAttributes {
             DirectionType direction,
             OffsetDateTime settledDate,
             OffsetDateTime authorizationDate,
-            FinancialInstitution financialInstitution,
-            CoreMerchant merchant,
+            String financialInstitutionName,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.transactionId = transactionId;
@@ -62,8 +59,7 @@ public final class CoreTransactionAttributes {
         this.direction = direction;
         this.settledDate = settledDate;
         this.authorizationDate = authorizationDate;
-        this.financialInstitution = financialInstitution;
-        this.merchant = merchant;
+        this.financialInstitutionName = financialInstitutionName;
         this.additionalProperties = additionalProperties;
     }
 
@@ -140,19 +136,11 @@ public final class CoreTransactionAttributes {
     }
 
     /**
-     * @return Financial institution details
+     * @return Name of the financial institution
      */
-    @JsonProperty("financialInstitution")
-    public FinancialInstitution getFinancialInstitution() {
-        return financialInstitution;
-    }
-
-    /**
-     * @return Merchant details
-     */
-    @JsonProperty("merchant")
-    public CoreMerchant getMerchant() {
-        return merchant;
+    @JsonProperty("financialInstitutionName")
+    public String getFinancialInstitutionName() {
+        return financialInstitutionName;
     }
 
     @java.lang.Override
@@ -175,8 +163,7 @@ public final class CoreTransactionAttributes {
                 && direction.equals(other.direction)
                 && settledDate.equals(other.settledDate)
                 && authorizationDate.equals(other.authorizationDate)
-                && financialInstitution.equals(other.financialInstitution)
-                && merchant.equals(other.merchant);
+                && financialInstitutionName.equals(other.financialInstitutionName);
     }
 
     @java.lang.Override
@@ -190,8 +177,7 @@ public final class CoreTransactionAttributes {
                 this.direction,
                 this.settledDate,
                 this.authorizationDate,
-                this.financialInstitution,
-                this.merchant);
+                this.financialInstitutionName);
     }
 
     @java.lang.Override
@@ -258,21 +244,14 @@ public final class CoreTransactionAttributes {
         /**
          * <p>Timestamp for transaction authorization. Date string should be in ISO 8601 format i.e.'YYYY-MM-DDThh:mm:ss.sTZD' where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. 1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</p>
          */
-        FinancialInstitutionStage authorizationDate(@NotNull OffsetDateTime authorizationDate);
+        FinancialInstitutionNameStage authorizationDate(@NotNull OffsetDateTime authorizationDate);
     }
 
-    public interface FinancialInstitutionStage {
+    public interface FinancialInstitutionNameStage {
         /**
-         * <p>Financial institution details</p>
+         * <p>Name of the financial institution</p>
          */
-        MerchantStage financialInstitution(@NotNull FinancialInstitution financialInstitution);
-    }
-
-    public interface MerchantStage {
-        /**
-         * <p>Merchant details</p>
-         */
-        _FinalStage merchant(@NotNull CoreMerchant merchant);
+        _FinalStage financialInstitutionName(@NotNull String financialInstitutionName);
     }
 
     public interface _FinalStage {
@@ -289,8 +268,7 @@ public final class CoreTransactionAttributes {
                     DirectionStage,
                     SettledDateStage,
                     AuthorizationDateStage,
-                    FinancialInstitutionStage,
-                    MerchantStage,
+                    FinancialInstitutionNameStage,
                     _FinalStage {
         private String userId;
 
@@ -308,9 +286,7 @@ public final class CoreTransactionAttributes {
 
         private OffsetDateTime authorizationDate;
 
-        private FinancialInstitution financialInstitution;
-
-        private CoreMerchant merchant;
+        private String financialInstitutionName;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -327,8 +303,7 @@ public final class CoreTransactionAttributes {
             direction(other.getDirection());
             settledDate(other.getSettledDate());
             authorizationDate(other.getAuthorizationDate());
-            financialInstitution(other.getFinancialInstitution());
-            merchant(other.getMerchant());
+            financialInstitutionName(other.getFinancialInstitutionName());
             return this;
         }
 
@@ -423,33 +398,21 @@ public final class CoreTransactionAttributes {
          */
         @java.lang.Override
         @JsonSetter("authorizationDate")
-        public FinancialInstitutionStage authorizationDate(@NotNull OffsetDateTime authorizationDate) {
+        public FinancialInstitutionNameStage authorizationDate(@NotNull OffsetDateTime authorizationDate) {
             this.authorizationDate = Objects.requireNonNull(authorizationDate, "authorizationDate must not be null");
             return this;
         }
 
         /**
-         * <p>Financial institution details</p>
-         * <p>Financial institution details</p>
+         * <p>Name of the financial institution</p>
+         * <p>Name of the financial institution</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("financialInstitution")
-        public MerchantStage financialInstitution(@NotNull FinancialInstitution financialInstitution) {
-            this.financialInstitution =
-                    Objects.requireNonNull(financialInstitution, "financialInstitution must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Merchant details</p>
-         * <p>Merchant details</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("merchant")
-        public _FinalStage merchant(@NotNull CoreMerchant merchant) {
-            this.merchant = Objects.requireNonNull(merchant, "merchant must not be null");
+        @JsonSetter("financialInstitutionName")
+        public _FinalStage financialInstitutionName(@NotNull String financialInstitutionName) {
+            this.financialInstitutionName =
+                    Objects.requireNonNull(financialInstitutionName, "financialInstitutionName must not be null");
             return this;
         }
 
@@ -464,8 +427,7 @@ public final class CoreTransactionAttributes {
                     direction,
                     settledDate,
                     authorizationDate,
-                    financialInstitution,
-                    merchant,
+                    financialInstitutionName,
                     additionalProperties);
         }
     }
