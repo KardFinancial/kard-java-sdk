@@ -1,3 +1,14 @@
+## 1.0.0 - 2026-02-17
+* refactor: simplify transaction data model structure
+* Refactored the transaction data model by replacing complex nested objects with simpler primitive fields. This change improves API usability and reduces complexity while maintaining the same core functionality.
+* Key changes:
+* Replace FinancialInstitution object with financialInstitutionName string field
+* Remove CoreMerchant object and associated merchant data
+* Update CoreTransactionAttributes to use simplified field structure
+* Add authentication documentation with two auth methods (bearer token and OAuth)
+* Update README table of contents to include Authentication section
+* 🌿 Generated with Fern
+
 ## 0.40.3 - 2026-02-10
 * docs: add comprehensive README for Kard Java SDK
 * Add complete documentation for the Kard Java library including installation instructions, usage examples, and configuration options. The README provides detailed guidance on authentication methods, environment configuration, and advanced features.
