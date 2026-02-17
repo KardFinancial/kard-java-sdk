@@ -4,9 +4,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -24,8 +24,8 @@ public final class HEM {
 
     private HEM() {}
 
-    private static final Set<String> GMAIL_DOMAINS = Collections.unmodifiableSet(
-            new HashSet<>(Arrays.asList("gmail.com", "googlemail.com")));
+    private static final Set<String> GMAIL_DOMAINS =
+            Collections.unmodifiableSet(new HashSet<>(Arrays.asList("gmail.com", "googlemail.com")));
 
     /**
      * Normalize an email address for HEM generation.
@@ -76,8 +76,7 @@ public final class HEM {
             domain = "gmail.com";
 
             if (local.isEmpty()) {
-                throw new IllegalArgumentException(
-                        "Invalid email format: empty local-part after Gmail normalization");
+                throw new IllegalArgumentException("Invalid email format: empty local-part after Gmail normalization");
             }
         }
 

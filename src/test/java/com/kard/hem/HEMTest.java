@@ -38,7 +38,8 @@ public class HEMTest {
         for (TestVector v : vectors) {
             String gotNorm = HEM.normalizeEmail(v.input);
             if (!gotNorm.equals(v.normalized)) {
-                System.err.printf("FAIL [normalize] %s%n  input:    \"%s\"%n  expected: %s%n  got:      %s%n",
+                System.err.printf(
+                        "FAIL [normalize] %s%n  input:    \"%s\"%n  expected: %s%n  got:      %s%n",
                         v.name, v.input, v.normalized, gotNorm);
                 failed++;
                 continue;
@@ -46,7 +47,8 @@ public class HEMTest {
 
             String gotHex = HEM.generateHEM(v.input);
             if (!gotHex.equals(v.sha256Hex)) {
-                System.err.printf("FAIL [sha256_hex] %s%n  expected: %s%n  got:      %s%n",
+                System.err.printf(
+                        "FAIL [sha256_hex] %s%n  expected: %s%n  got:      %s%n",
                         v.name, v.sha256Hex, gotHex);
                 failed++;
                 continue;
