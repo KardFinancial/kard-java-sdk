@@ -7,7 +7,9 @@
 .settings
 .node
 build
-.claude
+.claude/**
+!.claude/skills/
+!.claude/skills/**
 
 # IntelliJ
 *.iml
