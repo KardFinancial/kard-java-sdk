@@ -48,8 +48,7 @@ public class HEMTest {
             String gotHex = HEM.generateHEM(v.input);
             if (!gotHex.equals(v.sha256Hex)) {
                 System.err.printf(
-                        "FAIL [sha256_hex] %s%n  expected: %s%n  got:      %s%n",
-                        v.name, v.sha256Hex, gotHex);
+                        "FAIL [sha256_hex] %s%n  expected: %s%n  got:      %s%n", v.name, v.sha256Hex, gotHex);
                 failed++;
                 continue;
             }
