@@ -1,3 +1,13 @@
+## 1.0.7 - 2026-02-18
+* chore: remove README.md file
+* The README.md file has been completely removed from the repository.
+* Key changes:
+* Delete entire README.md documentation file (322 lines removed)
+* Remove installation instructions for Maven and Gradle
+* Remove usage examples and authentication documentation
+* Remove advanced configuration and contributing guidelines
+* 🌿 Generated with Fern
+
 ## 1.0.6 - 2026-02-18
 * docs: add authentication section to README
 * Enhanced the README documentation by adding comprehensive authentication guidance for developers using the Kard Java SDK. This addition provides clear examples for both direct bearer token authentication and OAuth client credentials flow, making it easier for developers to integrate with the Kard APIs.
