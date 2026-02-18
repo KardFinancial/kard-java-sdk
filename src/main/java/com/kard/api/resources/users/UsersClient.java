@@ -45,34 +45,34 @@ public class UsersClient {
     }
 
     /**
-     * Call this endpoint to enroll a specified user into your rewards program.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 100 users can be created per request</code>.</p>
+     * Call this endpoint to enroll a specified user into your rewards program.<br/>
+     * <p><b>Required scopes:</b>  <code>user:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 100 users can be created per request</code>.</p>
      */
     public CreateUsersObject create(String organizationId, CreateUsersObject request) {
         return this.rawClient.create(organizationId, request).body();
     }
 
     /**
-     * Call this endpoint to enroll a specified user into your rewards program.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 100 users can be created per request</code>.</p>
+     * Call this endpoint to enroll a specified user into your rewards program.<br/>
+     * <p><b>Required scopes:</b>  <code>user:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 100 users can be created per request</code>.</p>
      */
     public CreateUsersObject create(String organizationId, CreateUsersObject request, RequestOptions requestOptions) {
         return this.rawClient.create(organizationId, request, requestOptions).body();
     }
 
     /**
-     * Call this endpoint to update the details on a specified user.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:update</code></p>
+     * Call this endpoint to update the details on a specified user.<br/>
+     * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
     public UpdateUserObject update(String organizationId, String userId, UpdateUserObject request) {
         return this.rawClient.update(organizationId, userId, request).body();
     }
 
     /**
-     * Call this endpoint to update the details on a specified user.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:update</code></p>
+     * Call this endpoint to update the details on a specified user.<br/>
+     * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
     public UpdateUserObject update(
             String organizationId, String userId, UpdateUserObject request, RequestOptions requestOptions) {
@@ -82,34 +82,34 @@ public class UsersClient {
     }
 
     /**
-     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:delete</code></p>
+     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.<br/>
+     * <p><b>Required scopes:</b> <code>user:delete</code></p>
      */
     public DeleteUserResponseObject delete(String organizationId, String userId) {
         return this.rawClient.delete(organizationId, userId).body();
     }
 
     /**
-     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:delete</code></p>
+     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.<br/>
+     * <p><b>Required scopes:</b> <code>user:delete</code></p>
      */
     public DeleteUserResponseObject delete(String organizationId, String userId, RequestOptions requestOptions) {
         return this.rawClient.delete(organizationId, userId, requestOptions).body();
     }
 
     /**
-     * Call this endpoint to fetch the details on a specified user.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:read</code>
+     * Call this endpoint to fetch the details on a specified user.<br/>
+     * <br/>
+     * <b>Required scopes:</b>  <code>user:read</code>
      */
     public UpdateUserObject get(String organizationId, String userId) {
         return this.rawClient.get(organizationId, userId).body();
     }
 
     /**
-     * Call this endpoint to fetch the details on a specified user.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:read</code>
+     * Call this endpoint to fetch the details on a specified user.<br/>
+     * <br/>
+     * <b>Required scopes:</b>  <code>user:read</code>
      */
     public UpdateUserObject get(String organizationId, String userId, RequestOptions requestOptions) {
         return this.rawClient.get(organizationId, userId, requestOptions).body();

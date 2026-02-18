@@ -69,7 +69,7 @@ public final class Merchant {
     }
 
     /**
-     * @return Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. &lt;b&gt;Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.&lt;/b&gt;
+     * @return Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. <b>Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.</b>
      */
     @JsonProperty("id")
     public Optional<String> getId() {
@@ -209,7 +209,7 @@ public final class Merchant {
         Merchant build();
 
         /**
-         * <p>Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. &lt;b&gt;Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.&lt;/b&gt;</p>
+         * <p>Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. <b>Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.</b></p>
          */
         _FinalStage id(Optional<String> id);
 
@@ -487,7 +487,7 @@ public final class Merchant {
         }
 
         /**
-         * <p>Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. &lt;b&gt;Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.&lt;/b&gt;</p>
+         * <p>Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. <b>Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.</b></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -497,7 +497,7 @@ public final class Merchant {
         }
 
         /**
-         * <p>Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. &lt;b&gt;Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.&lt;/b&gt;</p>
+         * <p>Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. <b>Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.</b></p>
          */
         @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)

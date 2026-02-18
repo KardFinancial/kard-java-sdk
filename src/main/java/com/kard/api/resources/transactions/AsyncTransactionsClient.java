@@ -33,30 +33,30 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Call this endpoint to send all transactions made by all your enrolled users in your rewards program. The request body will depend on the transaction type.&lt;br/&gt;
+     * Call this endpoint to send all transactions made by all your enrolled users in your rewards program. The request body will depend on the transaction type.<br/>
      * Please use the correct type when calling the endpoint:
      * <ul>
      * <li><code>transaction</code>: These incoming transactions will be processed and matched by the Kard system. Learn more about the <a href="https://github.com/kard-financial/kard-postman#c-transaction-clo-matching">Transaction CLO Matching</a> flow here.</li>
      * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
-     * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.&lt;br/&gt;</li>
+     * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.<br/></li>
      * </ul>
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be created per request</code>.</p>
+     * <p><b>Required scopes:</b> <code>transaction:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 500 transactions can be created per request</code>.</p>
      */
     public CompletableFuture<TransactionsResponse> create(String organizationId, TransactionsRequestBody request) {
         return this.rawClient.create(organizationId, request).thenApply(response -> response.body());
     }
 
     /**
-     * Call this endpoint to send all transactions made by all your enrolled users in your rewards program. The request body will depend on the transaction type.&lt;br/&gt;
+     * Call this endpoint to send all transactions made by all your enrolled users in your rewards program. The request body will depend on the transaction type.<br/>
      * Please use the correct type when calling the endpoint:
      * <ul>
      * <li><code>transaction</code>: These incoming transactions will be processed and matched by the Kard system. Learn more about the <a href="https://github.com/kard-financial/kard-postman#c-transaction-clo-matching">Transaction CLO Matching</a> flow here.</li>
      * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
-     * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.&lt;br/&gt;</li>
+     * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.<br/></li>
      * </ul>
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be created per request</code>.</p>
+     * <p><b>Required scopes:</b> <code>transaction:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 500 transactions can be created per request</code>.</p>
      */
     public CompletableFuture<TransactionsResponse> create(
             String organizationId, TransactionsRequestBody request, RequestOptions requestOptions) {
@@ -64,9 +64,9 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Call this endpoint to flag a submitted transaction as fraudulent. This will prevent it from being rewarded.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt;  <code>transaction:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 fraudulent transactions can be created per request</code>.</p>
+     * Call this endpoint to flag a submitted transaction as fraudulent. This will prevent it from being rewarded.<br/>
+     * <p><b>Required scopes:</b>  <code>transaction:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 500 fraudulent transactions can be created per request</code>.</p>
      */
     public CompletableFuture<FraudulentTransactionObject> createFraudMarkers(
             String organizationId, FraudulentTransactionRequestBody request) {
@@ -74,9 +74,9 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Call this endpoint to flag a submitted transaction as fraudulent. This will prevent it from being rewarded.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt;  <code>transaction:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 fraudulent transactions can be created per request</code>.</p>
+     * Call this endpoint to flag a submitted transaction as fraudulent. This will prevent it from being rewarded.<br/>
+     * <p><b>Required scopes:</b>  <code>transaction:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 500 fraudulent transactions can be created per request</code>.</p>
      */
     public CompletableFuture<FraudulentTransactionObject> createFraudMarkers(
             String organizationId, FraudulentTransactionRequestBody request, RequestOptions requestOptions) {
@@ -86,8 +86,8 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Call this endpoint to request that a particular transaction be audited further by the Kard system, in the event of a missing cashback claim, incorrect cashback amount claim or other mis-match claims.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>audit:write</code>
+     * Call this endpoint to request that a particular transaction be audited further by the Kard system, in the event of a missing cashback claim, incorrect cashback amount claim or other mis-match claims.<br/>
+     * <b>Required scopes:</b> <code>audit:write</code>
      */
     public CompletableFuture<CreateAuditResponseBody> createAudits(
             String organizationId, String userId, CreateAuditRequestBody request) {
@@ -95,8 +95,8 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Call this endpoint to request that a particular transaction be audited further by the Kard system, in the event of a missing cashback claim, incorrect cashback amount claim or other mis-match claims.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>audit:write</code>
+     * Call this endpoint to request that a particular transaction be audited further by the Kard system, in the event of a missing cashback claim, incorrect cashback amount claim or other mis-match claims.<br/>
+     * <b>Required scopes:</b> <code>audit:write</code>
      */
     public CompletableFuture<CreateAuditResponseBody> createAudits(
             String organizationId, String userId, CreateAuditRequestBody request, RequestOptions requestOptions) {
@@ -107,10 +107,10 @@ public class AsyncTransactionsClient {
 
     /**
      * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:read</code>
-     * &lt;br/&gt;
-     * &lt;b&gt;Query Limit:&lt;/b&gt; Maximum of 12 months of transaction data can be queried.
+     * <br/>
+     * <b>Required scopes:</b> <code>transaction:read</code>
+     * <br/>
+     * <b>Query Limit:</b> Maximum of 12 months of transaction data can be queried.
      */
     public CompletableFuture<GetEarnedRewardsResponse> getEarnedRewards(String organizationId, String userId) {
         return this.rawClient.getEarnedRewards(organizationId, userId).thenApply(response -> response.body());
@@ -118,10 +118,24 @@ public class AsyncTransactionsClient {
 
     /**
      * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:read</code>
-     * &lt;br/&gt;
-     * &lt;b&gt;Query Limit:&lt;/b&gt; Maximum of 12 months of transaction data can be queried.
+     * <br/>
+     * <b>Required scopes:</b> <code>transaction:read</code>
+     * <br/>
+     * <b>Query Limit:</b> Maximum of 12 months of transaction data can be queried.
+     */
+    public CompletableFuture<GetEarnedRewardsResponse> getEarnedRewards(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return this.rawClient
+                .getEarnedRewards(organizationId, userId, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * <br/>
+     * <b>Required scopes:</b> <code>transaction:read</code>
+     * <br/>
+     * <b>Query Limit:</b> Maximum of 12 months of transaction data can be queried.
      */
     public CompletableFuture<GetEarnedRewardsResponse> getEarnedRewards(
             String organizationId, String userId, GetEarnedRewardsRequest request) {
@@ -130,10 +144,10 @@ public class AsyncTransactionsClient {
 
     /**
      * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:read</code>
-     * &lt;br/&gt;
-     * &lt;b&gt;Query Limit:&lt;/b&gt; Maximum of 12 months of transaction data can be queried.
+     * <br/>
+     * <b>Required scopes:</b> <code>transaction:read</code>
+     * <br/>
+     * <b>Query Limit:</b> Maximum of 12 months of transaction data can be queried.
      */
     public CompletableFuture<GetEarnedRewardsResponse> getEarnedRewards(
             String organizationId, String userId, GetEarnedRewardsRequest request, RequestOptions requestOptions) {

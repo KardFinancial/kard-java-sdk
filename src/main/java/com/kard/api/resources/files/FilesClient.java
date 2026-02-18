@@ -29,7 +29,7 @@ public class FilesClient {
      * Retrieves metadata for files associated with a specific issuer/organization.
      * This endpoint supports pagination and sorting options to efficiently navigate
      * through potentially large sets of file metadata.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>files.read</code>
+     * <b>Required scopes:</b> <code>files.read</code>
      */
     public GetFilesMetadataResponse getMetadata(String organizationId) {
         return this.rawClient.getMetadata(organizationId).body();
@@ -39,7 +39,17 @@ public class FilesClient {
      * Retrieves metadata for files associated with a specific issuer/organization.
      * This endpoint supports pagination and sorting options to efficiently navigate
      * through potentially large sets of file metadata.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>files.read</code>
+     * <b>Required scopes:</b> <code>files.read</code>
+     */
+    public GetFilesMetadataResponse getMetadata(String organizationId, RequestOptions requestOptions) {
+        return this.rawClient.getMetadata(organizationId, requestOptions).body();
+    }
+
+    /**
+     * Retrieves metadata for files associated with a specific issuer/organization.
+     * This endpoint supports pagination and sorting options to efficiently navigate
+     * through potentially large sets of file metadata.
+     * <b>Required scopes:</b> <code>files.read</code>
      */
     public GetFilesMetadataResponse getMetadata(String organizationId, GetFilesMetadataRequest request) {
         return this.rawClient.getMetadata(organizationId, request).body();
@@ -49,7 +59,7 @@ public class FilesClient {
      * Retrieves metadata for files associated with a specific issuer/organization.
      * This endpoint supports pagination and sorting options to efficiently navigate
      * through potentially large sets of file metadata.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>files.read</code>
+     * <b>Required scopes:</b> <code>files.read</code>
      */
     public GetFilesMetadataResponse getMetadata(
             String organizationId, GetFilesMetadataRequest request, RequestOptions requestOptions) {

@@ -38,7 +38,7 @@ public class RawAttributionsClient {
 
     /**
      * Call this endpoint to send attribution events made by a single enrolled user for processing. A maximum of 100 events can be included in a single request.
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>attributions:write</code></p>
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
      */
     public KardApiHttpResponse<CreateAttributionResponse> create(
             String organizationId, String userId, CreateAttributionRequestObject request) {
@@ -47,21 +47,25 @@ public class RawAttributionsClient {
 
     /**
      * Call this endpoint to send attribution events made by a single enrolled user for processing. A maximum of 100 events can be included in a single request.
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>attributions:write</code></p>
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
      */
     public KardApiHttpResponse<CreateAttributionResponse> create(
             String organizationId,
             String userId,
             CreateAttributionRequestObject request,
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
                 .addPathSegment(userId)
-                .addPathSegments("attributions")
-                .build();
+                .addPathSegments("attributions");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -70,7 +74,7 @@ public class RawAttributionsClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -125,6 +129,16 @@ public class RawAttributionsClient {
      * Optionally include the offer data by passing <code>include=offer</code>.
      */
     public KardApiHttpResponse<ActivateOfferResponse> activate(
+            String organizationId, String userId, String offerId, RequestOptions requestOptions) {
+        return activate(
+                organizationId, userId, offerId, ActivateOfferRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Record when a user activates an offer. Creates an attribution event with eventCode=ACTIVATE and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public KardApiHttpResponse<ActivateOfferResponse> activate(
             String organizationId, String userId, String offerId, ActivateOfferRequest request) {
         return activate(organizationId, userId, offerId, request, null);
     }
@@ -158,6 +172,11 @@ public class RawAttributionsClient {
         if (request.getInclude().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "include", request.getInclude().get(), true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

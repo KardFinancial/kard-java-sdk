@@ -44,11 +44,11 @@ public final class AuditAttributes {
 
     /**
      * @return Audit Code - Enum. Please submit the code that is most relevant to your audit request.
-     * &lt;ul&gt;
-     * &lt;li&gt;<code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-     * &lt;li&gt;<code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-     * &lt;li&gt;<code>8001</code> : Other - check audit description&lt;/li&gt;
-     * &lt;/ul&gt;
+     * <ul>
+     * <li><code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+     * <li><code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+     * <li><code>8001</code> : Other - check audit description</li>
+     * </ul>
      */
     @JsonProperty("auditCode")
     public int getAuditCode() {
@@ -114,11 +114,11 @@ public final class AuditAttributes {
     public interface AuditCodeStage {
         /**
          * <p>Audit Code - Enum. Please submit the code that is most relevant to your audit request.
-         * &lt;ul&gt;
-         * &lt;li&gt;<code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-         * &lt;li&gt;<code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-         * &lt;li&gt;<code>8001</code> : Other - check audit description&lt;/li&gt;
-         * &lt;/ul&gt;</p>
+         * <ul>
+         * <li><code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+         * <li><code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+         * <li><code>8001</code> : Other - check audit description</li>
+         * </ul></p>
          */
         MerchantNameStage auditCode(int auditCode);
 
@@ -177,17 +177,17 @@ public final class AuditAttributes {
 
         /**
          * <p>Audit Code - Enum. Please submit the code that is most relevant to your audit request.
-         * &lt;ul&gt;
-         * &lt;li&gt;<code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-         * &lt;li&gt;<code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-         * &lt;li&gt;<code>8001</code> : Other - check audit description&lt;/li&gt;
-         * &lt;/ul&gt;</p>
+         * <ul>
+         * <li><code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+         * <li><code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+         * <li><code>8001</code> : Other - check audit description</li>
+         * </ul></p>
          * <p>Audit Code - Enum. Please submit the code that is most relevant to your audit request.
-         * &lt;ul&gt;
-         * &lt;li&gt;<code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-         * &lt;li&gt;<code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-         * &lt;li&gt;<code>8001</code> : Other - check audit description&lt;/li&gt;
-         * &lt;/ul&gt;</p>
+         * <ul>
+         * <li><code>3005</code> : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+         * <li><code>3006</code> : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+         * <li><code>8001</code> : Other - check audit description</li>
+         * </ul></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

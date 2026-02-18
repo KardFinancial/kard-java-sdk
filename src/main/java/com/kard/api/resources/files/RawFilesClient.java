@@ -37,7 +37,7 @@ public class RawFilesClient {
      * Retrieves metadata for files associated with a specific issuer/organization.
      * This endpoint supports pagination and sorting options to efficiently navigate
      * through potentially large sets of file metadata.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>files.read</code>
+     * <b>Required scopes:</b> <code>files.read</code>
      */
     public KardApiHttpResponse<GetFilesMetadataResponse> getMetadata(String organizationId) {
         return getMetadata(organizationId, GetFilesMetadataRequest.builder().build());
@@ -47,7 +47,18 @@ public class RawFilesClient {
      * Retrieves metadata for files associated with a specific issuer/organization.
      * This endpoint supports pagination and sorting options to efficiently navigate
      * through potentially large sets of file metadata.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>files.read</code>
+     * <b>Required scopes:</b> <code>files.read</code>
+     */
+    public KardApiHttpResponse<GetFilesMetadataResponse> getMetadata(
+            String organizationId, RequestOptions requestOptions) {
+        return getMetadata(organizationId, GetFilesMetadataRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Retrieves metadata for files associated with a specific issuer/organization.
+     * This endpoint supports pagination and sorting options to efficiently navigate
+     * through potentially large sets of file metadata.
+     * <b>Required scopes:</b> <code>files.read</code>
      */
     public KardApiHttpResponse<GetFilesMetadataResponse> getMetadata(
             String organizationId, GetFilesMetadataRequest request) {
@@ -58,7 +69,7 @@ public class RawFilesClient {
      * Retrieves metadata for files associated with a specific issuer/organization.
      * This endpoint supports pagination and sorting options to efficiently navigate
      * through potentially large sets of file metadata.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>files.read</code>
+     * <b>Required scopes:</b> <code>files.read</code>
      */
     public KardApiHttpResponse<GetFilesMetadataResponse> getMetadata(
             String organizationId, GetFilesMetadataRequest request, RequestOptions requestOptions) {
@@ -95,6 +106,11 @@ public class RawFilesClient {
         if (request.getSort().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "sort", request.getSort().get(), true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

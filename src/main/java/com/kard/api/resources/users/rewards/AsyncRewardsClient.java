@@ -31,8 +31,8 @@ public class AsyncRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<OffersResponseObject> offers(String organizationId, String userId) {
         return this.rawClient.offers(organizationId, userId).thenApply(response -> response.body());
@@ -41,8 +41,19 @@ public class AsyncRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<OffersResponseObject> offers(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return this.rawClient.offers(organizationId, userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
+     * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<OffersResponseObject> offers(
             String organizationId, String userId, GetOffersByUserRequest request) {
@@ -52,8 +63,8 @@ public class AsyncRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<OffersResponseObject> offers(
             String organizationId, String userId, GetOffersByUserRequest request, RequestOptions requestOptions) {
@@ -66,9 +77,9 @@ public class AsyncRewardsClient {
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<LocationsResponseObject> locations(String organizationId, String userId) {
         return this.rawClient.locations(organizationId, userId).thenApply(response -> response.body());
@@ -78,9 +89,22 @@ public class AsyncRewardsClient {
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<LocationsResponseObject> locations(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return this.rawClient.locations(organizationId, userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
+     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
+     * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<LocationsResponseObject> locations(
             String organizationId, String userId, GetLocationsByUserRequest request) {
@@ -91,9 +115,9 @@ public class AsyncRewardsClient {
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<LocationsResponseObject> locations(
             String organizationId, String userId, GetLocationsByUserRequest request, RequestOptions requestOptions) {

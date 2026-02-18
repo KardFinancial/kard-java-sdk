@@ -30,24 +30,32 @@ public class SubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to fetch the subscriptions of the provided issuer.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:read</code>
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
      */
     public SubscriptionsResponseObject get(String organizationId) {
         return this.rawClient.get(organizationId).body();
     }
 
     /**
-     * Call this endpoint to fetch the subscriptions of the provided issuer.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:read</code>
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
+     */
+    public SubscriptionsResponseObject get(String organizationId, RequestOptions requestOptions) {
+        return this.rawClient.get(organizationId, requestOptions).body();
+    }
+
+    /**
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
      */
     public SubscriptionsResponseObject get(String organizationId, GetSubscriptionsRequest request) {
         return this.rawClient.get(organizationId, request).body();
     }
 
     /**
-     * Call this endpoint to fetch the subscriptions of the provided issuer.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:read</code>
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
      */
     public SubscriptionsResponseObject get(
             String organizationId, GetSubscriptionsRequest request, RequestOptions requestOptions) {
@@ -55,16 +63,16 @@ public class SubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to subscribe to notification events.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to subscribe to notification events.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public CreateSubscriptionsResponseObject create(String organizationId, SubscriptionRequestBody request) {
         return this.rawClient.create(organizationId, request).body();
     }
 
     /**
-     * Call this endpoint to subscribe to notification events.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to subscribe to notification events.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public CreateSubscriptionsResponseObject create(
             String organizationId, SubscriptionRequestBody request, RequestOptions requestOptions) {
@@ -72,8 +80,8 @@ public class SubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to update existing notification subscriptions.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to update existing notification subscriptions.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public UpdateSubscriptionsResponseObject update(
             String organizationId, String subscriptionId, UpdateSubscriptionRequestBody request) {
@@ -81,8 +89,8 @@ public class SubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to update existing notification subscriptions.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to update existing notification subscriptions.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public UpdateSubscriptionsResponseObject update(
             String organizationId,
