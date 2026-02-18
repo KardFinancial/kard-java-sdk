@@ -1,3 +1,13 @@
+## 1.0.1 - 2026-02-18
+* chore: remove README.md file
+* Completely remove the Kard Java Library README.md file from the repository. This includes deletion of all documentation covering installation instructions, usage examples, authentication methods, environment configuration, exception handling, and advanced features.
+* Key changes:
+* Remove installation instructions for Gradle and Maven
+* Remove usage examples and authentication documentation
+* Remove environment and configuration guidance
+* Remove exception handling and advanced feature documentation
+* 🌿 Generated with Fern
+
 ## 1.0.0 - 2026-02-17
 * refactor: simplify transaction data model and remove agent skills
 * Refactor the transaction data model by removing nested objects and simplifying the structure. The CoreTransactionAttributes now uses a simple string for financial institution name instead of a complex FinancialInstitution object, and merchant details have been removed entirely. This change makes the API response structure more straightforward and easier to consume.
