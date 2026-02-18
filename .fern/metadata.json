@@ -5,5 +5,5 @@
   "generatorConfig": {
     "publish-to": "central"
   },
-  "sdkVersion": "1.1.2"
+  "sdkVersion": "1.2.0"
 }
