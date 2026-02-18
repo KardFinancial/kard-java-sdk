@@ -80,4 +80,12 @@ public class KardApiClient {
     public static KardApiClientBuilder._CredentialsAuth withCredentials(String clientId, String clientSecret) {
         return KardApiClientBuilder.withCredentials(clientId, clientSecret);
     }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static KardApiClientBuilder._Builder builder() {
+        return KardApiClientBuilder.builder();
+    }
 }

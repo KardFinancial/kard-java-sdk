@@ -1,3 +1,7 @@
+## 1.0.4 - 2026-02-18
+* SDK regeneration
+* Unable to analyze changes with AI, incrementing PATCH version.
+
 ## 1.0.3 - 2026-02-18
 * docs: add authentication section to README
 * Add comprehensive documentation for the two supported authentication methods in the Kard Java SDK. This provides clear guidance for developers on how to authenticate API requests using either direct bearer tokens or OAuth client credentials flow.

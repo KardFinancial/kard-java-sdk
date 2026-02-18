@@ -30,7 +30,7 @@ public class AsyncAttributionsClient {
 
     /**
      * Call this endpoint to send attribution events made by a single enrolled user for processing. A maximum of 100 events can be included in a single request.
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>attributions:write</code></p>
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
      */
     public CompletableFuture<CreateAttributionResponse> create(
             String organizationId, String userId, CreateAttributionRequestObject request) {
@@ -39,7 +39,7 @@ public class AsyncAttributionsClient {
 
     /**
      * Call this endpoint to send attribution events made by a single enrolled user for processing. A maximum of 100 events can be included in a single request.
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>attributions:write</code></p>
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
      */
     public CompletableFuture<CreateAttributionResponse> create(
             String organizationId,
@@ -57,6 +57,17 @@ public class AsyncAttributionsClient {
      */
     public CompletableFuture<ActivateOfferResponse> activate(String organizationId, String userId, String offerId) {
         return this.rawClient.activate(organizationId, userId, offerId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Record when a user activates an offer. Creates an attribution event with eventCode=ACTIVATE and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<ActivateOfferResponse> activate(
+            String organizationId, String userId, String offerId, RequestOptions requestOptions) {
+        return this.rawClient
+                .activate(organizationId, userId, offerId, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     /**

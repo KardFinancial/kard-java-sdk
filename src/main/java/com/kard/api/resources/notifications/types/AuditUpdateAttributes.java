@@ -72,11 +72,11 @@ public final class AuditUpdateAttributes {
 
     /**
      * @return Audit Code - Enum. Code to define audit.
-     * <p>  &lt;ul&gt;
-     *     &lt;li&gt;`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-     *     &lt;li&gt;`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-     *     &lt;li&gt;`8001` : Other - check audit description&lt;/li&gt;
-     *   &lt;/ul&gt;</p>
+     * <p>  <ul>
+     *     <li>`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+     *     <li>`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+     *     <li>`8001` : Other - check audit description</li>
+     *   </ul></p>
      */
     @JsonProperty("auditCode")
     public int getAuditCode() {
@@ -109,22 +109,22 @@ public final class AuditUpdateAttributes {
 
     /**
      * @return Resolution Code - Enum. field is available when audit is status CLOSED.
-     * <p>&lt;ul&gt;
-     *   &lt;li&gt;`5001` : Transaction will be deleted&lt;/li&gt;
-     *   &lt;li&gt;`5002` : Settlement amount will be adjusted&lt;/li&gt;
-     *   &lt;li&gt;`5003` : Return amount will be adjusted&lt;/li&gt;
-     *   &lt;li&gt;`5004` : Reward dispute resolved&lt;/li&gt;
-     *   &lt;li&gt;`5005` : Transaction will be marked for writeoff&lt;/li&gt;
-     *   &lt;li&gt;`5006` : Transaction will be marked as rejected&lt;/li&gt;
-     *   &lt;li&gt;`5007` : Transaction will be resent through webhook&lt;/li&gt;
-     *   &lt;li&gt;`5008` : Transaction will be resent through daily file&lt;/li&gt;
-     *   &lt;li&gt;`5009` : No change needed&lt;/li&gt;
-     *   &lt;li&gt;`9001` : Ineligible item in purchase&lt;/li&gt;
-     *   &lt;li&gt;`9002` : Return was made&lt;/li&gt;
-     *   &lt;li&gt;`9003` : User ineligible for offer (usually because of participation through another program)&lt;/li&gt;
-     *   &lt;li&gt;`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)&lt;/li&gt;
-     *   &lt;li&gt;`9005` : Transaction not captured&lt;/li&gt;
-     * &lt;/ul&gt;</p>
+     * <p><ul>
+     *   <li>`5001` : Transaction will be deleted</li>
+     *   <li>`5002` : Settlement amount will be adjusted</li>
+     *   <li>`5003` : Return amount will be adjusted</li>
+     *   <li>`5004` : Reward dispute resolved</li>
+     *   <li>`5005` : Transaction will be marked for writeoff</li>
+     *   <li>`5006` : Transaction will be marked as rejected</li>
+     *   <li>`5007` : Transaction will be resent through webhook</li>
+     *   <li>`5008` : Transaction will be resent through daily file</li>
+     *   <li>`5009` : No change needed</li>
+     *   <li>`9001` : Ineligible item in purchase</li>
+     *   <li>`9002` : Return was made</li>
+     *   <li>`9003` : User ineligible for offer (usually because of participation through another program)</li>
+     *   <li>`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)</li>
+     *   <li>`9005` : Transaction not captured</li>
+     * </ul></p>
      */
     @JsonProperty("resolutionCode")
     public Optional<Integer> getResolutionCode() {
@@ -203,11 +203,11 @@ public final class AuditUpdateAttributes {
     public interface AuditCodeStage {
         /**
          * <p>Audit Code - Enum. Code to define audit.</p>
-         * <p>  &lt;ul&gt;
-         *     &lt;li&gt;`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-         *     &lt;li&gt;`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-         *     &lt;li&gt;`8001` : Other - check audit description&lt;/li&gt;
-         *   &lt;/ul&gt;</p>
+         * <p>  <ul>
+         *     <li>`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+         *     <li>`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+         *     <li>`8001` : Other - check audit description</li>
+         *   </ul></p>
          */
         MerchantNameStage auditCode(int auditCode);
     }
@@ -238,22 +238,22 @@ public final class AuditUpdateAttributes {
 
         /**
          * <p>Resolution Code - Enum. field is available when audit is status CLOSED.</p>
-         * <p>&lt;ul&gt;
-         *   &lt;li&gt;`5001` : Transaction will be deleted&lt;/li&gt;
-         *   &lt;li&gt;`5002` : Settlement amount will be adjusted&lt;/li&gt;
-         *   &lt;li&gt;`5003` : Return amount will be adjusted&lt;/li&gt;
-         *   &lt;li&gt;`5004` : Reward dispute resolved&lt;/li&gt;
-         *   &lt;li&gt;`5005` : Transaction will be marked for writeoff&lt;/li&gt;
-         *   &lt;li&gt;`5006` : Transaction will be marked as rejected&lt;/li&gt;
-         *   &lt;li&gt;`5007` : Transaction will be resent through webhook&lt;/li&gt;
-         *   &lt;li&gt;`5008` : Transaction will be resent through daily file&lt;/li&gt;
-         *   &lt;li&gt;`5009` : No change needed&lt;/li&gt;
-         *   &lt;li&gt;`9001` : Ineligible item in purchase&lt;/li&gt;
-         *   &lt;li&gt;`9002` : Return was made&lt;/li&gt;
-         *   &lt;li&gt;`9003` : User ineligible for offer (usually because of participation through another program)&lt;/li&gt;
-         *   &lt;li&gt;`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)&lt;/li&gt;
-         *   &lt;li&gt;`9005` : Transaction not captured&lt;/li&gt;
-         * &lt;/ul&gt;</p>
+         * <p><ul>
+         *   <li>`5001` : Transaction will be deleted</li>
+         *   <li>`5002` : Settlement amount will be adjusted</li>
+         *   <li>`5003` : Return amount will be adjusted</li>
+         *   <li>`5004` : Reward dispute resolved</li>
+         *   <li>`5005` : Transaction will be marked for writeoff</li>
+         *   <li>`5006` : Transaction will be marked as rejected</li>
+         *   <li>`5007` : Transaction will be resent through webhook</li>
+         *   <li>`5008` : Transaction will be resent through daily file</li>
+         *   <li>`5009` : No change needed</li>
+         *   <li>`9001` : Ineligible item in purchase</li>
+         *   <li>`9002` : Return was made</li>
+         *   <li>`9003` : User ineligible for offer (usually because of participation through another program)</li>
+         *   <li>`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)</li>
+         *   <li>`9005` : Transaction not captured</li>
+         * </ul></p>
          */
         _FinalStage resolutionCode(Optional<Integer> resolutionCode);
 
@@ -330,17 +330,17 @@ public final class AuditUpdateAttributes {
 
         /**
          * <p>Audit Code - Enum. Code to define audit.</p>
-         * <p>  &lt;ul&gt;
-         *     &lt;li&gt;`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-         *     &lt;li&gt;`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-         *     &lt;li&gt;`8001` : Other - check audit description&lt;/li&gt;
-         *   &lt;/ul&gt;</p>
+         * <p>  <ul>
+         *     <li>`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+         *     <li>`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+         *     <li>`8001` : Other - check audit description</li>
+         *   </ul></p>
          * <p>Audit Code - Enum. Code to define audit.</p>
-         * <p>  &lt;ul&gt;
-         *     &lt;li&gt;`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM&lt;/li&gt;
-         *     &lt;li&gt;`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD&lt;/li&gt;
-         *     &lt;li&gt;`8001` : Other - check audit description&lt;/li&gt;
-         *   &lt;/ul&gt;</p>
+         * <p>  <ul>
+         *     <li>`3005` : Customer is claiming cashback is incorrect - INCORRECT CASHBACK CLAIM</li>
+         *     <li>`3006` : Transaction is missing the cashback award - MISSING CASHBACK AWARD</li>
+         *     <li>`8001` : Other - check audit description</li>
+         *   </ul></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -428,22 +428,22 @@ public final class AuditUpdateAttributes {
 
         /**
          * <p>Resolution Code - Enum. field is available when audit is status CLOSED.</p>
-         * <p>&lt;ul&gt;
-         *   &lt;li&gt;`5001` : Transaction will be deleted&lt;/li&gt;
-         *   &lt;li&gt;`5002` : Settlement amount will be adjusted&lt;/li&gt;
-         *   &lt;li&gt;`5003` : Return amount will be adjusted&lt;/li&gt;
-         *   &lt;li&gt;`5004` : Reward dispute resolved&lt;/li&gt;
-         *   &lt;li&gt;`5005` : Transaction will be marked for writeoff&lt;/li&gt;
-         *   &lt;li&gt;`5006` : Transaction will be marked as rejected&lt;/li&gt;
-         *   &lt;li&gt;`5007` : Transaction will be resent through webhook&lt;/li&gt;
-         *   &lt;li&gt;`5008` : Transaction will be resent through daily file&lt;/li&gt;
-         *   &lt;li&gt;`5009` : No change needed&lt;/li&gt;
-         *   &lt;li&gt;`9001` : Ineligible item in purchase&lt;/li&gt;
-         *   &lt;li&gt;`9002` : Return was made&lt;/li&gt;
-         *   &lt;li&gt;`9003` : User ineligible for offer (usually because of participation through another program)&lt;/li&gt;
-         *   &lt;li&gt;`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)&lt;/li&gt;
-         *   &lt;li&gt;`9005` : Transaction not captured&lt;/li&gt;
-         * &lt;/ul&gt;</p>
+         * <p><ul>
+         *   <li>`5001` : Transaction will be deleted</li>
+         *   <li>`5002` : Settlement amount will be adjusted</li>
+         *   <li>`5003` : Return amount will be adjusted</li>
+         *   <li>`5004` : Reward dispute resolved</li>
+         *   <li>`5005` : Transaction will be marked for writeoff</li>
+         *   <li>`5006` : Transaction will be marked as rejected</li>
+         *   <li>`5007` : Transaction will be resent through webhook</li>
+         *   <li>`5008` : Transaction will be resent through daily file</li>
+         *   <li>`5009` : No change needed</li>
+         *   <li>`9001` : Ineligible item in purchase</li>
+         *   <li>`9002` : Return was made</li>
+         *   <li>`9003` : User ineligible for offer (usually because of participation through another program)</li>
+         *   <li>`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)</li>
+         *   <li>`9005` : Transaction not captured</li>
+         * </ul></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -454,22 +454,22 @@ public final class AuditUpdateAttributes {
 
         /**
          * <p>Resolution Code - Enum. field is available when audit is status CLOSED.</p>
-         * <p>&lt;ul&gt;
-         *   &lt;li&gt;`5001` : Transaction will be deleted&lt;/li&gt;
-         *   &lt;li&gt;`5002` : Settlement amount will be adjusted&lt;/li&gt;
-         *   &lt;li&gt;`5003` : Return amount will be adjusted&lt;/li&gt;
-         *   &lt;li&gt;`5004` : Reward dispute resolved&lt;/li&gt;
-         *   &lt;li&gt;`5005` : Transaction will be marked for writeoff&lt;/li&gt;
-         *   &lt;li&gt;`5006` : Transaction will be marked as rejected&lt;/li&gt;
-         *   &lt;li&gt;`5007` : Transaction will be resent through webhook&lt;/li&gt;
-         *   &lt;li&gt;`5008` : Transaction will be resent through daily file&lt;/li&gt;
-         *   &lt;li&gt;`5009` : No change needed&lt;/li&gt;
-         *   &lt;li&gt;`9001` : Ineligible item in purchase&lt;/li&gt;
-         *   &lt;li&gt;`9002` : Return was made&lt;/li&gt;
-         *   &lt;li&gt;`9003` : User ineligible for offer (usually because of participation through another program)&lt;/li&gt;
-         *   &lt;li&gt;`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)&lt;/li&gt;
-         *   &lt;li&gt;`9005` : Transaction not captured&lt;/li&gt;
-         * &lt;/ul&gt;</p>
+         * <p><ul>
+         *   <li>`5001` : Transaction will be deleted</li>
+         *   <li>`5002` : Settlement amount will be adjusted</li>
+         *   <li>`5003` : Return amount will be adjusted</li>
+         *   <li>`5004` : Reward dispute resolved</li>
+         *   <li>`5005` : Transaction will be marked for writeoff</li>
+         *   <li>`5006` : Transaction will be marked as rejected</li>
+         *   <li>`5007` : Transaction will be resent through webhook</li>
+         *   <li>`5008` : Transaction will be resent through daily file</li>
+         *   <li>`5009` : No change needed</li>
+         *   <li>`9001` : Ineligible item in purchase</li>
+         *   <li>`9002` : Return was made</li>
+         *   <li>`9003` : User ineligible for offer (usually because of participation through another program)</li>
+         *   <li>`9004` : Redemption limit hit (if offer has a set number of redemptions and it isn't handled programmatically)</li>
+         *   <li>`9005` : Transaction not captured</li>
+         * </ul></p>
          */
         @java.lang.Override
         @JsonSetter(value = "resolutionCode", nulls = Nulls.SKIP)

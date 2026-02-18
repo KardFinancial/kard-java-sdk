@@ -33,7 +33,7 @@ public final class MatchedTransactionsRequest {
     }
 
     /**
-     * @return Unique identifier for the transaction event. This &lt;b&gt;must&lt;/b&gt; be unique for each distinct event sent to the API.
+     * @return Unique identifier for the transaction event. This <b>must</b> be unique for each distinct event sent to the API.
      */
     @JsonProperty("id")
     public String getId() {
@@ -76,7 +76,7 @@ public final class MatchedTransactionsRequest {
 
     public interface IdStage {
         /**
-         * <p>Unique identifier for the transaction event. This &lt;b&gt;must&lt;/b&gt; be unique for each distinct event sent to the API.</p>
+         * <p>Unique identifier for the transaction event. This <b>must</b> be unique for each distinct event sent to the API.</p>
          */
         AttributesStage id(@NotNull String id);
 
@@ -110,8 +110,8 @@ public final class MatchedTransactionsRequest {
         }
 
         /**
-         * <p>Unique identifier for the transaction event. This &lt;b&gt;must&lt;/b&gt; be unique for each distinct event sent to the API.</p>
-         * <p>Unique identifier for the transaction event. This &lt;b&gt;must&lt;/b&gt; be unique for each distinct event sent to the API.</p>
+         * <p>Unique identifier for the transaction event. This <b>must</b> be unique for each distinct event sent to the API.</p>
+         * <p>Unique identifier for the transaction event. This <b>must</b> be unique for each distinct event sent to the API.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

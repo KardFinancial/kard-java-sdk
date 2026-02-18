@@ -80,4 +80,12 @@ public class AsyncKardApiClient {
     public static AsyncKardApiClientBuilder._CredentialsAuth withCredentials(String clientId, String clientSecret) {
         return AsyncKardApiClientBuilder.withCredentials(clientId, clientSecret);
     }
+
+    /**
+     * Creates a new client builder.
+     * @return A builder for configuring and creating the client
+     */
+    public static AsyncKardApiClientBuilder._Builder builder() {
+        return AsyncKardApiClientBuilder.builder();
+    }
 }

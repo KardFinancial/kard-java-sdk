@@ -32,7 +32,7 @@ public class UploadsClient {
     /**
      * Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/api/uploads/create-upload-part">Add Upload
      * Part</a> endpoint, historical transactions can be sent in batches for further processing.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public CreateUploadResponseObject create(String organizationId, String userId, CreateUploadRequestObject request) {
         return this.rawClient.create(organizationId, userId, request).body();
@@ -41,7 +41,7 @@ public class UploadsClient {
     /**
      * Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/api/uploads/create-upload-part">Add Upload
      * Part</a> endpoint, historical transactions can be sent in batches for further processing.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public CreateUploadResponseObject create(
             String organizationId, String userId, CreateUploadRequestObject request, RequestOptions requestOptions) {
@@ -52,8 +52,8 @@ public class UploadsClient {
 
     /**
      * Call this endpoint using the upload ID provided in the <a href="/api/uploads/create-upload">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be uploaded per request</code>.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     * <b>Note:</b> <code>Maximum of 500 transactions can be uploaded per request</code>.
      */
     public CreateUploadPartResponseObject createPart(
             String organizationId, String userId, String uploadId, CreateUploadPartRequestObject request) {
@@ -64,8 +64,8 @@ public class UploadsClient {
 
     /**
      * Call this endpoint using the upload ID provided in the <a href="/api/uploads/create-upload">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be uploaded per request</code>.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     * <b>Note:</b> <code>Maximum of 500 transactions can be uploaded per request</code>.
      */
     public CreateUploadPartResponseObject createPart(
             String organizationId,
@@ -80,7 +80,7 @@ public class UploadsClient {
 
     /**
      * Call this endpoint to update your upload session. Currently, you can signal completing a historical transactions upload.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public UpdateUploadResponseObject update(
             String organizationId, String userId, String uploadId, UpdateUploadRequestObject request) {
@@ -89,7 +89,7 @@ public class UploadsClient {
 
     /**
      * Call this endpoint to update your upload session. Currently, you can signal completing a historical transactions upload.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public UpdateUploadResponseObject update(
             String organizationId,

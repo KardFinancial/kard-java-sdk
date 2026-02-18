@@ -41,16 +41,24 @@ public class RawSubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to fetch the subscriptions of the provided issuer.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:read</code>
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
      */
     public KardApiHttpResponse<SubscriptionsResponseObject> get(String organizationId) {
         return get(organizationId, GetSubscriptionsRequest.builder().build());
     }
 
     /**
-     * Call this endpoint to fetch the subscriptions of the provided issuer.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:read</code>
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
+     */
+    public KardApiHttpResponse<SubscriptionsResponseObject> get(String organizationId, RequestOptions requestOptions) {
+        return get(organizationId, GetSubscriptionsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
      */
     public KardApiHttpResponse<SubscriptionsResponseObject> get(
             String organizationId, GetSubscriptionsRequest request) {
@@ -58,8 +66,8 @@ public class RawSubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to fetch the subscriptions of the provided issuer.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:read</code>
+     * Call this endpoint to fetch the subscriptions of the provided issuer.<br/>
+     * <b>Required scopes:</b> <code>notifications:read</code>
      */
     public KardApiHttpResponse<SubscriptionsResponseObject> get(
             String organizationId, GetSubscriptionsRequest request, RequestOptions requestOptions) {
@@ -71,6 +79,11 @@ public class RawSubscriptionsClient {
         if (request.getFilterEventName().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "filter[eventName]", request.getFilterEventName().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -114,8 +127,8 @@ public class RawSubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to subscribe to notification events.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to subscribe to notification events.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public KardApiHttpResponse<CreateSubscriptionsResponseObject> create(
             String organizationId, SubscriptionRequestBody request) {
@@ -123,17 +136,21 @@ public class RawSubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to subscribe to notification events.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to subscribe to notification events.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public KardApiHttpResponse<CreateSubscriptionsResponseObject> create(
             String organizationId, SubscriptionRequestBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
-                .addPathSegments("subscriptions")
-                .build();
+                .addPathSegments("subscriptions");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -142,7 +159,7 @@ public class RawSubscriptionsClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -188,8 +205,8 @@ public class RawSubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to update existing notification subscriptions.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to update existing notification subscriptions.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public KardApiHttpResponse<UpdateSubscriptionsResponseObject> update(
             String organizationId, String subscriptionId, UpdateSubscriptionRequestBody request) {
@@ -197,21 +214,25 @@ public class RawSubscriptionsClient {
     }
 
     /**
-     * Call this endpoint to update existing notification subscriptions.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>notifications:write</code>
+     * Call this endpoint to update existing notification subscriptions.<br/>
+     * <b>Required scopes:</b> <code>notifications:write</code>
      */
     public KardApiHttpResponse<UpdateSubscriptionsResponseObject> update(
             String organizationId,
             String subscriptionId,
             UpdateSubscriptionRequestBody request,
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("subscriptions")
-                .addPathSegment(subscriptionId)
-                .build();
+                .addPathSegment(subscriptionId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -220,7 +241,7 @@ public class RawSubscriptionsClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

@@ -42,8 +42,8 @@ public class AsyncRawRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<OffersResponseObject>> offers(String organizationId, String userId) {
         return offers(organizationId, userId, GetOffersByUserRequest.builder().build());
@@ -52,8 +52,19 @@ public class AsyncRawRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<KardApiHttpResponse<OffersResponseObject>> offers(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return offers(organizationId, userId, GetOffersByUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
+     * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<OffersResponseObject>> offers(
             String organizationId, String userId, GetOffersByUserRequest request) {
@@ -63,8 +74,8 @@ public class AsyncRawRewardsClient {
     /**
      * Retrieve national brand offers that a specified user is eligible for. Call this endpoint to build out your
      * <a href="/2024-10-01/api/getting-started#b-discover-a-lapsed-customer-clo">targeted offers UX experience</a>. Local offers details
-     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.&lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * can be found by calling the <a href="/2024-10-01/api/rewards/locations">Get Eligible Locations</a>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<OffersResponseObject>> offers(
             String organizationId, String userId, GetOffersByUserRequest request, RequestOptions requestOptions) {
@@ -116,6 +127,11 @@ public class AsyncRawRewardsClient {
                     "supportedComponents",
                     request.getSupportedComponents().get(),
                     true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -186,9 +202,9 @@ public class AsyncRawRewardsClient {
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<LocationsResponseObject>> locations(
             String organizationId, String userId) {
@@ -200,9 +216,23 @@ public class AsyncRawRewardsClient {
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<KardApiHttpResponse<LocationsResponseObject>> locations(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return locations(
+                organizationId, userId, GetLocationsByUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
+     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
+     * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<LocationsResponseObject>> locations(
             String organizationId, String userId, GetLocationsByUserRequest request) {
@@ -213,9 +243,9 @@ public class AsyncRawRewardsClient {
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
      * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
      * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>rewards:read</code>
+     * pattern.<br/>
+     * <br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<LocationsResponseObject>> locations(
             String organizationId, String userId, GetLocationsByUserRequest request, RequestOptions requestOptions) {
@@ -284,6 +314,11 @@ public class AsyncRawRewardsClient {
                     "supportedComponents",
                     request.getSupportedComponents().get(),
                     true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

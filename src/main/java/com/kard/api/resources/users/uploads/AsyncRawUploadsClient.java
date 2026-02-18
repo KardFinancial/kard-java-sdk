@@ -47,7 +47,7 @@ public class AsyncRawUploadsClient {
     /**
      * Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/api/uploads/create-upload-part">Add Upload
      * Part</a> endpoint, historical transactions can be sent in batches for further processing.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public CompletableFuture<KardApiHttpResponse<CreateUploadResponseObject>> create(
             String organizationId, String userId, CreateUploadRequestObject request) {
@@ -57,18 +57,22 @@ public class AsyncRawUploadsClient {
     /**
      * Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/api/uploads/create-upload-part">Add Upload
      * Part</a> endpoint, historical transactions can be sent in batches for further processing.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public CompletableFuture<KardApiHttpResponse<CreateUploadResponseObject>> create(
             String organizationId, String userId, CreateUploadRequestObject request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
                 .addPathSegment(userId)
-                .addPathSegments("uploads")
-                .build();
+                .addPathSegments("uploads");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -77,7 +81,7 @@ public class AsyncRawUploadsClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -140,8 +144,8 @@ public class AsyncRawUploadsClient {
 
     /**
      * Call this endpoint using the upload ID provided in the <a href="/api/uploads/create-upload">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be uploaded per request</code>.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     * <b>Note:</b> <code>Maximum of 500 transactions can be uploaded per request</code>.
      */
     public CompletableFuture<KardApiHttpResponse<CreateUploadPartResponseObject>> createPart(
             String organizationId, String userId, String uploadId, CreateUploadPartRequestObject request) {
@@ -150,8 +154,8 @@ public class AsyncRawUploadsClient {
 
     /**
      * Call this endpoint using the upload ID provided in the <a href="/api/uploads/create-upload">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 500 transactions can be uploaded per request</code>.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     * <b>Note:</b> <code>Maximum of 500 transactions can be uploaded per request</code>.
      */
     public CompletableFuture<KardApiHttpResponse<CreateUploadPartResponseObject>> createPart(
             String organizationId,
@@ -159,7 +163,7 @@ public class AsyncRawUploadsClient {
             String uploadId,
             CreateUploadPartRequestObject request,
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
@@ -167,8 +171,12 @@ public class AsyncRawUploadsClient {
                 .addPathSegment(userId)
                 .addPathSegments("uploads")
                 .addPathSegment(uploadId)
-                .addPathSegments("parts")
-                .build();
+                .addPathSegments("parts");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -177,7 +185,7 @@ public class AsyncRawUploadsClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -246,7 +254,7 @@ public class AsyncRawUploadsClient {
 
     /**
      * Call this endpoint to update your upload session. Currently, you can signal completing a historical transactions upload.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public CompletableFuture<KardApiHttpResponse<UpdateUploadResponseObject>> update(
             String organizationId, String userId, String uploadId, UpdateUploadRequestObject request) {
@@ -255,7 +263,7 @@ public class AsyncRawUploadsClient {
 
     /**
      * Call this endpoint to update your upload session. Currently, you can signal completing a historical transactions upload.
-     * &lt;b&gt;Required scopes:&lt;/b&gt; <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>transaction:write</code>
      */
     public CompletableFuture<KardApiHttpResponse<UpdateUploadResponseObject>> update(
             String organizationId,
@@ -263,15 +271,19 @@ public class AsyncRawUploadsClient {
             String uploadId,
             UpdateUploadRequestObject request,
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
                 .addPathSegment(userId)
                 .addPathSegments("uploads")
-                .addPathSegment(uploadId)
-                .build();
+                .addPathSegment(uploadId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -280,7 +292,7 @@ public class AsyncRawUploadsClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

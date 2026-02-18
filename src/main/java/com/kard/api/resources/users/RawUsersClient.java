@@ -39,27 +39,31 @@ public class RawUsersClient {
     }
 
     /**
-     * Call this endpoint to enroll a specified user into your rewards program.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 100 users can be created per request</code>.</p>
+     * Call this endpoint to enroll a specified user into your rewards program.<br/>
+     * <p><b>Required scopes:</b>  <code>user:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 100 users can be created per request</code>.</p>
      */
     public KardApiHttpResponse<CreateUsersObject> create(String organizationId, CreateUsersObject request) {
         return create(organizationId, request, null);
     }
 
     /**
-     * Call this endpoint to enroll a specified user into your rewards program.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:write</code>&lt;br/&gt;
-     * &lt;b&gt;Note:&lt;/b&gt; <code>Maximum of 100 users can be created per request</code>.</p>
+     * Call this endpoint to enroll a specified user into your rewards program.<br/>
+     * <p><b>Required scopes:</b>  <code>user:write</code><br/>
+     * <b>Note:</b> <code>Maximum of 100 users can be created per request</code>.</p>
      */
     public KardApiHttpResponse<CreateUsersObject> create(
             String organizationId, CreateUsersObject request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
-                .addPathSegments("users")
-                .build();
+                .addPathSegments("users");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -68,7 +72,7 @@ public class RawUsersClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -117,8 +121,8 @@ public class RawUsersClient {
     }
 
     /**
-     * Call this endpoint to update the details on a specified user.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:update</code></p>
+     * Call this endpoint to update the details on a specified user.<br/>
+     * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
     public KardApiHttpResponse<UpdateUserObject> update(
             String organizationId, String userId, UpdateUserObject request) {
@@ -126,18 +130,22 @@ public class RawUsersClient {
     }
 
     /**
-     * Call this endpoint to update the details on a specified user.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:update</code></p>
+     * Call this endpoint to update the details on a specified user.<br/>
+     * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
     public KardApiHttpResponse<UpdateUserObject> update(
             String organizationId, String userId, UpdateUserObject request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -146,7 +154,7 @@ public class RawUsersClient {
             throw new KardApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -190,28 +198,32 @@ public class RawUsersClient {
     }
 
     /**
-     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:delete</code></p>
+     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.<br/>
+     * <p><b>Required scopes:</b> <code>user:delete</code></p>
      */
     public KardApiHttpResponse<DeleteUserResponseObject> delete(String organizationId, String userId) {
         return delete(organizationId, userId, null);
     }
 
     /**
-     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.&lt;br/&gt;
-     * <p>&lt;b&gt;Required scopes:&lt;/b&gt; <code>user:delete</code></p>
+     * Call this endpoint to delete a specified enrolled user from the rewards program and Kard's system. Users can be re-enrolled into rewards by calling the <a href="/2024-10-01/api/users/create">Create User</a> endpoint using the same <code>id</code> from before.<br/>
+     * <p><b>Required scopes:</b> <code>user:delete</code></p>
      */
     public KardApiHttpResponse<DeleteUserResponseObject> delete(
             String organizationId, String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -255,30 +267,34 @@ public class RawUsersClient {
     }
 
     /**
-     * Call this endpoint to fetch the details on a specified user.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:read</code>
+     * Call this endpoint to fetch the details on a specified user.<br/>
+     * <br/>
+     * <b>Required scopes:</b>  <code>user:read</code>
      */
     public KardApiHttpResponse<UpdateUserObject> get(String organizationId, String userId) {
         return get(organizationId, userId, null);
     }
 
     /**
-     * Call this endpoint to fetch the details on a specified user.&lt;br/&gt;
-     * &lt;br/&gt;
-     * &lt;b&gt;Required scopes:&lt;/b&gt;  <code>user:read</code>
+     * Call this endpoint to fetch the details on a specified user.<br/>
+     * <br/>
+     * <b>Required scopes:</b>  <code>user:read</code>
      */
     public KardApiHttpResponse<UpdateUserObject> get(
             String organizationId, String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
+                .addPathSegment(userId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
