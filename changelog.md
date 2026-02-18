@@ -1,3 +1,15 @@
+## 1.0.5 - 2026-02-18
+* docs: add comprehensive README with examples and authentication guide
+* Added a complete README.md file for the Kard Java Library SDK that provides developers with comprehensive documentation for getting started and using the SDK effectively.
+* Key changes:
+* Added installation instructions for both Gradle and Maven
+* Included complete usage examples with code snippets
+* Documented two authentication methods: direct bearer token and OAuth client credentials
+* Added configuration guides for environments, base URLs, and exception handling
+* Provided advanced configuration examples for custom clients, retries, timeouts, headers, and raw response access
+* Included contribution guidelines and Maven Central badge
+* 🌿 Generated with Fern
+
 ## 1.0.4 - 2026-02-18
 * SDK regeneration
 * Unable to analyze changes with AI, incrementing PATCH version.
