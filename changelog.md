@@ -1,3 +1,13 @@
+## 1.3.1 - 2026-02-20
+* docs: add authentication section with two auth methods
+* Added comprehensive authentication documentation to the README, providing developers with clear guidance on how to authenticate with the Kard API using either direct bearer tokens or OAuth client credentials flow.
+* Key changes:
+* Add authentication section to table of contents
+* Document direct bearer token authentication method
+* Document OAuth client credentials authentication method
+* Provide code examples for both authentication approaches
+* 🌿 Generated with Fern
+
 ## 1.3.0 - 2026-02-20
 * feat: add comprehensive README documentation and update CLI version
 * This change adds complete SDK documentation and updates the Fern CLI version. The new README provides comprehensive guidance for Java developers integrating with the Kard API, including installation instructions, authentication methods, and advanced usage patterns.
