@@ -1,3 +1,14 @@
+## 1.3.0 - 2026-02-20
+* feat: add comprehensive README documentation and update CLI version
+* This change adds complete SDK documentation and updates the Fern CLI version. The new README provides comprehensive guidance for Java developers integrating with the Kard API, including installation instructions, authentication methods, and advanced usage patterns.
+* Key changes:
+* Add comprehensive README with installation, authentication, and usage examples
+* Include documentation for environments, base URL configuration, and exception handling
+* Add advanced features documentation covering custom clients, retries, timeouts, and custom headers
+* Update Fern CLI version from 3.79.2 to 3.76.0
+* Add Maven Central badge and Fern branding
+* 🌿 Generated with Fern
+
 ## 1.2.2 - 2026-02-18
 * docs: remove README.md file
 * Remove the comprehensive README.md documentation file that contained installation instructions, usage examples, authentication methods, and advanced configuration options for the Kard Java SDK.

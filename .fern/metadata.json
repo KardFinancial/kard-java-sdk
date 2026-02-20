@@ -1,9 +1,9 @@
 {
-  "cliVersion": "3.79.2",
+  "cliVersion": "3.76.0",
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "3.36.2",
   "generatorConfig": {
     "publish-to": "central"
   },
-  "sdkVersion": "1.2.2"
+  "sdkVersion": "1.3.0"
 }
