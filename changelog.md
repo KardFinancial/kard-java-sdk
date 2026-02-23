@@ -1,3 +1,16 @@
+## 1.4.0 - 2026-02-23
+* feat: add baseReward component support and remove README
+* This change introduces a new baseReward component type to the rewards system
+* while also removing the README documentation file. The baseReward component
+* provides formatted reward string functionality to enhance the offer display
+* capabilities.
+* Key changes:
+* Add baseReward component type to ComponentType enum with visitor pattern support
+* Add baseReward field to OfferComponents class with getter, builder methods, and serialization
+* Update equals/hashCode methods to include baseReward field
+* Remove README.md file containing SDK documentation and usage examples
+* 🌿 Generated with Fern
+
 ## 1.3.1 - 2026-02-20
 * docs: add authentication section with two auth methods
 * Added comprehensive authentication documentation to the README, providing developers with clear guidance on how to authenticate with the Kard API using either direct bearer tokens or OAuth client credentials flow.

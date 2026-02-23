@@ -25,6 +25,8 @@ public final class OfferComponents {
 
     private final Optional<String> longDescription;
 
+    private final Optional<String> baseReward;
+
     private final Optional<CtaComponent> cta;
 
     private final Optional<List<String>> tags;
@@ -36,12 +38,14 @@ public final class OfferComponents {
     private OfferComponents(
             Optional<String> shortDescription,
             Optional<String> longDescription,
+            Optional<String> baseReward,
             Optional<CtaComponent> cta,
             Optional<List<String>> tags,
             Optional<List<String>> detailTags,
             Map<String, Object> additionalProperties) {
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
+        this.baseReward = baseReward;
         this.cta = cta;
         this.tags = tags;
         this.detailTags = detailTags;
@@ -62,6 +66,14 @@ public final class OfferComponents {
     @JsonProperty("longDescription")
     public Optional<String> getLongDescription() {
         return longDescription;
+    }
+
+    /**
+     * @return Formatted reward string
+     */
+    @JsonProperty("baseReward")
+    public Optional<String> getBaseReward() {
+        return baseReward;
     }
 
     /**
@@ -102,6 +114,7 @@ public final class OfferComponents {
     private boolean equalTo(OfferComponents other) {
         return shortDescription.equals(other.shortDescription)
                 && longDescription.equals(other.longDescription)
+                && baseReward.equals(other.baseReward)
                 && cta.equals(other.cta)
                 && tags.equals(other.tags)
                 && detailTags.equals(other.detailTags);
@@ -109,7 +122,8 @@ public final class OfferComponents {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.shortDescription, this.longDescription, this.cta, this.tags, this.detailTags);
+        return Objects.hash(
+                this.shortDescription, this.longDescription, this.baseReward, this.cta, this.tags, this.detailTags);
     }
 
     @java.lang.Override
@@ -127,6 +141,8 @@ public final class OfferComponents {
 
         private Optional<String> longDescription = Optional.empty();
 
+        private Optional<String> baseReward = Optional.empty();
+
         private Optional<CtaComponent> cta = Optional.empty();
 
         private Optional<List<String>> tags = Optional.empty();
@@ -141,6 +157,7 @@ public final class OfferComponents {
         public Builder from(OfferComponents other) {
             shortDescription(other.getShortDescription());
             longDescription(other.getLongDescription());
+            baseReward(other.getBaseReward());
             cta(other.getCta());
             tags(other.getTags());
             detailTags(other.getDetailTags());
@@ -172,6 +189,20 @@ public final class OfferComponents {
 
         public Builder longDescription(String longDescription) {
             this.longDescription = Optional.ofNullable(longDescription);
+            return this;
+        }
+
+        /**
+         * <p>Formatted reward string</p>
+         */
+        @JsonSetter(value = "baseReward", nulls = Nulls.SKIP)
+        public Builder baseReward(Optional<String> baseReward) {
+            this.baseReward = baseReward;
+            return this;
+        }
+
+        public Builder baseReward(String baseReward) {
+            this.baseReward = Optional.ofNullable(baseReward);
             return this;
         }
 
@@ -218,7 +249,8 @@ public final class OfferComponents {
         }
 
         public OfferComponents build() {
-            return new OfferComponents(shortDescription, longDescription, cta, tags, detailTags, additionalProperties);
+            return new OfferComponents(
+                    shortDescription, longDescription, baseReward, cta, tags, detailTags, additionalProperties);
         }
     }
 }

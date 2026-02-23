@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class ComponentType {
+    public static final ComponentType BASE_REWARD = new ComponentType(Value.BASE_REWARD, "baseReward");
+
     public static final ComponentType CTA = new ComponentType(Value.CTA, "cta");
 
     public static final ComponentType TAGS = new ComponentType(Value.TAGS, "tags");
@@ -50,6 +52,8 @@ public final class ComponentType {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case BASE_REWARD:
+                return visitor.visitBaseReward();
             case CTA:
                 return visitor.visitCta();
             case TAGS:
@@ -69,6 +73,8 @@ public final class ComponentType {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static ComponentType valueOf(String value) {
         switch (value) {
+            case "baseReward":
+                return BASE_REWARD;
             case "cta":
                 return CTA;
             case "tags":
@@ -89,6 +95,8 @@ public final class ComponentType {
 
         LONG_DESCRIPTION,
 
+        BASE_REWARD,
+
         CTA,
 
         TAGS,
@@ -102,6 +110,8 @@ public final class ComponentType {
         T visitShortDescription();
 
         T visitLongDescription();
+
+        T visitBaseReward();
 
         T visitCta();
 
