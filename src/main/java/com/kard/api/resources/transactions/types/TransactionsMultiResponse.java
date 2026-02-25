@@ -86,6 +86,10 @@ public final class TransactionsMultiResponse implements IErrorResponse {
     public interface _FinalStage {
         TransactionsMultiResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage errors(List<ErrorObject> errors);
 
         _FinalStage addErrors(ErrorObject errors);
@@ -145,6 +149,18 @@ public final class TransactionsMultiResponse implements IErrorResponse {
         @java.lang.Override
         public TransactionsMultiResponse build() {
             return new TransactionsMultiResponse(errors, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

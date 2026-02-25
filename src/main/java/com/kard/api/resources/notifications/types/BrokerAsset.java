@@ -109,6 +109,10 @@ public final class BrokerAsset {
     public interface _FinalStage {
         BrokerAsset build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Alt text for the asset</p>
          */
@@ -185,6 +189,18 @@ public final class BrokerAsset {
         @java.lang.Override
         public BrokerAsset build() {
             return new BrokerAsset(type, url, alt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

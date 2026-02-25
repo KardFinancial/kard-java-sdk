@@ -524,6 +524,10 @@ public final class TransactionsAttributes {
     public interface _FinalStage {
         TransactionsAttributes build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>The base amount in cents excluding additional charges (such as tips, taxes, and other fees).</p>
          */
@@ -1270,6 +1274,18 @@ public final class TransactionsAttributes {
                     userZipCode,
                     processorMids,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

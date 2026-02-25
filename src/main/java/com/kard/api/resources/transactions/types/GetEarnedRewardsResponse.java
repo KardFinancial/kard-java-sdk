@@ -99,6 +99,10 @@ public final class GetEarnedRewardsResponse {
     public interface _FinalStage {
         GetEarnedRewardsResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<RewardedTransactionUnion> data);
 
         _FinalStage addData(RewardedTransactionUnion data);
@@ -188,6 +192,18 @@ public final class GetEarnedRewardsResponse {
         @java.lang.Override
         public GetEarnedRewardsResponse build() {
             return new GetEarnedRewardsResponse(data, links, included, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

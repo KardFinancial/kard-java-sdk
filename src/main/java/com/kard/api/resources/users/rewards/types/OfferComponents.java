@@ -252,5 +252,15 @@ public final class OfferComponents {
             return new OfferComponents(
                     shortDescription, longDescription, baseReward, cta, tags, detailTags, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

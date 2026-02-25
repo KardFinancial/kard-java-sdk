@@ -114,6 +114,10 @@ public final class CtaComponent {
     public interface _FinalStage {
         CtaComponent build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Action to perform when the button is clicked</p>
          */
@@ -190,6 +194,18 @@ public final class CtaComponent {
         @java.lang.Override
         public CtaComponent build() {
             return new CtaComponent(buttonText, buttonStyle, action, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

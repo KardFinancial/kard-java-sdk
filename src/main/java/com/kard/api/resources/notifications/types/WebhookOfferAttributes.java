@@ -421,6 +421,10 @@ public final class WebhookOfferAttributes {
     public interface _FinalStage {
         WebhookOfferAttributes build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Channels where the offer can be redeemed</p>
          */
@@ -922,6 +926,18 @@ public final class WebhookOfferAttributes {
                     updatedAt,
                     createdAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

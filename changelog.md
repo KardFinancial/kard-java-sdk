@@ -1,3 +1,7 @@
+## 1.4.1 - 2026-02-25
+* SDK regeneration
+* Unable to analyze changes with AI, incrementing PATCH version.
+
 ## 1.4.0 - 2026-02-23
 * feat: add baseReward component support and remove README
 * This change introduces a new baseReward component type to the rewards system

@@ -89,6 +89,10 @@ public final class Links {
     public interface _FinalStage {
         Links build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage prev(Optional<String> prev);
 
         _FinalStage prev(String prev);
@@ -155,6 +159,18 @@ public final class Links {
         @java.lang.Override
         public Links build() {
             return new Links(self, prev, next, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

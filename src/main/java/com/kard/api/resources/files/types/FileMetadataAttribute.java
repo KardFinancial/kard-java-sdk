@@ -138,6 +138,10 @@ public final class FileMetadataAttribute {
 
     public interface _FinalStage {
         FileMetadataAttribute build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -216,6 +220,18 @@ public final class FileMetadataAttribute {
         @java.lang.Override
         public FileMetadataAttribute build() {
             return new FileMetadataAttribute(fileName, sentAt, lastModified, downloadUrl, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -264,5 +264,15 @@ public final class UserRequestAttributes {
             return new UserRequestAttributes(
                     enrolledRewards, zipCode, email, hashedEmail, phoneNumber, birthYear, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

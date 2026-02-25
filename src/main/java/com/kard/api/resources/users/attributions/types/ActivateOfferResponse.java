@@ -85,6 +85,10 @@ public final class ActivateOfferResponse {
     public interface _FinalStage {
         ActivateOfferResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage included(Optional<List<ActivateOfferIncluded>> included);
 
         _FinalStage included(List<ActivateOfferIncluded> included);
@@ -131,6 +135,18 @@ public final class ActivateOfferResponse {
         @java.lang.Override
         public ActivateOfferResponse build() {
             return new ActivateOfferResponse(data, included, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

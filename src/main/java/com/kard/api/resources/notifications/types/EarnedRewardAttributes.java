@@ -152,6 +152,10 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
     public interface _FinalStage {
         EarnedRewardAttributes build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Post experience survey URL, if available. This will be present for rewards associated with local offers.</p>
          */
@@ -274,6 +278,18 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
         public EarnedRewardAttributes build() {
             return new EarnedRewardAttributes(
                     message, name, attributionUrl, surveyUrl, cardProductId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

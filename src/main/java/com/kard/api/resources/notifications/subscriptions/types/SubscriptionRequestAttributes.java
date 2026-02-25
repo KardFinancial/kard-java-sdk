@@ -114,6 +114,10 @@ public final class SubscriptionRequestAttributes {
 
     public interface _FinalStage {
         SubscriptionRequestAttributes build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -176,6 +180,18 @@ public final class SubscriptionRequestAttributes {
         @java.lang.Override
         public SubscriptionRequestAttributes build() {
             return new SubscriptionRequestAttributes(eventName, webhookUrl, enabled, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

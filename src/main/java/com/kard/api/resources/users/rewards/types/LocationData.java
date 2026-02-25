@@ -111,6 +111,10 @@ public final class LocationData {
     public interface _FinalStage {
         LocationData build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Related resources to the offer</p>
          */
@@ -182,6 +186,18 @@ public final class LocationData {
         @java.lang.Override
         public LocationData build() {
             return new LocationData(id, attributes, relationships, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

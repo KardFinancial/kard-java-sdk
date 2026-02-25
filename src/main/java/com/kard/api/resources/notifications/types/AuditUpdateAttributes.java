@@ -236,6 +236,10 @@ public final class AuditUpdateAttributes {
     public interface _FinalStage {
         AuditUpdateAttributes build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Resolution Code - Enum. field is available when audit is status CLOSED.</p>
          * <p><ul>
@@ -490,6 +494,18 @@ public final class AuditUpdateAttributes {
                     resolutionDescription,
                     resolutionTimeStamp,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

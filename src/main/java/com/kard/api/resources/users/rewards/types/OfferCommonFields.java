@@ -338,6 +338,10 @@ public final class OfferCommonFields implements IOfferCommonFields {
     public interface _FinalStage {
         OfferCommonFields build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Maximum times cardholder can redeem offer, if applicable</p>
          */
@@ -783,6 +787,18 @@ public final class OfferCommonFields implements IOfferCommonFields {
                     description,
                     components,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

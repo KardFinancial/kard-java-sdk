@@ -208,6 +208,10 @@ public final class Merchant {
     public interface _FinalStage {
         Merchant build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Acquirer Merchant Identification Number (MID) — usually a 15 digit numerical identifier code. <b>Note, this field is REQUIRED for local offers. We HIGHLY RECOMMEND sending this field as it will be required in the near future.</b></p>
          */
@@ -520,6 +524,18 @@ public final class Merchant {
                     longitude,
                     storeId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
