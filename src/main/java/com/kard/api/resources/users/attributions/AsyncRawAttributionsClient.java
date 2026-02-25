@@ -17,7 +17,9 @@ import com.kard.api.resources.commons.errors.InvalidRequest;
 import com.kard.api.resources.commons.errors.UnauthorizedError;
 import com.kard.api.resources.commons.types.ErrorResponse;
 import com.kard.api.resources.users.attributions.requests.ActivateOfferRequest;
+import com.kard.api.resources.users.attributions.requests.BoostOfferRequest;
 import com.kard.api.resources.users.attributions.types.ActivateOfferResponse;
+import com.kard.api.resources.users.attributions.types.BoostOfferResponse;
 import com.kard.api.resources.users.attributions.types.CreateAttributionRequestObject;
 import com.kard.api.resources.users.attributions.types.CreateAttributionResponse;
 import java.io.IOException;
@@ -222,6 +224,130 @@ public class AsyncRawAttributionsClient {
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ActivateOfferResponse.class),
+                                response));
+                        return;
+                    }
+                    try {
+                        switch (response.code()) {
+                            case 400:
+                                future.completeExceptionally(new InvalidRequest(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                            case 401:
+                                future.completeExceptionally(new UnauthorizedError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new KardApiApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new KardApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new KardApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Record when a user boosts an offer. Creates an attribution event with eventCode=BOOST and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<KardApiHttpResponse<BoostOfferResponse>> boost(
+            String organizationId, String userId, String offerId) {
+        return boost(
+                organizationId, userId, offerId, BoostOfferRequest.builder().build());
+    }
+
+    /**
+     * Record when a user boosts an offer. Creates an attribution event with eventCode=BOOST and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<KardApiHttpResponse<BoostOfferResponse>> boost(
+            String organizationId, String userId, String offerId, RequestOptions requestOptions) {
+        return boost(
+                organizationId, userId, offerId, BoostOfferRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Record when a user boosts an offer. Creates an attribution event with eventCode=BOOST and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<KardApiHttpResponse<BoostOfferResponse>> boost(
+            String organizationId, String userId, String offerId, BoostOfferRequest request) {
+        return boost(organizationId, userId, offerId, request, null);
+    }
+
+    /**
+     * Record when a user boosts an offer. Creates an attribution event with eventCode=BOOST and medium=CTA.
+     * Optionally include the offer data by passing <code>include=offer</code>.
+     */
+    public CompletableFuture<KardApiHttpResponse<BoostOfferResponse>> boost(
+            String organizationId,
+            String userId,
+            String offerId,
+            BoostOfferRequest request,
+            RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/issuers")
+                .addPathSegment(organizationId)
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .addPathSegments("offers")
+                .addPathSegment(offerId)
+                .addPathSegments("boost");
+        if (request.getSupportedComponents().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "supportedComponents",
+                    request.getSupportedComponents().get(),
+                    true);
+        }
+        if (request.getInclude().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include", request.getInclude().get(), true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<KardApiHttpResponse<BoostOfferResponse>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new KardApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BoostOfferResponse.class),
                                 response));
                         return;
                     }

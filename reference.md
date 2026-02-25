@@ -1413,6 +1413,100 @@ client.users().attributions().activate(
 </dl>
 </details>
 
+<details><summary><code>client.users.attributions.boost(organizationId, userId, offerId) -> BoostOfferResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Record when a user boosts an offer. Creates an attribution event with eventCode=BOOST and medium=CTA.
+Optionally include the offer data by passing `include=offer`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().attributions().boost(
+    "organization-123",
+    "user-123",
+    "offer-456",
+    BoostOfferRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offerId:** `String` — The unique identifier of the offer being boosted
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**supportedComponents:** `Optional<ComponentType>` — UI component types to include in the offer response (when include=offer).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `Optional<BoostOfferIncludeOption>` — Related resources to include in the response. Allowed value is `offer`.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## WebView
 <details><summary><code>client.users.auth.getWebViewToken(organizationId, userId) -> WebViewTokenResponse</code></summary>
 <dl>

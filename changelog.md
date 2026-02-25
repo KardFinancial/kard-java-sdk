@@ -1,3 +1,14 @@
+## 1.5.0 - 2026-02-25
+* feat: add boost offer attribution functionality
+* Added new boost offer capability to track when users boost offers for attribution events. This provides complete support for offer boosting attribution tracking with event code BOOST and medium CTA.
+* Key changes:
+* Add boost() method to attributions client with support for offer inclusion and component filtering
+* Implement BoostOfferRequest for configuration of boost requests with optional parameters
+* Create BoostOfferResponse types with complete data structure for attribution responses
+* Add BOOST event code to EventCode enum for proper attribution tracking
+* Remove outdated README.md file and update API reference documentation
+* 🌿 Generated with Fern
+
 ## 1.4.2 - 2026-02-25
 * docs: add authentication guide to README
 * Added comprehensive documentation for the two supported authentication methods available in the Kard Java SDK. This provides developers with clear guidance on how to authenticate their API requests.

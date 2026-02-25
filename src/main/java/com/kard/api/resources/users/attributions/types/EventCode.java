@@ -13,6 +13,8 @@ public final class EventCode {
 
     public static final EventCode VIEW = new EventCode(Value.VIEW, "VIEW");
 
+    public static final EventCode BOOST = new EventCode(Value.BOOST, "BOOST");
+
     private final Value value;
 
     private final String string;
@@ -50,6 +52,8 @@ public final class EventCode {
                 return visitor.visitImpression();
             case VIEW:
                 return visitor.visitView();
+            case BOOST:
+                return visitor.visitBoost();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -65,6 +69,8 @@ public final class EventCode {
                 return IMPRESSION;
             case "VIEW":
                 return VIEW;
+            case "BOOST":
+                return BOOST;
             default:
                 return new EventCode(Value.UNKNOWN, value);
         }
@@ -77,6 +83,8 @@ public final class EventCode {
 
         ACTIVATE,
 
+        BOOST,
+
         UNKNOWN
     }
 
@@ -86,6 +94,8 @@ public final class EventCode {
         T visitView();
 
         T visitActivate();
+
+        T visitBoost();
 
         T visitUnknown(String unknownType);
     }
