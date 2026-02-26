@@ -1,3 +1,13 @@
+## 1.5.1 - 2026-02-26
+* chore: update CLI version and add comprehensive README documentation
+* Updated the Fern CLI version to improve code generation capabilities and added a complete README with installation instructions, usage examples, authentication methods, and advanced configuration options.
+* Key changes:
+* Update Fern CLI version from 3.88.1 to 3.90.4 for latest features
+* Add comprehensive README with installation guide for Gradle and Maven
+* Include complete API usage examples and authentication documentation
+* Add advanced configuration sections covering retries, timeouts, and custom headers
+* 🌿 Generated with Fern
+
 ## 1.5.0 - 2026-02-25
 * feat: add boost offer attribution functionality
 * Added new boost offer capability to track when users boost offers for attribution events. This provides complete support for offer boosting attribution tracking with event code BOOST and medium CTA.
