@@ -42,7 +42,7 @@ Add the dependency in your `pom.xml` file:
 <dependency>
   <groupId>com.getkard</groupId>
   <artifactId>kard-financial-sdk</artifactId>
-  <version>1.4.2</version>
+  <version>1.5.1</version>
 </dependency>
 ```
 
