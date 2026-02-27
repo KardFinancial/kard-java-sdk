@@ -10,6 +10,7 @@ The Kard Java library provides convenient access to the Kard APIs from Java.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Authentication](#authentication)
 - [Environments](#environments)
 - [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
