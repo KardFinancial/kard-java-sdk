@@ -138,32 +138,6 @@ KardApiClient client = KardApiClient.builder()
     .build();
 ```
 
-## Authentication
-
-This SDK supports two authentication methods:
-
-### Option 1: Direct Bearer Token
-
-If you already have a valid access token, you can use it directly:
-
-```java
-KardApiClient client = KardApiClient.builder()
-    .token("your-access-token")
-    .url("https://api.example.com")
-    .build();
-```
-
-### Option 2: OAuth Client Credentials
-
-The SDK can automatically handle token acquisition and refresh:
-
-```java
-KardApiClient client = KardApiClient.builder()
-    .credentials("client-id", "client-secret")
-    .url("https://api.example.com")
-    .build();
-```
-
 ## Environments
 
 This SDK allows you to configure different environments for API requests.
