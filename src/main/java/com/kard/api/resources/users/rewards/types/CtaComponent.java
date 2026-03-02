@@ -27,16 +27,20 @@ public final class CtaComponent {
 
     private final Optional<CtaAction> action;
 
+    private final Optional<String> startIcon;
+
     private final Map<String, Object> additionalProperties;
 
     private CtaComponent(
             String buttonText,
             ButtonStyle buttonStyle,
             Optional<CtaAction> action,
+            Optional<String> startIcon,
             Map<String, Object> additionalProperties) {
         this.buttonText = buttonText;
         this.buttonStyle = buttonStyle;
         this.action = action;
+        this.startIcon = startIcon;
         this.additionalProperties = additionalProperties;
     }
 
@@ -64,6 +68,14 @@ public final class CtaComponent {
         return action;
     }
 
+    /**
+     * @return Icon identifier to display on the button
+     */
+    @JsonProperty("startIcon")
+    public Optional<String> getStartIcon() {
+        return startIcon;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -78,12 +90,13 @@ public final class CtaComponent {
     private boolean equalTo(CtaComponent other) {
         return buttonText.equals(other.buttonText)
                 && buttonStyle.equals(other.buttonStyle)
-                && action.equals(other.action);
+                && action.equals(other.action)
+                && startIcon.equals(other.startIcon);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.buttonText, this.buttonStyle, this.action);
+        return Objects.hash(this.buttonText, this.buttonStyle, this.action, this.startIcon);
     }
 
     @java.lang.Override
@@ -124,6 +137,13 @@ public final class CtaComponent {
         _FinalStage action(Optional<CtaAction> action);
 
         _FinalStage action(CtaAction action);
+
+        /**
+         * <p>Icon identifier to display on the button</p>
+         */
+        _FinalStage startIcon(Optional<String> startIcon);
+
+        _FinalStage startIcon(String startIcon);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -131,6 +151,8 @@ public final class CtaComponent {
         private String buttonText;
 
         private ButtonStyle buttonStyle;
+
+        private Optional<String> startIcon = Optional.empty();
 
         private Optional<CtaAction> action = Optional.empty();
 
@@ -144,6 +166,7 @@ public final class CtaComponent {
             buttonText(other.getButtonText());
             buttonStyle(other.getButtonStyle());
             action(other.getAction());
+            startIcon(other.getStartIcon());
             return this;
         }
 
@@ -172,6 +195,26 @@ public final class CtaComponent {
         }
 
         /**
+         * <p>Icon identifier to display on the button</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage startIcon(String startIcon) {
+            this.startIcon = Optional.ofNullable(startIcon);
+            return this;
+        }
+
+        /**
+         * <p>Icon identifier to display on the button</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "startIcon", nulls = Nulls.SKIP)
+        public _FinalStage startIcon(Optional<String> startIcon) {
+            this.startIcon = startIcon;
+            return this;
+        }
+
+        /**
          * <p>Action to perform when the button is clicked</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -193,7 +236,7 @@ public final class CtaComponent {
 
         @java.lang.Override
         public CtaComponent build() {
-            return new CtaComponent(buttonText, buttonStyle, action, additionalProperties);
+            return new CtaComponent(buttonText, buttonStyle, action, startIcon, additionalProperties);
         }
 
         @java.lang.Override
