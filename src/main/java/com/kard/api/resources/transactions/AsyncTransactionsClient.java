@@ -8,6 +8,8 @@ import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.transactions.requests.GetEarnedRewardsRequest;
 import com.kard.api.resources.transactions.types.CreateAuditRequestBody;
 import com.kard.api.resources.transactions.types.CreateAuditResponseBody;
+import com.kard.api.resources.transactions.types.CreateFileUploadRequestBody;
+import com.kard.api.resources.transactions.types.CreateFileUploadUrlResponse;
 import com.kard.api.resources.transactions.types.FraudulentTransactionObject;
 import com.kard.api.resources.transactions.types.FraudulentTransactionRequestBody;
 import com.kard.api.resources.transactions.types.GetEarnedRewardsResponse;
@@ -102,6 +104,36 @@ public class AsyncTransactionsClient {
             String organizationId, String userId, CreateAuditRequestBody request, RequestOptions requestOptions) {
         return this.rawClient
                 .createAudits(organizationId, userId, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Generates up to 10 presigned PUT URLs for uploading JSONL transaction files (up to 5GB each) directly
+     * to storage. Each URL is valid for 15 minutes. Use the returned URL to upload the file via an HTTP PUT request with the
+     * binary file content as the body. If a URL expires before the upload completes, you must request a new one.
+     * Files can be uploaded as plain JSONL or as a gzip-compressed file.
+     * Only <code>coreTransaction</code> type is supported for bulk file uploads.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     */
+    public CompletableFuture<CreateFileUploadUrlResponse> createBulkTransactionsUploadUrl(
+            String organizationId, CreateFileUploadRequestBody request) {
+        return this.rawClient
+                .createBulkTransactionsUploadUrl(organizationId, request)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Generates up to 10 presigned PUT URLs for uploading JSONL transaction files (up to 5GB each) directly
+     * to storage. Each URL is valid for 15 minutes. Use the returned URL to upload the file via an HTTP PUT request with the
+     * binary file content as the body. If a URL expires before the upload completes, you must request a new one.
+     * Files can be uploaded as plain JSONL or as a gzip-compressed file.
+     * Only <code>coreTransaction</code> type is supported for bulk file uploads.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     */
+    public CompletableFuture<CreateFileUploadUrlResponse> createBulkTransactionsUploadUrl(
+            String organizationId, CreateFileUploadRequestBody request, RequestOptions requestOptions) {
+        return this.rawClient
+                .createBulkTransactionsUploadUrl(organizationId, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 

@@ -1,3 +1,14 @@
+## 3.2.0 - 2026-03-03
+* feat: add bulk transactions file upload API endpoint
+* Add new API endpoint for generating presigned URLs to upload JSONL transaction files directly to storage. This feature enables bulk transaction uploads with support for up to 10 files per request, each up to 5GB.
+* Key changes:
+* Add createBulkTransactionsUploadUrl method to transactions client
+* Create new data types for file upload requests and responses
+* Move ForbiddenError to commons errors package for reuse
+* Add comprehensive documentation and usage examples
+* Support for gzip-compressed files and 15-minute URL expiration
+* 🌿 Generated with Fern
+
 ## 3.1.0 - 2026-03-03
 * feat: add file processing result notification support
 * This change extends the notification system to handle file processing results by introducing a new notification type and associated data structures. The implementation enables the API to properly communicate file processing outcomes to clients through the existing notification framework.

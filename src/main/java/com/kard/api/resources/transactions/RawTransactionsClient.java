@@ -14,6 +14,7 @@ import com.kard.api.core.QueryStringMapper;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.commons.errors.ConflictError;
 import com.kard.api.resources.commons.errors.DoesNotExistError;
+import com.kard.api.resources.commons.errors.ForbiddenError;
 import com.kard.api.resources.commons.errors.InternalServerError;
 import com.kard.api.resources.commons.errors.InvalidRequest;
 import com.kard.api.resources.commons.errors.UnauthorizedError;
@@ -25,6 +26,8 @@ import com.kard.api.resources.transactions.requests.GetEarnedRewardsRequest;
 import com.kard.api.resources.transactions.types.CreateAuditMultiStatusResponse;
 import com.kard.api.resources.transactions.types.CreateAuditRequestBody;
 import com.kard.api.resources.transactions.types.CreateAuditResponseBody;
+import com.kard.api.resources.transactions.types.CreateFileUploadRequestBody;
+import com.kard.api.resources.transactions.types.CreateFileUploadUrlResponse;
 import com.kard.api.resources.transactions.types.FraudulentTransactionObject;
 import com.kard.api.resources.transactions.types.FraudulentTransactionRequestBody;
 import com.kard.api.resources.transactions.types.FraudulentTransactionResponse;
@@ -294,6 +297,91 @@ public class RawTransactionsClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
                     case 409:
                         throw new ConflictError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 500:
+                        throw new InternalServerError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new KardApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new KardApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Generates up to 10 presigned PUT URLs for uploading JSONL transaction files (up to 5GB each) directly
+     * to storage. Each URL is valid for 15 minutes. Use the returned URL to upload the file via an HTTP PUT request with the
+     * binary file content as the body. If a URL expires before the upload completes, you must request a new one.
+     * Files can be uploaded as plain JSONL or as a gzip-compressed file.
+     * Only <code>coreTransaction</code> type is supported for bulk file uploads.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     */
+    public KardApiHttpResponse<CreateFileUploadUrlResponse> createBulkTransactionsUploadUrl(
+            String organizationId, CreateFileUploadRequestBody request) {
+        return createBulkTransactionsUploadUrl(organizationId, request, null);
+    }
+
+    /**
+     * Generates up to 10 presigned PUT URLs for uploading JSONL transaction files (up to 5GB each) directly
+     * to storage. Each URL is valid for 15 minutes. Use the returned URL to upload the file via an HTTP PUT request with the
+     * binary file content as the body. If a URL expires before the upload completes, you must request a new one.
+     * Files can be uploaded as plain JSONL or as a gzip-compressed file.
+     * Only <code>coreTransaction</code> type is supported for bulk file uploads.
+     * <b>Required scopes:</b> <code>transaction:write</code>
+     */
+    public KardApiHttpResponse<CreateFileUploadUrlResponse> createBulkTransactionsUploadUrl(
+            String organizationId, CreateFileUploadRequestBody request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/issuers")
+                .addPathSegment(organizationId)
+                .addPathSegments("transactions/upload");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new KardApiException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new KardApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, CreateFileUploadUrlResponse.class),
+                        response);
+            }
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new InvalidRequest(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 401:
+                        throw new UnauthorizedError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 403:
+                        throw new ForbiddenError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
                     case 500:
                         throw new InternalServerError(

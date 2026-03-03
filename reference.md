@@ -784,6 +784,100 @@ client.transactions().createAudits(
 </dl>
 </details>
 
+<details><summary><code>client.transactions.createBulkTransactionsUploadUrl(organizationId, request) -> CreateFileUploadUrlResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates up to 10 presigned PUT URLs for uploading JSONL transaction files (up to 5GB each) directly
+to storage. Each URL is valid for 15 minutes. Use the returned URL to upload the file via an HTTP PUT request with the
+binary file content as the body. If a URL expires before the upload completes, you must request a new one.
+Files can be uploaded as plain JSONL or as a gzip-compressed file.
+Only `coreTransaction` type is supported for bulk file uploads.
+<b>Required scopes:</b> `transaction:write`
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.transactions().createBulkTransactionsUploadUrl(
+    "organization-123",
+    CreateFileUploadRequestBody
+        .builder()
+        .data(
+            Arrays.asList(
+                CreateFileUploadData
+                    .builder()
+                    .attributes(
+                        CreateFileUploadAttributes
+                            .builder()
+                            .filename("transaction_12345.jsonl")
+                            .build()
+                    )
+                    .build(),
+                CreateFileUploadData
+                    .builder()
+                    .attributes(
+                        CreateFileUploadAttributes
+                            .builder()
+                            .filename("transaction_67890.jsonl")
+                            .build()
+                    )
+                    .build()
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateFileUploadRequestBody` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.transactions.getEarnedRewards(organizationId, userId) -> GetEarnedRewardsResponse</code></summary>
 <dl>
 <dd>
