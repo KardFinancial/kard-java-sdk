@@ -28,6 +28,9 @@ public final class NotificationType {
 
     public static final NotificationType CLAWBACK = new NotificationType(Value.CLAWBACK, "clawback");
 
+    public static final NotificationType FILE_PROCESSING_RESULT =
+            new NotificationType(Value.FILE_PROCESSING_RESULT, "fileProcessingResult");
+
     public static final NotificationType VALID_TRANSACTION =
             new NotificationType(Value.VALID_TRANSACTION, "validTransaction");
 
@@ -81,6 +84,8 @@ public final class NotificationType {
                 return visitor.visitMerchant();
             case CLAWBACK:
                 return visitor.visitClawback();
+            case FILE_PROCESSING_RESULT:
+                return visitor.visitFileProcessingResult();
             case VALID_TRANSACTION:
                 return visitor.visitValidTransaction();
             case UNKNOWN:
@@ -110,6 +115,8 @@ public final class NotificationType {
                 return MERCHANT;
             case "clawback":
                 return CLAWBACK;
+            case "fileProcessingResult":
+                return FILE_PROCESSING_RESULT;
             case "validTransaction":
                 return VALID_TRANSACTION;
             default:
@@ -138,6 +145,8 @@ public final class NotificationType {
 
         AUDIT_UPDATE,
 
+        FILE_PROCESSING_RESULT,
+
         UNKNOWN
     }
 
@@ -161,6 +170,8 @@ public final class NotificationType {
         T visitUserOffer();
 
         T visitAuditUpdate();
+
+        T visitFileProcessingResult();
 
         T visitUnknown(String unknownType);
     }

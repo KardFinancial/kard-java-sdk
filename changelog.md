@@ -1,3 +1,13 @@
+## 3.1.0 - 2026-03-03
+* feat: add file processing result notification support
+* This change extends the notification system to handle file processing results by introducing a new notification type and associated data structures. The implementation enables the API to properly communicate file processing outcomes to clients through the existing notification framework.
+* Key changes:
+* Add FILE_PROCESSING_RESULT notification type to NotificationType enum with visitor pattern support
+* Create FileResultData class to encapsulate file processing notification data with ID and file metadata attributes
+* Extend NotificationDataUnion to support file processing result notifications with serialization support
+* Add optional errors field to NotificationPayload for improved error reporting in notifications
+* 🌿 Generated with Fern
+
 ## 3.0.0 - 2026-03-03
 * refactor: replace string-based financial institution name with enum type
 * Replace the String-based financialInstitutionName field with a new FinancialInstitutionName enum type to provide better type safety and validation for transaction data. This change strengthens the API by preventing invalid financial institution names and provides a comprehensive list of supported institutions.

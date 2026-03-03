@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.commons.types.ErrorObject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,12 +27,18 @@ public final class NotificationPayload {
 
     private final Optional<NotificationMetadata> meta;
 
+    private final Optional<List<ErrorObject>> errors;
+
     private final Map<String, Object> additionalProperties;
 
     private NotificationPayload(
-            NotificationDataUnion data, Optional<NotificationMetadata> meta, Map<String, Object> additionalProperties) {
+            NotificationDataUnion data,
+            Optional<NotificationMetadata> meta,
+            Optional<List<ErrorObject>> errors,
+            Map<String, Object> additionalProperties) {
         this.data = data;
         this.meta = meta;
+        this.errors = errors;
         this.additionalProperties = additionalProperties;
     }
 
@@ -42,6 +50,11 @@ public final class NotificationPayload {
     @JsonProperty("meta")
     public Optional<NotificationMetadata> getMeta() {
         return meta;
+    }
+
+    @JsonProperty("errors")
+    public Optional<List<ErrorObject>> getErrors() {
+        return errors;
     }
 
     @java.lang.Override
@@ -56,12 +69,12 @@ public final class NotificationPayload {
     }
 
     private boolean equalTo(NotificationPayload other) {
-        return data.equals(other.data) && meta.equals(other.meta);
+        return data.equals(other.data) && meta.equals(other.meta) && errors.equals(other.errors);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data, this.meta);
+        return Objects.hash(this.data, this.meta, this.errors);
     }
 
     @java.lang.Override
@@ -89,11 +102,17 @@ public final class NotificationPayload {
         _FinalStage meta(Optional<NotificationMetadata> meta);
 
         _FinalStage meta(NotificationMetadata meta);
+
+        _FinalStage errors(Optional<List<ErrorObject>> errors);
+
+        _FinalStage errors(List<ErrorObject> errors);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DataStage, _FinalStage {
         private NotificationDataUnion data;
+
+        private Optional<List<ErrorObject>> errors = Optional.empty();
 
         private Optional<NotificationMetadata> meta = Optional.empty();
 
@@ -106,6 +125,7 @@ public final class NotificationPayload {
         public Builder from(NotificationPayload other) {
             data(other.getData());
             meta(other.getMeta());
+            errors(other.getErrors());
             return this;
         }
 
@@ -113,6 +133,19 @@ public final class NotificationPayload {
         @JsonSetter("data")
         public _FinalStage data(@NotNull NotificationDataUnion data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage errors(List<ErrorObject> errors) {
+            this.errors = Optional.ofNullable(errors);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "errors", nulls = Nulls.SKIP)
+        public _FinalStage errors(Optional<List<ErrorObject>> errors) {
+            this.errors = errors;
             return this;
         }
 
@@ -131,7 +164,7 @@ public final class NotificationPayload {
 
         @java.lang.Override
         public NotificationPayload build() {
-            return new NotificationPayload(data, meta, additionalProperties);
+            return new NotificationPayload(data, meta, errors, additionalProperties);
         }
 
         @java.lang.Override

@@ -66,6 +66,10 @@ public final class NotificationDataUnion {
         return new NotificationDataUnion(new AuditUpdateValue(value));
     }
 
+    public static NotificationDataUnion fileProcessingResult(FileResultData value) {
+        return new NotificationDataUnion(new FileProcessingResultValue(value));
+    }
+
     public boolean isEarnedRewardApproved() {
         return value instanceof EarnedRewardApprovedValue;
     }
@@ -104,6 +108,10 @@ public final class NotificationDataUnion {
 
     public boolean isAuditUpdate() {
         return value instanceof AuditUpdateValue;
+    }
+
+    public boolean isFileProcessingResult() {
+        return value instanceof FileProcessingResultValue;
     }
 
     public boolean _isUnknown() {
@@ -180,6 +188,13 @@ public final class NotificationDataUnion {
         return Optional.empty();
     }
 
+    public Optional<FileResultData> getFileProcessingResult() {
+        if (isFileProcessingResult()) {
+            return Optional.of(((FileProcessingResultValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -213,6 +228,8 @@ public final class NotificationDataUnion {
 
         T visitAuditUpdate(AuditUpdateData auditUpdate);
 
+        T visitFileProcessingResult(FileResultData fileProcessingResult);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -227,7 +244,8 @@ public final class NotificationDataUnion {
         @JsonSubTypes.Type(MerchantValue.class),
         @JsonSubTypes.Type(LocationValue.class),
         @JsonSubTypes.Type(UserOfferValue.class),
-        @JsonSubTypes.Type(AuditUpdateValue.class)
+        @JsonSubTypes.Type(AuditUpdateValue.class),
+        @JsonSubTypes.Type(FileProcessingResultValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -610,6 +628,45 @@ public final class NotificationDataUnion {
         }
 
         private boolean equalTo(AuditUpdateValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "NotificationDataUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("fileProcessingResult")
+    @JsonIgnoreProperties("type")
+    private static final class FileProcessingResultValue implements Value {
+        @JsonUnwrapped
+        private FileResultData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private FileProcessingResultValue() {}
+
+        private FileProcessingResultValue(FileResultData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFileProcessingResult(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FileProcessingResultValue && equalTo((FileProcessingResultValue) other);
+        }
+
+        private boolean equalTo(FileProcessingResultValue other) {
             return value.equals(other.value);
         }
 
