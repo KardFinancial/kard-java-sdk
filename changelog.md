@@ -1,3 +1,14 @@
+## 3.0.0 - 2026-03-03
+* refactor: replace string-based financial institution name with enum type
+* Replace the String-based financialInstitutionName field with a new FinancialInstitutionName enum type to provide better type safety and validation for transaction data. This change strengthens the API by preventing invalid financial institution names and provides a comprehensive list of supported institutions.
+* Key changes:
+* Create new FinancialInstitutionName enum with 33 predefined financial institution constants
+* Update CoreTransactionAttributes field type from String to FinancialInstitutionName
+* Implement visitor pattern for type-safe enum handling
+* Add JSON serialization/deserialization support with fallback for unknown values
+* Update all method signatures and builders to use the new enum type
+* 🌿 Generated with Fern
+
 ## 2.1.0 - 2026-03-02
 * feat: add startIcon property to CtaComponent
 * Add optional startIcon field to the CtaComponent class to support displaying icons on buttons. This backward-compatible enhancement allows specifying an icon identifier that will be displayed on the button.
