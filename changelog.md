@@ -1,3 +1,14 @@
+## 3.3.0 - 2026-03-04
+* feat: add logo flare component and secondary button style support
+* This update introduces logo flare functionality for enhanced offer presentation and adds secondary button style support. The changes expand UI component customization capabilities while removing outdated component type documentation.
+* Key changes:
+* Add LogoFlare, LogoFlareBadge, and related position/color enums for offer logo customization
+* Add SECONDARY button style option to ButtonStyle enum
+* Add BOOSTED_REWARD and LOGO_FLARE component types to ComponentType enum
+* Add boostedReward and logoFlare fields to OfferComponents
+* Remove specific valid values documentation from supportedComponents parameter descriptions
+* 🌿 Generated with Fern
+
 ## 3.2.0 - 2026-03-03
 * feat: add bulk transactions file upload API endpoint
 * Add new API endpoint for generating presigned URLs to upload JSONL transaction files directly to storage. This feature enables bulk transaction uploads with support for up to 10 files per request, each up to 5GB.

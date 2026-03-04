@@ -27,11 +27,15 @@ public final class OfferComponents {
 
     private final Optional<String> baseReward;
 
+    private final Optional<String> boostedReward;
+
     private final Optional<CtaComponent> cta;
 
     private final Optional<List<String>> tags;
 
     private final Optional<List<String>> detailTags;
+
+    private final Optional<LogoFlare> logoFlare;
 
     private final Map<String, Object> additionalProperties;
 
@@ -39,16 +43,20 @@ public final class OfferComponents {
             Optional<String> shortDescription,
             Optional<String> longDescription,
             Optional<String> baseReward,
+            Optional<String> boostedReward,
             Optional<CtaComponent> cta,
             Optional<List<String>> tags,
             Optional<List<String>> detailTags,
+            Optional<LogoFlare> logoFlare,
             Map<String, Object> additionalProperties) {
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.baseReward = baseReward;
+        this.boostedReward = boostedReward;
         this.cta = cta;
         this.tags = tags;
         this.detailTags = detailTags;
+        this.logoFlare = logoFlare;
         this.additionalProperties = additionalProperties;
     }
 
@@ -77,6 +85,14 @@ public final class OfferComponents {
     }
 
     /**
+     * @return Formatted boosted reward string
+     */
+    @JsonProperty("boostedReward")
+    public Optional<String> getBoostedReward() {
+        return boostedReward;
+    }
+
+    /**
      * @return Call-to-action button component
      */
     @JsonProperty("cta")
@@ -100,6 +116,14 @@ public final class OfferComponents {
         return detailTags;
     }
 
+    /**
+     * @return Logo flare configuration for the offer
+     */
+    @JsonProperty("logoFlare")
+    public Optional<LogoFlare> getLogoFlare() {
+        return logoFlare;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -115,15 +139,24 @@ public final class OfferComponents {
         return shortDescription.equals(other.shortDescription)
                 && longDescription.equals(other.longDescription)
                 && baseReward.equals(other.baseReward)
+                && boostedReward.equals(other.boostedReward)
                 && cta.equals(other.cta)
                 && tags.equals(other.tags)
-                && detailTags.equals(other.detailTags);
+                && detailTags.equals(other.detailTags)
+                && logoFlare.equals(other.logoFlare);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.shortDescription, this.longDescription, this.baseReward, this.cta, this.tags, this.detailTags);
+                this.shortDescription,
+                this.longDescription,
+                this.baseReward,
+                this.boostedReward,
+                this.cta,
+                this.tags,
+                this.detailTags,
+                this.logoFlare);
     }
 
     @java.lang.Override
@@ -143,11 +176,15 @@ public final class OfferComponents {
 
         private Optional<String> baseReward = Optional.empty();
 
+        private Optional<String> boostedReward = Optional.empty();
+
         private Optional<CtaComponent> cta = Optional.empty();
 
         private Optional<List<String>> tags = Optional.empty();
 
         private Optional<List<String>> detailTags = Optional.empty();
+
+        private Optional<LogoFlare> logoFlare = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -158,9 +195,11 @@ public final class OfferComponents {
             shortDescription(other.getShortDescription());
             longDescription(other.getLongDescription());
             baseReward(other.getBaseReward());
+            boostedReward(other.getBoostedReward());
             cta(other.getCta());
             tags(other.getTags());
             detailTags(other.getDetailTags());
+            logoFlare(other.getLogoFlare());
             return this;
         }
 
@@ -207,6 +246,20 @@ public final class OfferComponents {
         }
 
         /**
+         * <p>Formatted boosted reward string</p>
+         */
+        @JsonSetter(value = "boostedReward", nulls = Nulls.SKIP)
+        public Builder boostedReward(Optional<String> boostedReward) {
+            this.boostedReward = boostedReward;
+            return this;
+        }
+
+        public Builder boostedReward(String boostedReward) {
+            this.boostedReward = Optional.ofNullable(boostedReward);
+            return this;
+        }
+
+        /**
          * <p>Call-to-action button component</p>
          */
         @JsonSetter(value = "cta", nulls = Nulls.SKIP)
@@ -248,9 +301,31 @@ public final class OfferComponents {
             return this;
         }
 
+        /**
+         * <p>Logo flare configuration for the offer</p>
+         */
+        @JsonSetter(value = "logoFlare", nulls = Nulls.SKIP)
+        public Builder logoFlare(Optional<LogoFlare> logoFlare) {
+            this.logoFlare = logoFlare;
+            return this;
+        }
+
+        public Builder logoFlare(LogoFlare logoFlare) {
+            this.logoFlare = Optional.ofNullable(logoFlare);
+            return this;
+        }
+
         public OfferComponents build() {
             return new OfferComponents(
-                    shortDescription, longDescription, baseReward, cta, tags, detailTags, additionalProperties);
+                    shortDescription,
+                    longDescription,
+                    baseReward,
+                    boostedReward,
+                    cta,
+                    tags,
+                    detailTags,
+                    logoFlare,
+                    additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

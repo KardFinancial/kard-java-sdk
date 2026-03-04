@@ -6,18 +6,16 @@ package com.kard.api.resources.users.rewards.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class ButtonStyle {
-    public static final ButtonStyle SECONDARY = new ButtonStyle(Value.SECONDARY, "SECONDARY");
+public final class LogoFlareBorderColor {
+    public static final LogoFlareBorderColor SECONDARY = new LogoFlareBorderColor(Value.SECONDARY, "SECONDARY");
 
-    public static final ButtonStyle DISABLED = new ButtonStyle(Value.DISABLED, "DISABLED");
-
-    public static final ButtonStyle PRIMARY = new ButtonStyle(Value.PRIMARY, "PRIMARY");
+    public static final LogoFlareBorderColor PRIMARY = new LogoFlareBorderColor(Value.PRIMARY, "PRIMARY");
 
     private final Value value;
 
     private final String string;
 
-    ButtonStyle(Value value, String string) {
+    LogoFlareBorderColor(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -34,7 +32,8 @@ public final class ButtonStyle {
 
     @java.lang.Override
     public boolean equals(Object other) {
-        return (this == other) || (other instanceof ButtonStyle && this.string.equals(((ButtonStyle) other).string));
+        return (this == other)
+                || (other instanceof LogoFlareBorderColor && this.string.equals(((LogoFlareBorderColor) other).string));
     }
 
     @java.lang.Override
@@ -46,8 +45,6 @@ public final class ButtonStyle {
         switch (value) {
             case SECONDARY:
                 return visitor.visitSecondary();
-            case DISABLED:
-                return visitor.visitDisabled();
             case PRIMARY:
                 return visitor.visitPrimary();
             case UNKNOWN:
@@ -57,16 +54,14 @@ public final class ButtonStyle {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static ButtonStyle valueOf(String value) {
+    public static LogoFlareBorderColor valueOf(String value) {
         switch (value) {
             case "SECONDARY":
                 return SECONDARY;
-            case "DISABLED":
-                return DISABLED;
             case "PRIMARY":
                 return PRIMARY;
             default:
-                return new ButtonStyle(Value.UNKNOWN, value);
+                return new LogoFlareBorderColor(Value.UNKNOWN, value);
         }
     }
 
@@ -75,8 +70,6 @@ public final class ButtonStyle {
 
         SECONDARY,
 
-        DISABLED,
-
         UNKNOWN
     }
 
@@ -84,8 +77,6 @@ public final class ButtonStyle {
         T visitPrimary();
 
         T visitSecondary();
-
-        T visitDisabled();
 
         T visitUnknown(String unknownType);
     }

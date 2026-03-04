@@ -106,7 +106,7 @@ public final class GetLocationsByUserRequest {
     }
 
     /**
-     * @return UI component types to include in included offers. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
+     * @return UI component types to include in included offers.
      */
     @JsonProperty("supportedComponents")
     public Optional<List<ComponentType>> getSupportedComponents() {
@@ -316,7 +316,7 @@ public final class GetLocationsByUserRequest {
         }
 
         /**
-         * <p>UI component types to include in included offers. Valid values are shortDescription, longDescription, cta, tags, and detailTags.</p>
+         * <p>UI component types to include in included offers.</p>
          */
         @JsonSetter(value = "supportedComponents", nulls = Nulls.SKIP)
         public Builder supportedComponents(Optional<List<ComponentType>> supportedComponents) {

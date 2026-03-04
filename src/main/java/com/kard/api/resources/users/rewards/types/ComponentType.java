@@ -7,11 +7,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class ComponentType {
+    public static final ComponentType BOOSTED_REWARD = new ComponentType(Value.BOOSTED_REWARD, "boostedReward");
+
     public static final ComponentType BASE_REWARD = new ComponentType(Value.BASE_REWARD, "baseReward");
 
     public static final ComponentType CTA = new ComponentType(Value.CTA, "cta");
 
     public static final ComponentType TAGS = new ComponentType(Value.TAGS, "tags");
+
+    public static final ComponentType LOGO_FLARE = new ComponentType(Value.LOGO_FLARE, "logoFlare");
 
     public static final ComponentType SHORT_DESCRIPTION =
             new ComponentType(Value.SHORT_DESCRIPTION, "shortDescription");
@@ -52,12 +56,16 @@ public final class ComponentType {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case BOOSTED_REWARD:
+                return visitor.visitBoostedReward();
             case BASE_REWARD:
                 return visitor.visitBaseReward();
             case CTA:
                 return visitor.visitCta();
             case TAGS:
                 return visitor.visitTags();
+            case LOGO_FLARE:
+                return visitor.visitLogoFlare();
             case SHORT_DESCRIPTION:
                 return visitor.visitShortDescription();
             case LONG_DESCRIPTION:
@@ -73,12 +81,16 @@ public final class ComponentType {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static ComponentType valueOf(String value) {
         switch (value) {
+            case "boostedReward":
+                return BOOSTED_REWARD;
             case "baseReward":
                 return BASE_REWARD;
             case "cta":
                 return CTA;
             case "tags":
                 return TAGS;
+            case "logoFlare":
+                return LOGO_FLARE;
             case "shortDescription":
                 return SHORT_DESCRIPTION;
             case "longDescription":
@@ -97,11 +109,15 @@ public final class ComponentType {
 
         BASE_REWARD,
 
+        BOOSTED_REWARD,
+
         CTA,
 
         TAGS,
 
         DETAIL_TAGS,
+
+        LOGO_FLARE,
 
         UNKNOWN
     }
@@ -113,11 +129,15 @@ public final class ComponentType {
 
         T visitBaseReward();
 
+        T visitBoostedReward();
+
         T visitCta();
 
         T visitTags();
 
         T visitDetailTags();
+
+        T visitLogoFlare();
 
         T visitUnknown(String unknownType);
     }

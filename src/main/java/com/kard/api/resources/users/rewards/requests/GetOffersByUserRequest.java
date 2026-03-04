@@ -86,7 +86,7 @@ public final class GetOffersByUserRequest {
     }
 
     /**
-     * @return UI component types to include in the response. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
+     * @return UI component types to include in the response.
      */
     @JsonProperty("supportedComponents")
     public Optional<List<ComponentType>> getSupportedComponents() {
@@ -246,7 +246,7 @@ public final class GetOffersByUserRequest {
         }
 
         /**
-         * <p>UI component types to include in the response. Valid values are shortDescription, longDescription, cta, tags, and detailTags.</p>
+         * <p>UI component types to include in the response.</p>
          */
         @JsonSetter(value = "supportedComponents", nulls = Nulls.SKIP)
         public Builder supportedComponents(Optional<List<ComponentType>> supportedComponents) {

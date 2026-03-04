@@ -1801,7 +1801,7 @@ client.users().rewards().offers(
 <dl>
 <dd>
 
-**supportedComponents:** `Optional<ComponentType>` — UI component types to include in the response. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
+**supportedComponents:** `Optional<ComponentType>` — UI component types to include in the response.
     
 </dd>
 </dl>
@@ -1993,7 +1993,7 @@ client.users().rewards().locations(
 <dl>
 <dd>
 
-**supportedComponents:** `Optional<ComponentType>` — UI component types to include in included offers. Valid values are shortDescription, longDescription, cta, tags, and detailTags.
+**supportedComponents:** `Optional<ComponentType>` — UI component types to include in included offers.
     
 </dd>
 </dl>
