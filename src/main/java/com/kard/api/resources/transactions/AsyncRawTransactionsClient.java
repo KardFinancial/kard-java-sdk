@@ -413,7 +413,7 @@ public class AsyncRawTransactionsClient {
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
-                .addPathSegments("transactions/upload");
+                .addPathSegments("transactions/uploads");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

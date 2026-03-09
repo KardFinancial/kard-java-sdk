@@ -1,3 +1,14 @@
+## 3.3.1 - 2026-03-09
+* fix: correct API endpoint path for transaction uploads
+* Update the transaction upload endpoint path from "transactions/upload" to
+* "transactions/uploads" to match the correct API specification. This change
+* affects both synchronous and asynchronous transaction clients.
+* Key changes:
+* Update endpoint path in AsyncRawTransactionsClient from upload to uploads
+* Update endpoint path in RawTransactionsClient from upload to uploads
+* Ensure consistency with server-side API expectations
+* 🌿 Generated with Fern
+
 ## 3.3.0 - 2026-03-04
 * feat: add logo flare component and secondary button style support
 * This update introduces logo flare functionality for enhanced offer presentation and adds secondary button style support. The changes expand UI component customization capabilities while removing outdated component type documentation.
