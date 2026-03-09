@@ -38,6 +38,8 @@ public final class GetOffersByUserRequest {
 
     private final Optional<String> pageBefore;
 
+    private final Optional<String> filterSearch;
+
     private final Optional<List<PurchaseChannel>> filterPurchaseChannel;
 
     private final Optional<CategoryOption> filterCategory;
@@ -53,6 +55,7 @@ public final class GetOffersByUserRequest {
             Optional<Integer> pageSize,
             Optional<String> pageAfter,
             Optional<String> pageBefore,
+            Optional<String> filterSearch,
             Optional<List<PurchaseChannel>> filterPurchaseChannel,
             Optional<CategoryOption> filterCategory,
             Optional<Boolean> filterIsTargeted,
@@ -63,6 +66,7 @@ public final class GetOffersByUserRequest {
         this.pageSize = pageSize;
         this.pageAfter = pageAfter;
         this.pageBefore = pageBefore;
+        this.filterSearch = filterSearch;
         this.filterPurchaseChannel = filterPurchaseChannel;
         this.filterCategory = filterCategory;
         this.filterIsTargeted = filterIsTargeted;
@@ -108,6 +112,14 @@ public final class GetOffersByUserRequest {
         return pageBefore;
     }
 
+    /**
+     * @return Case-insensitive search string to filter offers by merchant name
+     */
+    @JsonProperty("filter[search]")
+    public Optional<String> getFilterSearch() {
+        return filterSearch;
+    }
+
     @JsonProperty("filter[purchaseChannel]")
     public Optional<List<PurchaseChannel>> getFilterPurchaseChannel() {
         return filterPurchaseChannel;
@@ -141,6 +153,7 @@ public final class GetOffersByUserRequest {
                 && pageSize.equals(other.pageSize)
                 && pageAfter.equals(other.pageAfter)
                 && pageBefore.equals(other.pageBefore)
+                && filterSearch.equals(other.filterSearch)
                 && filterPurchaseChannel.equals(other.filterPurchaseChannel)
                 && filterCategory.equals(other.filterCategory)
                 && filterIsTargeted.equals(other.filterIsTargeted);
@@ -155,6 +168,7 @@ public final class GetOffersByUserRequest {
                 this.pageSize,
                 this.pageAfter,
                 this.pageBefore,
+                this.filterSearch,
                 this.filterPurchaseChannel,
                 this.filterCategory,
                 this.filterIsTargeted);
@@ -183,6 +197,8 @@ public final class GetOffersByUserRequest {
 
         private Optional<String> pageBefore = Optional.empty();
 
+        private Optional<String> filterSearch = Optional.empty();
+
         private Optional<List<PurchaseChannel>> filterPurchaseChannel = Optional.empty();
 
         private Optional<CategoryOption> filterCategory = Optional.empty();
@@ -201,6 +217,7 @@ public final class GetOffersByUserRequest {
             pageSize(other.getPageSize());
             pageAfter(other.getPageAfter());
             pageBefore(other.getPageBefore());
+            filterSearch(other.getFilterSearch());
             filterPurchaseChannel(other.getFilterPurchaseChannel());
             filterCategory(other.getFilterCategory());
             filterIsTargeted(other.getFilterIsTargeted());
@@ -297,6 +314,20 @@ public final class GetOffersByUserRequest {
             return this;
         }
 
+        /**
+         * <p>Case-insensitive search string to filter offers by merchant name</p>
+         */
+        @JsonSetter(value = "filter[search]", nulls = Nulls.SKIP)
+        public Builder filterSearch(Optional<String> filterSearch) {
+            this.filterSearch = filterSearch;
+            return this;
+        }
+
+        public Builder filterSearch(String filterSearch) {
+            this.filterSearch = Optional.ofNullable(filterSearch);
+            return this;
+        }
+
         @JsonSetter(value = "filter[purchaseChannel]", nulls = Nulls.SKIP)
         public Builder filterPurchaseChannel(Optional<List<PurchaseChannel>> filterPurchaseChannel) {
             this.filterPurchaseChannel = filterPurchaseChannel;
@@ -338,6 +369,7 @@ public final class GetOffersByUserRequest {
                     pageSize,
                     pageAfter,
                     pageBefore,
+                    filterSearch,
                     filterPurchaseChannel,
                     filterCategory,
                     filterIsTargeted,

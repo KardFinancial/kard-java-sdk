@@ -98,6 +98,10 @@ public class AsyncRawRewardsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page[before]", request.getPageBefore().get(), false);
         }
+        if (request.getFilterSearch().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "filter[search]", request.getFilterSearch().get(), false);
+        }
         if (request.getFilterPurchaseChannel().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,

@@ -1,3 +1,6 @@
+## 3.4.0 - 2026-03-09
+* The `GetOffersByUserRequest` now supports filtering offers by merchant name using the new `filterSearch` parameter. Pass a case-insensitive search string to filter offers based on merchant names.
+
 ## 3.3.1 - 2026-03-09
 * fix: correct API endpoint path for transaction uploads
 * Update the transaction upload endpoint path from "transactions/upload" to

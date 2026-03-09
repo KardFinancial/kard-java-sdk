@@ -1761,6 +1761,14 @@ client.users().rewards().offers(
 <dl>
 <dd>
 
+**filterSearch:** `Optional<String>` — Case-insensitive search string to filter offers by merchant name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **filterPurchaseChannel:** `Optional<List<PurchaseChannel>>` 
     
 </dd>
