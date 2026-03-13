@@ -30,16 +30,20 @@ public final class OffersResponseObject {
 
     private final Optional<List<EligibilityOfferIncluded>> included;
 
+    private final Optional<OffersMeta> meta;
+
     private final Map<String, Object> additionalProperties;
 
     private OffersResponseObject(
             List<OfferDataUnion> data,
             Links links,
             Optional<List<EligibilityOfferIncluded>> included,
+            Optional<OffersMeta> meta,
             Map<String, Object> additionalProperties) {
         this.data = data;
         this.links = links;
         this.included = included;
+        this.meta = meta;
         this.additionalProperties = additionalProperties;
     }
 
@@ -58,6 +62,11 @@ public final class OffersResponseObject {
         return included;
     }
 
+    @JsonProperty("meta")
+    public Optional<OffersMeta> getMeta() {
+        return meta;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -70,12 +79,15 @@ public final class OffersResponseObject {
     }
 
     private boolean equalTo(OffersResponseObject other) {
-        return data.equals(other.data) && links.equals(other.links) && included.equals(other.included);
+        return data.equals(other.data)
+                && links.equals(other.links)
+                && included.equals(other.included)
+                && meta.equals(other.meta);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data, this.links, this.included);
+        return Objects.hash(this.data, this.links, this.included, this.meta);
     }
 
     @java.lang.Override
@@ -109,11 +121,17 @@ public final class OffersResponseObject {
         _FinalStage included(Optional<List<EligibilityOfferIncluded>> included);
 
         _FinalStage included(List<EligibilityOfferIncluded> included);
+
+        _FinalStage meta(Optional<OffersMeta> meta);
+
+        _FinalStage meta(OffersMeta meta);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements LinksStage, _FinalStage {
         private Links links;
+
+        private Optional<OffersMeta> meta = Optional.empty();
 
         private Optional<List<EligibilityOfferIncluded>> included = Optional.empty();
 
@@ -129,6 +147,7 @@ public final class OffersResponseObject {
             data(other.getData());
             links(other.getLinks());
             included(other.getIncluded());
+            meta(other.getMeta());
             return this;
         }
 
@@ -136,6 +155,19 @@ public final class OffersResponseObject {
         @JsonSetter("links")
         public _FinalStage links(@NotNull Links links) {
             this.links = Objects.requireNonNull(links, "links must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage meta(OffersMeta meta) {
+            this.meta = Optional.ofNullable(meta);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "meta", nulls = Nulls.SKIP)
+        public _FinalStage meta(Optional<OffersMeta> meta) {
+            this.meta = meta;
             return this;
         }
 
@@ -178,7 +210,7 @@ public final class OffersResponseObject {
 
         @java.lang.Override
         public OffersResponseObject build() {
-            return new OffersResponseObject(data, links, included, additionalProperties);
+            return new OffersResponseObject(data, links, included, meta, additionalProperties);
         }
 
         @java.lang.Override

@@ -1,3 +1,6 @@
+## 3.5.0 - 2026-03-13
+* The SDK now supports metadata in offers API responses. The OffersResponseObject includes a new optional meta field that provides additional context about available categories across the entire filtered result set.
+
 ## 3.4.0 - 2026-03-09
 * The `GetOffersByUserRequest` now supports filtering offers by merchant name using the new `filterSearch` parameter. Pass a case-insensitive search string to filter offers based on merchant names.
 
