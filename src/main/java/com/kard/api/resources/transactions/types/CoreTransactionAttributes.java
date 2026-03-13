@@ -36,7 +36,7 @@ public final class CoreTransactionAttributes {
 
     private final OffsetDateTime authorizationDate;
 
-    private final FinancialInstitutionName financialInstitutionName;
+    private final String financialInstitutionName;
 
     private final Map<String, Object> additionalProperties;
 
@@ -49,7 +49,7 @@ public final class CoreTransactionAttributes {
             DirectionType direction,
             OffsetDateTime settledDate,
             OffsetDateTime authorizationDate,
-            FinancialInstitutionName financialInstitutionName,
+            String financialInstitutionName,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.transactionId = transactionId;
@@ -139,7 +139,7 @@ public final class CoreTransactionAttributes {
      * @return Name of the financial institution
      */
     @JsonProperty("financialInstitutionName")
-    public FinancialInstitutionName getFinancialInstitutionName() {
+    public String getFinancialInstitutionName() {
         return financialInstitutionName;
     }
 
@@ -251,7 +251,7 @@ public final class CoreTransactionAttributes {
         /**
          * <p>Name of the financial institution</p>
          */
-        _FinalStage financialInstitutionName(@NotNull FinancialInstitutionName financialInstitutionName);
+        _FinalStage financialInstitutionName(@NotNull String financialInstitutionName);
     }
 
     public interface _FinalStage {
@@ -290,7 +290,7 @@ public final class CoreTransactionAttributes {
 
         private OffsetDateTime authorizationDate;
 
-        private FinancialInstitutionName financialInstitutionName;
+        private String financialInstitutionName;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -414,7 +414,7 @@ public final class CoreTransactionAttributes {
          */
         @java.lang.Override
         @JsonSetter("financialInstitutionName")
-        public _FinalStage financialInstitutionName(@NotNull FinancialInstitutionName financialInstitutionName) {
+        public _FinalStage financialInstitutionName(@NotNull String financialInstitutionName) {
             this.financialInstitutionName =
                     Objects.requireNonNull(financialInstitutionName, "financialInstitutionName must not be null");
             return this;

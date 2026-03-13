@@ -1,3 +1,6 @@
+## 4.0.0 - 2026-03-13
+* The `financialInstitutionName` field in `CoreTransactionAttributes` has been changed from a custom enum type to a String. Existing code that uses `FinancialInstitutionName` constants or methods will need to be updated to use String values directly.
+
 ## 3.5.0 - 2026-03-13
 * The SDK now supports metadata in offers API responses. The OffersResponseObject includes a new optional meta field that provides additional context about available categories across the entire filtered result set.
 
