@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public final class RequestOptions {
+    private final String xKardTargetIssuer;
+
     private final Optional<Integer> timeout;
 
     private final TimeUnit timeoutTimeUnit;
@@ -23,12 +25,14 @@ public final class RequestOptions {
     private final Map<String, Supplier<String>> queryParameterSuppliers;
 
     private RequestOptions(
+            String xKardTargetIssuer,
             Optional<Integer> timeout,
             TimeUnit timeoutTimeUnit,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             Map<String, String> queryParameters,
             Map<String, Supplier<String>> queryParameterSuppliers) {
+        this.xKardTargetIssuer = xKardTargetIssuer;
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
         this.headers = headers;
@@ -47,6 +51,9 @@ public final class RequestOptions {
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
+        if (this.xKardTargetIssuer != null) {
+            headers.put("X-Kard-Target-Issuer", this.xKardTargetIssuer);
+        }
         headers.putAll(this.headers);
         this.headerSuppliers.forEach((key, supplier) -> {
             headers.put(key, supplier.get());
@@ -67,6 +74,8 @@ public final class RequestOptions {
     }
 
     public static class Builder {
+        private String xKardTargetIssuer = null;
+
         private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
@@ -78,6 +87,11 @@ public final class RequestOptions {
         private final Map<String, String> queryParameters = new HashMap<>();
 
         private final Map<String, Supplier<String>> queryParameterSuppliers = new HashMap<>();
+
+        public Builder xKardTargetIssuer(String xKardTargetIssuer) {
+            this.xKardTargetIssuer = xKardTargetIssuer;
+            return this;
+        }
 
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
@@ -112,7 +126,13 @@ public final class RequestOptions {
 
         public RequestOptions build() {
             return new RequestOptions(
-                    timeout, timeoutTimeUnit, headers, headerSuppliers, queryParameters, queryParameterSuppliers);
+                    xKardTargetIssuer,
+                    timeout,
+                    timeoutTimeUnit,
+                    headers,
+                    headerSuppliers,
+                    queryParameters,
+                    queryParameterSuppliers);
         }
     }
 }

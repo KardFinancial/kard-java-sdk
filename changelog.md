@@ -1,3 +1,6 @@
+## 4.2.0 - 2026-03-16
+* The SDK now supports configuring the X-Kard-Target-Issuer header through the client builders. Use the `xKardTargetIssuer()` method on `KardApiClientBuilder` or `AsyncKardApiClientBuilder` to set this header for all requests.
+
 ## 4.1.0 - 2026-03-16
 * New `ProgressBar` component support added to offer rewards, allowing tracking of redemption progress with configurable display options including total count, current progress, labels, and segmented views.
 
