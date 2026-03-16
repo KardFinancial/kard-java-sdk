@@ -20,6 +20,8 @@ public final class ComponentType {
     public static final ComponentType SHORT_DESCRIPTION =
             new ComponentType(Value.SHORT_DESCRIPTION, "shortDescription");
 
+    public static final ComponentType PROGRESS_BAR = new ComponentType(Value.PROGRESS_BAR, "progressBar");
+
     public static final ComponentType LONG_DESCRIPTION = new ComponentType(Value.LONG_DESCRIPTION, "longDescription");
 
     public static final ComponentType DETAIL_TAGS = new ComponentType(Value.DETAIL_TAGS, "detailTags");
@@ -68,6 +70,8 @@ public final class ComponentType {
                 return visitor.visitLogoFlare();
             case SHORT_DESCRIPTION:
                 return visitor.visitShortDescription();
+            case PROGRESS_BAR:
+                return visitor.visitProgressBar();
             case LONG_DESCRIPTION:
                 return visitor.visitLongDescription();
             case DETAIL_TAGS:
@@ -93,6 +97,8 @@ public final class ComponentType {
                 return LOGO_FLARE;
             case "shortDescription":
                 return SHORT_DESCRIPTION;
+            case "progressBar":
+                return PROGRESS_BAR;
             case "longDescription":
                 return LONG_DESCRIPTION;
             case "detailTags":
@@ -119,6 +125,8 @@ public final class ComponentType {
 
         LOGO_FLARE,
 
+        PROGRESS_BAR,
+
         UNKNOWN
     }
 
@@ -138,6 +146,8 @@ public final class ComponentType {
         T visitDetailTags();
 
         T visitLogoFlare();
+
+        T visitProgressBar();
 
         T visitUnknown(String unknownType);
     }

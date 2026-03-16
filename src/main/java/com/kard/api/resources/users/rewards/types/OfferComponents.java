@@ -37,6 +37,8 @@ public final class OfferComponents {
 
     private final Optional<LogoFlare> logoFlare;
 
+    private final Optional<ProgressBar> progressBar;
+
     private final Map<String, Object> additionalProperties;
 
     private OfferComponents(
@@ -48,6 +50,7 @@ public final class OfferComponents {
             Optional<List<String>> tags,
             Optional<List<String>> detailTags,
             Optional<LogoFlare> logoFlare,
+            Optional<ProgressBar> progressBar,
             Map<String, Object> additionalProperties) {
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
@@ -57,6 +60,7 @@ public final class OfferComponents {
         this.tags = tags;
         this.detailTags = detailTags;
         this.logoFlare = logoFlare;
+        this.progressBar = progressBar;
         this.additionalProperties = additionalProperties;
     }
 
@@ -124,6 +128,14 @@ public final class OfferComponents {
         return logoFlare;
     }
 
+    /**
+     * @return Progress bar component for tracking offer redemptions
+     */
+    @JsonProperty("progressBar")
+    public Optional<ProgressBar> getProgressBar() {
+        return progressBar;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -143,7 +155,8 @@ public final class OfferComponents {
                 && cta.equals(other.cta)
                 && tags.equals(other.tags)
                 && detailTags.equals(other.detailTags)
-                && logoFlare.equals(other.logoFlare);
+                && logoFlare.equals(other.logoFlare)
+                && progressBar.equals(other.progressBar);
     }
 
     @java.lang.Override
@@ -156,7 +169,8 @@ public final class OfferComponents {
                 this.cta,
                 this.tags,
                 this.detailTags,
-                this.logoFlare);
+                this.logoFlare,
+                this.progressBar);
     }
 
     @java.lang.Override
@@ -186,6 +200,8 @@ public final class OfferComponents {
 
         private Optional<LogoFlare> logoFlare = Optional.empty();
 
+        private Optional<ProgressBar> progressBar = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -200,6 +216,7 @@ public final class OfferComponents {
             tags(other.getTags());
             detailTags(other.getDetailTags());
             logoFlare(other.getLogoFlare());
+            progressBar(other.getProgressBar());
             return this;
         }
 
@@ -315,6 +332,20 @@ public final class OfferComponents {
             return this;
         }
 
+        /**
+         * <p>Progress bar component for tracking offer redemptions</p>
+         */
+        @JsonSetter(value = "progressBar", nulls = Nulls.SKIP)
+        public Builder progressBar(Optional<ProgressBar> progressBar) {
+            this.progressBar = progressBar;
+            return this;
+        }
+
+        public Builder progressBar(ProgressBar progressBar) {
+            this.progressBar = Optional.ofNullable(progressBar);
+            return this;
+        }
+
         public OfferComponents build() {
             return new OfferComponents(
                     shortDescription,
@@ -325,6 +356,7 @@ public final class OfferComponents {
                     tags,
                     detailTags,
                     logoFlare,
+                    progressBar,
                     additionalProperties);
         }
 

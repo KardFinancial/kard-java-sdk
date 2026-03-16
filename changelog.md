@@ -1,3 +1,6 @@
+## 4.1.0 - 2026-03-16
+* New `ProgressBar` component support added to offer rewards, allowing tracking of redemption progress with configurable display options including total count, current progress, labels, and segmented views.
+
 ## 4.0.0 - 2026-03-13
 * The `financialInstitutionName` field in `CoreTransactionAttributes` has been changed from a custom enum type to a String. Existing code that uses `FinancialInstitutionName` constants or methods will need to be updated to use String values directly.
 
