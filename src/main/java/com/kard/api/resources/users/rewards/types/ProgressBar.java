@@ -31,6 +31,8 @@ public final class ProgressBar {
 
     private final Optional<String> segmentIcon;
 
+    private final ProgressBarLabels labels;
+
     private final Map<String, Object> additionalProperties;
 
     private ProgressBar(
@@ -39,12 +41,14 @@ public final class ProgressBar {
             String label,
             boolean segmented,
             Optional<String> segmentIcon,
+            ProgressBarLabels labels,
             Map<String, Object> additionalProperties) {
         this.total = total;
         this.currentProgress = currentProgress;
         this.label = label;
         this.segmented = segmented;
         this.segmentIcon = segmentIcon;
+        this.labels = labels;
         this.additionalProperties = additionalProperties;
     }
 
@@ -88,6 +92,14 @@ public final class ProgressBar {
         return segmentIcon;
     }
 
+    /**
+     * @return Labels to render around the progress bar in different layouts
+     */
+    @JsonProperty("labels")
+    public ProgressBarLabels getLabels() {
+        return labels;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -104,12 +116,14 @@ public final class ProgressBar {
                 && currentProgress == other.currentProgress
                 && label.equals(other.label)
                 && segmented == other.segmented
-                && segmentIcon.equals(other.segmentIcon);
+                && segmentIcon.equals(other.segmentIcon)
+                && labels.equals(other.labels);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.total, this.currentProgress, this.label, this.segmented, this.segmentIcon);
+        return Objects.hash(
+                this.total, this.currentProgress, this.label, this.segmented, this.segmentIcon, this.labels);
     }
 
     @java.lang.Override
@@ -148,7 +162,14 @@ public final class ProgressBar {
         /**
          * <p>Whether the progress bar should be displayed as segmented</p>
          */
-        _FinalStage segmented(boolean segmented);
+        LabelsStage segmented(boolean segmented);
+    }
+
+    public interface LabelsStage {
+        /**
+         * <p>Labels to render around the progress bar in different layouts</p>
+         */
+        _FinalStage labels(@NotNull ProgressBarLabels labels);
     }
 
     public interface _FinalStage {
@@ -168,7 +189,7 @@ public final class ProgressBar {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements TotalStage, CurrentProgressStage, LabelStage, SegmentedStage, _FinalStage {
+            implements TotalStage, CurrentProgressStage, LabelStage, SegmentedStage, LabelsStage, _FinalStage {
         private int total;
 
         private int currentProgress;
@@ -176,6 +197,8 @@ public final class ProgressBar {
         private String label;
 
         private boolean segmented;
+
+        private ProgressBarLabels labels;
 
         private Optional<String> segmentIcon = Optional.empty();
 
@@ -191,6 +214,7 @@ public final class ProgressBar {
             label(other.getLabel());
             segmented(other.getSegmented());
             segmentIcon(other.getSegmentIcon());
+            labels(other.getLabels());
             return this;
         }
 
@@ -237,8 +261,20 @@ public final class ProgressBar {
          */
         @java.lang.Override
         @JsonSetter("segmented")
-        public _FinalStage segmented(boolean segmented) {
+        public LabelsStage segmented(boolean segmented) {
             this.segmented = segmented;
+            return this;
+        }
+
+        /**
+         * <p>Labels to render around the progress bar in different layouts</p>
+         * <p>Labels to render around the progress bar in different layouts</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("labels")
+        public _FinalStage labels(@NotNull ProgressBarLabels labels) {
+            this.labels = Objects.requireNonNull(labels, "labels must not be null");
             return this;
         }
 
@@ -264,7 +300,7 @@ public final class ProgressBar {
 
         @java.lang.Override
         public ProgressBar build() {
-            return new ProgressBar(total, currentProgress, label, segmented, segmentIcon, additionalProperties);
+            return new ProgressBar(total, currentProgress, label, segmented, segmentIcon, labels, additionalProperties);
         }
 
         @java.lang.Override

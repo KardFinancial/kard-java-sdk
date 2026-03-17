@@ -1,3 +1,6 @@
+## 5.0.0 - 2026-03-17
+* The ProgressBar class now includes a new required 'labels' field that enables configurable label placement for different layout views. Three new types are available: ProgressBarLabels (containing details and default view configurations), ProgressBarLabel (with text and position properties), and ProgressBarLabelPosition enum (supporting LEFT and RIGHT positions).
+
 ## 4.3.0 - 2026-03-17
 * The ProgressBar type now includes an optional segmentIcon field for specifying custom SVG icons when the progress bar is segmented.
 
