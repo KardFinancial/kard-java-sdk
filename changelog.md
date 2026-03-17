@@ -1,3 +1,6 @@
+## 4.3.0 - 2026-03-17
+* The ProgressBar type now includes an optional segmentIcon field for specifying custom SVG icons when the progress bar is segmented.
+
 ## 4.2.0 - 2026-03-16
 * The SDK now supports configuring the X-Kard-Target-Issuer header through the client builders. Use the `xKardTargetIssuer()` method on `KardApiClientBuilder` or `AsyncKardApiClientBuilder` to set this header for all requests.
 

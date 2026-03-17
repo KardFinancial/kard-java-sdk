@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -27,14 +29,22 @@ public final class ProgressBar {
 
     private final boolean segmented;
 
+    private final Optional<String> segmentIcon;
+
     private final Map<String, Object> additionalProperties;
 
     private ProgressBar(
-            int total, int currentProgress, String label, boolean segmented, Map<String, Object> additionalProperties) {
+            int total,
+            int currentProgress,
+            String label,
+            boolean segmented,
+            Optional<String> segmentIcon,
+            Map<String, Object> additionalProperties) {
         this.total = total;
         this.currentProgress = currentProgress;
         this.label = label;
         this.segmented = segmented;
+        this.segmentIcon = segmentIcon;
         this.additionalProperties = additionalProperties;
     }
 
@@ -70,6 +80,14 @@ public final class ProgressBar {
         return segmented;
     }
 
+    /**
+     * @return SVG icon to use for each segment when the progress bar is segmented
+     */
+    @JsonProperty("segmentIcon")
+    public Optional<String> getSegmentIcon() {
+        return segmentIcon;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -85,12 +103,13 @@ public final class ProgressBar {
         return total == other.total
                 && currentProgress == other.currentProgress
                 && label.equals(other.label)
-                && segmented == other.segmented;
+                && segmented == other.segmented
+                && segmentIcon.equals(other.segmentIcon);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.total, this.currentProgress, this.label, this.segmented);
+        return Objects.hash(this.total, this.currentProgress, this.label, this.segmented, this.segmentIcon);
     }
 
     @java.lang.Override
@@ -138,6 +157,13 @@ public final class ProgressBar {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>SVG icon to use for each segment when the progress bar is segmented</p>
+         */
+        _FinalStage segmentIcon(Optional<String> segmentIcon);
+
+        _FinalStage segmentIcon(String segmentIcon);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -151,6 +177,8 @@ public final class ProgressBar {
 
         private boolean segmented;
 
+        private Optional<String> segmentIcon = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -162,6 +190,7 @@ public final class ProgressBar {
             currentProgress(other.getCurrentProgress());
             label(other.getLabel());
             segmented(other.getSegmented());
+            segmentIcon(other.getSegmentIcon());
             return this;
         }
 
@@ -213,9 +242,29 @@ public final class ProgressBar {
             return this;
         }
 
+        /**
+         * <p>SVG icon to use for each segment when the progress bar is segmented</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage segmentIcon(String segmentIcon) {
+            this.segmentIcon = Optional.ofNullable(segmentIcon);
+            return this;
+        }
+
+        /**
+         * <p>SVG icon to use for each segment when the progress bar is segmented</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "segmentIcon", nulls = Nulls.SKIP)
+        public _FinalStage segmentIcon(Optional<String> segmentIcon) {
+            this.segmentIcon = segmentIcon;
+            return this;
+        }
+
         @java.lang.Override
         public ProgressBar build() {
-            return new ProgressBar(total, currentProgress, label, segmented, additionalProperties);
+            return new ProgressBar(total, currentProgress, label, segmented, segmentIcon, additionalProperties);
         }
 
         @java.lang.Override
