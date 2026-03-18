@@ -19,17 +19,17 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = ProgressBarLabels.Builder.class)
-public final class ProgressBarLabels {
-    private final Optional<ProgressBarLabelPair> details;
+@JsonDeserialize(builder = ProgressBarSegments.Builder.class)
+public final class ProgressBarSegments {
+    private final Optional<ProgressBarSegment> details;
 
-    private final ProgressBarLabelPair default_;
+    private final ProgressBarSegment default_;
 
     private final Map<String, Object> additionalProperties;
 
-    private ProgressBarLabels(
-            Optional<ProgressBarLabelPair> details,
-            ProgressBarLabelPair default_,
+    private ProgressBarSegments(
+            Optional<ProgressBarSegment> details,
+            ProgressBarSegment default_,
             Map<String, Object> additionalProperties) {
         this.details = details;
         this.default_ = default_;
@@ -37,25 +37,25 @@ public final class ProgressBarLabels {
     }
 
     /**
-     * @return Label configuration for the details view
+     * @return Segment configuration for the details view
      */
     @JsonProperty("details")
-    public Optional<ProgressBarLabelPair> getDetails() {
+    public Optional<ProgressBarSegment> getDetails() {
         return details;
     }
 
     /**
-     * @return Label configuration for the default view
+     * @return Segment configuration for the default view
      */
     @JsonProperty("default")
-    public ProgressBarLabelPair getDefault() {
+    public ProgressBarSegment getDefault() {
         return default_;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ProgressBarLabels && equalTo((ProgressBarLabels) other);
+        return other instanceof ProgressBarSegments && equalTo((ProgressBarSegments) other);
     }
 
     @JsonAnyGetter
@@ -63,7 +63,7 @@ public final class ProgressBarLabels {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ProgressBarLabels other) {
+    private boolean equalTo(ProgressBarSegments other) {
         return details.equals(other.details) && default_.equals(other.default_);
     }
 
@@ -83,33 +83,33 @@ public final class ProgressBarLabels {
 
     public interface DefaultStage {
         /**
-         * <p>Label configuration for the default view</p>
+         * <p>Segment configuration for the default view</p>
          */
-        _FinalStage default_(@NotNull ProgressBarLabelPair default_);
+        _FinalStage default_(@NotNull ProgressBarSegment default_);
 
-        Builder from(ProgressBarLabels other);
+        Builder from(ProgressBarSegments other);
     }
 
     public interface _FinalStage {
-        ProgressBarLabels build();
+        ProgressBarSegments build();
 
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Label configuration for the details view</p>
+         * <p>Segment configuration for the details view</p>
          */
-        _FinalStage details(Optional<ProgressBarLabelPair> details);
+        _FinalStage details(Optional<ProgressBarSegment> details);
 
-        _FinalStage details(ProgressBarLabelPair details);
+        _FinalStage details(ProgressBarSegment details);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DefaultStage, _FinalStage {
-        private ProgressBarLabelPair default_;
+        private ProgressBarSegment default_;
 
-        private Optional<ProgressBarLabelPair> details = Optional.empty();
+        private Optional<ProgressBarSegment> details = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -117,47 +117,47 @@ public final class ProgressBarLabels {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ProgressBarLabels other) {
+        public Builder from(ProgressBarSegments other) {
             details(other.getDetails());
             default_(other.getDefault());
             return this;
         }
 
         /**
-         * <p>Label configuration for the default view</p>
-         * <p>Label configuration for the default view</p>
+         * <p>Segment configuration for the default view</p>
+         * <p>Segment configuration for the default view</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("default")
-        public _FinalStage default_(@NotNull ProgressBarLabelPair default_) {
+        public _FinalStage default_(@NotNull ProgressBarSegment default_) {
             this.default_ = Objects.requireNonNull(default_, "default_ must not be null");
             return this;
         }
 
         /**
-         * <p>Label configuration for the details view</p>
+         * <p>Segment configuration for the details view</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage details(ProgressBarLabelPair details) {
+        public _FinalStage details(ProgressBarSegment details) {
             this.details = Optional.ofNullable(details);
             return this;
         }
 
         /**
-         * <p>Label configuration for the details view</p>
+         * <p>Segment configuration for the details view</p>
          */
         @java.lang.Override
         @JsonSetter(value = "details", nulls = Nulls.SKIP)
-        public _FinalStage details(Optional<ProgressBarLabelPair> details) {
+        public _FinalStage details(Optional<ProgressBarSegment> details) {
             this.details = details;
             return this;
         }
 
         @java.lang.Override
-        public ProgressBarLabels build() {
-            return new ProgressBarLabels(details, default_, additionalProperties);
+        public ProgressBarSegments build() {
+            return new ProgressBarSegments(details, default_, additionalProperties);
         }
 
         @java.lang.Override

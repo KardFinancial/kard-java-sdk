@@ -1,3 +1,6 @@
+## 6.0.0 - 2026-03-18
+* The ProgressBar API has been restructured with breaking changes. The `segmentIcon` field has been replaced with a `segments` configuration object. The `ProgressBarLabel` class has been renamed to `ProgressBarSegment`, and `ProgressBarLabels` now uses `ProgressBarLabelPair` objects instead of `ProgressBarLabel`. Update your code to use the new type names and field structures when working with progress bar configurations.
+
 ## 5.0.0 - 2026-03-17
 * The ProgressBar class now includes a new required 'labels' field that enables configurable label placement for different layout views. Three new types are available: ProgressBarLabels (containing details and default view configurations), ProgressBarLabel (with text and position properties), and ProgressBarLabelPosition enum (supporting LEFT and RIGHT positions).
 

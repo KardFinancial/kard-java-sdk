@@ -6,16 +6,19 @@ package com.kard.api.resources.users.rewards.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class ProgressBarLabelPosition {
-    public static final ProgressBarLabelPosition RIGHT = new ProgressBarLabelPosition(Value.RIGHT, "RIGHT");
+public final class ProgressBarSegmentPosition {
+    public static final ProgressBarSegmentPosition FULL_WIDTH =
+            new ProgressBarSegmentPosition(Value.FULL_WIDTH, "FULL_WIDTH");
 
-    public static final ProgressBarLabelPosition LEFT = new ProgressBarLabelPosition(Value.LEFT, "LEFT");
+    public static final ProgressBarSegmentPosition RIGHT = new ProgressBarSegmentPosition(Value.RIGHT, "RIGHT");
+
+    public static final ProgressBarSegmentPosition LEFT = new ProgressBarSegmentPosition(Value.LEFT, "LEFT");
 
     private final Value value;
 
     private final String string;
 
-    ProgressBarLabelPosition(Value value, String string) {
+    ProgressBarSegmentPosition(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -33,8 +36,8 @@ public final class ProgressBarLabelPosition {
     @java.lang.Override
     public boolean equals(Object other) {
         return (this == other)
-                || (other instanceof ProgressBarLabelPosition
-                        && this.string.equals(((ProgressBarLabelPosition) other).string));
+                || (other instanceof ProgressBarSegmentPosition
+                        && this.string.equals(((ProgressBarSegmentPosition) other).string));
     }
 
     @java.lang.Override
@@ -44,6 +47,8 @@ public final class ProgressBarLabelPosition {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case FULL_WIDTH:
+                return visitor.visitFullWidth();
             case RIGHT:
                 return visitor.visitRight();
             case LEFT:
@@ -55,14 +60,16 @@ public final class ProgressBarLabelPosition {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static ProgressBarLabelPosition valueOf(String value) {
+    public static ProgressBarSegmentPosition valueOf(String value) {
         switch (value) {
+            case "FULL_WIDTH":
+                return FULL_WIDTH;
             case "RIGHT":
                 return RIGHT;
             case "LEFT":
                 return LEFT;
             default:
-                return new ProgressBarLabelPosition(Value.UNKNOWN, value);
+                return new ProgressBarSegmentPosition(Value.UNKNOWN, value);
         }
     }
 
@@ -71,6 +78,8 @@ public final class ProgressBarLabelPosition {
 
         RIGHT,
 
+        FULL_WIDTH,
+
         UNKNOWN
     }
 
@@ -78,6 +87,8 @@ public final class ProgressBarLabelPosition {
         T visitLeft();
 
         T visitRight();
+
+        T visitFullWidth();
 
         T visitUnknown(String unknownType);
     }

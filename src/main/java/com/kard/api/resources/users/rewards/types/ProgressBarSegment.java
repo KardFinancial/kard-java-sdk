@@ -9,48 +9,51 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = ProgressBarLabel.Builder.class)
-public final class ProgressBarLabel {
-    private final String text;
+@JsonDeserialize(builder = ProgressBarSegment.Builder.class)
+public final class ProgressBarSegment {
+    private final Optional<String> icon;
 
-    private final ProgressBarLabelPosition position;
+    private final ProgressBarSegmentPosition position;
 
     private final Map<String, Object> additionalProperties;
 
-    private ProgressBarLabel(String text, ProgressBarLabelPosition position, Map<String, Object> additionalProperties) {
-        this.text = text;
+    private ProgressBarSegment(
+            Optional<String> icon, ProgressBarSegmentPosition position, Map<String, Object> additionalProperties) {
+        this.icon = icon;
         this.position = position;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return Text content for the label
+     * @return SVG icon to use for each segment
      */
-    @JsonProperty("text")
-    public String getText() {
-        return text;
+    @JsonProperty("icon")
+    public Optional<String> getIcon() {
+        return icon;
     }
 
     /**
-     * @return Position where the label should render
+     * @return Position of the segment within the layout
      */
     @JsonProperty("position")
-    public ProgressBarLabelPosition getPosition() {
+    public ProgressBarSegmentPosition getPosition() {
         return position;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ProgressBarLabel && equalTo((ProgressBarLabel) other);
+        return other instanceof ProgressBarSegment && equalTo((ProgressBarSegment) other);
     }
 
     @JsonAnyGetter
@@ -58,13 +61,13 @@ public final class ProgressBarLabel {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ProgressBarLabel other) {
-        return text.equals(other.text) && position.equals(other.position);
+    private boolean equalTo(ProgressBarSegment other) {
+        return icon.equals(other.icon) && position.equals(other.position);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.text, this.position);
+        return Objects.hash(this.icon, this.position);
     }
 
     @java.lang.Override
@@ -72,39 +75,39 @@ public final class ProgressBarLabel {
         return ObjectMappers.stringify(this);
     }
 
-    public static TextStage builder() {
+    public static PositionStage builder() {
         return new Builder();
-    }
-
-    public interface TextStage {
-        /**
-         * <p>Text content for the label</p>
-         */
-        PositionStage text(@NotNull String text);
-
-        Builder from(ProgressBarLabel other);
     }
 
     public interface PositionStage {
         /**
-         * <p>Position where the label should render</p>
+         * <p>Position of the segment within the layout</p>
          */
-        _FinalStage position(@NotNull ProgressBarLabelPosition position);
+        _FinalStage position(@NotNull ProgressBarSegmentPosition position);
+
+        Builder from(ProgressBarSegment other);
     }
 
     public interface _FinalStage {
-        ProgressBarLabel build();
+        ProgressBarSegment build();
 
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>SVG icon to use for each segment</p>
+         */
+        _FinalStage icon(Optional<String> icon);
+
+        _FinalStage icon(String icon);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TextStage, PositionStage, _FinalStage {
-        private String text;
+    public static final class Builder implements PositionStage, _FinalStage {
+        private ProgressBarSegmentPosition position;
 
-        private ProgressBarLabelPosition position;
+        private Optional<String> icon = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -112,39 +115,47 @@ public final class ProgressBarLabel {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ProgressBarLabel other) {
-            text(other.getText());
+        public Builder from(ProgressBarSegment other) {
+            icon(other.getIcon());
             position(other.getPosition());
             return this;
         }
 
         /**
-         * <p>Text content for the label</p>
-         * <p>Text content for the label</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("text")
-        public PositionStage text(@NotNull String text) {
-            this.text = Objects.requireNonNull(text, "text must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Position where the label should render</p>
-         * <p>Position where the label should render</p>
+         * <p>Position of the segment within the layout</p>
+         * <p>Position of the segment within the layout</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("position")
-        public _FinalStage position(@NotNull ProgressBarLabelPosition position) {
+        public _FinalStage position(@NotNull ProgressBarSegmentPosition position) {
             this.position = Objects.requireNonNull(position, "position must not be null");
             return this;
         }
 
+        /**
+         * <p>SVG icon to use for each segment</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
-        public ProgressBarLabel build() {
-            return new ProgressBarLabel(text, position, additionalProperties);
+        public _FinalStage icon(String icon) {
+            this.icon = Optional.ofNullable(icon);
+            return this;
+        }
+
+        /**
+         * <p>SVG icon to use for each segment</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "icon", nulls = Nulls.SKIP)
+        public _FinalStage icon(Optional<String> icon) {
+            this.icon = icon;
+            return this;
+        }
+
+        @java.lang.Override
+        public ProgressBarSegment build() {
+            return new ProgressBarSegment(icon, position, additionalProperties);
         }
 
         @java.lang.Override
