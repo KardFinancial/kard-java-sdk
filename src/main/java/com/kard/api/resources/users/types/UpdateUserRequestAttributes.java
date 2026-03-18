@@ -21,8 +21,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = UserRequestAttributes.Builder.class)
-public final class UserRequestAttributes {
+@JsonDeserialize(builder = UpdateUserRequestAttributes.Builder.class)
+public final class UpdateUserRequestAttributes {
     private final List<EnrolledRewardsType> enrolledRewards;
 
     private final Optional<String> zipCode;
@@ -35,18 +35,15 @@ public final class UserRequestAttributes {
 
     private final Optional<String> birthYear;
 
-    private final Optional<Boolean> historicalTransactionsSent;
-
     private final Map<String, Object> additionalProperties;
 
-    private UserRequestAttributes(
+    private UpdateUserRequestAttributes(
             List<EnrolledRewardsType> enrolledRewards,
             Optional<String> zipCode,
             Optional<String> email,
             Optional<String> hashedEmail,
             Optional<String> phoneNumber,
             Optional<String> birthYear,
-            Optional<Boolean> historicalTransactionsSent,
             Map<String, Object> additionalProperties) {
         this.enrolledRewards = enrolledRewards;
         this.zipCode = zipCode;
@@ -54,7 +51,6 @@ public final class UserRequestAttributes {
         this.hashedEmail = hashedEmail;
         this.phoneNumber = phoneNumber;
         this.birthYear = birthYear;
-        this.historicalTransactionsSent = historicalTransactionsSent;
         this.additionalProperties = additionalProperties;
     }
 
@@ -106,18 +102,10 @@ public final class UserRequestAttributes {
         return birthYear;
     }
 
-    /**
-     * @return Indicates whether historical transactions have been sent for this user
-     */
-    @JsonProperty("historicalTransactionsSent")
-    public Optional<Boolean> getHistoricalTransactionsSent() {
-        return historicalTransactionsSent;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof UserRequestAttributes && equalTo((UserRequestAttributes) other);
+        return other instanceof UpdateUserRequestAttributes && equalTo((UpdateUserRequestAttributes) other);
     }
 
     @JsonAnyGetter
@@ -125,26 +113,19 @@ public final class UserRequestAttributes {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(UserRequestAttributes other) {
+    private boolean equalTo(UpdateUserRequestAttributes other) {
         return enrolledRewards.equals(other.enrolledRewards)
                 && zipCode.equals(other.zipCode)
                 && email.equals(other.email)
                 && hashedEmail.equals(other.hashedEmail)
                 && phoneNumber.equals(other.phoneNumber)
-                && birthYear.equals(other.birthYear)
-                && historicalTransactionsSent.equals(other.historicalTransactionsSent);
+                && birthYear.equals(other.birthYear);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.enrolledRewards,
-                this.zipCode,
-                this.email,
-                this.hashedEmail,
-                this.phoneNumber,
-                this.birthYear,
-                this.historicalTransactionsSent);
+                this.enrolledRewards, this.zipCode, this.email, this.hashedEmail, this.phoneNumber, this.birthYear);
     }
 
     @java.lang.Override
@@ -170,21 +151,18 @@ public final class UserRequestAttributes {
 
         private Optional<String> birthYear = Optional.empty();
 
-        private Optional<Boolean> historicalTransactionsSent = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        public Builder from(UserRequestAttributes other) {
+        public Builder from(UpdateUserRequestAttributes other) {
             enrolledRewards(other.getEnrolledRewards());
             zipCode(other.getZipCode());
             email(other.getEmail());
             hashedEmail(other.getHashedEmail());
             phoneNumber(other.getPhoneNumber());
             birthYear(other.getBirthYear());
-            historicalTransactionsSent(other.getHistoricalTransactionsSent());
             return this;
         }
 
@@ -282,30 +260,9 @@ public final class UserRequestAttributes {
             return this;
         }
 
-        /**
-         * <p>Indicates whether historical transactions have been sent for this user</p>
-         */
-        @JsonSetter(value = "historicalTransactionsSent", nulls = Nulls.SKIP)
-        public Builder historicalTransactionsSent(Optional<Boolean> historicalTransactionsSent) {
-            this.historicalTransactionsSent = historicalTransactionsSent;
-            return this;
-        }
-
-        public Builder historicalTransactionsSent(Boolean historicalTransactionsSent) {
-            this.historicalTransactionsSent = Optional.ofNullable(historicalTransactionsSent);
-            return this;
-        }
-
-        public UserRequestAttributes build() {
-            return new UserRequestAttributes(
-                    enrolledRewards,
-                    zipCode,
-                    email,
-                    hashedEmail,
-                    phoneNumber,
-                    birthYear,
-                    historicalTransactionsSent,
-                    additionalProperties);
+        public UpdateUserRequestAttributes build() {
+            return new UpdateUserRequestAttributes(
+                    enrolledRewards, zipCode, email, hashedEmail, phoneNumber, birthYear, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

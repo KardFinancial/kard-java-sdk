@@ -12,6 +12,7 @@ import com.kard.api.resources.users.rewards.RewardsClient;
 import com.kard.api.resources.users.types.CreateUsersObject;
 import com.kard.api.resources.users.types.DeleteUserResponseObject;
 import com.kard.api.resources.users.types.UpdateUserObject;
+import com.kard.api.resources.users.types.UserResponseObject;
 import com.kard.api.resources.users.uploads.UploadsClient;
 import java.util.function.Supplier;
 
@@ -66,7 +67,7 @@ public class UsersClient {
      * Call this endpoint to update the details on a specified user.<br/>
      * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
-    public UpdateUserObject update(String organizationId, String userId, UpdateUserObject request) {
+    public UserResponseObject update(String organizationId, String userId, UpdateUserObject request) {
         return this.rawClient.update(organizationId, userId, request).body();
     }
 
@@ -74,7 +75,7 @@ public class UsersClient {
      * Call this endpoint to update the details on a specified user.<br/>
      * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
-    public UpdateUserObject update(
+    public UserResponseObject update(
             String organizationId, String userId, UpdateUserObject request, RequestOptions requestOptions) {
         return this.rawClient
                 .update(organizationId, userId, request, requestOptions)
@@ -102,7 +103,7 @@ public class UsersClient {
      * <br/>
      * <b>Required scopes:</b>  <code>user:read</code>
      */
-    public UpdateUserObject get(String organizationId, String userId) {
+    public UserResponseObject get(String organizationId, String userId) {
         return this.rawClient.get(organizationId, userId).body();
     }
 
@@ -111,7 +112,7 @@ public class UsersClient {
      * <br/>
      * <b>Required scopes:</b>  <code>user:read</code>
      */
-    public UpdateUserObject get(String organizationId, String userId, RequestOptions requestOptions) {
+    public UserResponseObject get(String organizationId, String userId, RequestOptions requestOptions) {
         return this.rawClient.get(organizationId, userId, requestOptions).body();
     }
 

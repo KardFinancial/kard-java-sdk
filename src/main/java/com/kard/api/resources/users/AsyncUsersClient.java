@@ -12,6 +12,7 @@ import com.kard.api.resources.users.rewards.AsyncRewardsClient;
 import com.kard.api.resources.users.types.CreateUsersObject;
 import com.kard.api.resources.users.types.DeleteUserResponseObject;
 import com.kard.api.resources.users.types.UpdateUserObject;
+import com.kard.api.resources.users.types.UserResponseObject;
 import com.kard.api.resources.users.uploads.AsyncUploadsClient;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
@@ -68,7 +69,8 @@ public class AsyncUsersClient {
      * Call this endpoint to update the details on a specified user.<br/>
      * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
-    public CompletableFuture<UpdateUserObject> update(String organizationId, String userId, UpdateUserObject request) {
+    public CompletableFuture<UserResponseObject> update(
+            String organizationId, String userId, UpdateUserObject request) {
         return this.rawClient.update(organizationId, userId, request).thenApply(response -> response.body());
     }
 
@@ -76,7 +78,7 @@ public class AsyncUsersClient {
      * Call this endpoint to update the details on a specified user.<br/>
      * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
-    public CompletableFuture<UpdateUserObject> update(
+    public CompletableFuture<UserResponseObject> update(
             String organizationId, String userId, UpdateUserObject request, RequestOptions requestOptions) {
         return this.rawClient
                 .update(organizationId, userId, request, requestOptions)
@@ -105,7 +107,7 @@ public class AsyncUsersClient {
      * <br/>
      * <b>Required scopes:</b>  <code>user:read</code>
      */
-    public CompletableFuture<UpdateUserObject> get(String organizationId, String userId) {
+    public CompletableFuture<UserResponseObject> get(String organizationId, String userId) {
         return this.rawClient.get(organizationId, userId).thenApply(response -> response.body());
     }
 
@@ -114,7 +116,7 @@ public class AsyncUsersClient {
      * <br/>
      * <b>Required scopes:</b>  <code>user:read</code>
      */
-    public CompletableFuture<UpdateUserObject> get(
+    public CompletableFuture<UserResponseObject> get(
             String organizationId, String userId, RequestOptions requestOptions) {
         return this.rawClient.get(organizationId, userId, requestOptions).thenApply(response -> response.body());
     }

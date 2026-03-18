@@ -17,26 +17,35 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = UpdateUserObject.Builder.class)
-public final class UpdateUserObject {
-    private final UpdateUserRequestDataUnion data;
+@JsonDeserialize(builder = UpdateUserRequestData.Builder.class)
+public final class UpdateUserRequestData {
+    private final String id;
+
+    private final UpdateUserRequestAttributes attributes;
 
     private final Map<String, Object> additionalProperties;
 
-    private UpdateUserObject(UpdateUserRequestDataUnion data, Map<String, Object> additionalProperties) {
-        this.data = data;
+    private UpdateUserRequestData(
+            String id, UpdateUserRequestAttributes attributes, Map<String, Object> additionalProperties) {
+        this.id = id;
+        this.attributes = attributes;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("data")
-    public UpdateUserRequestDataUnion getData() {
-        return data;
+    @JsonProperty("id")
+    public String getId() {
+        return id;
+    }
+
+    @JsonProperty("attributes")
+    public UpdateUserRequestAttributes getAttributes() {
+        return attributes;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof UpdateUserObject && equalTo((UpdateUserObject) other);
+        return other instanceof UpdateUserRequestData && equalTo((UpdateUserRequestData) other);
     }
 
     @JsonAnyGetter
@@ -44,13 +53,13 @@ public final class UpdateUserObject {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(UpdateUserObject other) {
-        return data.equals(other.data);
+    private boolean equalTo(UpdateUserRequestData other) {
+        return id.equals(other.id) && attributes.equals(other.attributes);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data);
+        return Objects.hash(this.id, this.attributes);
     }
 
     @java.lang.Override
@@ -58,18 +67,22 @@ public final class UpdateUserObject {
         return ObjectMappers.stringify(this);
     }
 
-    public static DataStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface DataStage {
-        _FinalStage data(@NotNull UpdateUserRequestDataUnion data);
+    public interface IdStage {
+        AttributesStage id(@NotNull String id);
 
-        Builder from(UpdateUserObject other);
+        Builder from(UpdateUserRequestData other);
+    }
+
+    public interface AttributesStage {
+        _FinalStage attributes(@NotNull UpdateUserRequestAttributes attributes);
     }
 
     public interface _FinalStage {
-        UpdateUserObject build();
+        UpdateUserRequestData build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -77,8 +90,10 @@ public final class UpdateUserObject {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements DataStage, _FinalStage {
-        private UpdateUserRequestDataUnion data;
+    public static final class Builder implements IdStage, AttributesStage, _FinalStage {
+        private String id;
+
+        private UpdateUserRequestAttributes attributes;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -86,21 +101,29 @@ public final class UpdateUserObject {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(UpdateUserObject other) {
-            data(other.getData());
+        public Builder from(UpdateUserRequestData other) {
+            id(other.getId());
+            attributes(other.getAttributes());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("data")
-        public _FinalStage data(@NotNull UpdateUserRequestDataUnion data) {
-            this.data = Objects.requireNonNull(data, "data must not be null");
+        @JsonSetter("id")
+        public AttributesStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
-        public UpdateUserObject build() {
-            return new UpdateUserObject(data, additionalProperties);
+        @JsonSetter("attributes")
+        public _FinalStage attributes(@NotNull UpdateUserRequestAttributes attributes) {
+            this.attributes = Objects.requireNonNull(attributes, "attributes must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public UpdateUserRequestData build() {
+            return new UpdateUserRequestData(id, attributes, additionalProperties);
         }
 
         @java.lang.Override

@@ -17,26 +17,26 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = UpdateUserObject.Builder.class)
-public final class UpdateUserObject {
-    private final UpdateUserRequestDataUnion data;
+@JsonDeserialize(builder = UserResponseObject.Builder.class)
+public final class UserResponseObject {
+    private final UserRequestDataUnion data;
 
     private final Map<String, Object> additionalProperties;
 
-    private UpdateUserObject(UpdateUserRequestDataUnion data, Map<String, Object> additionalProperties) {
+    private UserResponseObject(UserRequestDataUnion data, Map<String, Object> additionalProperties) {
         this.data = data;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("data")
-    public UpdateUserRequestDataUnion getData() {
+    public UserRequestDataUnion getData() {
         return data;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof UpdateUserObject && equalTo((UpdateUserObject) other);
+        return other instanceof UserResponseObject && equalTo((UserResponseObject) other);
     }
 
     @JsonAnyGetter
@@ -44,7 +44,7 @@ public final class UpdateUserObject {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(UpdateUserObject other) {
+    private boolean equalTo(UserResponseObject other) {
         return data.equals(other.data);
     }
 
@@ -63,13 +63,13 @@ public final class UpdateUserObject {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull UpdateUserRequestDataUnion data);
+        _FinalStage data(@NotNull UserRequestDataUnion data);
 
-        Builder from(UpdateUserObject other);
+        Builder from(UserResponseObject other);
     }
 
     public interface _FinalStage {
-        UpdateUserObject build();
+        UserResponseObject build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -78,7 +78,7 @@ public final class UpdateUserObject {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DataStage, _FinalStage {
-        private UpdateUserRequestDataUnion data;
+        private UserRequestDataUnion data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -86,21 +86,21 @@ public final class UpdateUserObject {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(UpdateUserObject other) {
+        public Builder from(UserResponseObject other) {
             data(other.getData());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull UpdateUserRequestDataUnion data) {
+        public _FinalStage data(@NotNull UserRequestDataUnion data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 
         @java.lang.Override
-        public UpdateUserObject build() {
-            return new UpdateUserObject(data, additionalProperties);
+        public UserResponseObject build() {
+            return new UserResponseObject(data, additionalProperties);
         }
 
         @java.lang.Override

@@ -1,3 +1,10 @@
+## 7.0.0 - 2026-03-18
+* ### Breaking Changes
+* **User operations** now return `UserResponseObject` instead of `UpdateUserObject`. Update your variable types and field access patterns.
+* ### Added
+* **`UpdateUserRequestDataUnion`** type for enhanced user data operations.
+* **`historicalTransactionsSent`** optional field when updating user attributes.
+
 ## 6.0.0 - 2026-03-18
 * The ProgressBar API has been restructured with breaking changes. The `segmentIcon` field has been replaced with a `segments` configuration object. The `ProgressBarLabel` class has been renamed to `ProgressBarSegment`, and `ProgressBarLabels` now uses `ProgressBarLabelPair` objects instead of `ProgressBarLabel`. Update your code to use the new type names and field structures when working with progress bar configurations.
 

@@ -1023,6 +1023,11 @@ client.users().create(
                                     Arrays.asList(EnrolledRewardsType.CARDLINKED)
                                 )
                                 .zipCode("11238")
+                                .email("user@example.com")
+                                .hashedEmail("a94a8fe5ccb19ba61c4c0873d391e987982fbbd3e2d8a5b76e45a1d4c4e2e3a1")
+                                .phoneNumber("+14155552671")
+                                .birthYear("1990")
+                                .historicalTransactionsSent(true)
                                 .build()
                         )
                         .build()
@@ -1065,7 +1070,7 @@ client.users().create(
 </dl>
 </details>
 
-<details><summary><code>client.users.update(organizationId, userId, request) -> UpdateUserObject</code></summary>
+<details><summary><code>client.users.update(organizationId, userId, request) -> UserResponseObject</code></summary>
 <dl>
 <dd>
 
@@ -1100,17 +1105,21 @@ client.users().update(
     UpdateUserObject
         .builder()
         .data(
-            UserRequestDataUnion.user(
-                UserRequestData
+            UpdateUserRequestDataUnion.user(
+                UpdateUserRequestData
                     .builder()
                     .id("1234567890")
                     .attributes(
-                        UserRequestAttributes
+                        UpdateUserRequestAttributes
                             .builder()
                             .enrolledRewards(
                                 Arrays.asList(EnrolledRewardsType.CARDLINKED)
                             )
                             .zipCode("11238")
+                            .email("user@example.com")
+                            .hashedEmail("a94a8fe5ccb19ba61c4c0873d391e987982fbbd3e2d8a5b76e45a1d4c4e2e3a1")
+                            .phoneNumber("+14155552671")
+                            .birthYear("1990")
                             .build()
                     )
                     .build()
@@ -1224,7 +1233,7 @@ client.users().delete("organization-123", "user-123");
 </dl>
 </details>
 
-<details><summary><code>client.users.get(organizationId, userId) -> UpdateUserObject</code></summary>
+<details><summary><code>client.users.get(organizationId, userId) -> UserResponseObject</code></summary>
 <dl>
 <dd>
 

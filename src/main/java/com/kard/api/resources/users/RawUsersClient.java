@@ -22,6 +22,7 @@ import com.kard.api.resources.users.types.CreateUsersMultiStatusResponse;
 import com.kard.api.resources.users.types.CreateUsersObject;
 import com.kard.api.resources.users.types.DeleteUserResponseObject;
 import com.kard.api.resources.users.types.UpdateUserObject;
+import com.kard.api.resources.users.types.UserResponseObject;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -124,7 +125,7 @@ public class RawUsersClient {
      * Call this endpoint to update the details on a specified user.<br/>
      * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
-    public KardApiHttpResponse<UpdateUserObject> update(
+    public KardApiHttpResponse<UserResponseObject> update(
             String organizationId, String userId, UpdateUserObject request) {
         return update(organizationId, userId, request, null);
     }
@@ -133,7 +134,7 @@ public class RawUsersClient {
      * Call this endpoint to update the details on a specified user.<br/>
      * <p><b>Required scopes:</b> <code>user:update</code></p>
      */
-    public KardApiHttpResponse<UpdateUserObject> update(
+    public KardApiHttpResponse<UserResponseObject> update(
             String organizationId, String userId, UpdateUserObject request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -169,7 +170,7 @@ public class RawUsersClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UpdateUserObject.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UserResponseObject.class), response);
             }
             try {
                 switch (response.code()) {
@@ -271,7 +272,7 @@ public class RawUsersClient {
      * <br/>
      * <b>Required scopes:</b>  <code>user:read</code>
      */
-    public KardApiHttpResponse<UpdateUserObject> get(String organizationId, String userId) {
+    public KardApiHttpResponse<UserResponseObject> get(String organizationId, String userId) {
         return get(organizationId, userId, null);
     }
 
@@ -280,7 +281,7 @@ public class RawUsersClient {
      * <br/>
      * <b>Required scopes:</b>  <code>user:read</code>
      */
-    public KardApiHttpResponse<UpdateUserObject> get(
+    public KardApiHttpResponse<UserResponseObject> get(
             String organizationId, String userId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -308,7 +309,7 @@ public class RawUsersClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UpdateUserObject.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UserResponseObject.class), response);
             }
             try {
                 switch (response.code()) {
