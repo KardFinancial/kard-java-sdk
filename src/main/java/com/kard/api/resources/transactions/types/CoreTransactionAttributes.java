@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -38,6 +40,8 @@ public final class CoreTransactionAttributes {
 
     private final String financialInstitutionName;
 
+    private final Optional<String> cardLastFour;
+
     private final Map<String, Object> additionalProperties;
 
     private CoreTransactionAttributes(
@@ -50,6 +54,7 @@ public final class CoreTransactionAttributes {
             OffsetDateTime settledDate,
             OffsetDateTime authorizationDate,
             String financialInstitutionName,
+            Optional<String> cardLastFour,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.transactionId = transactionId;
@@ -60,6 +65,7 @@ public final class CoreTransactionAttributes {
         this.settledDate = settledDate;
         this.authorizationDate = authorizationDate;
         this.financialInstitutionName = financialInstitutionName;
+        this.cardLastFour = cardLastFour;
         this.additionalProperties = additionalProperties;
     }
 
@@ -143,6 +149,14 @@ public final class CoreTransactionAttributes {
         return financialInstitutionName;
     }
 
+    /**
+     * @return Last four digits of the card used for the transaction.
+     */
+    @JsonProperty("cardLastFour")
+    public Optional<String> getCardLastFour() {
+        return cardLastFour;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -163,7 +177,8 @@ public final class CoreTransactionAttributes {
                 && direction.equals(other.direction)
                 && settledDate.equals(other.settledDate)
                 && authorizationDate.equals(other.authorizationDate)
-                && financialInstitutionName.equals(other.financialInstitutionName);
+                && financialInstitutionName.equals(other.financialInstitutionName)
+                && cardLastFour.equals(other.cardLastFour);
     }
 
     @java.lang.Override
@@ -177,7 +192,8 @@ public final class CoreTransactionAttributes {
                 this.direction,
                 this.settledDate,
                 this.authorizationDate,
-                this.financialInstitutionName);
+                this.financialInstitutionName,
+                this.cardLastFour);
     }
 
     @java.lang.Override
@@ -260,6 +276,13 @@ public final class CoreTransactionAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Last four digits of the card used for the transaction.</p>
+         */
+        _FinalStage cardLastFour(Optional<String> cardLastFour);
+
+        _FinalStage cardLastFour(String cardLastFour);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -292,6 +315,8 @@ public final class CoreTransactionAttributes {
 
         private String financialInstitutionName;
 
+        private Optional<String> cardLastFour = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -308,6 +333,7 @@ public final class CoreTransactionAttributes {
             settledDate(other.getSettledDate());
             authorizationDate(other.getAuthorizationDate());
             financialInstitutionName(other.getFinancialInstitutionName());
+            cardLastFour(other.getCardLastFour());
             return this;
         }
 
@@ -420,6 +446,26 @@ public final class CoreTransactionAttributes {
             return this;
         }
 
+        /**
+         * <p>Last four digits of the card used for the transaction.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage cardLastFour(String cardLastFour) {
+            this.cardLastFour = Optional.ofNullable(cardLastFour);
+            return this;
+        }
+
+        /**
+         * <p>Last four digits of the card used for the transaction.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "cardLastFour", nulls = Nulls.SKIP)
+        public _FinalStage cardLastFour(Optional<String> cardLastFour) {
+            this.cardLastFour = cardLastFour;
+            return this;
+        }
+
         @java.lang.Override
         public CoreTransactionAttributes build() {
             return new CoreTransactionAttributes(
@@ -432,6 +478,7 @@ public final class CoreTransactionAttributes {
                     settledDate,
                     authorizationDate,
                     financialInstitutionName,
+                    cardLastFour,
                     additionalProperties);
         }
 

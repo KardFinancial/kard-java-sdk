@@ -1,3 +1,6 @@
+## 7.1.0 - 2026-03-25
+* The `CoreTransactionAttributes` class now includes an optional `cardLastFour` field that provides the last four digits of the card used for the transaction.
+
 ## 7.0.0 - 2026-03-18
 * ### Breaking Changes
 * **User operations** now return `UserResponseObject` instead of `UpdateUserObject`. Update your variable types and field access patterns.
