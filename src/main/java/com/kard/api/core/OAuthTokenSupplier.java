@@ -17,15 +17,18 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private final String clientSecret;
 
+    private final String xKardTargetIssuer;
+
     private final AuthClient authClient;
 
     private String accessToken;
 
     private Instant expiresAt;
 
-    public OAuthTokenSupplier(String clientId, String clientSecret, AuthClient authClient) {
+    public OAuthTokenSupplier(String clientId, String clientSecret, String xKardTargetIssuer, AuthClient authClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.xKardTargetIssuer = xKardTargetIssuer;
         this.authClient = authClient;
         this.expiresAt = Instant.now();
     }
@@ -34,6 +37,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
         GetTokenRequest getTokenRequest = GetTokenRequest.builder()
                 .clientId(clientId)
                 .clientSecret(clientSecret)
+                .xKardTargetIssuer(xKardTargetIssuer)
                 .build();
         return authClient.getToken(getTokenRequest);
     }

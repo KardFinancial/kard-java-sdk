@@ -19,8 +19,6 @@ public class AsyncKardApiClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private String xKardTargetIssuer = null;
-
     protected Environment environment = Environment.PRODUCTION;
 
     private OkHttpClient httpClient;
@@ -57,14 +55,6 @@ public class AsyncKardApiClientBuilder {
      */
     public static _Builder builder() {
         return new _Builder();
-    }
-
-    /**
-     * Sets xKardTargetIssuer
-     */
-    public AsyncKardApiClientBuilder xKardTargetIssuer(String xKardTargetIssuer) {
-        this.xKardTargetIssuer = xKardTargetIssuer;
-        return this;
     }
 
     public AsyncKardApiClientBuilder environment(Environment environment) {
@@ -118,7 +108,6 @@ public class AsyncKardApiClientBuilder {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
         setAuthentication(builder);
-        setCustomHeaders(builder);
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
@@ -155,27 +144,6 @@ public class AsyncKardApiClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {}
-
-    /**
-     * Override this method to add or modify custom headers.
-     * This method is called during client options construction to set up custom headers defined in the API.
-     *
-     * @param builder The ClientOptions.Builder to configure
-     *
-     * Example:
-     * <pre>{@code
-     * &#64;Override
-     * protected void setCustomHeaders(ClientOptions.Builder builder) {
-     *     super.setCustomHeaders(builder); // Keep existing headers
-     *     builder.addHeader("X-Trace-ID", generateTraceId());
-     * }
-     * }</pre>
-     */
-    protected void setCustomHeaders(ClientOptions.Builder builder) {
-        if (this.xKardTargetIssuer != null) {
-            builder.addHeader("X-Kard-Target-Issuer", this.xKardTargetIssuer);
-        }
-    }
 
     /**
      * Sets the request timeout configuration.
@@ -272,9 +240,16 @@ public class AsyncKardApiClientBuilder {
 
         private final String clientSecret;
 
+        private String xKardTargetIssuer = null;
+
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
+        }
+
+        public _CredentialsAuth xKardTargetIssuer(String xKardTargetIssuer) {
+            this.xKardTargetIssuer = xKardTargetIssuer;
+            return this;
         }
 
         @Override
@@ -283,7 +258,7 @@ public class AsyncKardApiClientBuilder {
             ClientOptions baseOptions = buildClientOptions();
             AuthClient authClient = new AuthClient(baseOptions);
             OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.xKardTargetIssuer, authClient);
             ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
                     .addHeader("Authorization", oAuthTokenSupplier)
                     .build();

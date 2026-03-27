@@ -5,6 +5,7 @@ package com.kard.api.resources.auth.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,21 +15,37 @@ import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetTokenRequest.Builder.class)
 public final class GetTokenRequest {
+    private final Optional<String> xKardTargetIssuer;
+
     private final String clientId;
 
     private final String clientSecret;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetTokenRequest(String clientId, String clientSecret, Map<String, Object> additionalProperties) {
+    private GetTokenRequest(
+            Optional<String> xKardTargetIssuer,
+            String clientId,
+            String clientSecret,
+            Map<String, Object> additionalProperties) {
+        this.xKardTargetIssuer = xKardTargetIssuer;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return (Beta) Target issuer ID for partners managing multiple issuers on the Kard platform. When set, the auth token will be scoped to this specific issuer. Required if you manage more than one issuer; omit if you operate a single issuer integration.
+     */
+    @JsonIgnore
+    public Optional<String> getXKardTargetIssuer() {
+        return xKardTargetIssuer;
     }
 
     @JsonProperty("client_id")
@@ -53,12 +70,14 @@ public final class GetTokenRequest {
     }
 
     private boolean equalTo(GetTokenRequest other) {
-        return clientId.equals(other.clientId) && clientSecret.equals(other.clientSecret);
+        return xKardTargetIssuer.equals(other.xKardTargetIssuer)
+                && clientId.equals(other.clientId)
+                && clientSecret.equals(other.clientSecret);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.clientId, this.clientSecret);
+        return Objects.hash(this.xKardTargetIssuer, this.clientId, this.clientSecret);
     }
 
     @java.lang.Override
@@ -86,6 +105,13 @@ public final class GetTokenRequest {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>(Beta) Target issuer ID for partners managing multiple issuers on the Kard platform. When set, the auth token will be scoped to this specific issuer. Required if you manage more than one issuer; omit if you operate a single issuer integration.</p>
+         */
+        _FinalStage xKardTargetIssuer(Optional<String> xKardTargetIssuer);
+
+        _FinalStage xKardTargetIssuer(String xKardTargetIssuer);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -94,6 +120,8 @@ public final class GetTokenRequest {
 
         private String clientSecret;
 
+        private Optional<String> xKardTargetIssuer = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -101,6 +129,7 @@ public final class GetTokenRequest {
 
         @java.lang.Override
         public Builder from(GetTokenRequest other) {
+            xKardTargetIssuer(other.getXKardTargetIssuer());
             clientId(other.getClientId());
             clientSecret(other.getClientSecret());
             return this;
@@ -120,9 +149,28 @@ public final class GetTokenRequest {
             return this;
         }
 
+        /**
+         * <p>(Beta) Target issuer ID for partners managing multiple issuers on the Kard platform. When set, the auth token will be scoped to this specific issuer. Required if you manage more than one issuer; omit if you operate a single issuer integration.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage xKardTargetIssuer(String xKardTargetIssuer) {
+            this.xKardTargetIssuer = Optional.ofNullable(xKardTargetIssuer);
+            return this;
+        }
+
+        /**
+         * <p>(Beta) Target issuer ID for partners managing multiple issuers on the Kard platform. When set, the auth token will be scoped to this specific issuer. Required if you manage more than one issuer; omit if you operate a single issuer integration.</p>
+         */
+        @java.lang.Override
+        public _FinalStage xKardTargetIssuer(Optional<String> xKardTargetIssuer) {
+            this.xKardTargetIssuer = xKardTargetIssuer;
+            return this;
+        }
+
         @java.lang.Override
         public GetTokenRequest build() {
-            return new GetTokenRequest(clientId, clientSecret, additionalProperties);
+            return new GetTokenRequest(xKardTargetIssuer, clientId, clientSecret, additionalProperties);
         }
 
         @java.lang.Override

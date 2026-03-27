@@ -1,3 +1,6 @@
+## 8.0.0 - 2026-03-27
+* The `xKardTargetIssuer` configuration method has been moved from the main client builders (`KardApiClientBuilder` and `AsyncKardApiClientBuilder`) to the authentication builders. When using credential-based authentication, call `xKardTargetIssuer()` on the credentials builder returned by `.credentials()` instead of on the main client builder.
+
 ## 7.1.0 - 2026-03-25
 * The `CoreTransactionAttributes` class now includes an optional `cardLastFour` field that provides the last four digits of the card used for the transaction.
 
