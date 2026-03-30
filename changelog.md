@@ -1,3 +1,6 @@
+## 9.0.0 - 2026-03-30
+* The `cardLastFour` field in `CoreTransactionAttributes` has been renamed to `cardLastFours` and changed from `Optional<String>` to `Optional<List<String>>`. This supports cases where multiple card candidates may be provided when the issuer cannot determine which specific card was used. Existing code accessing `getCardLastFour()` must be updated to use `getCardLastFours()` and handle the list type.
+
 ## 8.0.0 - 2026-03-27
 * The `xKardTargetIssuer` configuration method has been moved from the main client builders (`KardApiClientBuilder` and `AsyncKardApiClientBuilder`) to the authentication builders. When using credential-based authentication, call `xKardTargetIssuer()` on the credentials builder returned by `.credentials()` instead of on the main client builder.
 

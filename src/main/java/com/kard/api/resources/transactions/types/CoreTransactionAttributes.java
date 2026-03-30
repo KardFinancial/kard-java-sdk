@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -40,7 +41,7 @@ public final class CoreTransactionAttributes {
 
     private final String financialInstitutionName;
 
-    private final Optional<String> cardLastFour;
+    private final Optional<List<String>> cardLastFours;
 
     private final Map<String, Object> additionalProperties;
 
@@ -54,7 +55,7 @@ public final class CoreTransactionAttributes {
             OffsetDateTime settledDate,
             OffsetDateTime authorizationDate,
             String financialInstitutionName,
-            Optional<String> cardLastFour,
+            Optional<List<String>> cardLastFours,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.transactionId = transactionId;
@@ -65,7 +66,7 @@ public final class CoreTransactionAttributes {
         this.settledDate = settledDate;
         this.authorizationDate = authorizationDate;
         this.financialInstitutionName = financialInstitutionName;
-        this.cardLastFour = cardLastFour;
+        this.cardLastFours = cardLastFours;
         this.additionalProperties = additionalProperties;
     }
 
@@ -150,11 +151,11 @@ public final class CoreTransactionAttributes {
     }
 
     /**
-     * @return Last four digits of the card used for the transaction.
+     * @return Last four digits of the card(s) that may have been used for the transaction. When the issuer cannot determine which specific card was used, multiple values are provided as candidates.
      */
-    @JsonProperty("cardLastFour")
-    public Optional<String> getCardLastFour() {
-        return cardLastFour;
+    @JsonProperty("cardLastFours")
+    public Optional<List<String>> getCardLastFours() {
+        return cardLastFours;
     }
 
     @java.lang.Override
@@ -178,7 +179,7 @@ public final class CoreTransactionAttributes {
                 && settledDate.equals(other.settledDate)
                 && authorizationDate.equals(other.authorizationDate)
                 && financialInstitutionName.equals(other.financialInstitutionName)
-                && cardLastFour.equals(other.cardLastFour);
+                && cardLastFours.equals(other.cardLastFours);
     }
 
     @java.lang.Override
@@ -193,7 +194,7 @@ public final class CoreTransactionAttributes {
                 this.settledDate,
                 this.authorizationDate,
                 this.financialInstitutionName,
-                this.cardLastFour);
+                this.cardLastFours);
     }
 
     @java.lang.Override
@@ -278,11 +279,11 @@ public final class CoreTransactionAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Last four digits of the card used for the transaction.</p>
+         * <p>Last four digits of the card(s) that may have been used for the transaction. When the issuer cannot determine which specific card was used, multiple values are provided as candidates.</p>
          */
-        _FinalStage cardLastFour(Optional<String> cardLastFour);
+        _FinalStage cardLastFours(Optional<List<String>> cardLastFours);
 
-        _FinalStage cardLastFour(String cardLastFour);
+        _FinalStage cardLastFours(List<String> cardLastFours);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -315,7 +316,7 @@ public final class CoreTransactionAttributes {
 
         private String financialInstitutionName;
 
-        private Optional<String> cardLastFour = Optional.empty();
+        private Optional<List<String>> cardLastFours = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -333,7 +334,7 @@ public final class CoreTransactionAttributes {
             settledDate(other.getSettledDate());
             authorizationDate(other.getAuthorizationDate());
             financialInstitutionName(other.getFinancialInstitutionName());
-            cardLastFour(other.getCardLastFour());
+            cardLastFours(other.getCardLastFours());
             return this;
         }
 
@@ -447,22 +448,22 @@ public final class CoreTransactionAttributes {
         }
 
         /**
-         * <p>Last four digits of the card used for the transaction.</p>
+         * <p>Last four digits of the card(s) that may have been used for the transaction. When the issuer cannot determine which specific card was used, multiple values are provided as candidates.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage cardLastFour(String cardLastFour) {
-            this.cardLastFour = Optional.ofNullable(cardLastFour);
+        public _FinalStage cardLastFours(List<String> cardLastFours) {
+            this.cardLastFours = Optional.ofNullable(cardLastFours);
             return this;
         }
 
         /**
-         * <p>Last four digits of the card used for the transaction.</p>
+         * <p>Last four digits of the card(s) that may have been used for the transaction. When the issuer cannot determine which specific card was used, multiple values are provided as candidates.</p>
          */
         @java.lang.Override
-        @JsonSetter(value = "cardLastFour", nulls = Nulls.SKIP)
-        public _FinalStage cardLastFour(Optional<String> cardLastFour) {
-            this.cardLastFour = cardLastFour;
+        @JsonSetter(value = "cardLastFours", nulls = Nulls.SKIP)
+        public _FinalStage cardLastFours(Optional<List<String>> cardLastFours) {
+            this.cardLastFours = cardLastFours;
             return this;
         }
 
@@ -478,7 +479,7 @@ public final class CoreTransactionAttributes {
                     settledDate,
                     authorizationDate,
                     financialInstitutionName,
-                    cardLastFour,
+                    cardLastFours,
                     additionalProperties);
         }
 
