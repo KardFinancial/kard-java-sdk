@@ -41,6 +41,8 @@ public final class CoreTransactionAttributes {
 
     private final String financialInstitutionName;
 
+    private final Optional<String> financialInstitutionId;
+
     private final Optional<List<String>> cardLastFours;
 
     private final Map<String, Object> additionalProperties;
@@ -55,6 +57,7 @@ public final class CoreTransactionAttributes {
             OffsetDateTime settledDate,
             OffsetDateTime authorizationDate,
             String financialInstitutionName,
+            Optional<String> financialInstitutionId,
             Optional<List<String>> cardLastFours,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -66,6 +69,7 @@ public final class CoreTransactionAttributes {
         this.settledDate = settledDate;
         this.authorizationDate = authorizationDate;
         this.financialInstitutionName = financialInstitutionName;
+        this.financialInstitutionId = financialInstitutionId;
         this.cardLastFours = cardLastFours;
         this.additionalProperties = additionalProperties;
     }
@@ -143,11 +147,19 @@ public final class CoreTransactionAttributes {
     }
 
     /**
-     * @return Name of the financial institution
+     * @return Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.
      */
     @JsonProperty("financialInstitutionName")
     public String getFinancialInstitutionName() {
         return financialInstitutionName;
+    }
+
+    /**
+     * @return Unique identifier of the financial institution
+     */
+    @JsonProperty("financialInstitutionId")
+    public Optional<String> getFinancialInstitutionId() {
+        return financialInstitutionId;
     }
 
     /**
@@ -179,6 +191,7 @@ public final class CoreTransactionAttributes {
                 && settledDate.equals(other.settledDate)
                 && authorizationDate.equals(other.authorizationDate)
                 && financialInstitutionName.equals(other.financialInstitutionName)
+                && financialInstitutionId.equals(other.financialInstitutionId)
                 && cardLastFours.equals(other.cardLastFours);
     }
 
@@ -194,6 +207,7 @@ public final class CoreTransactionAttributes {
                 this.settledDate,
                 this.authorizationDate,
                 this.financialInstitutionName,
+                this.financialInstitutionId,
                 this.cardLastFours);
     }
 
@@ -266,7 +280,7 @@ public final class CoreTransactionAttributes {
 
     public interface FinancialInstitutionNameStage {
         /**
-         * <p>Name of the financial institution</p>
+         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
          */
         _FinalStage financialInstitutionName(@NotNull String financialInstitutionName);
     }
@@ -277,6 +291,13 @@ public final class CoreTransactionAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Unique identifier of the financial institution</p>
+         */
+        _FinalStage financialInstitutionId(Optional<String> financialInstitutionId);
+
+        _FinalStage financialInstitutionId(String financialInstitutionId);
 
         /**
          * <p>Last four digits of the card(s) that may have been used for the transaction. When the issuer cannot determine which specific card was used, multiple values are provided as candidates.</p>
@@ -318,6 +339,8 @@ public final class CoreTransactionAttributes {
 
         private Optional<List<String>> cardLastFours = Optional.empty();
 
+        private Optional<String> financialInstitutionId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -334,6 +357,7 @@ public final class CoreTransactionAttributes {
             settledDate(other.getSettledDate());
             authorizationDate(other.getAuthorizationDate());
             financialInstitutionName(other.getFinancialInstitutionName());
+            financialInstitutionId(other.getFinancialInstitutionId());
             cardLastFours(other.getCardLastFours());
             return this;
         }
@@ -435,8 +459,8 @@ public final class CoreTransactionAttributes {
         }
 
         /**
-         * <p>Name of the financial institution</p>
-         * <p>Name of the financial institution</p>
+         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
+         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -467,6 +491,26 @@ public final class CoreTransactionAttributes {
             return this;
         }
 
+        /**
+         * <p>Unique identifier of the financial institution</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage financialInstitutionId(String financialInstitutionId) {
+            this.financialInstitutionId = Optional.ofNullable(financialInstitutionId);
+            return this;
+        }
+
+        /**
+         * <p>Unique identifier of the financial institution</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "financialInstitutionId", nulls = Nulls.SKIP)
+        public _FinalStage financialInstitutionId(Optional<String> financialInstitutionId) {
+            this.financialInstitutionId = financialInstitutionId;
+            return this;
+        }
+
         @java.lang.Override
         public CoreTransactionAttributes build() {
             return new CoreTransactionAttributes(
@@ -479,6 +523,7 @@ public final class CoreTransactionAttributes {
                     settledDate,
                     authorizationDate,
                     financialInstitutionName,
+                    financialInstitutionId,
                     cardLastFours,
                     additionalProperties);
         }

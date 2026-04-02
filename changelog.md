@@ -1,3 +1,6 @@
+## 9.1.0 - 2026-04-02
+* The `CoreTransactionAttributes` class now includes an optional `financialInstitutionId` field that provides a unique identifier for the financial institution. The existing `financialInstitutionName` field has been deprecated — consumers should migrate to `financialInstitutionId` going forward.
+
 ## 9.0.0 - 2026-03-30
 * The `cardLastFour` field in `CoreTransactionAttributes` has been renamed to `cardLastFours` and changed from `Optional<String>` to `Optional<List<String>>`. This supports cases where multiple card candidates may be provided when the issuer cannot determine which specific card was used. Existing code accessing `getCardLastFour()` must be updated to use `getCardLastFours()` and handle the list type.
 
