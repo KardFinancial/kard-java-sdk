@@ -1,3 +1,6 @@
+## 10.0.0 - 2026-04-03
+* The `getFinancialInstitutionName()` method on `CoreTransactionAttributes` now returns `Optional<String>` instead of `String`. Existing code that calls this method without unwrapping the `Optional` will fail to compile and must be updated. Additionally, the `FinancialInstitutionNameStage` builder interface has been removed — `financialInstitutionName` is no longer a required builder step and is instead set via optional overloaded methods on `_FinalStage`. Builder chains that previously passed through `FinancialInstitutionNameStage` must be updated accordingly.
+
 ## 9.1.0 - 2026-04-02
 * The `CoreTransactionAttributes` class now includes an optional `financialInstitutionId` field that provides a unique identifier for the financial institution. The existing `financialInstitutionName` field has been deprecated — consumers should migrate to `financialInstitutionId` going forward.
 

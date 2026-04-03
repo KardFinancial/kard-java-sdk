@@ -39,7 +39,7 @@ public final class CoreTransactionAttributes {
 
     private final OffsetDateTime authorizationDate;
 
-    private final String financialInstitutionName;
+    private final Optional<String> financialInstitutionName;
 
     private final Optional<String> financialInstitutionId;
 
@@ -56,7 +56,7 @@ public final class CoreTransactionAttributes {
             DirectionType direction,
             OffsetDateTime settledDate,
             OffsetDateTime authorizationDate,
-            String financialInstitutionName,
+            Optional<String> financialInstitutionName,
             Optional<String> financialInstitutionId,
             Optional<List<String>> cardLastFours,
             Map<String, Object> additionalProperties) {
@@ -150,7 +150,7 @@ public final class CoreTransactionAttributes {
      * @return Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.
      */
     @JsonProperty("financialInstitutionName")
-    public String getFinancialInstitutionName() {
+    public Optional<String> getFinancialInstitutionName() {
         return financialInstitutionName;
     }
 
@@ -275,14 +275,7 @@ public final class CoreTransactionAttributes {
         /**
          * <p>Timestamp for transaction authorization. Date string should be in ISO 8601 format i.e.'YYYY-MM-DDThh:mm:ss.sTZD' where TZD = time zone designator (Z or +hh:mm or -hh:mm) i.e. 1994-11-05T08:15:30-05:00 OR 1994-11-05T08:15:30Z</p>
          */
-        FinancialInstitutionNameStage authorizationDate(@NotNull OffsetDateTime authorizationDate);
-    }
-
-    public interface FinancialInstitutionNameStage {
-        /**
-         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
-         */
-        _FinalStage financialInstitutionName(@NotNull String financialInstitutionName);
+        _FinalStage authorizationDate(@NotNull OffsetDateTime authorizationDate);
     }
 
     public interface _FinalStage {
@@ -291,6 +284,13 @@ public final class CoreTransactionAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
+         */
+        _FinalStage financialInstitutionName(Optional<String> financialInstitutionName);
+
+        _FinalStage financialInstitutionName(String financialInstitutionName);
 
         /**
          * <p>Unique identifier of the financial institution</p>
@@ -317,7 +317,6 @@ public final class CoreTransactionAttributes {
                     DirectionStage,
                     SettledDateStage,
                     AuthorizationDateStage,
-                    FinancialInstitutionNameStage,
                     _FinalStage {
         private String userId;
 
@@ -335,11 +334,11 @@ public final class CoreTransactionAttributes {
 
         private OffsetDateTime authorizationDate;
 
-        private String financialInstitutionName;
-
         private Optional<List<String>> cardLastFours = Optional.empty();
 
         private Optional<String> financialInstitutionId = Optional.empty();
+
+        private Optional<String> financialInstitutionName = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -453,21 +452,8 @@ public final class CoreTransactionAttributes {
          */
         @java.lang.Override
         @JsonSetter("authorizationDate")
-        public FinancialInstitutionNameStage authorizationDate(@NotNull OffsetDateTime authorizationDate) {
+        public _FinalStage authorizationDate(@NotNull OffsetDateTime authorizationDate) {
             this.authorizationDate = Objects.requireNonNull(authorizationDate, "authorizationDate must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
-         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("financialInstitutionName")
-        public _FinalStage financialInstitutionName(@NotNull String financialInstitutionName) {
-            this.financialInstitutionName =
-                    Objects.requireNonNull(financialInstitutionName, "financialInstitutionName must not be null");
             return this;
         }
 
@@ -508,6 +494,26 @@ public final class CoreTransactionAttributes {
         @JsonSetter(value = "financialInstitutionId", nulls = Nulls.SKIP)
         public _FinalStage financialInstitutionId(Optional<String> financialInstitutionId) {
             this.financialInstitutionId = financialInstitutionId;
+            return this;
+        }
+
+        /**
+         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage financialInstitutionName(String financialInstitutionName) {
+            this.financialInstitutionName = Optional.ofNullable(financialInstitutionName);
+            return this;
+        }
+
+        /**
+         * <p>Deprecated. Use <code>financialInstitutionId</code> instead. Name of the financial institution.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "financialInstitutionName", nulls = Nulls.SKIP)
+        public _FinalStage financialInstitutionName(Optional<String> financialInstitutionName) {
+            this.financialInstitutionName = financialInstitutionName;
             return this;
         }
 
