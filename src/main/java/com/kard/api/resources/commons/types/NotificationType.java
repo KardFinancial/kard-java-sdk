@@ -12,19 +12,11 @@ public final class NotificationType {
     public static final NotificationType EARNED_REWARD_SETTLED =
             new NotificationType(Value.EARNED_REWARD_SETTLED, "earnedRewardSettled");
 
-    public static final NotificationType LOCATION = new NotificationType(Value.LOCATION, "location");
-
-    public static final NotificationType USER_OFFER = new NotificationType(Value.USER_OFFER, "userOffer");
-
     public static final NotificationType FAILED_TRANSACTION =
             new NotificationType(Value.FAILED_TRANSACTION, "failedTransaction");
 
-    public static final NotificationType OFFER = new NotificationType(Value.OFFER, "offer");
-
     public static final NotificationType EARNED_REWARD_APPROVED =
             new NotificationType(Value.EARNED_REWARD_APPROVED, "earnedRewardApproved");
-
-    public static final NotificationType MERCHANT = new NotificationType(Value.MERCHANT, "merchant");
 
     public static final NotificationType CLAWBACK = new NotificationType(Value.CLAWBACK, "clawback");
 
@@ -70,18 +62,10 @@ public final class NotificationType {
                 return visitor.visitAuditUpdate();
             case EARNED_REWARD_SETTLED:
                 return visitor.visitEarnedRewardSettled();
-            case LOCATION:
-                return visitor.visitLocation();
-            case USER_OFFER:
-                return visitor.visitUserOffer();
             case FAILED_TRANSACTION:
                 return visitor.visitFailedTransaction();
-            case OFFER:
-                return visitor.visitOffer();
             case EARNED_REWARD_APPROVED:
                 return visitor.visitEarnedRewardApproved();
-            case MERCHANT:
-                return visitor.visitMerchant();
             case CLAWBACK:
                 return visitor.visitClawback();
             case FILE_PROCESSING_RESULT:
@@ -101,18 +85,10 @@ public final class NotificationType {
                 return AUDIT_UPDATE;
             case "earnedRewardSettled":
                 return EARNED_REWARD_SETTLED;
-            case "location":
-                return LOCATION;
-            case "userOffer":
-                return USER_OFFER;
             case "failedTransaction":
                 return FAILED_TRANSACTION;
-            case "offer":
-                return OFFER;
             case "earnedRewardApproved":
                 return EARNED_REWARD_APPROVED;
-            case "merchant":
-                return MERCHANT;
             case "clawback":
                 return CLAWBACK;
             case "fileProcessingResult":
@@ -135,14 +111,6 @@ public final class NotificationType {
 
         CLAWBACK,
 
-        OFFER,
-
-        MERCHANT,
-
-        LOCATION,
-
-        USER_OFFER,
-
         AUDIT_UPDATE,
 
         FILE_PROCESSING_RESULT,
@@ -160,14 +128,6 @@ public final class NotificationType {
         T visitFailedTransaction();
 
         T visitClawback();
-
-        T visitOffer();
-
-        T visitMerchant();
-
-        T visitLocation();
-
-        T visitUserOffer();
 
         T visitAuditUpdate();
 

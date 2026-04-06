@@ -46,22 +46,6 @@ public final class NotificationDataUnion {
         return new NotificationDataUnion(new ClawbackValue(value));
     }
 
-    public static NotificationDataUnion offer(WebhookOfferData value) {
-        return new NotificationDataUnion(new OfferValue(value));
-    }
-
-    public static NotificationDataUnion merchant(WebhookMerchantData value) {
-        return new NotificationDataUnion(new MerchantValue(value));
-    }
-
-    public static NotificationDataUnion location(WebhookLocationsData value) {
-        return new NotificationDataUnion(new LocationValue(value));
-    }
-
-    public static NotificationDataUnion userOffer(WebhookUserOfferData value) {
-        return new NotificationDataUnion(new UserOfferValue(value));
-    }
-
     public static NotificationDataUnion auditUpdate(AuditUpdateData value) {
         return new NotificationDataUnion(new AuditUpdateValue(value));
     }
@@ -88,22 +72,6 @@ public final class NotificationDataUnion {
 
     public boolean isClawback() {
         return value instanceof ClawbackValue;
-    }
-
-    public boolean isOffer() {
-        return value instanceof OfferValue;
-    }
-
-    public boolean isMerchant() {
-        return value instanceof MerchantValue;
-    }
-
-    public boolean isLocation() {
-        return value instanceof LocationValue;
-    }
-
-    public boolean isUserOffer() {
-        return value instanceof UserOfferValue;
     }
 
     public boolean isAuditUpdate() {
@@ -153,34 +121,6 @@ public final class NotificationDataUnion {
         return Optional.empty();
     }
 
-    public Optional<WebhookOfferData> getOffer() {
-        if (isOffer()) {
-            return Optional.of(((OfferValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<WebhookMerchantData> getMerchant() {
-        if (isMerchant()) {
-            return Optional.of(((MerchantValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<WebhookLocationsData> getLocation() {
-        if (isLocation()) {
-            return Optional.of(((LocationValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<WebhookUserOfferData> getUserOffer() {
-        if (isUserOffer()) {
-            return Optional.of(((UserOfferValue) value).value);
-        }
-        return Optional.empty();
-    }
-
     public Optional<AuditUpdateData> getAuditUpdate() {
         if (isAuditUpdate()) {
             return Optional.of(((AuditUpdateValue) value).value);
@@ -218,14 +158,6 @@ public final class NotificationDataUnion {
 
         T visitClawback(ClawbackData clawback);
 
-        T visitOffer(WebhookOfferData offer);
-
-        T visitMerchant(WebhookMerchantData merchant);
-
-        T visitLocation(WebhookLocationsData location);
-
-        T visitUserOffer(WebhookUserOfferData userOffer);
-
         T visitAuditUpdate(AuditUpdateData auditUpdate);
 
         T visitFileProcessingResult(FileResultData fileProcessingResult);
@@ -240,10 +172,6 @@ public final class NotificationDataUnion {
         @JsonSubTypes.Type(ValidTransactionValue.class),
         @JsonSubTypes.Type(FailedTransactionValue.class),
         @JsonSubTypes.Type(ClawbackValue.class),
-        @JsonSubTypes.Type(OfferValue.class),
-        @JsonSubTypes.Type(MerchantValue.class),
-        @JsonSubTypes.Type(LocationValue.class),
-        @JsonSubTypes.Type(UserOfferValue.class),
         @JsonSubTypes.Type(AuditUpdateValue.class),
         @JsonSubTypes.Type(FileProcessingResultValue.class)
     })
@@ -433,162 +361,6 @@ public final class NotificationDataUnion {
         }
 
         private boolean equalTo(ClawbackValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "NotificationDataUnion{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("offer")
-    @JsonIgnoreProperties("type")
-    private static final class OfferValue implements Value {
-        @JsonUnwrapped
-        private WebhookOfferData value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private OfferValue() {}
-
-        private OfferValue(WebhookOfferData value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitOffer(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof OfferValue && equalTo((OfferValue) other);
-        }
-
-        private boolean equalTo(OfferValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "NotificationDataUnion{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("merchant")
-    @JsonIgnoreProperties("type")
-    private static final class MerchantValue implements Value {
-        @JsonUnwrapped
-        private WebhookMerchantData value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private MerchantValue() {}
-
-        private MerchantValue(WebhookMerchantData value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitMerchant(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof MerchantValue && equalTo((MerchantValue) other);
-        }
-
-        private boolean equalTo(MerchantValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "NotificationDataUnion{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("location")
-    @JsonIgnoreProperties("type")
-    private static final class LocationValue implements Value {
-        @JsonUnwrapped
-        private WebhookLocationsData value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private LocationValue() {}
-
-        private LocationValue(WebhookLocationsData value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitLocation(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof LocationValue && equalTo((LocationValue) other);
-        }
-
-        private boolean equalTo(LocationValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "NotificationDataUnion{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("userOffer")
-    @JsonIgnoreProperties("type")
-    private static final class UserOfferValue implements Value {
-        @JsonUnwrapped
-        private WebhookUserOfferData value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private UserOfferValue() {}
-
-        private UserOfferValue(WebhookUserOfferData value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitUserOffer(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof UserOfferValue && equalTo((UserOfferValue) other);
-        }
-
-        private boolean equalTo(UserOfferValue other) {
             return value.equals(other.value);
         }
 
