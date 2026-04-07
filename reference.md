@@ -832,6 +832,7 @@ client.transactions().createBulkTransactionsUploadUrl(
             Arrays.asList(
                 CreateFileUploadData
                     .builder()
+                    .type(FileUploadType.INCOMING_TRANSACTIONS_FILE)
                     .attributes(
                         CreateFileUploadAttributes
                             .builder()
@@ -841,6 +842,7 @@ client.transactions().createBulkTransactionsUploadUrl(
                     .build(),
                 CreateFileUploadData
                     .builder()
+                    .type(FileUploadType.INCOMING_TRANSACTIONS_FILE)
                     .attributes(
                         CreateFileUploadAttributes
                             .builder()

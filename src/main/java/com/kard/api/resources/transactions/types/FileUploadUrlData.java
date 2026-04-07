@@ -19,21 +19,28 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FileUploadUrlData.Builder.class)
 public final class FileUploadUrlData {
+    private final FileUploadType type;
+
     private final String id;
 
     private final FileUploadUrlAttributes attributes;
 
     private final Map<String, Object> additionalProperties;
 
-    private FileUploadUrlData(String id, FileUploadUrlAttributes attributes, Map<String, Object> additionalProperties) {
+    private FileUploadUrlData(
+            FileUploadType type,
+            String id,
+            FileUploadUrlAttributes attributes,
+            Map<String, Object> additionalProperties) {
+        this.type = type;
         this.id = id;
         this.attributes = attributes;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("type")
-    public String getType() {
-        return "incomingTransactionsFile";
+    public FileUploadType getType() {
+        return type;
     }
 
     /**
@@ -61,12 +68,12 @@ public final class FileUploadUrlData {
     }
 
     private boolean equalTo(FileUploadUrlData other) {
-        return id.equals(other.id) && attributes.equals(other.attributes);
+        return type.equals(other.type) && id.equals(other.id) && attributes.equals(other.attributes);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.attributes);
+        return Objects.hash(this.type, this.id, this.attributes);
     }
 
     @java.lang.Override
@@ -74,8 +81,14 @@ public final class FileUploadUrlData {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdStage builder() {
+    public static TypeStage builder() {
         return new Builder();
+    }
+
+    public interface TypeStage {
+        IdStage type(@NotNull FileUploadType type);
+
+        Builder from(FileUploadUrlData other);
     }
 
     public interface IdStage {
@@ -83,8 +96,6 @@ public final class FileUploadUrlData {
          * <p>Upload session ID for traceability</p>
          */
         AttributesStage id(@NotNull String id);
-
-        Builder from(FileUploadUrlData other);
     }
 
     public interface AttributesStage {
@@ -100,7 +111,9 @@ public final class FileUploadUrlData {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, AttributesStage, _FinalStage {
+    public static final class Builder implements TypeStage, IdStage, AttributesStage, _FinalStage {
+        private FileUploadType type;
+
         private String id;
 
         private FileUploadUrlAttributes attributes;
@@ -112,8 +125,16 @@ public final class FileUploadUrlData {
 
         @java.lang.Override
         public Builder from(FileUploadUrlData other) {
+            type(other.getType());
             id(other.getId());
             attributes(other.getAttributes());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("type")
+        public IdStage type(@NotNull FileUploadType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -138,7 +159,7 @@ public final class FileUploadUrlData {
 
         @java.lang.Override
         public FileUploadUrlData build() {
-            return new FileUploadUrlData(id, attributes, additionalProperties);
+            return new FileUploadUrlData(type, id, attributes, additionalProperties);
         }
 
         @java.lang.Override

@@ -19,18 +19,22 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateFileUploadData.Builder.class)
 public final class CreateFileUploadData {
+    private final FileUploadType type;
+
     private final CreateFileUploadAttributes attributes;
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateFileUploadData(CreateFileUploadAttributes attributes, Map<String, Object> additionalProperties) {
+    private CreateFileUploadData(
+            FileUploadType type, CreateFileUploadAttributes attributes, Map<String, Object> additionalProperties) {
+        this.type = type;
         this.attributes = attributes;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("type")
-    public String getType() {
-        return "incomingTransactionsFile";
+    public FileUploadType getType() {
+        return type;
     }
 
     @JsonProperty("attributes")
@@ -50,12 +54,12 @@ public final class CreateFileUploadData {
     }
 
     private boolean equalTo(CreateFileUploadData other) {
-        return attributes.equals(other.attributes);
+        return type.equals(other.type) && attributes.equals(other.attributes);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.attributes);
+        return Objects.hash(this.type, this.attributes);
     }
 
     @java.lang.Override
@@ -63,14 +67,18 @@ public final class CreateFileUploadData {
         return ObjectMappers.stringify(this);
     }
 
-    public static AttributesStage builder() {
+    public static TypeStage builder() {
         return new Builder();
+    }
+
+    public interface TypeStage {
+        AttributesStage type(@NotNull FileUploadType type);
+
+        Builder from(CreateFileUploadData other);
     }
 
     public interface AttributesStage {
         _FinalStage attributes(@NotNull CreateFileUploadAttributes attributes);
-
-        Builder from(CreateFileUploadData other);
     }
 
     public interface _FinalStage {
@@ -82,7 +90,9 @@ public final class CreateFileUploadData {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements AttributesStage, _FinalStage {
+    public static final class Builder implements TypeStage, AttributesStage, _FinalStage {
+        private FileUploadType type;
+
         private CreateFileUploadAttributes attributes;
 
         @JsonAnySetter
@@ -92,7 +102,15 @@ public final class CreateFileUploadData {
 
         @java.lang.Override
         public Builder from(CreateFileUploadData other) {
+            type(other.getType());
             attributes(other.getAttributes());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("type")
+        public AttributesStage type(@NotNull FileUploadType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -105,7 +123,7 @@ public final class CreateFileUploadData {
 
         @java.lang.Override
         public CreateFileUploadData build() {
-            return new CreateFileUploadData(attributes, additionalProperties);
+            return new CreateFileUploadData(type, attributes, additionalProperties);
         }
 
         @java.lang.Override
