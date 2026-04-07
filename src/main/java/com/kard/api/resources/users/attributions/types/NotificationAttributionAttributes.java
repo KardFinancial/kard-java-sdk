@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -28,6 +30,8 @@ public final class NotificationAttributionAttributes {
 
     private final OffsetDateTime eventDate;
 
+    private final Optional<AttributionState> state;
+
     private final Map<String, Object> additionalProperties;
 
     private NotificationAttributionAttributes(
@@ -35,11 +39,13 @@ public final class NotificationAttributionAttributes {
             EventCode eventCode,
             NotificationMedium medium,
             OffsetDateTime eventDate,
+            Optional<AttributionState> state,
             Map<String, Object> additionalProperties) {
         this.entityId = entityId;
         this.eventCode = eventCode;
         this.medium = medium;
         this.eventDate = eventDate;
+        this.state = state;
         this.additionalProperties = additionalProperties;
     }
 
@@ -70,6 +76,14 @@ public final class NotificationAttributionAttributes {
         return eventDate;
     }
 
+    /**
+     * @return Placement context for the attribution event
+     */
+    @JsonProperty("state")
+    public Optional<AttributionState> getState() {
+        return state;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -85,12 +99,13 @@ public final class NotificationAttributionAttributes {
         return entityId.equals(other.entityId)
                 && eventCode.equals(other.eventCode)
                 && medium.equals(other.medium)
-                && eventDate.equals(other.eventDate);
+                && eventDate.equals(other.eventDate)
+                && state.equals(other.state);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.entityId, this.eventCode, this.medium, this.eventDate);
+        return Objects.hash(this.entityId, this.eventCode, this.medium, this.eventDate, this.state);
     }
 
     @java.lang.Override
@@ -133,6 +148,13 @@ public final class NotificationAttributionAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Placement context for the attribution event</p>
+         */
+        _FinalStage state(Optional<AttributionState> state);
+
+        _FinalStage state(AttributionState state);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -146,6 +168,8 @@ public final class NotificationAttributionAttributes {
 
         private OffsetDateTime eventDate;
 
+        private Optional<AttributionState> state = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -157,6 +181,7 @@ public final class NotificationAttributionAttributes {
             eventCode(other.getEventCode());
             medium(other.getMedium());
             eventDate(other.getEventDate());
+            state(other.getState());
             return this;
         }
 
@@ -200,9 +225,30 @@ public final class NotificationAttributionAttributes {
             return this;
         }
 
+        /**
+         * <p>Placement context for the attribution event</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage state(AttributionState state) {
+            this.state = Optional.ofNullable(state);
+            return this;
+        }
+
+        /**
+         * <p>Placement context for the attribution event</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "state", nulls = Nulls.SKIP)
+        public _FinalStage state(Optional<AttributionState> state) {
+            this.state = state;
+            return this;
+        }
+
         @java.lang.Override
         public NotificationAttributionAttributes build() {
-            return new NotificationAttributionAttributes(entityId, eventCode, medium, eventDate, additionalProperties);
+            return new NotificationAttributionAttributes(
+                    entityId, eventCode, medium, eventDate, state, additionalProperties);
         }
 
         @java.lang.Override

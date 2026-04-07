@@ -1,3 +1,6 @@
+## 12.1.0 - 2026-04-07
+* Two new types — `AttributionState` and `AttributionFilter` — are now available in the `com.kard.api.resources.users.attributions.types` package. `NotificationAttributionAttributes` and `OfferAttributionAttributes` each expose a new optional `getState()` method that returns placement context (offer rank and active filters) recorded at the time of the attribution event. Existing builder chains require no changes.
+
 ## 12.0.0 - 2026-04-07
 * The `getType()` method on `CreateFileUploadData` and `FileUploadUrlData` now returns a `FileUploadType` enum instead of a hardcoded `String`. The new `FileUploadType` enum exposes constants `INCOMING_TRANSACTIONS_FILE` and `HISTORICAL_TRANSACTIONS_FILE` and a `Visitor<T>` interface for exhaustive handling. Additionally, `type` is now a required first step in both classes' staged builders — code that calls `CreateFileUploadData.builder().attributes(...)` or `FileUploadUrlData.builder().id(...)` directly will fail to compile and must be updated to call `.type(FileUploadType.INCOMING_TRANSACTIONS_FILE)` (or the appropriate variant) first.
 
