@@ -1,3 +1,6 @@
+## 13.1.0 - 2026-04-10
+* `GetEarnedRewardsRequest` now supports an optional `include` parameter that accepts a comma-separated list of related resources (`merchant`, `offer`) to embed in the earned-rewards response. Pass the value via the builder with `.include("merchant,offer")` — existing builder chains require no changes.
+
 ## 13.0.0 - 2026-04-10
 * The `CardNetwork` class has been moved from `com.kard.api.resources.transactions.types` to `com.kard.api.resources.commons.types`. Existing code that imports `CardNetwork` from the old package will fail to compile. Update all import statements from `import com.kard.api.resources.transactions.types.CardNetwork;` to `import com.kard.api.resources.commons.types.CardNetwork;`.
 

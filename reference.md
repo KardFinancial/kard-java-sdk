@@ -925,6 +925,7 @@ client.transactions().getEarnedRewards(
     GetEarnedRewardsRequest
         .builder()
         .pageSize(10)
+        .include("merchant,offer")
         .build()
 );
 ```
@@ -974,6 +975,14 @@ client.transactions().getEarnedRewards(
 <dd>
 
 **pageSize:** `Optional<Integer>` — Number of results per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `Optional<String>` — Comma-separated list of related resources to include in the response. Supported values are `merchant` and `offer`.
     
 </dd>
 </dl>

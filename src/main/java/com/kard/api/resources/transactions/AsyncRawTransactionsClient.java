@@ -559,6 +559,10 @@ public class AsyncRawTransactionsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page[size]", request.getPageSize().get(), false);
         }
+        if (request.getInclude().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include", request.getInclude().get(), false);
+        }
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
