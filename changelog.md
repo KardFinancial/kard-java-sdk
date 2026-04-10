@@ -1,3 +1,6 @@
+## 13.0.0 - 2026-04-10
+* The `CardNetwork` class has been moved from `com.kard.api.resources.transactions.types` to `com.kard.api.resources.commons.types`. Existing code that imports `CardNetwork` from the old package will fail to compile. Update all import statements from `import com.kard.api.resources.transactions.types.CardNetwork;` to `import com.kard.api.resources.commons.types.CardNetwork;`.
+
 ## 12.1.0 - 2026-04-07
 * Two new types — `AttributionState` and `AttributionFilter` — are now available in the `com.kard.api.resources.users.attributions.types` package. `NotificationAttributionAttributes` and `OfferAttributionAttributes` each expose a new optional `getState()` method that returns placement context (offer rank and active filters) recorded at the time of the attribution event. Existing builder chains require no changes.
 
