@@ -5,9 +5,9 @@ package com.kard.api.resources.users.rewards.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -76,7 +76,7 @@ public final class GetOffersByUserRequest {
     /**
      * @return If provided, response will be sorted by the specified fields
      */
-    @JsonProperty("sort")
+    @JsonIgnore
     public Optional<List<OfferSortOptions>> getSort() {
         return sort;
     }
@@ -84,7 +84,7 @@ public final class GetOffersByUserRequest {
     /**
      * @return CSV list of included resources in the response (e.g &quot;categories&quot;). Allowed value is <code>categories</code>.
      */
-    @JsonProperty("include")
+    @JsonIgnore
     public Optional<List<String>> getInclude() {
         return include;
     }
@@ -92,22 +92,22 @@ public final class GetOffersByUserRequest {
     /**
      * @return UI component types to include in the response.
      */
-    @JsonProperty("supportedComponents")
+    @JsonIgnore
     public Optional<List<ComponentType>> getSupportedComponents() {
         return supportedComponents;
     }
 
-    @JsonProperty("page[size]")
+    @JsonIgnore
     public Optional<Integer> getPageSize() {
         return pageSize;
     }
 
-    @JsonProperty("page[after]")
+    @JsonIgnore
     public Optional<String> getPageAfter() {
         return pageAfter;
     }
 
-    @JsonProperty("page[before]")
+    @JsonIgnore
     public Optional<String> getPageBefore() {
         return pageBefore;
     }
@@ -115,22 +115,22 @@ public final class GetOffersByUserRequest {
     /**
      * @return Case-insensitive search string to filter offers by merchant name
      */
-    @JsonProperty("filter[search]")
+    @JsonIgnore
     public Optional<String> getFilterSearch() {
         return filterSearch;
     }
 
-    @JsonProperty("filter[purchaseChannel]")
+    @JsonIgnore
     public Optional<List<PurchaseChannel>> getFilterPurchaseChannel() {
         return filterPurchaseChannel;
     }
 
-    @JsonProperty("filter[category]")
+    @JsonIgnore
     public Optional<CategoryOption> getFilterCategory() {
         return filterCategory;
     }
 
-    @JsonProperty("filter[isTargeted]")
+    @JsonIgnore
     public Optional<Boolean> getFilterIsTargeted() {
         return filterIsTargeted;
     }

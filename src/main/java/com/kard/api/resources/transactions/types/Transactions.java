@@ -82,6 +82,22 @@ public final class Transactions {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof Transactions && value.equals(((Transactions) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -112,6 +128,7 @@ public final class Transactions {
     @JsonIgnoreProperties("type")
     private static final class TransactionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TransactionsRequest value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -151,6 +168,7 @@ public final class Transactions {
     @JsonIgnoreProperties("type")
     private static final class MatchedTransactionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private MatchedTransactionsRequest value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -190,6 +208,7 @@ public final class Transactions {
     @JsonIgnoreProperties("type")
     private static final class CoreTransactionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private CoreTransactionRequest value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

@@ -5,9 +5,9 @@ package com.kard.api.resources.users.attributions.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -42,7 +42,7 @@ public final class ActivateOfferRequest {
     /**
      * @return UI component types to include in the offer response (when include=offer).
      */
-    @JsonProperty("supportedComponents")
+    @JsonIgnore
     public Optional<List<ComponentType>> getSupportedComponents() {
         return supportedComponents;
     }
@@ -50,7 +50,7 @@ public final class ActivateOfferRequest {
     /**
      * @return Related resources to include in the response. Allowed value is <code>offer</code>.
      */
-    @JsonProperty("include")
+    @JsonIgnore
     public Optional<List<ActivateOfferIncludeOption>> getInclude() {
         return include;
     }

@@ -52,6 +52,22 @@ public final class ProcessorMid {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof ProcessorMid && value.equals(((ProcessorMid) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -74,6 +90,7 @@ public final class ProcessorMid {
     @JsonIgnoreProperties("processor")
     private static final class VisaValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "processor", allowSetters = true)
         private VisaMid value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

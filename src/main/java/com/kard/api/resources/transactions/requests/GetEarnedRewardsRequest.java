@@ -5,9 +5,9 @@ package com.kard.api.resources.transactions.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -46,7 +46,7 @@ public final class GetEarnedRewardsRequest {
     /**
      * @return Cursor for next page (base64-encoded timestamp + transaction ID)
      */
-    @JsonProperty("page[after]")
+    @JsonIgnore
     public Optional<String> getPageAfter() {
         return pageAfter;
     }
@@ -54,7 +54,7 @@ public final class GetEarnedRewardsRequest {
     /**
      * @return Cursor for previous page (base64-encoded timestamp + transaction ID)
      */
-    @JsonProperty("page[before]")
+    @JsonIgnore
     public Optional<String> getPageBefore() {
         return pageBefore;
     }
@@ -62,7 +62,7 @@ public final class GetEarnedRewardsRequest {
     /**
      * @return Number of results per page
      */
-    @JsonProperty("page[size]")
+    @JsonIgnore
     public Optional<Integer> getPageSize() {
         return pageSize;
     }
@@ -70,7 +70,7 @@ public final class GetEarnedRewardsRequest {
     /**
      * @return Comma-separated list of related resources to include in the response. Supported values are <code>merchant</code> and <code>offer</code>.
      */
-    @JsonProperty("include")
+    @JsonIgnore
     public Optional<String> getInclude() {
         return include;
     }

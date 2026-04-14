@@ -67,6 +67,23 @@ public final class TransactionIncludedResource {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof TransactionIncludedResource
+                && value.equals(((TransactionIncludedResource) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -91,6 +108,7 @@ public final class TransactionIncludedResource {
     @JsonIgnoreProperties("type")
     private static final class MerchantValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TransactionMerchantResource value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -130,6 +148,7 @@ public final class TransactionIncludedResource {
     @JsonIgnoreProperties("type")
     private static final class OfferValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private TransactionOfferResource value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

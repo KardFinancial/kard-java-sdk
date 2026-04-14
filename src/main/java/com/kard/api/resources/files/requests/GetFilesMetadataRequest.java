@@ -5,9 +5,9 @@ package com.kard.api.resources.files.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -62,7 +62,7 @@ public final class GetFilesMetadataRequest {
     /**
      * @return If provided, response will be sorted by the specified fields. Defaults to descending sentDate, equivalent to &quot;-sentDate&quot;
      */
-    @JsonProperty("sort")
+    @JsonIgnore
     public Optional<List<FilesMetadataSortOptions>> getSort() {
         return sort;
     }
@@ -70,7 +70,7 @@ public final class GetFilesMetadataRequest {
     /**
      * @return Start date for filtering files (format ISO8601). If not provided, defaults to current date minus 1 month.
      */
-    @JsonProperty("filter[dateFrom]")
+    @JsonIgnore
     public Optional<String> getFilterDateFrom() {
         return filterDateFrom;
     }
@@ -78,7 +78,7 @@ public final class GetFilesMetadataRequest {
     /**
      * @return End date for filtering files (format ISO8601). If not provided, defaults to current date.
      */
-    @JsonProperty("filter[dateTo]")
+    @JsonIgnore
     public Optional<String> getFilterDateTo() {
         return filterDateTo;
     }
@@ -86,7 +86,7 @@ public final class GetFilesMetadataRequest {
     /**
      * @return The document file type.
      */
-    @JsonProperty("filter[fileType]")
+    @JsonIgnore
     public Optional<FileType> getFilterFileType() {
         return filterFileType;
     }
@@ -94,7 +94,7 @@ public final class GetFilesMetadataRequest {
     /**
      * @return Number of items per page. Defaults to 10 if not specified and maximum value allowed 100 items per page.
      */
-    @JsonProperty("page[size]")
+    @JsonIgnore
     public Optional<Integer> getPageSize() {
         return pageSize;
     }
@@ -102,7 +102,7 @@ public final class GetFilesMetadataRequest {
     /**
      * @return Cursor for forward pagination (next page).
      */
-    @JsonProperty("page[after]")
+    @JsonIgnore
     public Optional<String> getPageAfter() {
         return pageAfter;
     }
@@ -110,7 +110,7 @@ public final class GetFilesMetadataRequest {
     /**
      * @return Cursor for backward pagination (previous page).
      */
-    @JsonProperty("page[before]")
+    @JsonIgnore
     public Optional<String> getPageBefore() {
         return pageBefore;
     }

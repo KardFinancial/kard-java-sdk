@@ -142,6 +142,22 @@ public final class NotificationDataUnion {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof NotificationDataUnion && value.equals(((NotificationDataUnion) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -184,6 +200,7 @@ public final class NotificationDataUnion {
     @JsonIgnoreProperties("type")
     private static final class EarnedRewardApprovedValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private EarnedRewardApprovedData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -223,6 +240,7 @@ public final class NotificationDataUnion {
     @JsonIgnoreProperties("type")
     private static final class EarnedRewardSettledValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private EarnedRewardSettledData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -262,6 +280,7 @@ public final class NotificationDataUnion {
     @JsonIgnoreProperties("type")
     private static final class ValidTransactionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ValidTransactionData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -301,6 +320,7 @@ public final class NotificationDataUnion {
     @JsonIgnoreProperties("type")
     private static final class FailedTransactionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private FailedTransactionData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -340,6 +360,7 @@ public final class NotificationDataUnion {
     @JsonIgnoreProperties("type")
     private static final class ClawbackValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private ClawbackData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -379,6 +400,7 @@ public final class NotificationDataUnion {
     @JsonIgnoreProperties("type")
     private static final class AuditUpdateValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private AuditUpdateData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -418,6 +440,7 @@ public final class NotificationDataUnion {
     @JsonIgnoreProperties("type")
     private static final class FileProcessingResultValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private FileResultData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

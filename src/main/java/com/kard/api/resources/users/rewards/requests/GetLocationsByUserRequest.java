@@ -5,9 +5,9 @@ package com.kard.api.resources.users.rewards.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -92,7 +92,7 @@ public final class GetLocationsByUserRequest {
     /**
      * @return If provided, response will be sorted by the specified fields
      */
-    @JsonProperty("sort")
+    @JsonIgnore
     public Optional<List<LocationSortOptions>> getSort() {
         return sort;
     }
@@ -100,7 +100,7 @@ public final class GetLocationsByUserRequest {
     /**
      * @return CSV list of included resources in the response (e.g &quot;offers,categories&quot;). Allowed values are <code>offers</code> and <code>categories</code>.
      */
-    @JsonProperty("include")
+    @JsonIgnore
     public Optional<List<String>> getInclude() {
         return include;
     }
@@ -108,62 +108,62 @@ public final class GetLocationsByUserRequest {
     /**
      * @return UI component types to include in included offers.
      */
-    @JsonProperty("supportedComponents")
+    @JsonIgnore
     public Optional<List<ComponentType>> getSupportedComponents() {
         return supportedComponents;
     }
 
-    @JsonProperty("page[size]")
+    @JsonIgnore
     public Optional<Integer> getPageSize() {
         return pageSize;
     }
 
-    @JsonProperty("page[after]")
+    @JsonIgnore
     public Optional<String> getPageAfter() {
         return pageAfter;
     }
 
-    @JsonProperty("page[before]")
+    @JsonIgnore
     public Optional<String> getPageBefore() {
         return pageBefore;
     }
 
-    @JsonProperty("filter[name]")
+    @JsonIgnore
     public Optional<String> getFilterName() {
         return filterName;
     }
 
-    @JsonProperty("filter[city]")
+    @JsonIgnore
     public Optional<String> getFilterCity() {
         return filterCity;
     }
 
-    @JsonProperty("filter[zipCode]")
+    @JsonIgnore
     public Optional<String> getFilterZipCode() {
         return filterZipCode;
     }
 
-    @JsonProperty("filter[state]")
+    @JsonIgnore
     public Optional<State> getFilterState() {
         return filterState;
     }
 
-    @JsonProperty("filter[category]")
+    @JsonIgnore
     public Optional<CategoryOption> getFilterCategory() {
         return filterCategory;
     }
 
-    @JsonProperty("filter[longitude]")
+    @JsonIgnore
     public Optional<Double> getFilterLongitude() {
         return filterLongitude;
     }
 
-    @JsonProperty("filter[latitude]")
+    @JsonIgnore
     public Optional<Double> getFilterLatitude() {
         return filterLatitude;
     }
 
-    @JsonProperty("filter[radius]")
+    @JsonIgnore
     public Optional<Integer> getFilterRadius() {
         return filterRadius;
     }

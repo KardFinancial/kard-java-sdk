@@ -52,6 +52,22 @@ public final class RewardedTransactionUnion {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof RewardedTransactionUnion && value.equals(((RewardedTransactionUnion) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -74,6 +90,7 @@ public final class RewardedTransactionUnion {
     @JsonIgnoreProperties("type")
     private static final class RewardedTransactionValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private RewardedTransaction value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

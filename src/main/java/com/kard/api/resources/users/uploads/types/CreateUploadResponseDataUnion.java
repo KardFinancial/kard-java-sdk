@@ -52,6 +52,23 @@ public final class CreateUploadResponseDataUnion {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof CreateUploadResponseDataUnion
+                && value.equals(((CreateUploadResponseDataUnion) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -74,6 +91,7 @@ public final class CreateUploadResponseDataUnion {
     @JsonIgnoreProperties("type")
     private static final class HistoricalTransactionStartValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
         private CreateUploadResponseData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

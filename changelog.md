@@ -1,3 +1,7 @@
+## 13.2.0 - 2026-04-14
+* [ADDED] **Configurable SDK logging** via the new `LogConfig`, `LogLevel`, `ILogger`, `Logger`, and `ConsoleLogger` types in `com.kard.api.core`. Pass a `LogConfig` to `KardApiClientBuilder.logging(LogConfig)` or `AsyncKardApiClientBuilder.logging(LogConfig)` to capture HTTP request/response activity at your desired level (`DEBUG`, `INFO`, `WARN`, `ERROR`). Logging is silent by default — no output is produced unless explicitly enabled. Supply a custom `ILogger` implementation to redirect output to any logging framework.
+* [FIXED] Query-parameter getters on several request types (`GetFilesMetadataRequest`, `GetEarnedRewardsRequest`, `GetLocationsByUserRequest`, `GetOffersByUserRequest`, `GetSubscriptionsRequest`, `ActivateOfferRequest`, `BoostOfferRequest`) were annotated with `@JsonProperty` instead of `@JsonIgnore`. They are now correctly marked `@JsonIgnore`, preventing these fields from being unintentionally serialized into a request body.
+
 ## 13.1.0 - 2026-04-10
 * `GetEarnedRewardsRequest` now supports an optional `include` parameter that accepts a comma-separated list of related resources (`merchant`, `offer`) to embed in the earned-rewards response. Pass the value via the builder with `.include("merchant,offer")` — existing builder chains require no changes.
 
