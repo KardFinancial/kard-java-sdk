@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class RewardedTransactionStatus {
+    public static final RewardedTransactionStatus APPROVED = new RewardedTransactionStatus(Value.APPROVED, "APPROVED");
+
     public static final RewardedTransactionStatus SETTLED = new RewardedTransactionStatus(Value.SETTLED, "SETTLED");
 
     private final Value value;
@@ -42,6 +44,8 @@ public final class RewardedTransactionStatus {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case APPROVED:
+                return visitor.visitApproved();
             case SETTLED:
                 return visitor.visitSettled();
             case UNKNOWN:
@@ -53,6 +57,8 @@ public final class RewardedTransactionStatus {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static RewardedTransactionStatus valueOf(String value) {
         switch (value) {
+            case "APPROVED":
+                return APPROVED;
             case "SETTLED":
                 return SETTLED;
             default:
@@ -61,12 +67,16 @@ public final class RewardedTransactionStatus {
     }
 
     public enum Value {
+        APPROVED,
+
         SETTLED,
 
         UNKNOWN
     }
 
     public interface Visitor<T> {
+        T visitApproved();
+
         T visitSettled();
 
         T visitUnknown(String unknownType);

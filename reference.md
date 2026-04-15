@@ -900,7 +900,7 @@ client.transactions().createBulkTransactionsUploadUrl(
 <dl>
 <dd>
 
-Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
 <br/>
 <b>Required scopes:</b> `transaction:read`
 <br/>
@@ -925,6 +925,7 @@ client.transactions().getEarnedRewards(
     GetEarnedRewardsRequest
         .builder()
         .pageSize(10)
+        .filterStatus("APPROVED,SETTLED")
         .include("merchant,offer")
         .build()
 );
@@ -975,6 +976,14 @@ client.transactions().getEarnedRewards(
 <dd>
 
 **pageSize:** `Optional<Integer>` — Number of results per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filterStatus:** `Optional<String>` — Comma-separated list of transaction statuses to return. Supported values are `APPROVED` and `SETTLED`. Defaults to `SETTLED` when omitted.
     
 </dd>
 </dl>

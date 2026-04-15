@@ -26,6 +26,8 @@ public final class GetEarnedRewardsRequest {
 
     private final Optional<Integer> pageSize;
 
+    private final Optional<String> filterStatus;
+
     private final Optional<String> include;
 
     private final Map<String, Object> additionalProperties;
@@ -34,11 +36,13 @@ public final class GetEarnedRewardsRequest {
             Optional<String> pageAfter,
             Optional<String> pageBefore,
             Optional<Integer> pageSize,
+            Optional<String> filterStatus,
             Optional<String> include,
             Map<String, Object> additionalProperties) {
         this.pageAfter = pageAfter;
         this.pageBefore = pageBefore;
         this.pageSize = pageSize;
+        this.filterStatus = filterStatus;
         this.include = include;
         this.additionalProperties = additionalProperties;
     }
@@ -68,6 +72,14 @@ public final class GetEarnedRewardsRequest {
     }
 
     /**
+     * @return Comma-separated list of transaction statuses to return. Supported values are <code>APPROVED</code> and <code>SETTLED</code>. Defaults to <code>SETTLED</code> when omitted.
+     */
+    @JsonIgnore
+    public Optional<String> getFilterStatus() {
+        return filterStatus;
+    }
+
+    /**
      * @return Comma-separated list of related resources to include in the response. Supported values are <code>merchant</code> and <code>offer</code>.
      */
     @JsonIgnore
@@ -90,12 +102,13 @@ public final class GetEarnedRewardsRequest {
         return pageAfter.equals(other.pageAfter)
                 && pageBefore.equals(other.pageBefore)
                 && pageSize.equals(other.pageSize)
+                && filterStatus.equals(other.filterStatus)
                 && include.equals(other.include);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.pageAfter, this.pageBefore, this.pageSize, this.include);
+        return Objects.hash(this.pageAfter, this.pageBefore, this.pageSize, this.filterStatus, this.include);
     }
 
     @java.lang.Override
@@ -115,6 +128,8 @@ public final class GetEarnedRewardsRequest {
 
         private Optional<Integer> pageSize = Optional.empty();
 
+        private Optional<String> filterStatus = Optional.empty();
+
         private Optional<String> include = Optional.empty();
 
         @JsonAnySetter
@@ -126,6 +141,7 @@ public final class GetEarnedRewardsRequest {
             pageAfter(other.getPageAfter());
             pageBefore(other.getPageBefore());
             pageSize(other.getPageSize());
+            filterStatus(other.getFilterStatus());
             include(other.getInclude());
             return this;
         }
@@ -173,6 +189,20 @@ public final class GetEarnedRewardsRequest {
         }
 
         /**
+         * <p>Comma-separated list of transaction statuses to return. Supported values are <code>APPROVED</code> and <code>SETTLED</code>. Defaults to <code>SETTLED</code> when omitted.</p>
+         */
+        @JsonSetter(value = "filter[status]", nulls = Nulls.SKIP)
+        public Builder filterStatus(Optional<String> filterStatus) {
+            this.filterStatus = filterStatus;
+            return this;
+        }
+
+        public Builder filterStatus(String filterStatus) {
+            this.filterStatus = Optional.ofNullable(filterStatus);
+            return this;
+        }
+
+        /**
          * <p>Comma-separated list of related resources to include in the response. Supported values are <code>merchant</code> and <code>offer</code>.</p>
          */
         @JsonSetter(value = "include", nulls = Nulls.SKIP)
@@ -187,7 +217,8 @@ public final class GetEarnedRewardsRequest {
         }
 
         public GetEarnedRewardsRequest build() {
-            return new GetEarnedRewardsRequest(pageAfter, pageBefore, pageSize, include, additionalProperties);
+            return new GetEarnedRewardsRequest(
+                    pageAfter, pageBefore, pageSize, filterStatus, include, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

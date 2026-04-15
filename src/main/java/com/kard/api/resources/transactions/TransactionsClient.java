@@ -136,7 +136,7 @@ public class TransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -147,7 +147,7 @@ public class TransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -161,7 +161,7 @@ public class TransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -173,7 +173,7 @@ public class TransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>

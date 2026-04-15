@@ -1,3 +1,12 @@
+## 14.0.0 - 2026-04-15
+### Breaking Changes
+* **`GetEarnedRewardsResponse.Builder`** — `links()` now returns the new `MetaStage` interface instead of `_FinalStage`, inserting a mandatory `.meta(GetEarnedRewardsMeta)` call into every builder chain. Update all callsites from `.links(l).build()` to `.links(l).meta(meta).build()`.
+* **`RewardedTransactionStatus.Visitor`** — a new required `visitApproved()` method has been added to the `Visitor<T>` interface; any class implementing this interface must add the method or it will fail to compile.
+### Added
+* **`GetEarnedRewardsMeta`** — new response type in `com.kard.api.resources.transactions.types` that carries `lifetimeRewardsInCents`, representing the lifetime rewards earned by a user across all matched transactions.
+* **`GetEarnedRewardsResponse.getMeta()`** — returns the new `GetEarnedRewardsMeta` object embedded in every earned-rewards response.
+* **`GetEarnedRewardsRequest.Builder.filterStatus()`** — new optional builder method that maps to the `filter[status]` query parameter; pass `"APPROVED"`, `"SETTLED"`, or a comma-separated combination to control which transaction statuses are returned (defaults to `SETTLED` when omitted).
+
 ## 13.2.0 - 2026-04-14
 * [ADDED] **Configurable SDK logging** via the new `LogConfig`, `LogLevel`, `ILogger`, `Logger`, and `ConsoleLogger` types in `com.kard.api.core`. Pass a `LogConfig` to `KardApiClientBuilder.logging(LogConfig)` or `AsyncKardApiClientBuilder.logging(LogConfig)` to capture HTTP request/response activity at your desired level (`DEBUG`, `INFO`, `WARN`, `ERROR`). Logging is silent by default — no output is produced unless explicitly enabled. Supply a custom `ILogger` implementation to redirect output to any logging framework.
 * [FIXED] Query-parameter getters on several request types (`GetFilesMetadataRequest`, `GetEarnedRewardsRequest`, `GetLocationsByUserRequest`, `GetOffersByUserRequest`, `GetSubscriptionsRequest`, `ActivateOfferRequest`, `BoostOfferRequest`) were annotated with `@JsonProperty` instead of `@JsonIgnore`. They are now correctly marked `@JsonIgnore`, preventing these fields from being unintentionally serialized into a request body.

@@ -399,7 +399,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -411,7 +411,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -424,7 +424,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -436,7 +436,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. Returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -462,6 +462,10 @@ public class RawTransactionsClient {
         if (request.getPageSize().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page[size]", request.getPageSize().get(), false);
+        }
+        if (request.getFilterStatus().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "filter[status]", request.getFilterStatus().get(), false);
         }
         if (request.getInclude().isPresent()) {
             QueryStringMapper.addQueryParameter(

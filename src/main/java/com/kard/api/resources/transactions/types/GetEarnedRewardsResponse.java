@@ -28,6 +28,8 @@ public final class GetEarnedRewardsResponse {
 
     private final Links links;
 
+    private final GetEarnedRewardsMeta meta;
+
     private final Optional<List<TransactionIncludedResource>> included;
 
     private final Map<String, Object> additionalProperties;
@@ -35,10 +37,12 @@ public final class GetEarnedRewardsResponse {
     private GetEarnedRewardsResponse(
             List<RewardedTransactionUnion> data,
             Links links,
+            GetEarnedRewardsMeta meta,
             Optional<List<TransactionIncludedResource>> included,
             Map<String, Object> additionalProperties) {
         this.data = data;
         this.links = links;
+        this.meta = meta;
         this.included = included;
         this.additionalProperties = additionalProperties;
     }
@@ -51,6 +55,14 @@ public final class GetEarnedRewardsResponse {
     @JsonProperty("links")
     public Links getLinks() {
         return links;
+    }
+
+    /**
+     * @return Additional metadata for the earned rewards response.
+     */
+    @JsonProperty("meta")
+    public GetEarnedRewardsMeta getMeta() {
+        return meta;
     }
 
     /**
@@ -73,12 +85,15 @@ public final class GetEarnedRewardsResponse {
     }
 
     private boolean equalTo(GetEarnedRewardsResponse other) {
-        return data.equals(other.data) && links.equals(other.links) && included.equals(other.included);
+        return data.equals(other.data)
+                && links.equals(other.links)
+                && meta.equals(other.meta)
+                && included.equals(other.included);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data, this.links, this.included);
+        return Objects.hash(this.data, this.links, this.meta, this.included);
     }
 
     @java.lang.Override
@@ -91,9 +106,16 @@ public final class GetEarnedRewardsResponse {
     }
 
     public interface LinksStage {
-        _FinalStage links(@NotNull Links links);
+        MetaStage links(@NotNull Links links);
 
         Builder from(GetEarnedRewardsResponse other);
+    }
+
+    public interface MetaStage {
+        /**
+         * <p>Additional metadata for the earned rewards response.</p>
+         */
+        _FinalStage meta(@NotNull GetEarnedRewardsMeta meta);
     }
 
     public interface _FinalStage {
@@ -118,8 +140,10 @@ public final class GetEarnedRewardsResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements LinksStage, _FinalStage {
+    public static final class Builder implements LinksStage, MetaStage, _FinalStage {
         private Links links;
+
+        private GetEarnedRewardsMeta meta;
 
         private Optional<List<TransactionIncludedResource>> included = Optional.empty();
 
@@ -134,14 +158,27 @@ public final class GetEarnedRewardsResponse {
         public Builder from(GetEarnedRewardsResponse other) {
             data(other.getData());
             links(other.getLinks());
+            meta(other.getMeta());
             included(other.getIncluded());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("links")
-        public _FinalStage links(@NotNull Links links) {
+        public MetaStage links(@NotNull Links links) {
             this.links = Objects.requireNonNull(links, "links must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Additional metadata for the earned rewards response.</p>
+         * <p>Additional metadata for the earned rewards response.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("meta")
+        public _FinalStage meta(@NotNull GetEarnedRewardsMeta meta) {
+            this.meta = Objects.requireNonNull(meta, "meta must not be null");
             return this;
         }
 
@@ -191,7 +228,7 @@ public final class GetEarnedRewardsResponse {
 
         @java.lang.Override
         public GetEarnedRewardsResponse build() {
-            return new GetEarnedRewardsResponse(data, links, included, additionalProperties);
+            return new GetEarnedRewardsResponse(data, links, meta, included, additionalProperties);
         }
 
         @java.lang.Override
