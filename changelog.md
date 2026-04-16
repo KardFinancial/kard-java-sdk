@@ -1,3 +1,9 @@
+## 15.4.0 - 2026-04-16
+### Added
+* **`MerchantAsset`** — new type representing a tracked asset image (logo, banner, etc.) for a merchant, with required `type` and `url` fields and an optional `alt` accessibility string.
+* **`MerchantAssetType`** — new enum-like type with `IMG_VIEW` and `BANNER_VIEW` constants used with `MerchantAsset`, supporting a Visitor pattern for exhaustive handling.
+* **`TransactionMerchantAttributes.getAssets()`** — new optional `List<MerchantAsset>` field exposing attribution-signed asset URLs; builder gains `assets(List<MerchantAsset>)` and `assets(Optional<List<MerchantAsset>>)` methods.
+
 ## 15.3.0 - 2026-04-16
 ### Added
 * **`ListPlacementsRequest.filterType()`** — new optional builder method to filter placements by type (`placementMainPage` or `placementPushNotification`) via the `filter[type]` query parameter.

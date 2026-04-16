@@ -9,11 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -21,10 +24,14 @@ import org.jetbrains.annotations.NotNull;
 public final class TransactionMerchantAttributes {
     private final String name;
 
+    private final Optional<List<MerchantAsset>> assets;
+
     private final Map<String, Object> additionalProperties;
 
-    private TransactionMerchantAttributes(String name, Map<String, Object> additionalProperties) {
+    private TransactionMerchantAttributes(
+            String name, Optional<List<MerchantAsset>> assets, Map<String, Object> additionalProperties) {
         this.name = name;
+        this.assets = assets;
         this.additionalProperties = additionalProperties;
     }
 
@@ -34,6 +41,16 @@ public final class TransactionMerchantAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Tracked asset images for the merchant (logo, banner, etc.). Each asset
+     * URL is signed for attribution tracking and should be loaded as-is by the
+     * client.
+     */
+    @JsonProperty("assets")
+    public Optional<List<MerchantAsset>> getAssets() {
+        return assets;
     }
 
     @java.lang.Override
@@ -48,12 +65,12 @@ public final class TransactionMerchantAttributes {
     }
 
     private boolean equalTo(TransactionMerchantAttributes other) {
-        return name.equals(other.name);
+        return name.equals(other.name) && assets.equals(other.assets);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(this.name, this.assets);
     }
 
     @java.lang.Override
@@ -80,11 +97,22 @@ public final class TransactionMerchantAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Tracked asset images for the merchant (logo, banner, etc.). Each asset
+         * URL is signed for attribution tracking and should be loaded as-is by the
+         * client.</p>
+         */
+        _FinalStage assets(Optional<List<MerchantAsset>> assets);
+
+        _FinalStage assets(List<MerchantAsset> assets);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements NameStage, _FinalStage {
         private String name;
+
+        private Optional<List<MerchantAsset>> assets = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -94,6 +122,7 @@ public final class TransactionMerchantAttributes {
         @java.lang.Override
         public Builder from(TransactionMerchantAttributes other) {
             name(other.getName());
+            assets(other.getAssets());
             return this;
         }
 
@@ -109,9 +138,33 @@ public final class TransactionMerchantAttributes {
             return this;
         }
 
+        /**
+         * <p>Tracked asset images for the merchant (logo, banner, etc.). Each asset
+         * URL is signed for attribution tracking and should be loaded as-is by the
+         * client.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage assets(List<MerchantAsset> assets) {
+            this.assets = Optional.ofNullable(assets);
+            return this;
+        }
+
+        /**
+         * <p>Tracked asset images for the merchant (logo, banner, etc.). Each asset
+         * URL is signed for attribution tracking and should be loaded as-is by the
+         * client.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "assets", nulls = Nulls.SKIP)
+        public _FinalStage assets(Optional<List<MerchantAsset>> assets) {
+            this.assets = assets;
+            return this;
+        }
+
         @java.lang.Override
         public TransactionMerchantAttributes build() {
-            return new TransactionMerchantAttributes(name, additionalProperties);
+            return new TransactionMerchantAttributes(name, assets, additionalProperties);
         }
 
         @java.lang.Override
