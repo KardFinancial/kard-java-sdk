@@ -6,6 +6,7 @@ package com.kard.api.resources.users.rewards;
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.users.rewards.requests.GetLocationsByUserRequest;
+import com.kard.api.resources.users.rewards.requests.GetOffersByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByUserRequest;
 import com.kard.api.resources.users.rewards.types.LocationsResponseObject;
 import com.kard.api.resources.users.rewards.types.OffersResponseObject;
@@ -67,6 +68,57 @@ public class RewardsClient {
             String organizationId, String userId, GetOffersByUserRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .offers(organizationId, userId, request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
+     * limited by the placement's available slots.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public OffersResponseObject placementOffers(String organizationId, String userId, String placementId) {
+        return this.rawClient
+                .placementOffers(organizationId, userId, placementId)
+                .body();
+    }
+
+    /**
+     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
+     * limited by the placement's available slots.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public OffersResponseObject placementOffers(
+            String organizationId, String userId, String placementId, RequestOptions requestOptions) {
+        return this.rawClient
+                .placementOffers(organizationId, userId, placementId, requestOptions)
+                .body();
+    }
+
+    /**
+     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
+     * limited by the placement's available slots.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public OffersResponseObject placementOffers(
+            String organizationId, String userId, String placementId, GetOffersByPlacementRequest request) {
+        return this.rawClient
+                .placementOffers(organizationId, userId, placementId, request)
+                .body();
+    }
+
+    /**
+     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
+     * limited by the placement's available slots.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public OffersResponseObject placementOffers(
+            String organizationId,
+            String userId,
+            String placementId,
+            GetOffersByPlacementRequest request,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .placementOffers(organizationId, userId, placementId, request, requestOptions)
                 .body();
     }
 

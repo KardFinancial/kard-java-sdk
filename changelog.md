@@ -1,3 +1,8 @@
+## 15.2.0 - 2026-04-16
+### Added
+* **`RewardsClient.placementOffers()`** / **`AsyncRewardsClient.placementOffers()`** — new sync and async methods (plus raw-response variants) that retrieve offers for a specific placement slot via `GET /v2/issuers/{organizationId}/users/{userId}/placements/{placementId}/offers`, returning results sorted by highest cash back and limited to the placement's available slots.
+* **`GetOffersByPlacementRequest`** — new request type for `placementOffers()` with optional filter parameters: `filterSearch`, `filterPurchaseChannel`, `filterCategory`, `filterIsTargeted`, `include`, and `supportedComponents`.
+
 ## 15.1.0 - 2026-04-16
 ### Added
 * **`KardApiClient.organizations()`** / **`AsyncKardApiClient.organizations()`** — new top-level accessors returning the new `OrganizationsClient` / `AsyncOrganizationsClient` for retrieving organization details.

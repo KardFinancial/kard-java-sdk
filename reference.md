@@ -2648,6 +2648,133 @@ client.users().rewards().offers(
 </dl>
 </details>
 
+<details><summary><code>client.users.rewards.placementOffers(organizationId, userId, placementId) -> OffersResponseObject</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
+limited by the placement's available slots.<br/>
+<b>Required scopes:</b> `rewards:read`
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().rewards().placementOffers(
+    "organizationId",
+    "userId",
+    "placementId",
+    GetOffersByPlacementRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**placementId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filterSearch:** `Optional<String>` — Case-insensitive search string to filter offers by merchant name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filterPurchaseChannel:** `Optional<List<PurchaseChannel>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filterCategory:** `Optional<CategoryOption>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filterIsTargeted:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `Optional<String>` — CSV list of included resources in the response (e.g "categories"). Allowed value is `categories`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**supportedComponents:** `Optional<ComponentType>` — UI component types to include in the response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.rewards.locations(organizationId, userId) -> LocationsResponseObject</code></summary>
 <dl>
 <dd>
