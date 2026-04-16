@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.organizations.placements.types.PlacementTypeFilter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,6 +21,10 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListPlacementsRequest.Builder.class)
 public final class ListPlacementsRequest {
+    private final Optional<PlacementTypeFilter> filterType;
+
+    private final Optional<String> filterName;
+
     private final Optional<String> pageAfter;
 
     private final Optional<Integer> pageSize;
@@ -27,10 +32,32 @@ public final class ListPlacementsRequest {
     private final Map<String, Object> additionalProperties;
 
     private ListPlacementsRequest(
-            Optional<String> pageAfter, Optional<Integer> pageSize, Map<String, Object> additionalProperties) {
+            Optional<PlacementTypeFilter> filterType,
+            Optional<String> filterName,
+            Optional<String> pageAfter,
+            Optional<Integer> pageSize,
+            Map<String, Object> additionalProperties) {
+        this.filterType = filterType;
+        this.filterName = filterName;
         this.pageAfter = pageAfter;
         this.pageSize = pageSize;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Filter by placement type (placementMainPage or placementPushNotification)
+     */
+    @JsonIgnore
+    public Optional<PlacementTypeFilter> getFilterType() {
+        return filterType;
+    }
+
+    /**
+     * @return Filter by exact placement name (unique within an organization per type)
+     */
+    @JsonIgnore
+    public Optional<String> getFilterName() {
+        return filterName;
     }
 
     /**
@@ -61,12 +88,15 @@ public final class ListPlacementsRequest {
     }
 
     private boolean equalTo(ListPlacementsRequest other) {
-        return pageAfter.equals(other.pageAfter) && pageSize.equals(other.pageSize);
+        return filterType.equals(other.filterType)
+                && filterName.equals(other.filterName)
+                && pageAfter.equals(other.pageAfter)
+                && pageSize.equals(other.pageSize);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.pageAfter, this.pageSize);
+        return Objects.hash(this.filterType, this.filterName, this.pageAfter, this.pageSize);
     }
 
     @java.lang.Override
@@ -80,6 +110,10 @@ public final class ListPlacementsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<PlacementTypeFilter> filterType = Optional.empty();
+
+        private Optional<String> filterName = Optional.empty();
+
         private Optional<String> pageAfter = Optional.empty();
 
         private Optional<Integer> pageSize = Optional.empty();
@@ -90,8 +124,38 @@ public final class ListPlacementsRequest {
         private Builder() {}
 
         public Builder from(ListPlacementsRequest other) {
+            filterType(other.getFilterType());
+            filterName(other.getFilterName());
             pageAfter(other.getPageAfter());
             pageSize(other.getPageSize());
+            return this;
+        }
+
+        /**
+         * <p>Filter by placement type (placementMainPage or placementPushNotification)</p>
+         */
+        @JsonSetter(value = "filter[type]", nulls = Nulls.SKIP)
+        public Builder filterType(Optional<PlacementTypeFilter> filterType) {
+            this.filterType = filterType;
+            return this;
+        }
+
+        public Builder filterType(PlacementTypeFilter filterType) {
+            this.filterType = Optional.ofNullable(filterType);
+            return this;
+        }
+
+        /**
+         * <p>Filter by exact placement name (unique within an organization per type)</p>
+         */
+        @JsonSetter(value = "filter[name]", nulls = Nulls.SKIP)
+        public Builder filterName(Optional<String> filterName) {
+            this.filterName = filterName;
+            return this;
+        }
+
+        public Builder filterName(String filterName) {
+            this.filterName = Optional.ofNullable(filterName);
             return this;
         }
 
@@ -124,7 +188,7 @@ public final class ListPlacementsRequest {
         }
 
         public ListPlacementsRequest build() {
-            return new ListPlacementsRequest(pageAfter, pageSize, additionalProperties);
+            return new ListPlacementsRequest(filterType, filterName, pageAfter, pageSize, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

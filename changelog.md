@@ -1,3 +1,11 @@
+## 15.3.0 - 2026-04-16
+### Added
+* **`ListPlacementsRequest.filterType()`** — new optional builder method to filter placements by type (`placementMainPage` or `placementPushNotification`) via the `filter[type]` query parameter.
+* **`ListPlacementsRequest.filterName()`** — new optional builder method to filter placements by exact name (unique within an organization per type) via the `filter[name]` query parameter.
+* **`PlacementTypeFilter`** — new enum type with `PLACEMENT_MAIN_PAGE` and `PLACEMENT_PUSH_NOTIFICATION` values used with `filterType()`.
+### Changed
+* **`PlacementsClient`** / **`AsyncPlacementsClient`** — HTTP 400 responses from the list endpoint now throw `InvalidRequest` instead of being silently unhandled.
+
 ## 15.2.0 - 2026-04-16
 ### Added
 * **`RewardsClient.placementOffers()`** / **`AsyncRewardsClient.placementOffers()`** — new sync and async methods (plus raw-response variants) that retrieve offers for a specific placement slot via `GET /v2/issuers/{organizationId}/users/{userId}/placements/{placementId}/offers`, returning results sorted by highest cash back and limited to the placement's available slots.

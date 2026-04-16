@@ -990,6 +990,22 @@ client.organizations().placements().list(
 <dl>
 <dd>
 
+**filterType:** `Optional<PlacementTypeFilter>` — Filter by placement type (placementMainPage or placementPushNotification)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filterName:** `Optional<String>` — Filter by exact placement name (unique within an organization per type)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **pageAfter:** `Optional<String>` — Cursor value for the next page of results
     
 </dd>

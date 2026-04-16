@@ -147,6 +147,14 @@ public class RawPlacementsClient {
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("placements");
+        if (request.getFilterType().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "filter[type]", request.getFilterType().get(), false);
+        }
+        if (request.getFilterName().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "filter[name]", request.getFilterName().get(), false);
+        }
         if (request.getPageAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page[after]", request.getPageAfter().get(), false);
@@ -179,6 +187,9 @@ public class RawPlacementsClient {
             }
             try {
                 switch (response.code()) {
+                    case 400:
+                        throw new InvalidRequest(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
                     case 401:
                         throw new UnauthorizedError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
