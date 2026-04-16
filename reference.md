@@ -925,7 +925,7 @@ client.transactions().getEarnedRewards(
     GetEarnedRewardsRequest
         .builder()
         .pageSize(10)
-        .filterStatus("APPROVED,SETTLED")
+        .filterStatus(RewardedTransactionStatus.APPROVED)
         .include("merchant,offer")
         .build()
 );
@@ -983,7 +983,7 @@ client.transactions().getEarnedRewards(
 <dl>
 <dd>
 
-**filterStatus:** `Optional<String>` — Comma-separated list of transaction statuses to return. Supported values are `APPROVED` and `SETTLED`. Defaults to `SETTLED` when omitted.
+**filterStatus:** `Optional<RewardedTransactionStatus>` — Filter by transaction status. Supported values are `APPROVED` and `SETTLED`. Defaults to `SETTLED` when omitted. When `APPROVED` is specified, only approved transactions that do not yet have a corresponding settled transaction are returned.
     
 </dd>
 </dl>

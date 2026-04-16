@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.transactions.types.RewardedTransactionStatus;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public final class GetEarnedRewardsRequest {
 
     private final Optional<Integer> pageSize;
 
-    private final Optional<String> filterStatus;
+    private final Optional<RewardedTransactionStatus> filterStatus;
 
     private final Optional<String> include;
 
@@ -36,7 +37,7 @@ public final class GetEarnedRewardsRequest {
             Optional<String> pageAfter,
             Optional<String> pageBefore,
             Optional<Integer> pageSize,
-            Optional<String> filterStatus,
+            Optional<RewardedTransactionStatus> filterStatus,
             Optional<String> include,
             Map<String, Object> additionalProperties) {
         this.pageAfter = pageAfter;
@@ -72,10 +73,10 @@ public final class GetEarnedRewardsRequest {
     }
 
     /**
-     * @return Comma-separated list of transaction statuses to return. Supported values are <code>APPROVED</code> and <code>SETTLED</code>. Defaults to <code>SETTLED</code> when omitted.
+     * @return Filter by transaction status. Supported values are <code>APPROVED</code> and <code>SETTLED</code>. Defaults to <code>SETTLED</code> when omitted. When <code>APPROVED</code> is specified, only approved transactions that do not yet have a corresponding settled transaction are returned.
      */
     @JsonIgnore
-    public Optional<String> getFilterStatus() {
+    public Optional<RewardedTransactionStatus> getFilterStatus() {
         return filterStatus;
     }
 
@@ -128,7 +129,7 @@ public final class GetEarnedRewardsRequest {
 
         private Optional<Integer> pageSize = Optional.empty();
 
-        private Optional<String> filterStatus = Optional.empty();
+        private Optional<RewardedTransactionStatus> filterStatus = Optional.empty();
 
         private Optional<String> include = Optional.empty();
 
@@ -189,15 +190,15 @@ public final class GetEarnedRewardsRequest {
         }
 
         /**
-         * <p>Comma-separated list of transaction statuses to return. Supported values are <code>APPROVED</code> and <code>SETTLED</code>. Defaults to <code>SETTLED</code> when omitted.</p>
+         * <p>Filter by transaction status. Supported values are <code>APPROVED</code> and <code>SETTLED</code>. Defaults to <code>SETTLED</code> when omitted. When <code>APPROVED</code> is specified, only approved transactions that do not yet have a corresponding settled transaction are returned.</p>
          */
         @JsonSetter(value = "filter[status]", nulls = Nulls.SKIP)
-        public Builder filterStatus(Optional<String> filterStatus) {
+        public Builder filterStatus(Optional<RewardedTransactionStatus> filterStatus) {
             this.filterStatus = filterStatus;
             return this;
         }
 
-        public Builder filterStatus(String filterStatus) {
+        public Builder filterStatus(RewardedTransactionStatus filterStatus) {
             this.filterStatus = Optional.ofNullable(filterStatus);
             return this;
         }

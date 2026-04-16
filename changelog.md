@@ -1,3 +1,10 @@
+## 15.0.0 - 2026-04-16
+### Breaking Changes
+* **`GetEarnedRewardsRequest.getFilterStatus()`** — now returns `Optional<RewardedTransactionStatus>` instead of `Optional<String>`; update any code that reads this value to use the enum type.
+* **`GetEarnedRewardsRequest.Builder.filterStatus()`** — both overloads now accept `RewardedTransactionStatus` (or `Optional<RewardedTransactionStatus>`) instead of `String`; replace raw string literals such as `"APPROVED"` with `RewardedTransactionStatus.APPROVED`.
+### Changed
+* **`GetEarnedRewardsRequest` `filterStatus` documentation** — clarifies that when `APPROVED` is specified, only approved transactions that do not yet have a corresponding settled transaction are returned.
+
 ## 14.0.0 - 2026-04-15
 ### Breaking Changes
 * **`GetEarnedRewardsResponse.Builder`** — `links()` now returns the new `MetaStage` interface instead of `_FinalStage`, inserting a mandatory `.meta(GetEarnedRewardsMeta)` call into every builder chain. Update all callsites from `.links(l).build()` to `.links(l).meta(meta).build()`.
