@@ -8,6 +8,7 @@ import com.kard.api.core.Suppliers;
 import com.kard.api.resources.auth.AsyncAuthClient;
 import com.kard.api.resources.files.AsyncFilesClient;
 import com.kard.api.resources.notifications.AsyncNotificationsClient;
+import com.kard.api.resources.organizations.AsyncOrganizationsClient;
 import com.kard.api.resources.ping.AsyncPingClient;
 import com.kard.api.resources.transactions.AsyncTransactionsClient;
 import com.kard.api.resources.users.AsyncUsersClient;
@@ -22,6 +23,8 @@ public class AsyncKardApiClient {
 
     protected final Supplier<AsyncNotificationsClient> notificationsClient;
 
+    protected final Supplier<AsyncOrganizationsClient> organizationsClient;
+
     protected final Supplier<AsyncPingClient> pingClient;
 
     protected final Supplier<AsyncTransactionsClient> transactionsClient;
@@ -33,6 +36,7 @@ public class AsyncKardApiClient {
         this.authClient = Suppliers.memoize(() -> new AsyncAuthClient(clientOptions));
         this.filesClient = Suppliers.memoize(() -> new AsyncFilesClient(clientOptions));
         this.notificationsClient = Suppliers.memoize(() -> new AsyncNotificationsClient(clientOptions));
+        this.organizationsClient = Suppliers.memoize(() -> new AsyncOrganizationsClient(clientOptions));
         this.pingClient = Suppliers.memoize(() -> new AsyncPingClient(clientOptions));
         this.transactionsClient = Suppliers.memoize(() -> new AsyncTransactionsClient(clientOptions));
         this.usersClient = Suppliers.memoize(() -> new AsyncUsersClient(clientOptions));
@@ -48,6 +52,10 @@ public class AsyncKardApiClient {
 
     public AsyncNotificationsClient notifications() {
         return this.notificationsClient.get();
+    }
+
+    public AsyncOrganizationsClient organizations() {
+        return this.organizationsClient.get();
     }
 
     public AsyncPingClient ping() {

@@ -38,10 +38,10 @@ public final class ClientOptions {
         this.headers.putAll(headers);
         this.headers.putAll(new HashMap<String, String>() {
             {
-                put("User-Agent", "com.getkard:kard-financial-sdk/15.0.0");
+                put("User-Agent", "com.getkard:kard-financial-sdk/15.1.0");
                 put("X-Fern-Language", "JAVA");
                 put("X-Fern-SDK-Name", "com.kard.fern:api-sdk");
-                put("X-Fern-SDK-Version", "15.0.0");
+                put("X-Fern-SDK-Version", "15.1.0");
             }
         });
         this.headerSuppliers = headerSuppliers;

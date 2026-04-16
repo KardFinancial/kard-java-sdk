@@ -1,3 +1,11 @@
+## 15.1.0 - 2026-04-16
+### Added
+* **`KardApiClient.organizations()`** / **`AsyncKardApiClient.organizations()`** — new top-level accessors returning the new `OrganizationsClient` / `AsyncOrganizationsClient` for retrieving organization details.
+* **`OrganizationsClient`** / **`AsyncOrganizationsClient`** — new sync and async clients (plus raw-response variants) for managing organizations via `GET /v2/issuers/{organizationId}`, including sub-client accessors `children()` and `placements()`.
+* **`ChildrenClient`** / **`AsyncChildrenClient`** — new sync and async clients (plus raw-response variants) for managing child (sub-issuer) organizations via `v2/issuers/{organizationId}/children`, exposing `list()`, `create()`, `get()`, `update()`, and `delete()` methods with cursor-based pagination via `ListChildrenRequest`.
+* **`PlacementsClient`** / **`AsyncPlacementsClient`** — new sync and async clients (plus raw-response variants) for managing organization placements via `v2/issuers/{organizationId}/placements`, exposing `list()`, `create()`, `get()`, `update()`, and `delete()` methods with `ListPlacementsRequest` pagination support.
+* **New domain types** — `ExternalOrganizationResponse`, `ExternalOrganizationAttributes`, `ChildOrganizationListResponse`, `PlacementListResponse`, `PlacementFormatUnion`, `CreatePlacementDataUnion`, `UpdatePlacementDataUnion`, `Cadence`, `CadenceFrequency`, `DayOfWeek`, and supporting request/response types across the `organizations`, `organizations.children`, and `organizations.placements` packages.
+
 ## 15.0.0 - 2026-04-16
 ### Breaking Changes
 * **`GetEarnedRewardsRequest.getFilterStatus()`** — now returns `Optional<RewardedTransactionStatus>` instead of `Optional<String>`; update any code that reads this value to use the enum type.

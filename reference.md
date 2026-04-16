@@ -434,6 +434,796 @@ client.notifications().subscriptions().update(
 </dl>
 </details>
 
+## Organizations
+<details><summary><code>client.organizations.get(organizationId) -> ExternalOrganizationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve organization details for the authenticated issuer
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().get("organizationId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization (must match the authenticated issuer)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Children
+<details><summary><code>client.organizations.children.list(organizationId) -> ChildOrganizationListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List child organizations belonging to the authenticated issuer
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().children().list(
+    "organizationId",
+    ListChildrenRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the parent organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageAfter:** `Optional<String>` — Cursor value for the next page of results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageSize:** `Optional<Integer>` — Maximum number of records to return [1 - 200] (default = 200)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.children.create(organizationId, request) -> ExternalOrganizationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().children().create(
+    "organizationId",
+    CreateChildRequestBody
+        .builder()
+        .data(
+            CreateChildRequestData
+                .builder()
+                .attributes(
+                    CreateChildAttributes
+                        .builder()
+                        .name("name")
+                        .build()
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the parent organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateChildRequestBody` — Child organization data for creation
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.children.get(organizationId, childId) -> ExternalOrganizationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific child organization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().children().get("organizationId", "childId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the parent organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**childId:** `String` — Unique identifier of the child organization
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.children.update(organizationId, childId, request) -> ExternalOrganizationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a child organization. Only the name can be changed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().children().update(
+    "organizationId",
+    "childId",
+    UpdateChildRequestBody
+        .builder()
+        .data(
+            UpdateChildRequestData
+                .builder()
+                .attributes(
+                    UpdateChildAttributes
+                        .builder()
+                        .build()
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the parent organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**childId:** `String` — Unique identifier of the child organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateChildRequestBody` — Child organization data for update
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.children.delete(organizationId, childId) -> DeleteResourceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a child organization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().children().delete("organizationId", "childId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the parent organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**childId:** `String` — Unique identifier of the child organization
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Placements
+<details><summary><code>client.organizations.placements.create(organizationId, request) -> PlacementFormatUnion</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a placement for the organization. Use type "placementMainPage" for main-page placements (requires name and availableSlots) or "placementPushNotification" for push-notification placements (requires name and cadence; availableSlots is automatically set to 1).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().placements().create(
+    "org-123",
+    CreatePlacementRequestBody
+        .builder()
+        .data(
+            CreatePlacementDataUnion.placementMainPage(
+                CreateMainPagePlacementData
+                    .builder()
+                    .attributes(
+                        CreateMainPageAttributes
+                            .builder()
+                            .name("Homepage Banner")
+                            .availableSlots(5)
+                            .build()
+                    )
+                    .build()
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreatePlacementRequestBody` — Placement data for creation
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.placements.list(organizationId) -> PlacementListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List placements belonging to the authenticated organization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().placements().list(
+    "organizationId",
+    ListPlacementsRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageAfter:** `Optional<String>` — Cursor value for the next page of results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageSize:** `Optional<Integer>` — Maximum number of records to return [1 - 200] (default = 200)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.placements.get(organizationId, placementId) -> PlacementFormatUnion</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific placement
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().placements().get("organizationId", "placementId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**placementId:** `String` — Unique identifier of the placement (UUID v7)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.placements.update(organizationId, placementId, request) -> PlacementFormatUnion</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replace a placement. All fields must be provided. Use type "placementMainPage" or "placementPushNotification" to set the placement kind. If the type is "placementPushNotification", availableSlots is automatically set to 1.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().placements().update(
+    "organizationId",
+    "placementId",
+    UpdatePlacementRequestBody
+        .builder()
+        .data(
+            UpdatePlacementDataUnion.placementMainPage(
+                UpdateMainPagePlacementData
+                    .builder()
+                    .attributes(
+                        UpdateMainPageAttributes
+                            .builder()
+                            .name("name")
+                            .availableSlots(1)
+                            .build()
+                    )
+                    .build()
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**placementId:** `String` — Unique identifier of the placement (UUID v7)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdatePlacementRequestBody` — Placement data for update
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.placements.delete(organizationId, placementId) -> DeleteResourceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a placement
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().placements().delete("organizationId", "placementId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**placementId:** `String` — Unique identifier of the placement (UUID v7)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Ping
 <details><summary><code>client.ping.ping() -> PingResponseObject</code></summary>
 <dl>

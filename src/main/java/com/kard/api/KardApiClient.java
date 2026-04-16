@@ -8,6 +8,7 @@ import com.kard.api.core.Suppliers;
 import com.kard.api.resources.auth.AuthClient;
 import com.kard.api.resources.files.FilesClient;
 import com.kard.api.resources.notifications.NotificationsClient;
+import com.kard.api.resources.organizations.OrganizationsClient;
 import com.kard.api.resources.ping.PingClient;
 import com.kard.api.resources.transactions.TransactionsClient;
 import com.kard.api.resources.users.UsersClient;
@@ -22,6 +23,8 @@ public class KardApiClient {
 
     protected final Supplier<NotificationsClient> notificationsClient;
 
+    protected final Supplier<OrganizationsClient> organizationsClient;
+
     protected final Supplier<PingClient> pingClient;
 
     protected final Supplier<TransactionsClient> transactionsClient;
@@ -33,6 +36,7 @@ public class KardApiClient {
         this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
         this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
         this.notificationsClient = Suppliers.memoize(() -> new NotificationsClient(clientOptions));
+        this.organizationsClient = Suppliers.memoize(() -> new OrganizationsClient(clientOptions));
         this.pingClient = Suppliers.memoize(() -> new PingClient(clientOptions));
         this.transactionsClient = Suppliers.memoize(() -> new TransactionsClient(clientOptions));
         this.usersClient = Suppliers.memoize(() -> new UsersClient(clientOptions));
@@ -48,6 +52,10 @@ public class KardApiClient {
 
     public NotificationsClient notifications() {
         return this.notificationsClient.get();
+    }
+
+    public OrganizationsClient organizations() {
+        return this.organizationsClient.get();
     }
 
     public PingClient ping() {
