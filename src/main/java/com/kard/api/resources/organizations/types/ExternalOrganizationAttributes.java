@@ -14,14 +14,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.resources.commons.types.CardNetwork;
 import com.kard.api.resources.internalorganizations.types.EnrolledReward;
-import com.kard.api.resources.internalorganizations.types.MerchantNetwork;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -29,56 +26,36 @@ import org.jetbrains.annotations.NotNull;
 public final class ExternalOrganizationAttributes {
     private final String name;
 
-    private final Optional<String> externalId;
-
-    private final Optional<String> parentOrganizationId;
-
     private final List<EnrolledReward> enrolledRewards;
 
     private final List<CardNetwork> cardNetworks;
 
-    private final Optional<List<MerchantNetwork>> merchantNetworks;
-
-    private final boolean nationalOffers;
-
-    private final boolean localOffers;
-
-    private final boolean useAttribution;
-
     private final List<String> bins;
 
-    private final Optional<OffsetDateTime> createdAt;
+    private final double affiliateCommissionSplit;
 
-    private final Optional<OffsetDateTime> updatedAt;
+    private final double cardlinkedCommissionSplit;
+
+    private final double cardlinkedUserCommissionSplit;
 
     private final Map<String, Object> additionalProperties;
 
     private ExternalOrganizationAttributes(
             String name,
-            Optional<String> externalId,
-            Optional<String> parentOrganizationId,
             List<EnrolledReward> enrolledRewards,
             List<CardNetwork> cardNetworks,
-            Optional<List<MerchantNetwork>> merchantNetworks,
-            boolean nationalOffers,
-            boolean localOffers,
-            boolean useAttribution,
             List<String> bins,
-            Optional<OffsetDateTime> createdAt,
-            Optional<OffsetDateTime> updatedAt,
+            double affiliateCommissionSplit,
+            double cardlinkedCommissionSplit,
+            double cardlinkedUserCommissionSplit,
             Map<String, Object> additionalProperties) {
         this.name = name;
-        this.externalId = externalId;
-        this.parentOrganizationId = parentOrganizationId;
         this.enrolledRewards = enrolledRewards;
         this.cardNetworks = cardNetworks;
-        this.merchantNetworks = merchantNetworks;
-        this.nationalOffers = nationalOffers;
-        this.localOffers = localOffers;
-        this.useAttribution = useAttribution;
         this.bins = bins;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.affiliateCommissionSplit = affiliateCommissionSplit;
+        this.cardlinkedCommissionSplit = cardlinkedCommissionSplit;
+        this.cardlinkedUserCommissionSplit = cardlinkedUserCommissionSplit;
         this.additionalProperties = additionalProperties;
     }
 
@@ -88,22 +65,6 @@ public final class ExternalOrganizationAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
-    }
-
-    /**
-     * @return External identifier for the organization
-     */
-    @JsonProperty("externalId")
-    public Optional<String> getExternalId() {
-        return externalId;
-    }
-
-    /**
-     * @return ID of the parent organization
-     */
-    @JsonProperty("parentOrganizationId")
-    public Optional<String> getParentOrganizationId() {
-        return parentOrganizationId;
     }
 
     /**
@@ -123,38 +84,6 @@ public final class ExternalOrganizationAttributes {
     }
 
     /**
-     * @return Merchant networks with priority for the organization
-     */
-    @JsonProperty("merchantNetworks")
-    public Optional<List<MerchantNetwork>> getMerchantNetworks() {
-        return merchantNetworks;
-    }
-
-    /**
-     * @return Whether national offers are enabled
-     */
-    @JsonProperty("nationalOffers")
-    public boolean getNationalOffers() {
-        return nationalOffers;
-    }
-
-    /**
-     * @return Whether local offers are enabled
-     */
-    @JsonProperty("localOffers")
-    public boolean getLocalOffers() {
-        return localOffers;
-    }
-
-    /**
-     * @return Whether attribution tracking is enabled
-     */
-    @JsonProperty("useAttribution")
-    public boolean getUseAttribution() {
-        return useAttribution;
-    }
-
-    /**
      * @return Bank Identification Numbers for the organization
      */
     @JsonProperty("bins")
@@ -163,19 +92,27 @@ public final class ExternalOrganizationAttributes {
     }
 
     /**
-     * @return When the organization was created (ISO 8601 UTC)
+     * @return Affiliate commission split percentage
      */
-    @JsonProperty("createdAt")
-    public Optional<OffsetDateTime> getCreatedAt() {
-        return createdAt;
+    @JsonProperty("affiliateCommissionSplit")
+    public double getAffiliateCommissionSplit() {
+        return affiliateCommissionSplit;
     }
 
     /**
-     * @return When the organization was last updated (ISO 8601 UTC)
+     * @return Cardlinked commission split percentage
      */
-    @JsonProperty("updatedAt")
-    public Optional<OffsetDateTime> getUpdatedAt() {
-        return updatedAt;
+    @JsonProperty("cardlinkedCommissionSplit")
+    public double getCardlinkedCommissionSplit() {
+        return cardlinkedCommissionSplit;
+    }
+
+    /**
+     * @return Cardlinked user commission split percentage
+     */
+    @JsonProperty("cardlinkedUserCommissionSplit")
+    public double getCardlinkedUserCommissionSplit() {
+        return cardlinkedUserCommissionSplit;
     }
 
     @java.lang.Override
@@ -191,34 +128,24 @@ public final class ExternalOrganizationAttributes {
 
     private boolean equalTo(ExternalOrganizationAttributes other) {
         return name.equals(other.name)
-                && externalId.equals(other.externalId)
-                && parentOrganizationId.equals(other.parentOrganizationId)
                 && enrolledRewards.equals(other.enrolledRewards)
                 && cardNetworks.equals(other.cardNetworks)
-                && merchantNetworks.equals(other.merchantNetworks)
-                && nationalOffers == other.nationalOffers
-                && localOffers == other.localOffers
-                && useAttribution == other.useAttribution
                 && bins.equals(other.bins)
-                && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt);
+                && affiliateCommissionSplit == other.affiliateCommissionSplit
+                && cardlinkedCommissionSplit == other.cardlinkedCommissionSplit
+                && cardlinkedUserCommissionSplit == other.cardlinkedUserCommissionSplit;
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
-                this.externalId,
-                this.parentOrganizationId,
                 this.enrolledRewards,
                 this.cardNetworks,
-                this.merchantNetworks,
-                this.nationalOffers,
-                this.localOffers,
-                this.useAttribution,
                 this.bins,
-                this.createdAt,
-                this.updatedAt);
+                this.affiliateCommissionSplit,
+                this.cardlinkedCommissionSplit,
+                this.cardlinkedUserCommissionSplit);
     }
 
     @java.lang.Override
@@ -234,30 +161,30 @@ public final class ExternalOrganizationAttributes {
         /**
          * <p>Name of the organization (uppercase, no spaces)</p>
          */
-        NationalOffersStage name(@NotNull String name);
+        AffiliateCommissionSplitStage name(@NotNull String name);
 
         Builder from(ExternalOrganizationAttributes other);
     }
 
-    public interface NationalOffersStage {
+    public interface AffiliateCommissionSplitStage {
         /**
-         * <p>Whether national offers are enabled</p>
+         * <p>Affiliate commission split percentage</p>
          */
-        LocalOffersStage nationalOffers(boolean nationalOffers);
+        CardlinkedCommissionSplitStage affiliateCommissionSplit(double affiliateCommissionSplit);
     }
 
-    public interface LocalOffersStage {
+    public interface CardlinkedCommissionSplitStage {
         /**
-         * <p>Whether local offers are enabled</p>
+         * <p>Cardlinked commission split percentage</p>
          */
-        UseAttributionStage localOffers(boolean localOffers);
+        CardlinkedUserCommissionSplitStage cardlinkedCommissionSplit(double cardlinkedCommissionSplit);
     }
 
-    public interface UseAttributionStage {
+    public interface CardlinkedUserCommissionSplitStage {
         /**
-         * <p>Whether attribution tracking is enabled</p>
+         * <p>Cardlinked user commission split percentage</p>
          */
-        _FinalStage useAttribution(boolean useAttribution);
+        _FinalStage cardlinkedUserCommissionSplit(double cardlinkedUserCommissionSplit);
     }
 
     public interface _FinalStage {
@@ -266,20 +193,6 @@ public final class ExternalOrganizationAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>External identifier for the organization</p>
-         */
-        _FinalStage externalId(Optional<String> externalId);
-
-        _FinalStage externalId(String externalId);
-
-        /**
-         * <p>ID of the parent organization</p>
-         */
-        _FinalStage parentOrganizationId(Optional<String> parentOrganizationId);
-
-        _FinalStage parentOrganizationId(String parentOrganizationId);
 
         /**
          * <p>Rewards programs the organization is enrolled in</p>
@@ -300,13 +213,6 @@ public final class ExternalOrganizationAttributes {
         _FinalStage addAllCardNetworks(List<CardNetwork> cardNetworks);
 
         /**
-         * <p>Merchant networks with priority for the organization</p>
-         */
-        _FinalStage merchantNetworks(Optional<List<MerchantNetwork>> merchantNetworks);
-
-        _FinalStage merchantNetworks(List<MerchantNetwork> merchantNetworks);
-
-        /**
          * <p>Bank Identification Numbers for the organization</p>
          */
         _FinalStage bins(List<String> bins);
@@ -314,48 +220,28 @@ public final class ExternalOrganizationAttributes {
         _FinalStage addBins(String bins);
 
         _FinalStage addAllBins(List<String> bins);
-
-        /**
-         * <p>When the organization was created (ISO 8601 UTC)</p>
-         */
-        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
-
-        _FinalStage createdAt(OffsetDateTime createdAt);
-
-        /**
-         * <p>When the organization was last updated (ISO 8601 UTC)</p>
-         */
-        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
-
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements NameStage, NationalOffersStage, LocalOffersStage, UseAttributionStage, _FinalStage {
+            implements NameStage,
+                    AffiliateCommissionSplitStage,
+                    CardlinkedCommissionSplitStage,
+                    CardlinkedUserCommissionSplitStage,
+                    _FinalStage {
         private String name;
 
-        private boolean nationalOffers;
+        private double affiliateCommissionSplit;
 
-        private boolean localOffers;
+        private double cardlinkedCommissionSplit;
 
-        private boolean useAttribution;
-
-        private Optional<OffsetDateTime> updatedAt = Optional.empty();
-
-        private Optional<OffsetDateTime> createdAt = Optional.empty();
+        private double cardlinkedUserCommissionSplit;
 
         private List<String> bins = new ArrayList<>();
-
-        private Optional<List<MerchantNetwork>> merchantNetworks = Optional.empty();
 
         private List<CardNetwork> cardNetworks = new ArrayList<>();
 
         private List<EnrolledReward> enrolledRewards = new ArrayList<>();
-
-        private Optional<String> parentOrganizationId = Optional.empty();
-
-        private Optional<String> externalId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -365,17 +251,12 @@ public final class ExternalOrganizationAttributes {
         @java.lang.Override
         public Builder from(ExternalOrganizationAttributes other) {
             name(other.getName());
-            externalId(other.getExternalId());
-            parentOrganizationId(other.getParentOrganizationId());
             enrolledRewards(other.getEnrolledRewards());
             cardNetworks(other.getCardNetworks());
-            merchantNetworks(other.getMerchantNetworks());
-            nationalOffers(other.getNationalOffers());
-            localOffers(other.getLocalOffers());
-            useAttribution(other.getUseAttribution());
             bins(other.getBins());
-            createdAt(other.getCreatedAt());
-            updatedAt(other.getUpdatedAt());
+            affiliateCommissionSplit(other.getAffiliateCommissionSplit());
+            cardlinkedCommissionSplit(other.getCardlinkedCommissionSplit());
+            cardlinkedUserCommissionSplit(other.getCardlinkedUserCommissionSplit());
             return this;
         }
 
@@ -386,84 +267,44 @@ public final class ExternalOrganizationAttributes {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public NationalOffersStage name(@NotNull String name) {
+        public AffiliateCommissionSplitStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         /**
-         * <p>Whether national offers are enabled</p>
-         * <p>Whether national offers are enabled</p>
+         * <p>Affiliate commission split percentage</p>
+         * <p>Affiliate commission split percentage</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("nationalOffers")
-        public LocalOffersStage nationalOffers(boolean nationalOffers) {
-            this.nationalOffers = nationalOffers;
+        @JsonSetter("affiliateCommissionSplit")
+        public CardlinkedCommissionSplitStage affiliateCommissionSplit(double affiliateCommissionSplit) {
+            this.affiliateCommissionSplit = affiliateCommissionSplit;
             return this;
         }
 
         /**
-         * <p>Whether local offers are enabled</p>
-         * <p>Whether local offers are enabled</p>
+         * <p>Cardlinked commission split percentage</p>
+         * <p>Cardlinked commission split percentage</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("localOffers")
-        public UseAttributionStage localOffers(boolean localOffers) {
-            this.localOffers = localOffers;
+        @JsonSetter("cardlinkedCommissionSplit")
+        public CardlinkedUserCommissionSplitStage cardlinkedCommissionSplit(double cardlinkedCommissionSplit) {
+            this.cardlinkedCommissionSplit = cardlinkedCommissionSplit;
             return this;
         }
 
         /**
-         * <p>Whether attribution tracking is enabled</p>
-         * <p>Whether attribution tracking is enabled</p>
+         * <p>Cardlinked user commission split percentage</p>
+         * <p>Cardlinked user commission split percentage</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("useAttribution")
-        public _FinalStage useAttribution(boolean useAttribution) {
-            this.useAttribution = useAttribution;
-            return this;
-        }
-
-        /**
-         * <p>When the organization was last updated (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.ofNullable(updatedAt);
-            return this;
-        }
-
-        /**
-         * <p>When the organization was last updated (ISO 8601 UTC)</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "updatedAt", nulls = Nulls.SKIP)
-        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        /**
-         * <p>When the organization was created (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.ofNullable(createdAt);
-            return this;
-        }
-
-        /**
-         * <p>When the organization was created (ISO 8601 UTC)</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "createdAt", nulls = Nulls.SKIP)
-        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
-            this.createdAt = createdAt;
+        @JsonSetter("cardlinkedUserCommissionSplit")
+        public _FinalStage cardlinkedUserCommissionSplit(double cardlinkedUserCommissionSplit) {
+            this.cardlinkedUserCommissionSplit = cardlinkedUserCommissionSplit;
             return this;
         }
 
@@ -499,26 +340,6 @@ public final class ExternalOrganizationAttributes {
             if (bins != null) {
                 this.bins.addAll(bins);
             }
-            return this;
-        }
-
-        /**
-         * <p>Merchant networks with priority for the organization</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage merchantNetworks(List<MerchantNetwork> merchantNetworks) {
-            this.merchantNetworks = Optional.ofNullable(merchantNetworks);
-            return this;
-        }
-
-        /**
-         * <p>Merchant networks with priority for the organization</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "merchantNetworks", nulls = Nulls.SKIP)
-        public _FinalStage merchantNetworks(Optional<List<MerchantNetwork>> merchantNetworks) {
-            this.merchantNetworks = merchantNetworks;
             return this;
         }
 
@@ -592,61 +413,16 @@ public final class ExternalOrganizationAttributes {
             return this;
         }
 
-        /**
-         * <p>ID of the parent organization</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage parentOrganizationId(String parentOrganizationId) {
-            this.parentOrganizationId = Optional.ofNullable(parentOrganizationId);
-            return this;
-        }
-
-        /**
-         * <p>ID of the parent organization</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "parentOrganizationId", nulls = Nulls.SKIP)
-        public _FinalStage parentOrganizationId(Optional<String> parentOrganizationId) {
-            this.parentOrganizationId = parentOrganizationId;
-            return this;
-        }
-
-        /**
-         * <p>External identifier for the organization</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage externalId(String externalId) {
-            this.externalId = Optional.ofNullable(externalId);
-            return this;
-        }
-
-        /**
-         * <p>External identifier for the organization</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "externalId", nulls = Nulls.SKIP)
-        public _FinalStage externalId(Optional<String> externalId) {
-            this.externalId = externalId;
-            return this;
-        }
-
         @java.lang.Override
         public ExternalOrganizationAttributes build() {
             return new ExternalOrganizationAttributes(
                     name,
-                    externalId,
-                    parentOrganizationId,
                     enrolledRewards,
                     cardNetworks,
-                    merchantNetworks,
-                    nationalOffers,
-                    localOffers,
-                    useAttribution,
                     bins,
-                    createdAt,
-                    updatedAt,
+                    affiliateCommissionSplit,
+                    cardlinkedCommissionSplit,
+                    cardlinkedUserCommissionSplit,
                     additionalProperties);
         }
 

@@ -435,7 +435,7 @@ client.notifications().subscriptions().update(
 </details>
 
 ## Organizations
-<details><summary><code>client.organizations.get(organizationId) -> ExternalOrganizationResponse</code></summary>
+<details><summary><code>client.organizations.get() -> ExternalOrganizationResponse</code></summary>
 <dl>
 <dd>
 
@@ -462,23 +462,8 @@ Retrieve organization details for the authenticated issuer
 <dd>
 
 ```java
-client.organizations().get("organizationId");
+client.organizations().get();
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organizationId:** `String` — Unique identifier of the organization (must match the authenticated issuer)
-    
 </dd>
 </dl>
 </dd>
@@ -565,7 +550,7 @@ client.organizations().children().list(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.children.create(organizationId, request) -> ExternalOrganizationResponse</code></summary>
+<details><summary><code>client.organizations.children.create(organizationId, request) -> ChildOrganizationResponse</code></summary>
 <dl>
 <dd>
 
@@ -643,7 +628,7 @@ client.organizations().children().create(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.children.get(organizationId, childId) -> ExternalOrganizationResponse</code></summary>
+<details><summary><code>client.organizations.children.get(organizationId, childId) -> ChildOrganizationResponse</code></summary>
 <dl>
 <dd>
 
@@ -705,7 +690,7 @@ client.organizations().children().get("organizationId", "childId");
 </dl>
 </details>
 
-<details><summary><code>client.organizations.children.update(organizationId, childId, request) -> ExternalOrganizationResponse</code></summary>
+<details><summary><code>client.organizations.children.update(organizationId, childId, request) -> ChildOrganizationResponse</code></summary>
 <dl>
 <dd>
 

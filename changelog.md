@@ -1,3 +1,10 @@
+## 16.0.0 - 2026-04-17
+### Breaking Changes
+* **`OrganizationsClient.get()`** / **`AsyncOrganizationsClient.get()`** — the `organizationId` parameter has been removed; the endpoint now resolves to `v2/issuer` automatically. Remove the `organizationId` argument from all call sites.
+* **`ChildrenClient.create()`**, **`.get()`**, **`.update()`** (and async / raw variants) — return type changed from `ExternalOrganizationResponse` to `ChildOrganizationResponse`. Update variable declarations and type references accordingly.
+* **`MerchantNetwork`** — public class removed with no replacement; delete any references or usages.
+* **`MerchantNetworkName`** — public enum-like class removed with no replacement; delete any references or usages.
+
 ## 15.4.0 - 2026-04-16
 ### Added
 * **`MerchantAsset`** — new type representing a tracked asset image (logo, banner, etc.) for a merchant, with required `type` and `url` fields and an optional `alt` accessibility string.

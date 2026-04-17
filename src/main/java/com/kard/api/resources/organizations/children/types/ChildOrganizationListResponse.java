@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.resources.commons.types.Links;
 import com.kard.api.resources.internalorganizations.types.OrganizationPaginationMetadata;
-import com.kard.api.resources.organizations.types.ExternalOrganizationResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ChildOrganizationListResponse.Builder.class)
 public final class ChildOrganizationListResponse {
-    private final List<ExternalOrganizationResponse> data;
+    private final List<ChildOrganizationResponse> data;
 
     private final Optional<Links> links;
 
@@ -34,7 +33,7 @@ public final class ChildOrganizationListResponse {
     private final Map<String, Object> additionalProperties;
 
     private ChildOrganizationListResponse(
-            List<ExternalOrganizationResponse> data,
+            List<ChildOrganizationResponse> data,
             Optional<Links> links,
             Optional<OrganizationPaginationMetadata> meta,
             Map<String, Object> additionalProperties) {
@@ -48,7 +47,7 @@ public final class ChildOrganizationListResponse {
      * @return Array of child organization resources
      */
     @JsonProperty("data")
-    public List<ExternalOrganizationResponse> getData() {
+    public List<ChildOrganizationResponse> getData() {
         return data;
     }
 
@@ -96,7 +95,7 @@ public final class ChildOrganizationListResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<ExternalOrganizationResponse> data = new ArrayList<>();
+        private List<ChildOrganizationResponse> data = new ArrayList<>();
 
         private Optional<Links> links = Optional.empty();
 
@@ -118,7 +117,7 @@ public final class ChildOrganizationListResponse {
          * <p>Array of child organization resources</p>
          */
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public Builder data(List<ExternalOrganizationResponse> data) {
+        public Builder data(List<ChildOrganizationResponse> data) {
             this.data.clear();
             if (data != null) {
                 this.data.addAll(data);
@@ -126,12 +125,12 @@ public final class ChildOrganizationListResponse {
             return this;
         }
 
-        public Builder addData(ExternalOrganizationResponse data) {
+        public Builder addData(ChildOrganizationResponse data) {
             this.data.add(data);
             return this;
         }
 
-        public Builder addAllData(List<ExternalOrganizationResponse> data) {
+        public Builder addAllData(List<ChildOrganizationResponse> data) {
             if (data != null) {
                 this.data.addAll(data);
             }

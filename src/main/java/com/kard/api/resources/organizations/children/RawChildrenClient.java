@@ -22,9 +22,9 @@ import com.kard.api.resources.commons.types.ErrorResponse;
 import com.kard.api.resources.internalorganizations.types.DeleteResourceResponse;
 import com.kard.api.resources.organizations.children.requests.ListChildrenRequest;
 import com.kard.api.resources.organizations.children.types.ChildOrganizationListResponse;
+import com.kard.api.resources.organizations.children.types.ChildOrganizationResponse;
 import com.kard.api.resources.organizations.children.types.CreateChildRequestBody;
 import com.kard.api.resources.organizations.children.types.UpdateChildRequestBody;
-import com.kard.api.resources.organizations.types.ExternalOrganizationResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -133,7 +133,7 @@ public class RawChildrenClient {
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public KardApiHttpResponse<ExternalOrganizationResponse> create(
+    public KardApiHttpResponse<ChildOrganizationResponse> create(
             String organizationId, CreateChildRequestBody request) {
         return create(organizationId, request, null);
     }
@@ -141,7 +141,7 @@ public class RawChildrenClient {
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public KardApiHttpResponse<ExternalOrganizationResponse> create(
+    public KardApiHttpResponse<ChildOrganizationResponse> create(
             String organizationId, CreateChildRequestBody request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -176,7 +176,7 @@ public class RawChildrenClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ExternalOrganizationResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ChildOrganizationResponse.class),
                         response);
             }
             try {
@@ -211,14 +211,14 @@ public class RawChildrenClient {
     /**
      * Retrieve a specific child organization
      */
-    public KardApiHttpResponse<ExternalOrganizationResponse> get(String organizationId, String childId) {
+    public KardApiHttpResponse<ChildOrganizationResponse> get(String organizationId, String childId) {
         return get(organizationId, childId, null);
     }
 
     /**
      * Retrieve a specific child organization
      */
-    public KardApiHttpResponse<ExternalOrganizationResponse> get(
+    public KardApiHttpResponse<ChildOrganizationResponse> get(
             String organizationId, String childId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -246,7 +246,7 @@ public class RawChildrenClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ExternalOrganizationResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ChildOrganizationResponse.class),
                         response);
             }
             try {
@@ -278,7 +278,7 @@ public class RawChildrenClient {
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public KardApiHttpResponse<ExternalOrganizationResponse> update(
+    public KardApiHttpResponse<ChildOrganizationResponse> update(
             String organizationId, String childId, UpdateChildRequestBody request) {
         return update(organizationId, childId, request, null);
     }
@@ -286,7 +286,7 @@ public class RawChildrenClient {
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public KardApiHttpResponse<ExternalOrganizationResponse> update(
+    public KardApiHttpResponse<ChildOrganizationResponse> update(
             String organizationId, String childId, UpdateChildRequestBody request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -322,7 +322,7 @@ public class RawChildrenClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ExternalOrganizationResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ChildOrganizationResponse.class),
                         response);
             }
             try {

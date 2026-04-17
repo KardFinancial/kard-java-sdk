@@ -8,9 +8,9 @@ import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.internalorganizations.types.DeleteResourceResponse;
 import com.kard.api.resources.organizations.children.requests.ListChildrenRequest;
 import com.kard.api.resources.organizations.children.types.ChildOrganizationListResponse;
+import com.kard.api.resources.organizations.children.types.ChildOrganizationResponse;
 import com.kard.api.resources.organizations.children.types.CreateChildRequestBody;
 import com.kard.api.resources.organizations.children.types.UpdateChildRequestBody;
-import com.kard.api.resources.organizations.types.ExternalOrganizationResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncChildrenClient {
@@ -62,15 +62,14 @@ public class AsyncChildrenClient {
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public CompletableFuture<ExternalOrganizationResponse> create(
-            String organizationId, CreateChildRequestBody request) {
+    public CompletableFuture<ChildOrganizationResponse> create(String organizationId, CreateChildRequestBody request) {
         return this.rawClient.create(organizationId, request).thenApply(response -> response.body());
     }
 
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public CompletableFuture<ExternalOrganizationResponse> create(
+    public CompletableFuture<ChildOrganizationResponse> create(
             String organizationId, CreateChildRequestBody request, RequestOptions requestOptions) {
         return this.rawClient.create(organizationId, request, requestOptions).thenApply(response -> response.body());
     }
@@ -78,14 +77,14 @@ public class AsyncChildrenClient {
     /**
      * Retrieve a specific child organization
      */
-    public CompletableFuture<ExternalOrganizationResponse> get(String organizationId, String childId) {
+    public CompletableFuture<ChildOrganizationResponse> get(String organizationId, String childId) {
         return this.rawClient.get(organizationId, childId).thenApply(response -> response.body());
     }
 
     /**
      * Retrieve a specific child organization
      */
-    public CompletableFuture<ExternalOrganizationResponse> get(
+    public CompletableFuture<ChildOrganizationResponse> get(
             String organizationId, String childId, RequestOptions requestOptions) {
         return this.rawClient.get(organizationId, childId, requestOptions).thenApply(response -> response.body());
     }
@@ -93,7 +92,7 @@ public class AsyncChildrenClient {
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public CompletableFuture<ExternalOrganizationResponse> update(
+    public CompletableFuture<ChildOrganizationResponse> update(
             String organizationId, String childId, UpdateChildRequestBody request) {
         return this.rawClient.update(organizationId, childId, request).thenApply(response -> response.body());
     }
@@ -101,7 +100,7 @@ public class AsyncChildrenClient {
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public CompletableFuture<ExternalOrganizationResponse> update(
+    public CompletableFuture<ChildOrganizationResponse> update(
             String organizationId, String childId, UpdateChildRequestBody request, RequestOptions requestOptions) {
         return this.rawClient
                 .update(organizationId, childId, request, requestOptions)

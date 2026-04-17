@@ -8,9 +8,9 @@ import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.internalorganizations.types.DeleteResourceResponse;
 import com.kard.api.resources.organizations.children.requests.ListChildrenRequest;
 import com.kard.api.resources.organizations.children.types.ChildOrganizationListResponse;
+import com.kard.api.resources.organizations.children.types.ChildOrganizationResponse;
 import com.kard.api.resources.organizations.children.types.CreateChildRequestBody;
 import com.kard.api.resources.organizations.children.types.UpdateChildRequestBody;
-import com.kard.api.resources.organizations.types.ExternalOrganizationResponse;
 
 public class ChildrenClient {
     protected final ClientOptions clientOptions;
@@ -61,14 +61,14 @@ public class ChildrenClient {
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public ExternalOrganizationResponse create(String organizationId, CreateChildRequestBody request) {
+    public ChildOrganizationResponse create(String organizationId, CreateChildRequestBody request) {
         return this.rawClient.create(organizationId, request).body();
     }
 
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public ExternalOrganizationResponse create(
+    public ChildOrganizationResponse create(
             String organizationId, CreateChildRequestBody request, RequestOptions requestOptions) {
         return this.rawClient.create(organizationId, request, requestOptions).body();
     }
@@ -76,28 +76,28 @@ public class ChildrenClient {
     /**
      * Retrieve a specific child organization
      */
-    public ExternalOrganizationResponse get(String organizationId, String childId) {
+    public ChildOrganizationResponse get(String organizationId, String childId) {
         return this.rawClient.get(organizationId, childId).body();
     }
 
     /**
      * Retrieve a specific child organization
      */
-    public ExternalOrganizationResponse get(String organizationId, String childId, RequestOptions requestOptions) {
+    public ChildOrganizationResponse get(String organizationId, String childId, RequestOptions requestOptions) {
         return this.rawClient.get(organizationId, childId, requestOptions).body();
     }
 
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public ExternalOrganizationResponse update(String organizationId, String childId, UpdateChildRequestBody request) {
+    public ChildOrganizationResponse update(String organizationId, String childId, UpdateChildRequestBody request) {
         return this.rawClient.update(organizationId, childId, request).body();
     }
 
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public ExternalOrganizationResponse update(
+    public ChildOrganizationResponse update(
             String organizationId, String childId, UpdateChildRequestBody request, RequestOptions requestOptions) {
         return this.rawClient
                 .update(organizationId, childId, request, requestOptions)

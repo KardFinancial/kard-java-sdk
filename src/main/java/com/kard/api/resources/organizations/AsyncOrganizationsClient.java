@@ -38,15 +38,15 @@ public class AsyncOrganizationsClient {
     /**
      * Retrieve organization details for the authenticated issuer
      */
-    public CompletableFuture<ExternalOrganizationResponse> get(String organizationId) {
-        return this.rawClient.get(organizationId).thenApply(response -> response.body());
+    public CompletableFuture<ExternalOrganizationResponse> get() {
+        return this.rawClient.get().thenApply(response -> response.body());
     }
 
     /**
      * Retrieve organization details for the authenticated issuer
      */
-    public CompletableFuture<ExternalOrganizationResponse> get(String organizationId, RequestOptions requestOptions) {
-        return this.rawClient.get(organizationId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ExternalOrganizationResponse> get(RequestOptions requestOptions) {
+        return this.rawClient.get(requestOptions).thenApply(response -> response.body());
     }
 
     public AsyncChildrenClient children() {

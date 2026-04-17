@@ -38,19 +38,17 @@ public class AsyncRawOrganizationsClient {
     /**
      * Retrieve organization details for the authenticated issuer
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> get(String organizationId) {
-        return get(organizationId, null);
+    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> get() {
+        return get(null);
     }
 
     /**
      * Retrieve organization details for the authenticated issuer
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> get(
-            String organizationId, RequestOptions requestOptions) {
+    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> get(RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/issuers")
-                .addPathSegment(organizationId);
+                .addPathSegments("v2/issuer");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

@@ -22,9 +22,9 @@ import com.kard.api.resources.commons.types.ErrorResponse;
 import com.kard.api.resources.internalorganizations.types.DeleteResourceResponse;
 import com.kard.api.resources.organizations.children.requests.ListChildrenRequest;
 import com.kard.api.resources.organizations.children.types.ChildOrganizationListResponse;
+import com.kard.api.resources.organizations.children.types.ChildOrganizationResponse;
 import com.kard.api.resources.organizations.children.types.CreateChildRequestBody;
 import com.kard.api.resources.organizations.children.types.UpdateChildRequestBody;
-import com.kard.api.resources.organizations.types.ExternalOrganizationResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -160,7 +160,7 @@ public class AsyncRawChildrenClient {
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> create(
+    public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> create(
             String organizationId, CreateChildRequestBody request) {
         return create(organizationId, request, null);
     }
@@ -168,7 +168,7 @@ public class AsyncRawChildrenClient {
     /**
      * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> create(
+    public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> create(
             String organizationId, CreateChildRequestBody request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -198,7 +198,7 @@ public class AsyncRawChildrenClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> future = new CompletableFuture<>();
+        CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -207,7 +207,7 @@ public class AsyncRawChildrenClient {
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, ExternalOrganizationResponse.class),
+                                        responseBodyString, ChildOrganizationResponse.class),
                                 response));
                         return;
                     }
@@ -262,7 +262,7 @@ public class AsyncRawChildrenClient {
     /**
      * Retrieve a specific child organization
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> get(
+    public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> get(
             String organizationId, String childId) {
         return get(organizationId, childId, null);
     }
@@ -270,7 +270,7 @@ public class AsyncRawChildrenClient {
     /**
      * Retrieve a specific child organization
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> get(
+    public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> get(
             String organizationId, String childId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -293,7 +293,7 @@ public class AsyncRawChildrenClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> future = new CompletableFuture<>();
+        CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -302,7 +302,7 @@ public class AsyncRawChildrenClient {
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, ExternalOrganizationResponse.class),
+                                        responseBodyString, ChildOrganizationResponse.class),
                                 response));
                         return;
                     }
@@ -352,7 +352,7 @@ public class AsyncRawChildrenClient {
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> update(
+    public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> update(
             String organizationId, String childId, UpdateChildRequestBody request) {
         return update(organizationId, childId, request, null);
     }
@@ -360,7 +360,7 @@ public class AsyncRawChildrenClient {
     /**
      * Update a child organization. Only the name can be changed.
      */
-    public CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> update(
+    public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> update(
             String organizationId, String childId, UpdateChildRequestBody request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -391,7 +391,7 @@ public class AsyncRawChildrenClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<KardApiHttpResponse<ExternalOrganizationResponse>> future = new CompletableFuture<>();
+        CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -400,7 +400,7 @@ public class AsyncRawChildrenClient {
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, ExternalOrganizationResponse.class),
+                                        responseBodyString, ChildOrganizationResponse.class),
                                 response));
                         return;
                     }

@@ -37,15 +37,15 @@ public class OrganizationsClient {
     /**
      * Retrieve organization details for the authenticated issuer
      */
-    public ExternalOrganizationResponse get(String organizationId) {
-        return this.rawClient.get(organizationId).body();
+    public ExternalOrganizationResponse get() {
+        return this.rawClient.get().body();
     }
 
     /**
      * Retrieve organization details for the authenticated issuer
      */
-    public ExternalOrganizationResponse get(String organizationId, RequestOptions requestOptions) {
-        return this.rawClient.get(organizationId, requestOptions).body();
+    public ExternalOrganizationResponse get(RequestOptions requestOptions) {
+        return this.rawClient.get(requestOptions).body();
     }
 
     public ChildrenClient children() {
