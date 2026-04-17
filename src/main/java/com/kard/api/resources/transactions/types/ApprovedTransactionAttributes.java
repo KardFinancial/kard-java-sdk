@@ -9,56 +9,42 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = RewardedTransactionAttributes.Builder.class)
-public final class RewardedTransactionAttributes {
+@JsonDeserialize(builder = ApprovedTransactionAttributes.Builder.class)
+public final class ApprovedTransactionAttributes {
     private final String transactionId;
 
     private final int transactionAmountInCents;
 
     private final OffsetDateTime transactionTimestamp;
 
-    private final PaymentStatus paidToIssuer;
-
-    private final CommissionEarnedDetails commissionEarned;
-
-    private final Optional<OffsetDateTime> payoutTimestamp;
-
     private final Map<String, Object> additionalProperties;
 
-    private RewardedTransactionAttributes(
+    private ApprovedTransactionAttributes(
             String transactionId,
             int transactionAmountInCents,
             OffsetDateTime transactionTimestamp,
-            PaymentStatus paidToIssuer,
-            CommissionEarnedDetails commissionEarned,
-            Optional<OffsetDateTime> payoutTimestamp,
             Map<String, Object> additionalProperties) {
         this.transactionId = transactionId;
         this.transactionAmountInCents = transactionAmountInCents;
         this.transactionTimestamp = transactionTimestamp;
-        this.paidToIssuer = paidToIssuer;
-        this.commissionEarned = commissionEarned;
-        this.payoutTimestamp = payoutTimestamp;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return Status of the rewarded transaction
+     * @return Status of the approved transaction
      */
     @JsonProperty("status")
     public String getStatus() {
-        return "SETTLED";
+        return "APPROVED";
     }
 
     /**
@@ -85,31 +71,10 @@ public final class RewardedTransactionAttributes {
         return transactionTimestamp;
     }
 
-    /**
-     * @return Payment status to issuer
-     */
-    @JsonProperty("paidToIssuer")
-    public PaymentStatus getPaidToIssuer() {
-        return paidToIssuer;
-    }
-
-    @JsonProperty("commissionEarned")
-    public CommissionEarnedDetails getCommissionEarned() {
-        return commissionEarned;
-    }
-
-    /**
-     * @return Timestamp representing the month when the transaction has been paid out to issuer
-     */
-    @JsonProperty("payoutTimestamp")
-    public Optional<OffsetDateTime> getPayoutTimestamp() {
-        return payoutTimestamp;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof RewardedTransactionAttributes && equalTo((RewardedTransactionAttributes) other);
+        return other instanceof ApprovedTransactionAttributes && equalTo((ApprovedTransactionAttributes) other);
     }
 
     @JsonAnyGetter
@@ -117,24 +82,15 @@ public final class RewardedTransactionAttributes {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(RewardedTransactionAttributes other) {
+    private boolean equalTo(ApprovedTransactionAttributes other) {
         return transactionId.equals(other.transactionId)
                 && transactionAmountInCents == other.transactionAmountInCents
-                && transactionTimestamp.equals(other.transactionTimestamp)
-                && paidToIssuer.equals(other.paidToIssuer)
-                && commissionEarned.equals(other.commissionEarned)
-                && payoutTimestamp.equals(other.payoutTimestamp);
+                && transactionTimestamp.equals(other.transactionTimestamp);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.transactionId,
-                this.transactionAmountInCents,
-                this.transactionTimestamp,
-                this.paidToIssuer,
-                this.commissionEarned,
-                this.payoutTimestamp);
+        return Objects.hash(this.transactionId, this.transactionAmountInCents, this.transactionTimestamp);
     }
 
     @java.lang.Override
@@ -152,7 +108,7 @@ public final class RewardedTransactionAttributes {
          */
         TransactionAmountInCentsStage transactionId(@NotNull String transactionId);
 
-        Builder from(RewardedTransactionAttributes other);
+        Builder from(ApprovedTransactionAttributes other);
     }
 
     public interface TransactionAmountInCentsStage {
@@ -166,54 +122,25 @@ public final class RewardedTransactionAttributes {
         /**
          * <p>Timestamp of the transaction in ISO 8601 format</p>
          */
-        PaidToIssuerStage transactionTimestamp(@NotNull OffsetDateTime transactionTimestamp);
-    }
-
-    public interface PaidToIssuerStage {
-        /**
-         * <p>Payment status to issuer</p>
-         */
-        CommissionEarnedStage paidToIssuer(@NotNull PaymentStatus paidToIssuer);
-    }
-
-    public interface CommissionEarnedStage {
-        _FinalStage commissionEarned(@NotNull CommissionEarnedDetails commissionEarned);
+        _FinalStage transactionTimestamp(@NotNull OffsetDateTime transactionTimestamp);
     }
 
     public interface _FinalStage {
-        RewardedTransactionAttributes build();
+        ApprovedTransactionAttributes build();
 
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>Timestamp representing the month when the transaction has been paid out to issuer</p>
-         */
-        _FinalStage payoutTimestamp(Optional<OffsetDateTime> payoutTimestamp);
-
-        _FinalStage payoutTimestamp(OffsetDateTime payoutTimestamp);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements TransactionIdStage,
-                    TransactionAmountInCentsStage,
-                    TransactionTimestampStage,
-                    PaidToIssuerStage,
-                    CommissionEarnedStage,
-                    _FinalStage {
+            implements TransactionIdStage, TransactionAmountInCentsStage, TransactionTimestampStage, _FinalStage {
         private String transactionId;
 
         private int transactionAmountInCents;
 
         private OffsetDateTime transactionTimestamp;
-
-        private PaymentStatus paidToIssuer;
-
-        private CommissionEarnedDetails commissionEarned;
-
-        private Optional<OffsetDateTime> payoutTimestamp = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -221,13 +148,10 @@ public final class RewardedTransactionAttributes {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(RewardedTransactionAttributes other) {
+        public Builder from(ApprovedTransactionAttributes other) {
             transactionId(other.getTransactionId());
             transactionAmountInCents(other.getTransactionAmountInCents());
             transactionTimestamp(other.getTransactionTimestamp());
-            paidToIssuer(other.getPaidToIssuer());
-            commissionEarned(other.getCommissionEarned());
-            payoutTimestamp(other.getPayoutTimestamp());
             return this;
         }
 
@@ -262,61 +186,16 @@ public final class RewardedTransactionAttributes {
          */
         @java.lang.Override
         @JsonSetter("transactionTimestamp")
-        public PaidToIssuerStage transactionTimestamp(@NotNull OffsetDateTime transactionTimestamp) {
+        public _FinalStage transactionTimestamp(@NotNull OffsetDateTime transactionTimestamp) {
             this.transactionTimestamp =
                     Objects.requireNonNull(transactionTimestamp, "transactionTimestamp must not be null");
             return this;
         }
 
-        /**
-         * <p>Payment status to issuer</p>
-         * <p>Payment status to issuer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @java.lang.Override
-        @JsonSetter("paidToIssuer")
-        public CommissionEarnedStage paidToIssuer(@NotNull PaymentStatus paidToIssuer) {
-            this.paidToIssuer = Objects.requireNonNull(paidToIssuer, "paidToIssuer must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("commissionEarned")
-        public _FinalStage commissionEarned(@NotNull CommissionEarnedDetails commissionEarned) {
-            this.commissionEarned = Objects.requireNonNull(commissionEarned, "commissionEarned must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Timestamp representing the month when the transaction has been paid out to issuer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage payoutTimestamp(OffsetDateTime payoutTimestamp) {
-            this.payoutTimestamp = Optional.ofNullable(payoutTimestamp);
-            return this;
-        }
-
-        /**
-         * <p>Timestamp representing the month when the transaction has been paid out to issuer</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "payoutTimestamp", nulls = Nulls.SKIP)
-        public _FinalStage payoutTimestamp(Optional<OffsetDateTime> payoutTimestamp) {
-            this.payoutTimestamp = payoutTimestamp;
-            return this;
-        }
-
-        @java.lang.Override
-        public RewardedTransactionAttributes build() {
-            return new RewardedTransactionAttributes(
-                    transactionId,
-                    transactionAmountInCents,
-                    transactionTimestamp,
-                    paidToIssuer,
-                    commissionEarned,
-                    payoutTimestamp,
-                    additionalProperties);
+        public ApprovedTransactionAttributes build() {
+            return new ApprovedTransactionAttributes(
+                    transactionId, transactionAmountInCents, transactionTimestamp, additionalProperties);
         }
 
         @java.lang.Override

@@ -1,3 +1,14 @@
+## 17.0.0 - 2026-04-17
+### Breaking Changes
+* **`CommissionEarnedDetails.getIssuer()`** — the `issuer` field and `IssuerStage` builder stage are removed; update all construction call chains to start from `UserStage` (call `CommissionEarnedDetails.builder().user(...)`).
+* **`RewardedTransactionAttributes.getStatus()`** — return type changed from `RewardedTransactionStatus` to `String` (hardcoded `"SETTLED"`); update variable declarations and switch/if logic that expected a `RewardedTransactionStatus` enum value.
+* **`RewardedTransactionAttributes.getCardBin()`** and **`getCardLastFour()`** — these optional fields and their builder methods (`cardBin()`, `cardLastFour()`) are removed; delete all references to them.
+* **`RewardedTransactionAttributes.Builder`** — the `StatusStage` entry point is removed; builder construction now begins at `TransactionIdStage`.
+* **`RewardedTransactionUnion.Visitor`** — a new required method `visitApprovedTransaction(ApprovedTransaction)` has been added to the `Visitor` interface; all existing visitor implementations must add this method.
+### Added
+* **`ApprovedTransaction`** and **`ApprovedTransactionAttributes`** — new types representing approved (non-settled) transactions with `id`, `transactionId`, `transactionAmountInCents`, and `transactionTimestamp` fields.
+* **`RewardedTransactionUnion.approvedTransaction()`** — new factory method and `getApprovedTransaction()` accessor to construct and unwrap the new `approvedTransaction` union variant.
+
 ## 16.0.0 - 2026-04-17
 ### Breaking Changes
 * **`OrganizationsClient.get()`** / **`AsyncOrganizationsClient.get()`** — the `organizationId` parameter has been removed; the endpoint now resolves to `v2/issuer` automatically. Remove the `organizationId` argument from all call sites.

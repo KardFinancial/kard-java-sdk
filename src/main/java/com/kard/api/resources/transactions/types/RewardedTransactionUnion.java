@@ -30,8 +30,16 @@ public final class RewardedTransactionUnion {
         return new RewardedTransactionUnion(new RewardedTransactionValue(value));
     }
 
+    public static RewardedTransactionUnion approvedTransaction(ApprovedTransaction value) {
+        return new RewardedTransactionUnion(new ApprovedTransactionValue(value));
+    }
+
     public boolean isRewardedTransaction() {
         return value instanceof RewardedTransactionValue;
+    }
+
+    public boolean isApprovedTransaction() {
+        return value instanceof ApprovedTransactionValue;
     }
 
     public boolean _isUnknown() {
@@ -41,6 +49,13 @@ public final class RewardedTransactionUnion {
     public Optional<RewardedTransaction> getRewardedTransaction() {
         if (isRewardedTransaction()) {
             return Optional.of(((RewardedTransactionValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<ApprovedTransaction> getApprovedTransaction() {
+        if (isApprovedTransaction()) {
+            return Optional.of(((ApprovedTransactionValue) value).value);
         }
         return Optional.empty();
     }
@@ -76,11 +91,16 @@ public final class RewardedTransactionUnion {
     public interface Visitor<T> {
         T visitRewardedTransaction(RewardedTransaction rewardedTransaction);
 
+        T visitApprovedTransaction(ApprovedTransaction approvedTransaction);
+
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
-    @JsonSubTypes(@JsonSubTypes.Type(RewardedTransactionValue.class))
+    @JsonSubTypes({
+        @JsonSubTypes.Type(RewardedTransactionValue.class),
+        @JsonSubTypes.Type(ApprovedTransactionValue.class)
+    })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
@@ -112,6 +132,46 @@ public final class RewardedTransactionUnion {
         }
 
         private boolean equalTo(RewardedTransactionValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "RewardedTransactionUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("approvedTransaction")
+    @JsonIgnoreProperties("type")
+    private static final class ApprovedTransactionValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private ApprovedTransaction value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ApprovedTransactionValue() {}
+
+        private ApprovedTransactionValue(ApprovedTransaction value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitApprovedTransaction(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ApprovedTransactionValue && equalTo((ApprovedTransactionValue) other);
+        }
+
+        private boolean equalTo(ApprovedTransactionValue other) {
             return value.equals(other.value);
         }
 

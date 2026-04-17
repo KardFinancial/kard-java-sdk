@@ -20,22 +20,13 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CommissionEarnedDetails.Builder.class)
 public final class CommissionEarnedDetails {
-    private final CommissionValue issuer;
-
     private final CommissionValue user;
 
     private final Map<String, Object> additionalProperties;
 
-    private CommissionEarnedDetails(
-            CommissionValue issuer, CommissionValue user, Map<String, Object> additionalProperties) {
-        this.issuer = issuer;
+    private CommissionEarnedDetails(CommissionValue user, Map<String, Object> additionalProperties) {
         this.user = user;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("issuer")
-    public CommissionValue getIssuer() {
-        return issuer;
     }
 
     @JsonProperty("user")
@@ -55,12 +46,12 @@ public final class CommissionEarnedDetails {
     }
 
     private boolean equalTo(CommissionEarnedDetails other) {
-        return issuer.equals(other.issuer) && user.equals(other.user);
+        return user.equals(other.user);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.issuer, this.user);
+        return Objects.hash(this.user);
     }
 
     @java.lang.Override
@@ -68,18 +59,14 @@ public final class CommissionEarnedDetails {
         return ObjectMappers.stringify(this);
     }
 
-    public static IssuerStage builder() {
+    public static UserStage builder() {
         return new Builder();
-    }
-
-    public interface IssuerStage {
-        UserStage issuer(@NotNull CommissionValue issuer);
-
-        Builder from(CommissionEarnedDetails other);
     }
 
     public interface UserStage {
         _FinalStage user(@NotNull CommissionValue user);
+
+        Builder from(CommissionEarnedDetails other);
     }
 
     public interface _FinalStage {
@@ -91,9 +78,7 @@ public final class CommissionEarnedDetails {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IssuerStage, UserStage, _FinalStage {
-        private CommissionValue issuer;
-
+    public static final class Builder implements UserStage, _FinalStage {
         private CommissionValue user;
 
         @JsonAnySetter
@@ -103,15 +88,7 @@ public final class CommissionEarnedDetails {
 
         @java.lang.Override
         public Builder from(CommissionEarnedDetails other) {
-            issuer(other.getIssuer());
             user(other.getUser());
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("issuer")
-        public UserStage issuer(@NotNull CommissionValue issuer) {
-            this.issuer = Objects.requireNonNull(issuer, "issuer must not be null");
             return this;
         }
 
@@ -124,7 +101,7 @@ public final class CommissionEarnedDetails {
 
         @java.lang.Override
         public CommissionEarnedDetails build() {
-            return new CommissionEarnedDetails(issuer, user, additionalProperties);
+            return new CommissionEarnedDetails(user, additionalProperties);
         }
 
         @java.lang.Override
