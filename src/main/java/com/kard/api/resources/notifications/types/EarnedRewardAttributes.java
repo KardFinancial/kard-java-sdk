@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,6 +32,8 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
 
     private final Optional<String> cardProductId;
 
+    private final Optional<OffsetDateTime> transactionTimestamp;
+
     private final Map<String, Object> additionalProperties;
 
     private EarnedRewardAttributes(
@@ -39,12 +42,14 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
             String attributionUrl,
             Optional<String> surveyUrl,
             Optional<String> cardProductId,
+            Optional<OffsetDateTime> transactionTimestamp,
             Map<String, Object> additionalProperties) {
         this.message = message;
         this.name = name;
         this.attributionUrl = attributionUrl;
         this.surveyUrl = surveyUrl;
         this.cardProductId = cardProductId;
+        this.transactionTimestamp = transactionTimestamp;
         this.additionalProperties = additionalProperties;
     }
 
@@ -93,6 +98,14 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
         return cardProductId;
     }
 
+    /**
+     * @return The timestamp of the originating transaction in ISO format
+     */
+    @JsonProperty("transactionTimestamp")
+    public Optional<OffsetDateTime> getTransactionTimestamp() {
+        return transactionTimestamp;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -109,12 +122,19 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
                 && name.equals(other.name)
                 && attributionUrl.equals(other.attributionUrl)
                 && surveyUrl.equals(other.surveyUrl)
-                && cardProductId.equals(other.cardProductId);
+                && cardProductId.equals(other.cardProductId)
+                && transactionTimestamp.equals(other.transactionTimestamp);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.message, this.name, this.attributionUrl, this.surveyUrl, this.cardProductId);
+        return Objects.hash(
+                this.message,
+                this.name,
+                this.attributionUrl,
+                this.surveyUrl,
+                this.cardProductId,
+                this.transactionTimestamp);
     }
 
     @java.lang.Override
@@ -169,6 +189,13 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
         _FinalStage cardProductId(Optional<String> cardProductId);
 
         _FinalStage cardProductId(String cardProductId);
+
+        /**
+         * <p>The timestamp of the originating transaction in ISO format</p>
+         */
+        _FinalStage transactionTimestamp(Optional<OffsetDateTime> transactionTimestamp);
+
+        _FinalStage transactionTimestamp(OffsetDateTime transactionTimestamp);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -178,6 +205,8 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
         private String name;
 
         private String attributionUrl;
+
+        private Optional<OffsetDateTime> transactionTimestamp = Optional.empty();
 
         private Optional<String> cardProductId = Optional.empty();
 
@@ -195,6 +224,7 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
             attributionUrl(other.getAttributionUrl());
             surveyUrl(other.getSurveyUrl());
             cardProductId(other.getCardProductId());
+            transactionTimestamp(other.getTransactionTimestamp());
             return this;
         }
 
@@ -231,6 +261,26 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
         @JsonSetter("attributionUrl")
         public _FinalStage attributionUrl(@NotNull String attributionUrl) {
             this.attributionUrl = Objects.requireNonNull(attributionUrl, "attributionUrl must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The timestamp of the originating transaction in ISO format</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage transactionTimestamp(OffsetDateTime transactionTimestamp) {
+            this.transactionTimestamp = Optional.ofNullable(transactionTimestamp);
+            return this;
+        }
+
+        /**
+         * <p>The timestamp of the originating transaction in ISO format</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "transactionTimestamp", nulls = Nulls.SKIP)
+        public _FinalStage transactionTimestamp(Optional<OffsetDateTime> transactionTimestamp) {
+            this.transactionTimestamp = transactionTimestamp;
             return this;
         }
 
@@ -277,7 +327,13 @@ public final class EarnedRewardAttributes implements IRewardNotificationAttribut
         @java.lang.Override
         public EarnedRewardAttributes build() {
             return new EarnedRewardAttributes(
-                    message, name, attributionUrl, surveyUrl, cardProductId, additionalProperties);
+                    message,
+                    name,
+                    attributionUrl,
+                    surveyUrl,
+                    cardProductId,
+                    transactionTimestamp,
+                    additionalProperties);
         }
 
         @java.lang.Override

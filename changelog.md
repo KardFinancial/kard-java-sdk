@@ -1,3 +1,8 @@
+## 17.1.0 - 2026-04-23
+### Added
+* **`EarnedRewardAttributes.getTransactionTimestamp()`** — new optional `OffsetDateTime` field exposing the ISO-formatted timestamp of the originating transaction; builder gains `transactionTimestamp(OffsetDateTime)` and `transactionTimestamp(Optional<OffsetDateTime>)` methods.
+* **`EarnedRewardSettledAttributes.getTransactionTimestamp()`** — new optional `OffsetDateTime` field exposing the ISO-formatted timestamp of the originating transaction; builder gains `transactionTimestamp(OffsetDateTime)` and `transactionTimestamp(Optional<OffsetDateTime>)` methods.
+
 ## 17.0.0 - 2026-04-17
 ### Breaking Changes
 * **`CommissionEarnedDetails.getIssuer()`** — the `issuer` field and `IssuerStage` builder stage are removed; update all construction call chains to start from `UserStage` (call `CommissionEarnedDetails.builder().user(...)`).
