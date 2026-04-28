@@ -192,10 +192,10 @@
 * feat: add startIcon property to CtaComponent
 * Add optional startIcon field to the CtaComponent class to support displaying icons on buttons. This backward-compatible enhancement allows specifying an icon identifier that will be displayed on the button.
 * Key changes:
-* Add startIcon field as Optional<String> to CtaComponent
+* Add startIcon field as `Optional<String>` to CtaComponent
 * Update constructor, builder methods, equals(), and hashCode() to include startIcon
 * Add getter method with proper documentation
-* Add builder methods for both Optional<String> and String variants
+* Add builder methods for both `Optional<String>` and String variants
 * 🌿 Generated with Fern
 
 ## 2.0.1 - 2026-02-27
