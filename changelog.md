@@ -1,3 +1,14 @@
+## 17.1.1 - 2026-04-30
+* chore: update Javadoc for bulk upload and uploads client deprecation
+* Refresh documentation across all transaction and uploads client variants
+* to reflect expanded bulk upload support and mark the legacy uploads API
+* as deprecated.
+* Key changes:
+* Update `createBulkTransactionsUploadUrl` Javadoc to document support for both `incomingTransactionsFile` and `historicalTransactionsFile` types (sync, async, raw, and async-raw clients)
+* Mark `UploadsClient.create()`, `createPart()`, and `update()` (and all async/raw variants) as deprecated in favor of the bulk transactions upload URL endpoint
+* Add deprecation notice pointing consumers to the Historical Transaction Uploads integration guide
+* 🌿 Generated with Fern
+
 ## 17.1.0 - 2026-04-23
 ### Added
 * **`EarnedRewardAttributes.getTransactionTimestamp()`** — new optional `OffsetDateTime` field exposing the ISO-formatted timestamp of the originating transaction; builder gains `transactionTimestamp(OffsetDateTime)` and `transactionTimestamp(Optional<OffsetDateTime>)` methods.
