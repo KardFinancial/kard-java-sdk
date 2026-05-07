@@ -1,3 +1,16 @@
+## 1.5.2 - 2026-05-07
+* chore: update required scope for createBulkTransactionsUploadUrl to files:write
+* Correct the documented OAuth scope required to call `createBulkTransactionsUploadUrl`
+* across all four transaction client variants. The Javadoc previously stated
+* `transaction:write` as the required scope; the correct scope is `files:write`.
+* No public API signatures, return types, or runtime behavior are changed.
+* Key changes:
+* Update Javadoc in `TransactionsClient.createBulkTransactionsUploadUrl()` to reflect `files:write` scope
+* Update Javadoc in `AsyncTransactionsClient.createBulkTransactionsUploadUrl()` to reflect `files:write` scope
+* Update Javadoc in `RawTransactionsClient.createBulkTransactionsUploadUrl()` to reflect `files:write` scope
+* Update Javadoc in `AsyncRawTransactionsClient.createBulkTransactionsUploadUrl()` to reflect `files:write` scope
+* 🌿 Generated with Fern
+
 ## 17.1.1 - 2026-04-30
 * chore: update Javadoc for bulk upload and uploads client deprecation
 * Refresh documentation across all transaction and uploads client variants

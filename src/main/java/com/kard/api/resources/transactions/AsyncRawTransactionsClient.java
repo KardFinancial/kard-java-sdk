@@ -392,7 +392,7 @@ public class AsyncRawTransactionsClient {
      * binary file content as the body. If a URL expires before the upload completes, you must request a new one.
      * Files can be uploaded as plain JSONL or as a gzip-compressed file.
      * Supports both <code>incomingTransactionsFile</code> for daily transaction ingestion and <code>historicalTransactionsFile</code> for historical transaction ingestion. See the <a href="/2024-10-01/api/integration-guides/historical-transaction-uploads">Historical Transaction Uploads</a> integration guide for details on the historical flow.
-     * <b>Required scopes:</b> <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>files:write</code>
      */
     public CompletableFuture<KardApiHttpResponse<CreateFileUploadUrlResponse>> createBulkTransactionsUploadUrl(
             String organizationId, CreateFileUploadRequestBody request) {
@@ -405,7 +405,7 @@ public class AsyncRawTransactionsClient {
      * binary file content as the body. If a URL expires before the upload completes, you must request a new one.
      * Files can be uploaded as plain JSONL or as a gzip-compressed file.
      * Supports both <code>incomingTransactionsFile</code> for daily transaction ingestion and <code>historicalTransactionsFile</code> for historical transaction ingestion. See the <a href="/2024-10-01/api/integration-guides/historical-transaction-uploads">Historical Transaction Uploads</a> integration guide for details on the historical flow.
-     * <b>Required scopes:</b> <code>transaction:write</code>
+     * <b>Required scopes:</b> <code>files:write</code>
      */
     public CompletableFuture<KardApiHttpResponse<CreateFileUploadUrlResponse>> createBulkTransactionsUploadUrl(
             String organizationId, CreateFileUploadRequestBody request, RequestOptions requestOptions) {

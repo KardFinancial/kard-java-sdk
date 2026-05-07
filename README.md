@@ -30,7 +30,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.getkard:kard-financial-sdk'
+  implementation 'com.getkard:kard-financial-sdk:1.5.2'
 }
 ```
 
@@ -42,7 +42,7 @@ Add the dependency in your `pom.xml` file:
 <dependency>
   <groupId>com.getkard</groupId>
   <artifactId>kard-financial-sdk</artifactId>
-  <version>1.5.1</version>
+  <version>1.5.2</version>
 </dependency>
 ```
 
@@ -112,6 +112,7 @@ public class Example {
     }
 }
 ```
+
 ## Authentication
 
 This SDK supports two authentication methods:
@@ -279,7 +280,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-CreateHttpResponse response = client.users().withRawResponse().create(...);
+KardApiHttpResponse response = client.users().withRawResponse().create(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));
