@@ -1,3 +1,9 @@
+## 1.6.0 - 2026-05-12
+### Added
+* **`LocationPartnerId`** — new public class representing a third-party partner identifier (e.g. a Google Place ID) associated with a reward location; exposes `getType()` and `getId()` accessors with a staged builder.
+* **`LocationPartnerIdType`** — new enum-like class with a `GOOGLE` constant and `Visitor<T>` pattern for exhaustive handling of partner ID types.
+* **`LocationAttributes.getPartnerIds()`** — new optional `Optional<List<LocationPartnerId>>` field exposing partner IDs for LOCAL locations; builder gains `partnerIds(List<LocationPartnerId>)` and `partnerIds(Optional<List<LocationPartnerId>>)` overloads.
+
 ## 1.5.2 - 2026-05-07
 * chore: update required scope for createBulkTransactionsUploadUrl to files:write
 * Correct the documented OAuth scope required to call `createBulkTransactionsUploadUrl`

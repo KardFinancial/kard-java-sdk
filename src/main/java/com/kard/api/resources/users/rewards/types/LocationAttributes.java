@@ -9,11 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -29,6 +32,8 @@ public final class LocationAttributes {
 
     private final OperationHours operationHours;
 
+    private final Optional<List<LocationPartnerId>> partnerIds;
+
     private final Map<String, Object> additionalProperties;
 
     private LocationAttributes(
@@ -37,12 +42,14 @@ public final class LocationAttributes {
             Coordinates coordinates,
             String phone,
             OperationHours operationHours,
+            Optional<List<LocationPartnerId>> partnerIds,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.address = address;
         this.coordinates = coordinates;
         this.phone = phone;
         this.operationHours = operationHours;
+        this.partnerIds = partnerIds;
         this.additionalProperties = additionalProperties;
     }
 
@@ -71,6 +78,14 @@ public final class LocationAttributes {
         return operationHours;
     }
 
+    /**
+     * @return List of ids associated with the location from third party partners. Only included on LOCAL locations.
+     */
+    @JsonProperty("partnerIds")
+    public Optional<List<LocationPartnerId>> getPartnerIds() {
+        return partnerIds;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -87,12 +102,14 @@ public final class LocationAttributes {
                 && address.equals(other.address)
                 && coordinates.equals(other.coordinates)
                 && phone.equals(other.phone)
-                && operationHours.equals(other.operationHours);
+                && operationHours.equals(other.operationHours)
+                && partnerIds.equals(other.partnerIds);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.address, this.coordinates, this.phone, this.operationHours);
+        return Objects.hash(
+                this.name, this.address, this.coordinates, this.phone, this.operationHours, this.partnerIds);
     }
 
     @java.lang.Override
@@ -132,6 +149,13 @@ public final class LocationAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>List of ids associated with the location from third party partners. Only included on LOCAL locations.</p>
+         */
+        _FinalStage partnerIds(Optional<List<LocationPartnerId>> partnerIds);
+
+        _FinalStage partnerIds(List<LocationPartnerId> partnerIds);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -147,6 +171,8 @@ public final class LocationAttributes {
 
         private OperationHours operationHours;
 
+        private Optional<List<LocationPartnerId>> partnerIds = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -159,6 +185,7 @@ public final class LocationAttributes {
             coordinates(other.getCoordinates());
             phone(other.getPhone());
             operationHours(other.getOperationHours());
+            partnerIds(other.getPartnerIds());
             return this;
         }
 
@@ -197,9 +224,30 @@ public final class LocationAttributes {
             return this;
         }
 
+        /**
+         * <p>List of ids associated with the location from third party partners. Only included on LOCAL locations.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage partnerIds(List<LocationPartnerId> partnerIds) {
+            this.partnerIds = Optional.ofNullable(partnerIds);
+            return this;
+        }
+
+        /**
+         * <p>List of ids associated with the location from third party partners. Only included on LOCAL locations.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "partnerIds", nulls = Nulls.SKIP)
+        public _FinalStage partnerIds(Optional<List<LocationPartnerId>> partnerIds) {
+            this.partnerIds = partnerIds;
+            return this;
+        }
+
         @java.lang.Override
         public LocationAttributes build() {
-            return new LocationAttributes(name, address, coordinates, phone, operationHours, additionalProperties);
+            return new LocationAttributes(
+                    name, address, coordinates, phone, operationHours, partnerIds, additionalProperties);
         }
 
         @java.lang.Override
