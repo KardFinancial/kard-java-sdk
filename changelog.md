@@ -1,3 +1,13 @@
+## 2.0.0 - 2026-05-14
+### Breaking Changes
+* **`EarnedRewardAttributes`** — class removed; replace all usages with `RewardNotificationAttributes`.
+* **`EarnedRewardApprovedData.getAttributes()`** — return type changed from `EarnedRewardAttributes` to `RewardNotificationAttributes`; update variable declarations and builder calls accordingly.
+* **`RewardNotificationAttributes.Builder` and `EarnedRewardSettledAttributes.Builder`** — two new required staged-builder steps (`TransactionIdStage` → `TransactionAmountInCentsStage`) inserted after `attributionUrl(…)`; chain `.transactionId(…).transactionAmountInCents(…)` before proceeding to `_FinalStage`.
+* **`ValidTransactionAttributes` staged builder** — two new required stages (`TransactionIdStage` → `TransactionAmountInCentsStage`) inserted between `AttributionUrlStage` and `CommissionEarnedStage`; chain `.transactionId(…).transactionAmountInCents(…)` after `.attributionUrl(…)`.
+* **`IRewardNotificationAttributes`** — three new methods (`getTransactionId()`, `getTransactionAmountInCents()`, `getTransactionTimestamp()`) added to the interface; all custom implementations must add these methods.
+### Added
+* **`getTransactionId()`, `getTransactionAmountInCents()`, and `getTransactionTimestamp()`** — new accessors added to `RewardNotificationAttributes` and `ValidTransactionAttributes` exposing the originating transaction ID, amount in cents, and ISO timestamp.
+
 ## 1.6.0 - 2026-05-12
 ### Added
 * **`LocationPartnerId`** — new public class representing a third-party partner identifier (e.g. a Google Place ID) associated with a reward location; exposes `getType()` and `getId()` accessors with a staged builder.

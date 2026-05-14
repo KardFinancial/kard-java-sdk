@@ -33,9 +33,13 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
 
     private final Optional<String> cardProductId;
 
-    private final CommissionValue commissionEarned;
-
     private final Optional<OffsetDateTime> transactionTimestamp;
+
+    private final String transactionId;
+
+    private final int transactionAmountInCents;
+
+    private final CommissionValue commissionEarned;
 
     private final Map<String, Object> additionalProperties;
 
@@ -45,16 +49,20 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
             String attributionUrl,
             Optional<String> surveyUrl,
             Optional<String> cardProductId,
-            CommissionValue commissionEarned,
             Optional<OffsetDateTime> transactionTimestamp,
+            String transactionId,
+            int transactionAmountInCents,
+            CommissionValue commissionEarned,
             Map<String, Object> additionalProperties) {
         this.message = message;
         this.name = name;
         this.attributionUrl = attributionUrl;
         this.surveyUrl = surveyUrl;
         this.cardProductId = cardProductId;
-        this.commissionEarned = commissionEarned;
         this.transactionTimestamp = transactionTimestamp;
+        this.transactionId = transactionId;
+        this.transactionAmountInCents = transactionAmountInCents;
+        this.commissionEarned = commissionEarned;
         this.additionalProperties = additionalProperties;
     }
 
@@ -103,17 +111,36 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
         return cardProductId;
     }
 
-    @JsonProperty("commissionEarned")
-    public CommissionValue getCommissionEarned() {
-        return commissionEarned;
-    }
-
     /**
      * @return The timestamp of the originating transaction in ISO format
      */
     @JsonProperty("transactionTimestamp")
+    @java.lang.Override
     public Optional<OffsetDateTime> getTransactionTimestamp() {
         return transactionTimestamp;
+    }
+
+    /**
+     * @return The transaction ID
+     */
+    @JsonProperty("transactionId")
+    @java.lang.Override
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    /**
+     * @return The amount of the originating transaction in cents
+     */
+    @JsonProperty("transactionAmountInCents")
+    @java.lang.Override
+    public int getTransactionAmountInCents() {
+        return transactionAmountInCents;
+    }
+
+    @JsonProperty("commissionEarned")
+    public CommissionValue getCommissionEarned() {
+        return commissionEarned;
     }
 
     @java.lang.Override
@@ -133,8 +160,10 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
                 && attributionUrl.equals(other.attributionUrl)
                 && surveyUrl.equals(other.surveyUrl)
                 && cardProductId.equals(other.cardProductId)
-                && commissionEarned.equals(other.commissionEarned)
-                && transactionTimestamp.equals(other.transactionTimestamp);
+                && transactionTimestamp.equals(other.transactionTimestamp)
+                && transactionId.equals(other.transactionId)
+                && transactionAmountInCents == other.transactionAmountInCents
+                && commissionEarned.equals(other.commissionEarned);
     }
 
     @java.lang.Override
@@ -145,8 +174,10 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
                 this.attributionUrl,
                 this.surveyUrl,
                 this.cardProductId,
-                this.commissionEarned,
-                this.transactionTimestamp);
+                this.transactionTimestamp,
+                this.transactionId,
+                this.transactionAmountInCents,
+                this.commissionEarned);
     }
 
     @java.lang.Override
@@ -178,7 +209,21 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
         /**
          * <p>The attribution URL to track user's interactions with the notification</p>
          */
-        CommissionEarnedStage attributionUrl(@NotNull String attributionUrl);
+        TransactionIdStage attributionUrl(@NotNull String attributionUrl);
+    }
+
+    public interface TransactionIdStage {
+        /**
+         * <p>The transaction ID</p>
+         */
+        TransactionAmountInCentsStage transactionId(@NotNull String transactionId);
+    }
+
+    public interface TransactionAmountInCentsStage {
+        /**
+         * <p>The amount of the originating transaction in cents</p>
+         */
+        CommissionEarnedStage transactionAmountInCents(int transactionAmountInCents);
     }
 
     public interface CommissionEarnedStage {
@@ -216,12 +261,22 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements MessageStage, NameStage, AttributionUrlStage, CommissionEarnedStage, _FinalStage {
+            implements MessageStage,
+                    NameStage,
+                    AttributionUrlStage,
+                    TransactionIdStage,
+                    TransactionAmountInCentsStage,
+                    CommissionEarnedStage,
+                    _FinalStage {
         private String message;
 
         private String name;
 
         private String attributionUrl;
+
+        private String transactionId;
+
+        private int transactionAmountInCents;
 
         private CommissionValue commissionEarned;
 
@@ -243,8 +298,10 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
             attributionUrl(other.getAttributionUrl());
             surveyUrl(other.getSurveyUrl());
             cardProductId(other.getCardProductId());
-            commissionEarned(other.getCommissionEarned());
             transactionTimestamp(other.getTransactionTimestamp());
+            transactionId(other.getTransactionId());
+            transactionAmountInCents(other.getTransactionAmountInCents());
+            commissionEarned(other.getCommissionEarned());
             return this;
         }
 
@@ -279,8 +336,32 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
          */
         @java.lang.Override
         @JsonSetter("attributionUrl")
-        public CommissionEarnedStage attributionUrl(@NotNull String attributionUrl) {
+        public TransactionIdStage attributionUrl(@NotNull String attributionUrl) {
             this.attributionUrl = Objects.requireNonNull(attributionUrl, "attributionUrl must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The transaction ID</p>
+         * <p>The transaction ID</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("transactionId")
+        public TransactionAmountInCentsStage transactionId(@NotNull String transactionId) {
+            this.transactionId = Objects.requireNonNull(transactionId, "transactionId must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The amount of the originating transaction in cents</p>
+         * <p>The amount of the originating transaction in cents</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("transactionAmountInCents")
+        public CommissionEarnedStage transactionAmountInCents(int transactionAmountInCents) {
+            this.transactionAmountInCents = transactionAmountInCents;
             return this;
         }
 
@@ -359,8 +440,10 @@ public final class EarnedRewardSettledAttributes implements IRewardNotificationA
                     attributionUrl,
                     surveyUrl,
                     cardProductId,
-                    commissionEarned,
                     transactionTimestamp,
+                    transactionId,
+                    transactionAmountInCents,
+                    commissionEarned,
                     additionalProperties);
         }
 

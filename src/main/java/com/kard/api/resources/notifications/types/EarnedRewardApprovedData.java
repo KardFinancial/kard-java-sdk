@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public final class EarnedRewardApprovedData {
     private final String id;
 
-    private final EarnedRewardAttributes attributes;
+    private final RewardNotificationAttributes attributes;
 
     private final EarnedRewardRelationships relationships;
 
@@ -29,7 +29,7 @@ public final class EarnedRewardApprovedData {
 
     private EarnedRewardApprovedData(
             String id,
-            EarnedRewardAttributes attributes,
+            RewardNotificationAttributes attributes,
             EarnedRewardRelationships relationships,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -47,7 +47,7 @@ public final class EarnedRewardApprovedData {
     }
 
     @JsonProperty("attributes")
-    public EarnedRewardAttributes getAttributes() {
+    public RewardNotificationAttributes getAttributes() {
         return attributes;
     }
 
@@ -95,7 +95,7 @@ public final class EarnedRewardApprovedData {
     }
 
     public interface AttributesStage {
-        RelationshipsStage attributes(@NotNull EarnedRewardAttributes attributes);
+        RelationshipsStage attributes(@NotNull RewardNotificationAttributes attributes);
     }
 
     public interface RelationshipsStage {
@@ -114,7 +114,7 @@ public final class EarnedRewardApprovedData {
     public static final class Builder implements IdStage, AttributesStage, RelationshipsStage, _FinalStage {
         private String id;
 
-        private EarnedRewardAttributes attributes;
+        private RewardNotificationAttributes attributes;
 
         private EarnedRewardRelationships relationships;
 
@@ -145,7 +145,7 @@ public final class EarnedRewardApprovedData {
 
         @java.lang.Override
         @JsonSetter("attributes")
-        public RelationshipsStage attributes(@NotNull EarnedRewardAttributes attributes) {
+        public RelationshipsStage attributes(@NotNull RewardNotificationAttributes attributes) {
             this.attributes = Objects.requireNonNull(attributes, "attributes must not be null");
             return this;
         }

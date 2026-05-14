@@ -3,6 +3,7 @@
  */
 package com.kard.api.resources.notifications.types;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 public interface IRewardNotificationAttributes {
@@ -15,4 +16,10 @@ public interface IRewardNotificationAttributes {
     Optional<String> getSurveyUrl();
 
     Optional<String> getCardProductId();
+
+    Optional<OffsetDateTime> getTransactionTimestamp();
+
+    String getTransactionId();
+
+    int getTransactionAmountInCents();
 }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,6 +32,12 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
 
     private final Optional<String> cardProductId;
 
+    private final Optional<OffsetDateTime> transactionTimestamp;
+
+    private final String transactionId;
+
+    private final int transactionAmountInCents;
+
     private final ValidTransactionCommissionEarned commissionEarned;
 
     private final Map<String, Object> additionalProperties;
@@ -41,6 +48,9 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
             String attributionUrl,
             Optional<String> surveyUrl,
             Optional<String> cardProductId,
+            Optional<OffsetDateTime> transactionTimestamp,
+            String transactionId,
+            int transactionAmountInCents,
             ValidTransactionCommissionEarned commissionEarned,
             Map<String, Object> additionalProperties) {
         this.message = message;
@@ -48,6 +58,9 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
         this.attributionUrl = attributionUrl;
         this.surveyUrl = surveyUrl;
         this.cardProductId = cardProductId;
+        this.transactionTimestamp = transactionTimestamp;
+        this.transactionId = transactionId;
+        this.transactionAmountInCents = transactionAmountInCents;
         this.commissionEarned = commissionEarned;
         this.additionalProperties = additionalProperties;
     }
@@ -97,6 +110,33 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
         return cardProductId;
     }
 
+    /**
+     * @return The timestamp of the originating transaction in ISO format
+     */
+    @JsonProperty("transactionTimestamp")
+    @java.lang.Override
+    public Optional<OffsetDateTime> getTransactionTimestamp() {
+        return transactionTimestamp;
+    }
+
+    /**
+     * @return The transaction ID
+     */
+    @JsonProperty("transactionId")
+    @java.lang.Override
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    /**
+     * @return The amount of the originating transaction in cents
+     */
+    @JsonProperty("transactionAmountInCents")
+    @java.lang.Override
+    public int getTransactionAmountInCents() {
+        return transactionAmountInCents;
+    }
+
     @JsonProperty("commissionEarned")
     public ValidTransactionCommissionEarned getCommissionEarned() {
         return commissionEarned;
@@ -119,6 +159,9 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
                 && attributionUrl.equals(other.attributionUrl)
                 && surveyUrl.equals(other.surveyUrl)
                 && cardProductId.equals(other.cardProductId)
+                && transactionTimestamp.equals(other.transactionTimestamp)
+                && transactionId.equals(other.transactionId)
+                && transactionAmountInCents == other.transactionAmountInCents
                 && commissionEarned.equals(other.commissionEarned);
     }
 
@@ -130,6 +173,9 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
                 this.attributionUrl,
                 this.surveyUrl,
                 this.cardProductId,
+                this.transactionTimestamp,
+                this.transactionId,
+                this.transactionAmountInCents,
                 this.commissionEarned);
     }
 
@@ -162,7 +208,21 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
         /**
          * <p>The attribution URL to track user's interactions with the notification</p>
          */
-        CommissionEarnedStage attributionUrl(@NotNull String attributionUrl);
+        TransactionIdStage attributionUrl(@NotNull String attributionUrl);
+    }
+
+    public interface TransactionIdStage {
+        /**
+         * <p>The transaction ID</p>
+         */
+        TransactionAmountInCentsStage transactionId(@NotNull String transactionId);
+    }
+
+    public interface TransactionAmountInCentsStage {
+        /**
+         * <p>The amount of the originating transaction in cents</p>
+         */
+        CommissionEarnedStage transactionAmountInCents(int transactionAmountInCents);
     }
 
     public interface CommissionEarnedStage {
@@ -189,18 +249,37 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
         _FinalStage cardProductId(Optional<String> cardProductId);
 
         _FinalStage cardProductId(String cardProductId);
+
+        /**
+         * <p>The timestamp of the originating transaction in ISO format</p>
+         */
+        _FinalStage transactionTimestamp(Optional<OffsetDateTime> transactionTimestamp);
+
+        _FinalStage transactionTimestamp(OffsetDateTime transactionTimestamp);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements MessageStage, NameStage, AttributionUrlStage, CommissionEarnedStage, _FinalStage {
+            implements MessageStage,
+                    NameStage,
+                    AttributionUrlStage,
+                    TransactionIdStage,
+                    TransactionAmountInCentsStage,
+                    CommissionEarnedStage,
+                    _FinalStage {
         private String message;
 
         private String name;
 
         private String attributionUrl;
 
+        private String transactionId;
+
+        private int transactionAmountInCents;
+
         private ValidTransactionCommissionEarned commissionEarned;
+
+        private Optional<OffsetDateTime> transactionTimestamp = Optional.empty();
 
         private Optional<String> cardProductId = Optional.empty();
 
@@ -218,6 +297,9 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
             attributionUrl(other.getAttributionUrl());
             surveyUrl(other.getSurveyUrl());
             cardProductId(other.getCardProductId());
+            transactionTimestamp(other.getTransactionTimestamp());
+            transactionId(other.getTransactionId());
+            transactionAmountInCents(other.getTransactionAmountInCents());
             commissionEarned(other.getCommissionEarned());
             return this;
         }
@@ -253,8 +335,32 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
          */
         @java.lang.Override
         @JsonSetter("attributionUrl")
-        public CommissionEarnedStage attributionUrl(@NotNull String attributionUrl) {
+        public TransactionIdStage attributionUrl(@NotNull String attributionUrl) {
             this.attributionUrl = Objects.requireNonNull(attributionUrl, "attributionUrl must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The transaction ID</p>
+         * <p>The transaction ID</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("transactionId")
+        public TransactionAmountInCentsStage transactionId(@NotNull String transactionId) {
+            this.transactionId = Objects.requireNonNull(transactionId, "transactionId must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The amount of the originating transaction in cents</p>
+         * <p>The amount of the originating transaction in cents</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("transactionAmountInCents")
+        public CommissionEarnedStage transactionAmountInCents(int transactionAmountInCents) {
+            this.transactionAmountInCents = transactionAmountInCents;
             return this;
         }
 
@@ -262,6 +368,26 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
         @JsonSetter("commissionEarned")
         public _FinalStage commissionEarned(@NotNull ValidTransactionCommissionEarned commissionEarned) {
             this.commissionEarned = Objects.requireNonNull(commissionEarned, "commissionEarned must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The timestamp of the originating transaction in ISO format</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage transactionTimestamp(OffsetDateTime transactionTimestamp) {
+            this.transactionTimestamp = Optional.ofNullable(transactionTimestamp);
+            return this;
+        }
+
+        /**
+         * <p>The timestamp of the originating transaction in ISO format</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "transactionTimestamp", nulls = Nulls.SKIP)
+        public _FinalStage transactionTimestamp(Optional<OffsetDateTime> transactionTimestamp) {
+            this.transactionTimestamp = transactionTimestamp;
             return this;
         }
 
@@ -308,7 +434,16 @@ public final class ValidTransactionAttributes implements IRewardNotificationAttr
         @java.lang.Override
         public ValidTransactionAttributes build() {
             return new ValidTransactionAttributes(
-                    message, name, attributionUrl, surveyUrl, cardProductId, commissionEarned, additionalProperties);
+                    message,
+                    name,
+                    attributionUrl,
+                    surveyUrl,
+                    cardProductId,
+                    transactionTimestamp,
+                    transactionId,
+                    transactionAmountInCents,
+                    commissionEarned,
+                    additionalProperties);
         }
 
         @java.lang.Override
