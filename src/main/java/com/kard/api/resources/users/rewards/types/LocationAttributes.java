@@ -12,11 +12,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -32,7 +32,7 @@ public final class LocationAttributes {
 
     private final OperationHours operationHours;
 
-    private final Optional<List<LocationPartnerId>> partnerIds;
+    private final List<LocationPartnerId> partnerIds;
 
     private final Map<String, Object> additionalProperties;
 
@@ -42,7 +42,7 @@ public final class LocationAttributes {
             Coordinates coordinates,
             String phone,
             OperationHours operationHours,
-            Optional<List<LocationPartnerId>> partnerIds,
+            List<LocationPartnerId> partnerIds,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.address = address;
@@ -79,10 +79,10 @@ public final class LocationAttributes {
     }
 
     /**
-     * @return List of ids associated with the location from third party partners. Only included on LOCAL locations.
+     * @return List of ids associated with the location from third party partners. Only applicable for LOCAL locations.
      */
     @JsonProperty("partnerIds")
-    public Optional<List<LocationPartnerId>> getPartnerIds() {
+    public List<LocationPartnerId> getPartnerIds() {
         return partnerIds;
     }
 
@@ -151,11 +151,13 @@ public final class LocationAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>List of ids associated with the location from third party partners. Only included on LOCAL locations.</p>
+         * <p>List of ids associated with the location from third party partners. Only applicable for LOCAL locations.</p>
          */
-        _FinalStage partnerIds(Optional<List<LocationPartnerId>> partnerIds);
-
         _FinalStage partnerIds(List<LocationPartnerId> partnerIds);
+
+        _FinalStage addPartnerIds(LocationPartnerId partnerIds);
+
+        _FinalStage addAllPartnerIds(List<LocationPartnerId> partnerIds);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -171,7 +173,7 @@ public final class LocationAttributes {
 
         private OperationHours operationHours;
 
-        private Optional<List<LocationPartnerId>> partnerIds = Optional.empty();
+        private List<LocationPartnerId> partnerIds = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -225,22 +227,37 @@ public final class LocationAttributes {
         }
 
         /**
-         * <p>List of ids associated with the location from third party partners. Only included on LOCAL locations.</p>
+         * <p>List of ids associated with the location from third party partners. Only applicable for LOCAL locations.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage partnerIds(List<LocationPartnerId> partnerIds) {
-            this.partnerIds = Optional.ofNullable(partnerIds);
+        public _FinalStage addAllPartnerIds(List<LocationPartnerId> partnerIds) {
+            if (partnerIds != null) {
+                this.partnerIds.addAll(partnerIds);
+            }
             return this;
         }
 
         /**
-         * <p>List of ids associated with the location from third party partners. Only included on LOCAL locations.</p>
+         * <p>List of ids associated with the location from third party partners. Only applicable for LOCAL locations.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage addPartnerIds(LocationPartnerId partnerIds) {
+            this.partnerIds.add(partnerIds);
+            return this;
+        }
+
+        /**
+         * <p>List of ids associated with the location from third party partners. Only applicable for LOCAL locations.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "partnerIds", nulls = Nulls.SKIP)
-        public _FinalStage partnerIds(Optional<List<LocationPartnerId>> partnerIds) {
-            this.partnerIds = partnerIds;
+        public _FinalStage partnerIds(List<LocationPartnerId> partnerIds) {
+            this.partnerIds.clear();
+            if (partnerIds != null) {
+                this.partnerIds.addAll(partnerIds);
+            }
             return this;
         }
 

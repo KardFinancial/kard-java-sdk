@@ -1,3 +1,10 @@
+## 3.0.0 - 2026-05-14
+### Breaking Changes
+* **`LocationAttributes.getPartnerIds()`** — return type changed from `Optional<List<LocationPartnerId>>` to `List<LocationPartnerId>`; update all call sites to remove `Optional` unwrapping (an absent value is now represented as an empty list).
+* **`_FinalStage.partnerIds(Optional<List<LocationPartnerId>>)`** — the `Optional`-accepting builder overload is removed; replace calls with `partnerIds(List<LocationPartnerId>)`, `addPartnerIds(LocationPartnerId)`, or `addAllPartnerIds(List<LocationPartnerId>)`.
+### Added
+* **`LocationAttributes.Builder.addPartnerIds()`** and **`addAllPartnerIds()`** — new convenience builder methods for appending individual or multiple `LocationPartnerId` entries without replacing the existing list.
+
 ## 2.0.0 - 2026-05-14
 ### Breaking Changes
 * **`EarnedRewardAttributes`** — class removed; replace all usages with `RewardNotificationAttributes`.
