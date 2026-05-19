@@ -25,6 +25,8 @@ public final class ListPlacementsRequest {
 
     private final Optional<String> filterName;
 
+    private final Optional<String> filterContentStrategyId;
+
     private final Optional<String> pageAfter;
 
     private final Optional<Integer> pageSize;
@@ -34,11 +36,13 @@ public final class ListPlacementsRequest {
     private ListPlacementsRequest(
             Optional<PlacementTypeFilter> filterType,
             Optional<String> filterName,
+            Optional<String> filterContentStrategyId,
             Optional<String> pageAfter,
             Optional<Integer> pageSize,
             Map<String, Object> additionalProperties) {
         this.filterType = filterType;
         this.filterName = filterName;
+        this.filterContentStrategyId = filterContentStrategyId;
         this.pageAfter = pageAfter;
         this.pageSize = pageSize;
         this.additionalProperties = additionalProperties;
@@ -58,6 +62,14 @@ public final class ListPlacementsRequest {
     @JsonIgnore
     public Optional<String> getFilterName() {
         return filterName;
+    }
+
+    /**
+     * @return Filter by the ID of the content strategy linked to the placement
+     */
+    @JsonIgnore
+    public Optional<String> getFilterContentStrategyId() {
+        return filterContentStrategyId;
     }
 
     /**
@@ -90,13 +102,15 @@ public final class ListPlacementsRequest {
     private boolean equalTo(ListPlacementsRequest other) {
         return filterType.equals(other.filterType)
                 && filterName.equals(other.filterName)
+                && filterContentStrategyId.equals(other.filterContentStrategyId)
                 && pageAfter.equals(other.pageAfter)
                 && pageSize.equals(other.pageSize);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.filterType, this.filterName, this.pageAfter, this.pageSize);
+        return Objects.hash(
+                this.filterType, this.filterName, this.filterContentStrategyId, this.pageAfter, this.pageSize);
     }
 
     @java.lang.Override
@@ -114,6 +128,8 @@ public final class ListPlacementsRequest {
 
         private Optional<String> filterName = Optional.empty();
 
+        private Optional<String> filterContentStrategyId = Optional.empty();
+
         private Optional<String> pageAfter = Optional.empty();
 
         private Optional<Integer> pageSize = Optional.empty();
@@ -126,6 +142,7 @@ public final class ListPlacementsRequest {
         public Builder from(ListPlacementsRequest other) {
             filterType(other.getFilterType());
             filterName(other.getFilterName());
+            filterContentStrategyId(other.getFilterContentStrategyId());
             pageAfter(other.getPageAfter());
             pageSize(other.getPageSize());
             return this;
@@ -160,6 +177,20 @@ public final class ListPlacementsRequest {
         }
 
         /**
+         * <p>Filter by the ID of the content strategy linked to the placement</p>
+         */
+        @JsonSetter(value = "filter[contentStrategyId]", nulls = Nulls.SKIP)
+        public Builder filterContentStrategyId(Optional<String> filterContentStrategyId) {
+            this.filterContentStrategyId = filterContentStrategyId;
+            return this;
+        }
+
+        public Builder filterContentStrategyId(String filterContentStrategyId) {
+            this.filterContentStrategyId = Optional.ofNullable(filterContentStrategyId);
+            return this;
+        }
+
+        /**
          * <p>Cursor value for the next page of results</p>
          */
         @JsonSetter(value = "page[after]", nulls = Nulls.SKIP)
@@ -188,7 +219,8 @@ public final class ListPlacementsRequest {
         }
 
         public ListPlacementsRequest build() {
-            return new ListPlacementsRequest(filterType, filterName, pageAfter, pageSize, additionalProperties);
+            return new ListPlacementsRequest(
+                    filterType, filterName, filterContentStrategyId, pageAfter, pageSize, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

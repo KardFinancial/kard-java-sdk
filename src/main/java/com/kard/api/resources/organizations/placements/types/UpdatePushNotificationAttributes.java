@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -23,11 +25,18 @@ public final class UpdatePushNotificationAttributes {
 
     private final Cadence cadence;
 
+    private final Optional<String> contentStrategyId;
+
     private final Map<String, Object> additionalProperties;
 
-    private UpdatePushNotificationAttributes(String name, Cadence cadence, Map<String, Object> additionalProperties) {
+    private UpdatePushNotificationAttributes(
+            String name,
+            Cadence cadence,
+            Optional<String> contentStrategyId,
+            Map<String, Object> additionalProperties) {
         this.name = name;
         this.cadence = cadence;
+        this.contentStrategyId = contentStrategyId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -47,6 +56,14 @@ public final class UpdatePushNotificationAttributes {
         return cadence;
     }
 
+    /**
+     * @return ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).
+     */
+    @JsonProperty("contentStrategyId")
+    public Optional<String> getContentStrategyId() {
+        return contentStrategyId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -59,12 +76,14 @@ public final class UpdatePushNotificationAttributes {
     }
 
     private boolean equalTo(UpdatePushNotificationAttributes other) {
-        return name.equals(other.name) && cadence.equals(other.cadence);
+        return name.equals(other.name)
+                && cadence.equals(other.cadence)
+                && contentStrategyId.equals(other.contentStrategyId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.cadence);
+        return Objects.hash(this.name, this.cadence, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -98,6 +117,13 @@ public final class UpdatePushNotificationAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
+         */
+        _FinalStage contentStrategyId(Optional<String> contentStrategyId);
+
+        _FinalStage contentStrategyId(String contentStrategyId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -105,6 +131,8 @@ public final class UpdatePushNotificationAttributes {
         private String name;
 
         private Cadence cadence;
+
+        private Optional<String> contentStrategyId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -115,6 +143,7 @@ public final class UpdatePushNotificationAttributes {
         public Builder from(UpdatePushNotificationAttributes other) {
             name(other.getName());
             cadence(other.getCadence());
+            contentStrategyId(other.getContentStrategyId());
             return this;
         }
 
@@ -142,9 +171,29 @@ public final class UpdatePushNotificationAttributes {
             return this;
         }
 
+        /**
+         * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage contentStrategyId(String contentStrategyId) {
+            this.contentStrategyId = Optional.ofNullable(contentStrategyId);
+            return this;
+        }
+
+        /**
+         * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "contentStrategyId", nulls = Nulls.SKIP)
+        public _FinalStage contentStrategyId(Optional<String> contentStrategyId) {
+            this.contentStrategyId = contentStrategyId;
+            return this;
+        }
+
         @java.lang.Override
         public UpdatePushNotificationAttributes build() {
-            return new UpdatePushNotificationAttributes(name, cadence, additionalProperties);
+            return new UpdatePushNotificationAttributes(name, cadence, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override

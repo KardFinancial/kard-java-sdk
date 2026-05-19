@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -26,6 +28,8 @@ public final class MainPagePlacementAttributes {
 
     private final int availableSlots;
 
+    private final Optional<String> contentStrategyId;
+
     private final OffsetDateTime createdAt;
 
     private final OffsetDateTime lastModified;
@@ -36,12 +40,14 @@ public final class MainPagePlacementAttributes {
             String name,
             String organizationId,
             int availableSlots,
+            Optional<String> contentStrategyId,
             OffsetDateTime createdAt,
             OffsetDateTime lastModified,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.organizationId = organizationId;
         this.availableSlots = availableSlots;
+        this.contentStrategyId = contentStrategyId;
         this.createdAt = createdAt;
         this.lastModified = lastModified;
         this.additionalProperties = additionalProperties;
@@ -69,6 +75,14 @@ public final class MainPagePlacementAttributes {
     @JsonProperty("availableSlots")
     public int getAvailableSlots() {
         return availableSlots;
+    }
+
+    /**
+     * @return ID of the content strategy linked to this placement, if any
+     */
+    @JsonProperty("contentStrategyId")
+    public Optional<String> getContentStrategyId() {
+        return contentStrategyId;
     }
 
     /**
@@ -102,13 +116,20 @@ public final class MainPagePlacementAttributes {
         return name.equals(other.name)
                 && organizationId.equals(other.organizationId)
                 && availableSlots == other.availableSlots
+                && contentStrategyId.equals(other.contentStrategyId)
                 && createdAt.equals(other.createdAt)
                 && lastModified.equals(other.lastModified);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.organizationId, this.availableSlots, this.createdAt, this.lastModified);
+        return Objects.hash(
+                this.name,
+                this.organizationId,
+                this.availableSlots,
+                this.contentStrategyId,
+                this.createdAt,
+                this.lastModified);
     }
 
     @java.lang.Override
@@ -163,6 +184,13 @@ public final class MainPagePlacementAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>ID of the content strategy linked to this placement, if any</p>
+         */
+        _FinalStage contentStrategyId(Optional<String> contentStrategyId);
+
+        _FinalStage contentStrategyId(String contentStrategyId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -183,6 +211,8 @@ public final class MainPagePlacementAttributes {
 
         private OffsetDateTime lastModified;
 
+        private Optional<String> contentStrategyId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -193,6 +223,7 @@ public final class MainPagePlacementAttributes {
             name(other.getName());
             organizationId(other.getOrganizationId());
             availableSlots(other.getAvailableSlots());
+            contentStrategyId(other.getContentStrategyId());
             createdAt(other.getCreatedAt());
             lastModified(other.getLastModified());
             return this;
@@ -258,10 +289,36 @@ public final class MainPagePlacementAttributes {
             return this;
         }
 
+        /**
+         * <p>ID of the content strategy linked to this placement, if any</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage contentStrategyId(String contentStrategyId) {
+            this.contentStrategyId = Optional.ofNullable(contentStrategyId);
+            return this;
+        }
+
+        /**
+         * <p>ID of the content strategy linked to this placement, if any</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "contentStrategyId", nulls = Nulls.SKIP)
+        public _FinalStage contentStrategyId(Optional<String> contentStrategyId) {
+            this.contentStrategyId = contentStrategyId;
+            return this;
+        }
+
         @java.lang.Override
         public MainPagePlacementAttributes build() {
             return new MainPagePlacementAttributes(
-                    name, organizationId, availableSlots, createdAt, lastModified, additionalProperties);
+                    name,
+                    organizationId,
+                    availableSlots,
+                    contentStrategyId,
+                    createdAt,
+                    lastModified,
+                    additionalProperties);
         }
 
         @java.lang.Override

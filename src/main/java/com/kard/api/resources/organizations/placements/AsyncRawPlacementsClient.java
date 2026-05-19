@@ -186,6 +186,13 @@ public class AsyncRawPlacementsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "filter[name]", request.getFilterName().get(), false);
         }
+        if (request.getFilterContentStrategyId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "filter[contentStrategyId]",
+                    request.getFilterContentStrategyId().get(),
+                    false);
+        }
         if (request.getPageAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page[after]", request.getPageAfter().get(), false);

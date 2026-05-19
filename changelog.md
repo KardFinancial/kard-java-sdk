@@ -1,3 +1,9 @@
+## 3.2.0 - 2026-05-19
+### Added
+* **`getContentStrategyId()`** — new optional accessor on `MainPagePlacementAttributes` and `PushNotificationPlacementAttributes` returning the ID of the content strategy linked to a placement.
+* **`contentStrategyId()`** — new builder method on `CreateMainPageAttributes`, `CreatePushNotificationAttributes`, `UpdateMainPageAttributes`, and `UpdatePushNotificationAttributes` for linking a placement to a content strategy on create or update.
+* **`ListPlacementsRequest.filterContentStrategyId()`** — new optional filter that scopes list-placements results to placements associated with a specific content strategy ID.
+
 ## 3.1.0 - 2026-05-19
 ### Added
 * **`ContentStrategiesClient`** and **`AsyncContentStrategiesClient`** — new sub-clients for managing organization content strategies, accessible via `OrganizationsClient.contentStrategies()`, with full CRUD support (`create()`, `list()`, `get()`, `update()`, `delete()`).

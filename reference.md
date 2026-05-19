@@ -1388,6 +1388,14 @@ client.organizations().placements().list(
 <dl>
 <dd>
 
+**filterContentStrategyId:** `Optional<String>` — Filter by the ID of the content strategy linked to the placement
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **pageAfter:** `Optional<String>` — Cursor value for the next page of results
     
 </dd>
