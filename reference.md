@@ -838,6 +838,403 @@ client.organizations().children().delete("organizationId", "childId");
 </dl>
 </details>
 
+## ContentStrategies
+<details><summary><code>client.organizations.contentStrategies.create(organizationId, request) -> ContentStrategyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a content strategy for the organization. The strategy name must be unique within the organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().contentStrategies().create(
+    "org-123",
+    CreateContentStrategyRequestBody
+        .builder()
+        .data(
+            CreateContentStrategyRequestData
+                .builder()
+                .attributes(
+                    CreateContentStrategyAttributes
+                        .builder()
+                        .name("Featured Travel")
+                        .filters(
+                            Arrays.asList(ContentStrategyFilter.HIGHEST_CASHBACK, ContentStrategyFilter.NEWLY_LIVE)
+                        )
+                        .categories(
+                            Arrays.asList(CategoryOption.TRAVEL)
+                        )
+                        .categoryExclusions(
+                            Arrays.asList(CategoryOption.GAS)
+                        )
+                        .merchantExclusions(
+                            Arrays.asList("merchant-abc")
+                        )
+                        .build()
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateContentStrategyRequestBody` — Content strategy data for creation
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.contentStrategies.list(organizationId) -> ContentStrategyListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List content strategies belonging to the authenticated organization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().contentStrategies().list(
+    "organizationId",
+    ListContentStrategiesRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filterName:** `Optional<String>` — Filter by exact content strategy name (unique within an organization)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageAfter:** `Optional<String>` — Cursor value for the next page of results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageSize:** `Optional<Integer>` — Maximum number of records to return [1 - 200] (default = 200)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.contentStrategies.get(organizationId, contentStrategyId) -> ContentStrategyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific content strategy
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().contentStrategies().get("organizationId", "contentStrategyId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contentStrategyId:** `String` — Unique identifier of the content strategy (UUID v7)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.contentStrategies.update(organizationId, contentStrategyId, request) -> ContentStrategyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replace a content strategy. All fields must be provided; any omitted attribute is treated as cleared.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().contentStrategies().update(
+    "organizationId",
+    "contentStrategyId",
+    UpdateContentStrategyRequestBody
+        .builder()
+        .data(
+            UpdateContentStrategyRequestData
+                .builder()
+                .attributes(
+                    UpdateContentStrategyAttributes
+                        .builder()
+                        .name("name")
+                        .filters(
+                            Arrays.asList(ContentStrategyFilter.NEWLY_LIVE, ContentStrategyFilter.NEWLY_LIVE)
+                        )
+                        .categories(
+                            Arrays.asList(CategoryOption.ARTS_ENTERTAINMENT, CategoryOption.ARTS_ENTERTAINMENT)
+                        )
+                        .categoryExclusions(
+                            Arrays.asList(CategoryOption.ARTS_ENTERTAINMENT, CategoryOption.ARTS_ENTERTAINMENT)
+                        )
+                        .merchantExclusions(
+                            Arrays.asList("merchantExclusions", "merchantExclusions")
+                        )
+                        .build()
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contentStrategyId:** `String` — Unique identifier of the content strategy (UUID v7)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateContentStrategyRequestBody` — Content strategy data for update
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organizations.contentStrategies.delete(organizationId, contentStrategyId) -> DeleteResourceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a content strategy. Returns 409 if the strategy is still referenced by another resource.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizations().contentStrategies().delete("organizationId", "contentStrategyId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` — Unique identifier of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contentStrategyId:** `String` — Unique identifier of the content strategy (UUID v7)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Placements
 <details><summary><code>client.organizations.placements.create(organizationId, request) -> PlacementFormatUnion</code></summary>
 <dl>

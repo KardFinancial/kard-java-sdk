@@ -1,3 +1,11 @@
+## 3.1.0 - 2026-05-19
+### Added
+* **`ContentStrategiesClient`** and **`AsyncContentStrategiesClient`** — new sub-clients for managing organization content strategies, accessible via `OrganizationsClient.contentStrategies()`, with full CRUD support (`create()`, `list()`, `get()`, `update()`, `delete()`).
+* **`RawContentStrategiesClient`** and **`AsyncRawContentStrategiesClient`** — raw variants of the content strategies sub-clients returning `KardApiHttpResponse`-wrapped results with full HTTP metadata access.
+* **`ContentStrategyAttributes`**, **`ContentStrategyResponse`**, and **`ContentStrategyListResponse`** — new model types representing a content strategy resource, its single-item response envelope, and its paginated list response respectively.
+* **`ContentStrategyFilter`** — new enum-like class with constants `EXPIRING_SOON`, `PERSONALIZED`, `HIGHEST_CASHBACK`, and `NEWLY_LIVE`, supporting a `Visitor<T>` pattern for exhaustive handling.
+* **`CreateContentStrategyRequestBody`**, **`UpdateContentStrategyRequestBody`**, and **`ListContentStrategiesRequest`** — new request types for creating, updating, and paginated-listing of content strategies, each with staged builders.
+
 ## 3.0.0 - 2026-05-14
 ### Breaking Changes
 * **`LocationAttributes.getPartnerIds()`** — return type changed from `Optional<List<LocationPartnerId>>` to `List<LocationPartnerId>`; update all call sites to remove `Optional` unwrapping (an absent value is now represented as an empty list).

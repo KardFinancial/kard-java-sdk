@@ -7,6 +7,7 @@ import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.core.Suppliers;
 import com.kard.api.resources.organizations.children.ChildrenClient;
+import com.kard.api.resources.organizations.contentstrategies.ContentStrategiesClient;
 import com.kard.api.resources.organizations.placements.PlacementsClient;
 import com.kard.api.resources.organizations.types.ExternalOrganizationResponse;
 import java.util.function.Supplier;
@@ -18,12 +19,15 @@ public class OrganizationsClient {
 
     protected final Supplier<ChildrenClient> childrenClient;
 
+    protected final Supplier<ContentStrategiesClient> contentStrategiesClient;
+
     protected final Supplier<PlacementsClient> placementsClient;
 
     public OrganizationsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new RawOrganizationsClient(clientOptions);
         this.childrenClient = Suppliers.memoize(() -> new ChildrenClient(clientOptions));
+        this.contentStrategiesClient = Suppliers.memoize(() -> new ContentStrategiesClient(clientOptions));
         this.placementsClient = Suppliers.memoize(() -> new PlacementsClient(clientOptions));
     }
 
@@ -50,6 +54,10 @@ public class OrganizationsClient {
 
     public ChildrenClient children() {
         return this.childrenClient.get();
+    }
+
+    public ContentStrategiesClient contentStrategies() {
+        return this.contentStrategiesClient.get();
     }
 
     public PlacementsClient placements() {

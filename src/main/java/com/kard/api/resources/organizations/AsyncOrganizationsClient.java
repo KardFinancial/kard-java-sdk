@@ -7,6 +7,7 @@ import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.core.Suppliers;
 import com.kard.api.resources.organizations.children.AsyncChildrenClient;
+import com.kard.api.resources.organizations.contentstrategies.AsyncContentStrategiesClient;
 import com.kard.api.resources.organizations.placements.AsyncPlacementsClient;
 import com.kard.api.resources.organizations.types.ExternalOrganizationResponse;
 import java.util.concurrent.CompletableFuture;
@@ -19,12 +20,15 @@ public class AsyncOrganizationsClient {
 
     protected final Supplier<AsyncChildrenClient> childrenClient;
 
+    protected final Supplier<AsyncContentStrategiesClient> contentStrategiesClient;
+
     protected final Supplier<AsyncPlacementsClient> placementsClient;
 
     public AsyncOrganizationsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new AsyncRawOrganizationsClient(clientOptions);
         this.childrenClient = Suppliers.memoize(() -> new AsyncChildrenClient(clientOptions));
+        this.contentStrategiesClient = Suppliers.memoize(() -> new AsyncContentStrategiesClient(clientOptions));
         this.placementsClient = Suppliers.memoize(() -> new AsyncPlacementsClient(clientOptions));
     }
 
@@ -51,6 +55,10 @@ public class AsyncOrganizationsClient {
 
     public AsyncChildrenClient children() {
         return this.childrenClient.get();
+    }
+
+    public AsyncContentStrategiesClient contentStrategies() {
+        return this.contentStrategiesClient.get();
     }
 
     public AsyncPlacementsClient placements() {
