@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 public final class UpdateContentStrategyAttributes {
     private final String name;
 
-    private final List<ContentStrategyFilter> filters;
+    private final Optional<ContentStrategyFilter> filter;
 
     private final List<CategoryOption> categories;
 
@@ -37,13 +38,13 @@ public final class UpdateContentStrategyAttributes {
 
     private UpdateContentStrategyAttributes(
             String name,
-            List<ContentStrategyFilter> filters,
+            Optional<ContentStrategyFilter> filter,
             List<CategoryOption> categories,
             List<CategoryOption> categoryExclusions,
             List<String> merchantExclusions,
             Map<String, Object> additionalProperties) {
         this.name = name;
-        this.filters = filters;
+        this.filter = filter;
         this.categories = categories;
         this.categoryExclusions = categoryExclusions;
         this.merchantExclusions = merchantExclusions;
@@ -59,11 +60,11 @@ public final class UpdateContentStrategyAttributes {
     }
 
     /**
-     * @return Filters applied when selecting offers for the strategy
+     * @return Filter applied when selecting offers for the strategy
      */
-    @JsonProperty("filters")
-    public List<ContentStrategyFilter> getFilters() {
-        return filters;
+    @JsonProperty("filter")
+    public Optional<ContentStrategyFilter> getFilter() {
+        return filter;
     }
 
     /**
@@ -103,7 +104,7 @@ public final class UpdateContentStrategyAttributes {
 
     private boolean equalTo(UpdateContentStrategyAttributes other) {
         return name.equals(other.name)
-                && filters.equals(other.filters)
+                && filter.equals(other.filter)
                 && categories.equals(other.categories)
                 && categoryExclusions.equals(other.categoryExclusions)
                 && merchantExclusions.equals(other.merchantExclusions);
@@ -111,7 +112,7 @@ public final class UpdateContentStrategyAttributes {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.filters, this.categories, this.categoryExclusions, this.merchantExclusions);
+        return Objects.hash(this.name, this.filter, this.categories, this.categoryExclusions, this.merchantExclusions);
     }
 
     @java.lang.Override
@@ -140,13 +141,11 @@ public final class UpdateContentStrategyAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Filters applied when selecting offers for the strategy</p>
+         * <p>Filter applied when selecting offers for the strategy</p>
          */
-        _FinalStage filters(List<ContentStrategyFilter> filters);
+        _FinalStage filter(Optional<ContentStrategyFilter> filter);
 
-        _FinalStage addFilters(ContentStrategyFilter filters);
-
-        _FinalStage addAllFilters(List<ContentStrategyFilter> filters);
+        _FinalStage filter(ContentStrategyFilter filter);
 
         /**
          * <p>Merchant categories to include</p>
@@ -186,7 +185,7 @@ public final class UpdateContentStrategyAttributes {
 
         private List<CategoryOption> categories = new ArrayList<>();
 
-        private List<ContentStrategyFilter> filters = new ArrayList<>();
+        private Optional<ContentStrategyFilter> filter = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -196,7 +195,7 @@ public final class UpdateContentStrategyAttributes {
         @java.lang.Override
         public Builder from(UpdateContentStrategyAttributes other) {
             name(other.getName());
-            filters(other.getFilters());
+            filter(other.getFilter());
             categories(other.getCategories());
             categoryExclusions(other.getCategoryExclusions());
             merchantExclusions(other.getMerchantExclusions());
@@ -321,44 +320,29 @@ public final class UpdateContentStrategyAttributes {
         }
 
         /**
-         * <p>Filters applied when selecting offers for the strategy</p>
+         * <p>Filter applied when selecting offers for the strategy</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addAllFilters(List<ContentStrategyFilter> filters) {
-            if (filters != null) {
-                this.filters.addAll(filters);
-            }
+        public _FinalStage filter(ContentStrategyFilter filter) {
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
         /**
-         * <p>Filters applied when selecting offers for the strategy</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
+         * <p>Filter applied when selecting offers for the strategy</p>
          */
         @java.lang.Override
-        public _FinalStage addFilters(ContentStrategyFilter filters) {
-            this.filters.add(filters);
-            return this;
-        }
-
-        /**
-         * <p>Filters applied when selecting offers for the strategy</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "filters", nulls = Nulls.SKIP)
-        public _FinalStage filters(List<ContentStrategyFilter> filters) {
-            this.filters.clear();
-            if (filters != null) {
-                this.filters.addAll(filters);
-            }
+        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
+        public _FinalStage filter(Optional<ContentStrategyFilter> filter) {
+            this.filter = filter;
             return this;
         }
 
         @java.lang.Override
         public UpdateContentStrategyAttributes build() {
             return new UpdateContentStrategyAttributes(
-                    name, filters, categories, categoryExclusions, merchantExclusions, additionalProperties);
+                    name, filter, categories, categoryExclusions, merchantExclusions, additionalProperties);
         }
 
         @java.lang.Override

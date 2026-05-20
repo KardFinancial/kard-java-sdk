@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -28,7 +29,7 @@ public final class ContentStrategyAttributes {
 
     private final String organizationId;
 
-    private final List<ContentStrategyFilter> filters;
+    private final Optional<ContentStrategyFilter> filter;
 
     private final List<CategoryOption> categories;
 
@@ -45,7 +46,7 @@ public final class ContentStrategyAttributes {
     private ContentStrategyAttributes(
             String name,
             String organizationId,
-            List<ContentStrategyFilter> filters,
+            Optional<ContentStrategyFilter> filter,
             List<CategoryOption> categories,
             List<CategoryOption> categoryExclusions,
             List<String> merchantExclusions,
@@ -54,7 +55,7 @@ public final class ContentStrategyAttributes {
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.organizationId = organizationId;
-        this.filters = filters;
+        this.filter = filter;
         this.categories = categories;
         this.categoryExclusions = categoryExclusions;
         this.merchantExclusions = merchantExclusions;
@@ -80,11 +81,11 @@ public final class ContentStrategyAttributes {
     }
 
     /**
-     * @return Filters applied when selecting offers for the strategy
+     * @return Filter applied when selecting offers for the strategy
      */
-    @JsonProperty("filters")
-    public List<ContentStrategyFilter> getFilters() {
-        return filters;
+    @JsonProperty("filter")
+    public Optional<ContentStrategyFilter> getFilter() {
+        return filter;
     }
 
     /**
@@ -141,7 +142,7 @@ public final class ContentStrategyAttributes {
     private boolean equalTo(ContentStrategyAttributes other) {
         return name.equals(other.name)
                 && organizationId.equals(other.organizationId)
-                && filters.equals(other.filters)
+                && filter.equals(other.filter)
                 && categories.equals(other.categories)
                 && categoryExclusions.equals(other.categoryExclusions)
                 && merchantExclusions.equals(other.merchantExclusions)
@@ -154,7 +155,7 @@ public final class ContentStrategyAttributes {
         return Objects.hash(
                 this.name,
                 this.organizationId,
-                this.filters,
+                this.filter,
                 this.categories,
                 this.categoryExclusions,
                 this.merchantExclusions,
@@ -209,13 +210,11 @@ public final class ContentStrategyAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Filters applied when selecting offers for the strategy</p>
+         * <p>Filter applied when selecting offers for the strategy</p>
          */
-        _FinalStage filters(List<ContentStrategyFilter> filters);
+        _FinalStage filter(Optional<ContentStrategyFilter> filter);
 
-        _FinalStage addFilters(ContentStrategyFilter filters);
-
-        _FinalStage addAllFilters(List<ContentStrategyFilter> filters);
+        _FinalStage filter(ContentStrategyFilter filter);
 
         /**
          * <p>Merchant categories to include</p>
@@ -262,7 +261,7 @@ public final class ContentStrategyAttributes {
 
         private List<CategoryOption> categories = new ArrayList<>();
 
-        private List<ContentStrategyFilter> filters = new ArrayList<>();
+        private Optional<ContentStrategyFilter> filter = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -273,7 +272,7 @@ public final class ContentStrategyAttributes {
         public Builder from(ContentStrategyAttributes other) {
             name(other.getName());
             organizationId(other.getOrganizationId());
-            filters(other.getFilters());
+            filter(other.getFilter());
             categories(other.getCategories());
             categoryExclusions(other.getCategoryExclusions());
             merchantExclusions(other.getMerchantExclusions());
@@ -436,37 +435,22 @@ public final class ContentStrategyAttributes {
         }
 
         /**
-         * <p>Filters applied when selecting offers for the strategy</p>
+         * <p>Filter applied when selecting offers for the strategy</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addAllFilters(List<ContentStrategyFilter> filters) {
-            if (filters != null) {
-                this.filters.addAll(filters);
-            }
+        public _FinalStage filter(ContentStrategyFilter filter) {
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
         /**
-         * <p>Filters applied when selecting offers for the strategy</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
+         * <p>Filter applied when selecting offers for the strategy</p>
          */
         @java.lang.Override
-        public _FinalStage addFilters(ContentStrategyFilter filters) {
-            this.filters.add(filters);
-            return this;
-        }
-
-        /**
-         * <p>Filters applied when selecting offers for the strategy</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "filters", nulls = Nulls.SKIP)
-        public _FinalStage filters(List<ContentStrategyFilter> filters) {
-            this.filters.clear();
-            if (filters != null) {
-                this.filters.addAll(filters);
-            }
+        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
+        public _FinalStage filter(Optional<ContentStrategyFilter> filter) {
+            this.filter = filter;
             return this;
         }
 
@@ -475,7 +459,7 @@ public final class ContentStrategyAttributes {
             return new ContentStrategyAttributes(
                     name,
                     organizationId,
-                    filters,
+                    filter,
                     categories,
                     categoryExclusions,
                     merchantExclusions,

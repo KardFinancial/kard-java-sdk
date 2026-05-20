@@ -1,3 +1,9 @@
+## 4.0.0 - 2026-05-20
+### Breaking Changes
+* **`ContentStrategyAttributes.getFilters()`**, **`CreateContentStrategyAttributes.getFilters()`**, and **`UpdateContentStrategyAttributes.getFilters()`** — removed; replaced by `getFilter()` returning `Optional<ContentStrategyFilter>`. Update all call sites to use `getFilter()` and handle the `Optional` wrapper.
+* **`_FinalStage.filters(List<ContentStrategyFilter>)`**, **`addFilters()`**, and **`addAllFilters()`** — removed from all three attributes builder interfaces; replace with `filter(ContentStrategyFilter)` or `filter(Optional<ContentStrategyFilter>)`.
+* The serialized JSON field name changed from `"filters"` (array) to `"filter"` (single value); any code that constructs or parses raw JSON payloads must be updated accordingly.
+
 ## 3.2.0 - 2026-05-19
 ### Added
 * **`getContentStrategyId()`** — new optional accessor on `MainPagePlacementAttributes` and `PushNotificationPlacementAttributes` returning the ID of the content strategy linked to a placement.
