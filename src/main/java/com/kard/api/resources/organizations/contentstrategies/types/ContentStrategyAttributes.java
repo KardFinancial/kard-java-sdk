@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.resources.commons.types.CategoryOption;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,10 +36,6 @@ public final class ContentStrategyAttributes {
 
     private final List<String> merchantExclusions;
 
-    private final OffsetDateTime createdAt;
-
-    private final OffsetDateTime lastModified;
-
     private final Map<String, Object> additionalProperties;
 
     private ContentStrategyAttributes(
@@ -50,8 +45,6 @@ public final class ContentStrategyAttributes {
             List<CategoryOption> categories,
             List<CategoryOption> categoryExclusions,
             List<String> merchantExclusions,
-            OffsetDateTime createdAt,
-            OffsetDateTime lastModified,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.organizationId = organizationId;
@@ -59,8 +52,6 @@ public final class ContentStrategyAttributes {
         this.categories = categories;
         this.categoryExclusions = categoryExclusions;
         this.merchantExclusions = merchantExclusions;
-        this.createdAt = createdAt;
-        this.lastModified = lastModified;
         this.additionalProperties = additionalProperties;
     }
 
@@ -112,22 +103,6 @@ public final class ContentStrategyAttributes {
         return merchantExclusions;
     }
 
-    /**
-     * @return When the content strategy was created (ISO 8601 UTC)
-     */
-    @JsonProperty("createdAt")
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * @return When the content strategy was last modified (ISO 8601 UTC)
-     */
-    @JsonProperty("lastModified")
-    public OffsetDateTime getLastModified() {
-        return lastModified;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -145,9 +120,7 @@ public final class ContentStrategyAttributes {
                 && filter.equals(other.filter)
                 && categories.equals(other.categories)
                 && categoryExclusions.equals(other.categoryExclusions)
-                && merchantExclusions.equals(other.merchantExclusions)
-                && createdAt.equals(other.createdAt)
-                && lastModified.equals(other.lastModified);
+                && merchantExclusions.equals(other.merchantExclusions);
     }
 
     @java.lang.Override
@@ -158,9 +131,7 @@ public final class ContentStrategyAttributes {
                 this.filter,
                 this.categories,
                 this.categoryExclusions,
-                this.merchantExclusions,
-                this.createdAt,
-                this.lastModified);
+                this.merchantExclusions);
     }
 
     @java.lang.Override
@@ -185,21 +156,7 @@ public final class ContentStrategyAttributes {
         /**
          * <p>ID of the organization this content strategy belongs to</p>
          */
-        CreatedAtStage organizationId(@NotNull String organizationId);
-    }
-
-    public interface CreatedAtStage {
-        /**
-         * <p>When the content strategy was created (ISO 8601 UTC)</p>
-         */
-        LastModifiedStage createdAt(@NotNull OffsetDateTime createdAt);
-    }
-
-    public interface LastModifiedStage {
-        /**
-         * <p>When the content strategy was last modified (ISO 8601 UTC)</p>
-         */
-        _FinalStage lastModified(@NotNull OffsetDateTime lastModified);
+        _FinalStage organizationId(@NotNull String organizationId);
     }
 
     public interface _FinalStage {
@@ -245,15 +202,10 @@ public final class ContentStrategyAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements NameStage, OrganizationIdStage, CreatedAtStage, LastModifiedStage, _FinalStage {
+    public static final class Builder implements NameStage, OrganizationIdStage, _FinalStage {
         private String name;
 
         private String organizationId;
-
-        private OffsetDateTime createdAt;
-
-        private OffsetDateTime lastModified;
 
         private List<String> merchantExclusions = new ArrayList<>();
 
@@ -276,8 +228,6 @@ public final class ContentStrategyAttributes {
             categories(other.getCategories());
             categoryExclusions(other.getCategoryExclusions());
             merchantExclusions(other.getMerchantExclusions());
-            createdAt(other.getCreatedAt());
-            lastModified(other.getLastModified());
             return this;
         }
 
@@ -300,32 +250,8 @@ public final class ContentStrategyAttributes {
          */
         @java.lang.Override
         @JsonSetter("organizationId")
-        public CreatedAtStage organizationId(@NotNull String organizationId) {
+        public _FinalStage organizationId(@NotNull String organizationId) {
             this.organizationId = Objects.requireNonNull(organizationId, "organizationId must not be null");
-            return this;
-        }
-
-        /**
-         * <p>When the content strategy was created (ISO 8601 UTC)</p>
-         * <p>When the content strategy was created (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("createdAt")
-        public LastModifiedStage createdAt(@NotNull OffsetDateTime createdAt) {
-            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
-            return this;
-        }
-
-        /**
-         * <p>When the content strategy was last modified (ISO 8601 UTC)</p>
-         * <p>When the content strategy was last modified (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("lastModified")
-        public _FinalStage lastModified(@NotNull OffsetDateTime lastModified) {
-            this.lastModified = Objects.requireNonNull(lastModified, "lastModified must not be null");
             return this;
         }
 
@@ -463,8 +389,6 @@ public final class ContentStrategyAttributes {
                     categories,
                     categoryExclusions,
                     merchantExclusions,
-                    createdAt,
-                    lastModified,
                     additionalProperties);
         }
 

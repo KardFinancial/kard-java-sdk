@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -30,10 +29,6 @@ public final class MainPagePlacementAttributes {
 
     private final Optional<String> contentStrategyId;
 
-    private final OffsetDateTime createdAt;
-
-    private final OffsetDateTime lastModified;
-
     private final Map<String, Object> additionalProperties;
 
     private MainPagePlacementAttributes(
@@ -41,15 +36,11 @@ public final class MainPagePlacementAttributes {
             String organizationId,
             int availableSlots,
             Optional<String> contentStrategyId,
-            OffsetDateTime createdAt,
-            OffsetDateTime lastModified,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.organizationId = organizationId;
         this.availableSlots = availableSlots;
         this.contentStrategyId = contentStrategyId;
-        this.createdAt = createdAt;
-        this.lastModified = lastModified;
         this.additionalProperties = additionalProperties;
     }
 
@@ -85,22 +76,6 @@ public final class MainPagePlacementAttributes {
         return contentStrategyId;
     }
 
-    /**
-     * @return When the placement was created (ISO 8601 UTC)
-     */
-    @JsonProperty("createdAt")
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * @return When the placement was last modified (ISO 8601 UTC)
-     */
-    @JsonProperty("lastModified")
-    public OffsetDateTime getLastModified() {
-        return lastModified;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -116,20 +91,12 @@ public final class MainPagePlacementAttributes {
         return name.equals(other.name)
                 && organizationId.equals(other.organizationId)
                 && availableSlots == other.availableSlots
-                && contentStrategyId.equals(other.contentStrategyId)
-                && createdAt.equals(other.createdAt)
-                && lastModified.equals(other.lastModified);
+                && contentStrategyId.equals(other.contentStrategyId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.name,
-                this.organizationId,
-                this.availableSlots,
-                this.contentStrategyId,
-                this.createdAt,
-                this.lastModified);
+        return Objects.hash(this.name, this.organizationId, this.availableSlots, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -161,21 +128,7 @@ public final class MainPagePlacementAttributes {
         /**
          * <p>Number of available slots</p>
          */
-        CreatedAtStage availableSlots(int availableSlots);
-    }
-
-    public interface CreatedAtStage {
-        /**
-         * <p>When the placement was created (ISO 8601 UTC)</p>
-         */
-        LastModifiedStage createdAt(@NotNull OffsetDateTime createdAt);
-    }
-
-    public interface LastModifiedStage {
-        /**
-         * <p>When the placement was last modified (ISO 8601 UTC)</p>
-         */
-        _FinalStage lastModified(@NotNull OffsetDateTime lastModified);
+        _FinalStage availableSlots(int availableSlots);
     }
 
     public interface _FinalStage {
@@ -194,22 +147,12 @@ public final class MainPagePlacementAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements NameStage,
-                    OrganizationIdStage,
-                    AvailableSlotsStage,
-                    CreatedAtStage,
-                    LastModifiedStage,
-                    _FinalStage {
+    public static final class Builder implements NameStage, OrganizationIdStage, AvailableSlotsStage, _FinalStage {
         private String name;
 
         private String organizationId;
 
         private int availableSlots;
-
-        private OffsetDateTime createdAt;
-
-        private OffsetDateTime lastModified;
 
         private Optional<String> contentStrategyId = Optional.empty();
 
@@ -224,8 +167,6 @@ public final class MainPagePlacementAttributes {
             organizationId(other.getOrganizationId());
             availableSlots(other.getAvailableSlots());
             contentStrategyId(other.getContentStrategyId());
-            createdAt(other.getCreatedAt());
-            lastModified(other.getLastModified());
             return this;
         }
 
@@ -260,32 +201,8 @@ public final class MainPagePlacementAttributes {
          */
         @java.lang.Override
         @JsonSetter("availableSlots")
-        public CreatedAtStage availableSlots(int availableSlots) {
+        public _FinalStage availableSlots(int availableSlots) {
             this.availableSlots = availableSlots;
-            return this;
-        }
-
-        /**
-         * <p>When the placement was created (ISO 8601 UTC)</p>
-         * <p>When the placement was created (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("createdAt")
-        public LastModifiedStage createdAt(@NotNull OffsetDateTime createdAt) {
-            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
-            return this;
-        }
-
-        /**
-         * <p>When the placement was last modified (ISO 8601 UTC)</p>
-         * <p>When the placement was last modified (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("lastModified")
-        public _FinalStage lastModified(@NotNull OffsetDateTime lastModified) {
-            this.lastModified = Objects.requireNonNull(lastModified, "lastModified must not be null");
             return this;
         }
 
@@ -312,13 +229,7 @@ public final class MainPagePlacementAttributes {
         @java.lang.Override
         public MainPagePlacementAttributes build() {
             return new MainPagePlacementAttributes(
-                    name,
-                    organizationId,
-                    availableSlots,
-                    contentStrategyId,
-                    createdAt,
-                    lastModified,
-                    additionalProperties);
+                    name, organizationId, availableSlots, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override

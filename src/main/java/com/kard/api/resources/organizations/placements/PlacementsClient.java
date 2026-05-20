@@ -6,10 +6,12 @@ package com.kard.api.resources.organizations.placements;
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.internalorganizations.types.DeleteResourceResponse;
+import com.kard.api.resources.organizations.placements.requests.GetPlacementRequest;
 import com.kard.api.resources.organizations.placements.requests.ListPlacementsRequest;
 import com.kard.api.resources.organizations.placements.types.CreatePlacementRequestBody;
 import com.kard.api.resources.organizations.placements.types.PlacementFormatUnion;
 import com.kard.api.resources.organizations.placements.types.PlacementListResponse;
+import com.kard.api.resources.organizations.placements.types.PlacementResource;
 import com.kard.api.resources.organizations.placements.types.UpdatePlacementRequestBody;
 
 public class PlacementsClient {
@@ -76,15 +78,32 @@ public class PlacementsClient {
     /**
      * Retrieve a specific placement
      */
-    public PlacementFormatUnion get(String organizationId, String placementId) {
+    public PlacementResource get(String organizationId, String placementId) {
         return this.rawClient.get(organizationId, placementId).body();
     }
 
     /**
      * Retrieve a specific placement
      */
-    public PlacementFormatUnion get(String organizationId, String placementId, RequestOptions requestOptions) {
+    public PlacementResource get(String organizationId, String placementId, RequestOptions requestOptions) {
         return this.rawClient.get(organizationId, placementId, requestOptions).body();
+    }
+
+    /**
+     * Retrieve a specific placement
+     */
+    public PlacementResource get(String organizationId, String placementId, GetPlacementRequest request) {
+        return this.rawClient.get(organizationId, placementId, request).body();
+    }
+
+    /**
+     * Retrieve a specific placement
+     */
+    public PlacementResource get(
+            String organizationId, String placementId, GetPlacementRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .get(organizationId, placementId, request, requestOptions)
+                .body();
     }
 
     /**

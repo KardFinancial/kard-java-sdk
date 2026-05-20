@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.resources.commons.types.Links;
 import com.kard.api.resources.internalorganizations.types.OrganizationPaginationMetadata;
+import com.kard.api.resources.organizations.contentstrategies.types.ContentStrategyResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,8 @@ import java.util.Optional;
 public final class PlacementListResponse {
     private final List<PlacementFormatUnion> data;
 
+    private final Optional<List<ContentStrategyResponse>> included;
+
     private final Optional<Links> links;
 
     private final Optional<OrganizationPaginationMetadata> meta;
@@ -34,10 +37,12 @@ public final class PlacementListResponse {
 
     private PlacementListResponse(
             List<PlacementFormatUnion> data,
+            Optional<List<ContentStrategyResponse>> included,
             Optional<Links> links,
             Optional<OrganizationPaginationMetadata> meta,
             Map<String, Object> additionalProperties) {
         this.data = data;
+        this.included = included;
         this.links = links;
         this.meta = meta;
         this.additionalProperties = additionalProperties;
@@ -49,6 +54,14 @@ public final class PlacementListResponse {
     @JsonProperty("data")
     public List<PlacementFormatUnion> getData() {
         return data;
+    }
+
+    /**
+     * @return Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and at least one placement in <code>data</code> is linked to a content strategy.
+     */
+    @JsonProperty("included")
+    public Optional<List<ContentStrategyResponse>> getIncluded() {
+        return included;
     }
 
     @JsonProperty("links")
@@ -76,12 +89,15 @@ public final class PlacementListResponse {
     }
 
     private boolean equalTo(PlacementListResponse other) {
-        return data.equals(other.data) && links.equals(other.links) && meta.equals(other.meta);
+        return data.equals(other.data)
+                && included.equals(other.included)
+                && links.equals(other.links)
+                && meta.equals(other.meta);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data, this.links, this.meta);
+        return Objects.hash(this.data, this.included, this.links, this.meta);
     }
 
     @java.lang.Override
@@ -97,6 +113,8 @@ public final class PlacementListResponse {
     public static final class Builder {
         private List<PlacementFormatUnion> data = new ArrayList<>();
 
+        private Optional<List<ContentStrategyResponse>> included = Optional.empty();
+
         private Optional<Links> links = Optional.empty();
 
         private Optional<OrganizationPaginationMetadata> meta = Optional.empty();
@@ -108,6 +126,7 @@ public final class PlacementListResponse {
 
         public Builder from(PlacementListResponse other) {
             data(other.getData());
+            included(other.getIncluded());
             links(other.getLinks());
             meta(other.getMeta());
             return this;
@@ -137,6 +156,20 @@ public final class PlacementListResponse {
             return this;
         }
 
+        /**
+         * <p>Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and at least one placement in <code>data</code> is linked to a content strategy.</p>
+         */
+        @JsonSetter(value = "included", nulls = Nulls.SKIP)
+        public Builder included(Optional<List<ContentStrategyResponse>> included) {
+            this.included = included;
+            return this;
+        }
+
+        public Builder included(List<ContentStrategyResponse> included) {
+            this.included = Optional.ofNullable(included);
+            return this;
+        }
+
         @JsonSetter(value = "links", nulls = Nulls.SKIP)
         public Builder links(Optional<Links> links) {
             this.links = links;
@@ -163,7 +196,7 @@ public final class PlacementListResponse {
         }
 
         public PlacementListResponse build() {
-            return new PlacementListResponse(data, links, meta, additionalProperties);
+            return new PlacementListResponse(data, included, links, meta, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

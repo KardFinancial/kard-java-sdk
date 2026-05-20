@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -30,10 +29,6 @@ public final class PushNotificationPlacementAttributes {
 
     private final Optional<String> contentStrategyId;
 
-    private final OffsetDateTime createdAt;
-
-    private final OffsetDateTime lastModified;
-
     private final Map<String, Object> additionalProperties;
 
     private PushNotificationPlacementAttributes(
@@ -41,15 +36,11 @@ public final class PushNotificationPlacementAttributes {
             String organizationId,
             Cadence cadence,
             Optional<String> contentStrategyId,
-            OffsetDateTime createdAt,
-            OffsetDateTime lastModified,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.organizationId = organizationId;
         this.cadence = cadence;
         this.contentStrategyId = contentStrategyId;
-        this.createdAt = createdAt;
-        this.lastModified = lastModified;
         this.additionalProperties = additionalProperties;
     }
 
@@ -85,22 +76,6 @@ public final class PushNotificationPlacementAttributes {
         return contentStrategyId;
     }
 
-    /**
-     * @return When the placement was created (ISO 8601 UTC)
-     */
-    @JsonProperty("createdAt")
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * @return When the placement was last modified (ISO 8601 UTC)
-     */
-    @JsonProperty("lastModified")
-    public OffsetDateTime getLastModified() {
-        return lastModified;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -117,20 +92,12 @@ public final class PushNotificationPlacementAttributes {
         return name.equals(other.name)
                 && organizationId.equals(other.organizationId)
                 && cadence.equals(other.cadence)
-                && contentStrategyId.equals(other.contentStrategyId)
-                && createdAt.equals(other.createdAt)
-                && lastModified.equals(other.lastModified);
+                && contentStrategyId.equals(other.contentStrategyId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.name,
-                this.organizationId,
-                this.cadence,
-                this.contentStrategyId,
-                this.createdAt,
-                this.lastModified);
+        return Objects.hash(this.name, this.organizationId, this.cadence, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -162,21 +129,7 @@ public final class PushNotificationPlacementAttributes {
         /**
          * <p>Delivery cadence for the notification</p>
          */
-        CreatedAtStage cadence(@NotNull Cadence cadence);
-    }
-
-    public interface CreatedAtStage {
-        /**
-         * <p>When the placement was created (ISO 8601 UTC)</p>
-         */
-        LastModifiedStage createdAt(@NotNull OffsetDateTime createdAt);
-    }
-
-    public interface LastModifiedStage {
-        /**
-         * <p>When the placement was last modified (ISO 8601 UTC)</p>
-         */
-        _FinalStage lastModified(@NotNull OffsetDateTime lastModified);
+        _FinalStage cadence(@NotNull Cadence cadence);
     }
 
     public interface _FinalStage {
@@ -195,17 +148,12 @@ public final class PushNotificationPlacementAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements NameStage, OrganizationIdStage, CadenceStage, CreatedAtStage, LastModifiedStage, _FinalStage {
+    public static final class Builder implements NameStage, OrganizationIdStage, CadenceStage, _FinalStage {
         private String name;
 
         private String organizationId;
 
         private Cadence cadence;
-
-        private OffsetDateTime createdAt;
-
-        private OffsetDateTime lastModified;
 
         private Optional<String> contentStrategyId = Optional.empty();
 
@@ -220,8 +168,6 @@ public final class PushNotificationPlacementAttributes {
             organizationId(other.getOrganizationId());
             cadence(other.getCadence());
             contentStrategyId(other.getContentStrategyId());
-            createdAt(other.getCreatedAt());
-            lastModified(other.getLastModified());
             return this;
         }
 
@@ -256,32 +202,8 @@ public final class PushNotificationPlacementAttributes {
          */
         @java.lang.Override
         @JsonSetter("cadence")
-        public CreatedAtStage cadence(@NotNull Cadence cadence) {
+        public _FinalStage cadence(@NotNull Cadence cadence) {
             this.cadence = Objects.requireNonNull(cadence, "cadence must not be null");
-            return this;
-        }
-
-        /**
-         * <p>When the placement was created (ISO 8601 UTC)</p>
-         * <p>When the placement was created (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("createdAt")
-        public LastModifiedStage createdAt(@NotNull OffsetDateTime createdAt) {
-            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
-            return this;
-        }
-
-        /**
-         * <p>When the placement was last modified (ISO 8601 UTC)</p>
-         * <p>When the placement was last modified (ISO 8601 UTC)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("lastModified")
-        public _FinalStage lastModified(@NotNull OffsetDateTime lastModified) {
-            this.lastModified = Objects.requireNonNull(lastModified, "lastModified must not be null");
             return this;
         }
 
@@ -308,7 +230,7 @@ public final class PushNotificationPlacementAttributes {
         @java.lang.Override
         public PushNotificationPlacementAttributes build() {
             return new PushNotificationPlacementAttributes(
-                    name, organizationId, cadence, contentStrategyId, createdAt, lastModified, additionalProperties);
+                    name, organizationId, cadence, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override

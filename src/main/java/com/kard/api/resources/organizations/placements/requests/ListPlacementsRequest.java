@@ -27,6 +27,8 @@ public final class ListPlacementsRequest {
 
     private final Optional<String> filterContentStrategyId;
 
+    private final Optional<String> include;
+
     private final Optional<String> pageAfter;
 
     private final Optional<Integer> pageSize;
@@ -37,12 +39,14 @@ public final class ListPlacementsRequest {
             Optional<PlacementTypeFilter> filterType,
             Optional<String> filterName,
             Optional<String> filterContentStrategyId,
+            Optional<String> include,
             Optional<String> pageAfter,
             Optional<Integer> pageSize,
             Map<String, Object> additionalProperties) {
         this.filterType = filterType;
         this.filterName = filterName;
         this.filterContentStrategyId = filterContentStrategyId;
+        this.include = include;
         this.pageAfter = pageAfter;
         this.pageSize = pageSize;
         this.additionalProperties = additionalProperties;
@@ -70,6 +74,14 @@ public final class ListPlacementsRequest {
     @JsonIgnore
     public Optional<String> getFilterContentStrategyId() {
         return filterContentStrategyId;
+    }
+
+    /**
+     * @return CSV list of related resources to embed in the <code>included</code> array (allowed value is <code>contentStrategy</code>).
+     */
+    @JsonIgnore
+    public Optional<String> getInclude() {
+        return include;
     }
 
     /**
@@ -103,6 +115,7 @@ public final class ListPlacementsRequest {
         return filterType.equals(other.filterType)
                 && filterName.equals(other.filterName)
                 && filterContentStrategyId.equals(other.filterContentStrategyId)
+                && include.equals(other.include)
                 && pageAfter.equals(other.pageAfter)
                 && pageSize.equals(other.pageSize);
     }
@@ -110,7 +123,12 @@ public final class ListPlacementsRequest {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.filterType, this.filterName, this.filterContentStrategyId, this.pageAfter, this.pageSize);
+                this.filterType,
+                this.filterName,
+                this.filterContentStrategyId,
+                this.include,
+                this.pageAfter,
+                this.pageSize);
     }
 
     @java.lang.Override
@@ -130,6 +148,8 @@ public final class ListPlacementsRequest {
 
         private Optional<String> filterContentStrategyId = Optional.empty();
 
+        private Optional<String> include = Optional.empty();
+
         private Optional<String> pageAfter = Optional.empty();
 
         private Optional<Integer> pageSize = Optional.empty();
@@ -143,6 +163,7 @@ public final class ListPlacementsRequest {
             filterType(other.getFilterType());
             filterName(other.getFilterName());
             filterContentStrategyId(other.getFilterContentStrategyId());
+            include(other.getInclude());
             pageAfter(other.getPageAfter());
             pageSize(other.getPageSize());
             return this;
@@ -191,6 +212,20 @@ public final class ListPlacementsRequest {
         }
 
         /**
+         * <p>CSV list of related resources to embed in the <code>included</code> array (allowed value is <code>contentStrategy</code>).</p>
+         */
+        @JsonSetter(value = "include", nulls = Nulls.SKIP)
+        public Builder include(Optional<String> include) {
+            this.include = include;
+            return this;
+        }
+
+        public Builder include(String include) {
+            this.include = Optional.ofNullable(include);
+            return this;
+        }
+
+        /**
          * <p>Cursor value for the next page of results</p>
          */
         @JsonSetter(value = "page[after]", nulls = Nulls.SKIP)
@@ -220,7 +255,13 @@ public final class ListPlacementsRequest {
 
         public ListPlacementsRequest build() {
             return new ListPlacementsRequest(
-                    filterType, filterName, filterContentStrategyId, pageAfter, pageSize, additionalProperties);
+                    filterType,
+                    filterName,
+                    filterContentStrategyId,
+                    include,
+                    pageAfter,
+                    pageSize,
+                    additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -6,10 +6,12 @@ package com.kard.api.resources.organizations.placements;
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.internalorganizations.types.DeleteResourceResponse;
+import com.kard.api.resources.organizations.placements.requests.GetPlacementRequest;
 import com.kard.api.resources.organizations.placements.requests.ListPlacementsRequest;
 import com.kard.api.resources.organizations.placements.types.CreatePlacementRequestBody;
 import com.kard.api.resources.organizations.placements.types.PlacementFormatUnion;
 import com.kard.api.resources.organizations.placements.types.PlacementListResponse;
+import com.kard.api.resources.organizations.placements.types.PlacementResource;
 import com.kard.api.resources.organizations.placements.types.UpdatePlacementRequestBody;
 import java.util.concurrent.CompletableFuture;
 
@@ -77,16 +79,34 @@ public class AsyncPlacementsClient {
     /**
      * Retrieve a specific placement
      */
-    public CompletableFuture<PlacementFormatUnion> get(String organizationId, String placementId) {
+    public CompletableFuture<PlacementResource> get(String organizationId, String placementId) {
         return this.rawClient.get(organizationId, placementId).thenApply(response -> response.body());
     }
 
     /**
      * Retrieve a specific placement
      */
-    public CompletableFuture<PlacementFormatUnion> get(
+    public CompletableFuture<PlacementResource> get(
             String organizationId, String placementId, RequestOptions requestOptions) {
         return this.rawClient.get(organizationId, placementId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Retrieve a specific placement
+     */
+    public CompletableFuture<PlacementResource> get(
+            String organizationId, String placementId, GetPlacementRequest request) {
+        return this.rawClient.get(organizationId, placementId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Retrieve a specific placement
+     */
+    public CompletableFuture<PlacementResource> get(
+            String organizationId, String placementId, GetPlacementRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .get(organizationId, placementId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     /**

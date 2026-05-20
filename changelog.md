@@ -1,3 +1,12 @@
+## 5.0.0 - 2026-05-20
+### Breaking Changes
+* **`PushNotificationPlacementAttributes.getCreatedAt()`** and **`getLastModified()`** — removed; these fields are no longer returned by the API. Remove any call sites that read these values.
+* **`PushNotificationPlacementAttributes.Builder` staged interfaces `CreatedAtStage` and `LastModifiedStage`** — removed from the builder chain; calls to `.createdAt(...)` and `.lastModified(...)` must be deleted, and the builder now advances directly from `CadenceStage` to `_FinalStage`.
+### Added
+* **`PlacementResource`** — new response type wrapping a single placement (`getData()`) with an optional `getIncluded()` list of `ContentStrategyResponse` objects, populated when `include=contentStrategy` is requested.
+* **`GetPlacementRequest`** — new request type with an optional `include` parameter for embedding related content strategy resources in a single-placement response.
+* **`PlacementListResponse.getIncluded()`** — new optional accessor returning `Optional<List<ContentStrategyResponse>>` with content strategies embedded when `include=contentStrategy` is supplied on list requests.
+
 ## 4.0.0 - 2026-05-20
 ### Breaking Changes
 * **`ContentStrategyAttributes.getFilters()`**, **`CreateContentStrategyAttributes.getFilters()`**, and **`UpdateContentStrategyAttributes.getFilters()`** — removed; replaced by `getFilter()` returning `Optional<ContentStrategyFilter>`. Update all call sites to use `getFilter()` and handle the `Optional` wrapper.

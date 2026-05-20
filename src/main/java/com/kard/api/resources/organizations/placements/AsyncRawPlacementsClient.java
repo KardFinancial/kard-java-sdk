@@ -19,10 +19,12 @@ import com.kard.api.resources.commons.errors.InvalidRequest;
 import com.kard.api.resources.commons.errors.UnauthorizedError;
 import com.kard.api.resources.commons.types.ErrorResponse;
 import com.kard.api.resources.internalorganizations.types.DeleteResourceResponse;
+import com.kard.api.resources.organizations.placements.requests.GetPlacementRequest;
 import com.kard.api.resources.organizations.placements.requests.ListPlacementsRequest;
 import com.kard.api.resources.organizations.placements.types.CreatePlacementRequestBody;
 import com.kard.api.resources.organizations.placements.types.PlacementFormatUnion;
 import com.kard.api.resources.organizations.placements.types.PlacementListResponse;
+import com.kard.api.resources.organizations.placements.types.PlacementResource;
 import com.kard.api.resources.organizations.placements.types.UpdatePlacementRequestBody;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -193,6 +195,10 @@ public class AsyncRawPlacementsClient {
                     request.getFilterContentStrategyId().get(),
                     false);
         }
+        if (request.getInclude().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include", request.getInclude().get(), false);
+        }
         if (request.getPageAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page[after]", request.getPageAfter().get(), false);
@@ -279,37 +285,57 @@ public class AsyncRawPlacementsClient {
     /**
      * Retrieve a specific placement
      */
-    public CompletableFuture<KardApiHttpResponse<PlacementFormatUnion>> get(String organizationId, String placementId) {
-        return get(organizationId, placementId, null);
+    public CompletableFuture<KardApiHttpResponse<PlacementResource>> get(String organizationId, String placementId) {
+        return get(organizationId, placementId, GetPlacementRequest.builder().build());
     }
 
     /**
      * Retrieve a specific placement
      */
-    public CompletableFuture<KardApiHttpResponse<PlacementFormatUnion>> get(
+    public CompletableFuture<KardApiHttpResponse<PlacementResource>> get(
             String organizationId, String placementId, RequestOptions requestOptions) {
+        return get(organizationId, placementId, GetPlacementRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Retrieve a specific placement
+     */
+    public CompletableFuture<KardApiHttpResponse<PlacementResource>> get(
+            String organizationId, String placementId, GetPlacementRequest request) {
+        return get(organizationId, placementId, request, null);
+    }
+
+    /**
+     * Retrieve a specific placement
+     */
+    public CompletableFuture<KardApiHttpResponse<PlacementResource>> get(
+            String organizationId, String placementId, GetPlacementRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/issuers")
                 .addPathSegment(organizationId)
                 .addPathSegments("placements")
                 .addPathSegment(placementId);
+        if (request.getInclude().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include", request.getInclude().get(), false);
+        }
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<KardApiHttpResponse<PlacementFormatUnion>> future = new CompletableFuture<>();
+        CompletableFuture<KardApiHttpResponse<PlacementResource>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -317,7 +343,7 @@ public class AsyncRawPlacementsClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PlacementFormatUnion.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PlacementResource.class),
                                 response));
                         return;
                     }

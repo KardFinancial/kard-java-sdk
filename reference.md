@@ -1391,6 +1391,14 @@ client.organizations().placements().list(
 <dl>
 <dd>
 
+**include:** `Optional<String>` — CSV list of related resources to embed in the `included` array (allowed value is `contentStrategy`).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **pageAfter:** `Optional<String>` — Cursor value for the next page of results
     
 </dd>
@@ -1411,7 +1419,7 @@ client.organizations().placements().list(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.placements.get(organizationId, placementId) -> PlacementFormatUnion</code></summary>
+<details><summary><code>client.organizations.placements.get(organizationId, placementId) -> PlacementResource</code></summary>
 <dl>
 <dd>
 
@@ -1438,7 +1446,13 @@ Retrieve a specific placement
 <dd>
 
 ```java
-client.organizations().placements().get("organizationId", "placementId");
+client.organizations().placements().get(
+    "organizationId",
+    "placementId",
+    GetPlacementRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -1462,6 +1476,14 @@ client.organizations().placements().get("organizationId", "placementId");
 <dd>
 
 **placementId:** `String` — Unique identifier of the placement (UUID v7)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `Optional<String>` — CSV list of related resources to embed in the `included` array (allowed value is `contentStrategy`).
     
 </dd>
 </dl>
