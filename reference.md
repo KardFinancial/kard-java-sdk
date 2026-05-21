@@ -877,7 +877,7 @@ client.organizations().contentStrategies().create(
                     CreateContentStrategyAttributes
                         .builder()
                         .name("Featured Travel")
-                        .filter(ContentStrategyFilter.HIGHEST_CASHBACK)
+                        .sort(ContentStrategySort.HIGHEST_CASHBACK)
                         .categories(
                             Arrays.asList(CategoryOption.TRAVEL)
                         )

@@ -6,23 +6,22 @@ package com.kard.api.resources.organizations.contentstrategies.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class ContentStrategyFilter {
-    public static final ContentStrategyFilter EXPIRING_SOON =
-            new ContentStrategyFilter(Value.EXPIRING_SOON, "EXPIRING_SOON");
+public final class ContentStrategySort {
+    public static final ContentStrategySort EXPIRING_SOON =
+            new ContentStrategySort(Value.EXPIRING_SOON, "EXPIRING_SOON");
 
-    public static final ContentStrategyFilter PERSONALIZED =
-            new ContentStrategyFilter(Value.PERSONALIZED, "PERSONALIZED");
+    public static final ContentStrategySort PERSONALIZED = new ContentStrategySort(Value.PERSONALIZED, "PERSONALIZED");
 
-    public static final ContentStrategyFilter HIGHEST_CASHBACK =
-            new ContentStrategyFilter(Value.HIGHEST_CASHBACK, "HIGHEST_CASHBACK");
+    public static final ContentStrategySort HIGHEST_CASHBACK =
+            new ContentStrategySort(Value.HIGHEST_CASHBACK, "HIGHEST_CASHBACK");
 
-    public static final ContentStrategyFilter NEWLY_LIVE = new ContentStrategyFilter(Value.NEWLY_LIVE, "NEWLY_LIVE");
+    public static final ContentStrategySort NEWLY_LIVE = new ContentStrategySort(Value.NEWLY_LIVE, "NEWLY_LIVE");
 
     private final Value value;
 
     private final String string;
 
-    ContentStrategyFilter(Value value, String string) {
+    ContentStrategySort(Value value, String string) {
         this.value = value;
         this.string = string;
     }
@@ -40,8 +39,7 @@ public final class ContentStrategyFilter {
     @java.lang.Override
     public boolean equals(Object other) {
         return (this == other)
-                || (other instanceof ContentStrategyFilter
-                        && this.string.equals(((ContentStrategyFilter) other).string));
+                || (other instanceof ContentStrategySort && this.string.equals(((ContentStrategySort) other).string));
     }
 
     @java.lang.Override
@@ -66,7 +64,7 @@ public final class ContentStrategyFilter {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static ContentStrategyFilter valueOf(String value) {
+    public static ContentStrategySort valueOf(String value) {
         switch (value) {
             case "EXPIRING_SOON":
                 return EXPIRING_SOON;
@@ -77,7 +75,7 @@ public final class ContentStrategyFilter {
             case "NEWLY_LIVE":
                 return NEWLY_LIVE;
             default:
-                return new ContentStrategyFilter(Value.UNKNOWN, value);
+                return new ContentStrategySort(Value.UNKNOWN, value);
         }
     }
 

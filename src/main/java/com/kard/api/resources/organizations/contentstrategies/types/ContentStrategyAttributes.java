@@ -28,7 +28,7 @@ public final class ContentStrategyAttributes {
 
     private final String organizationId;
 
-    private final Optional<ContentStrategyFilter> filter;
+    private final Optional<ContentStrategySort> sort;
 
     private final List<CategoryOption> categories;
 
@@ -41,14 +41,14 @@ public final class ContentStrategyAttributes {
     private ContentStrategyAttributes(
             String name,
             String organizationId,
-            Optional<ContentStrategyFilter> filter,
+            Optional<ContentStrategySort> sort,
             List<CategoryOption> categories,
             List<CategoryOption> categoryExclusions,
             List<String> merchantExclusions,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.organizationId = organizationId;
-        this.filter = filter;
+        this.sort = sort;
         this.categories = categories;
         this.categoryExclusions = categoryExclusions;
         this.merchantExclusions = merchantExclusions;
@@ -72,11 +72,11 @@ public final class ContentStrategyAttributes {
     }
 
     /**
-     * @return Filter applied when selecting offers for the strategy
+     * @return Sort applied when selecting offers for the strategy
      */
-    @JsonProperty("filter")
-    public Optional<ContentStrategyFilter> getFilter() {
-        return filter;
+    @JsonProperty("sort")
+    public Optional<ContentStrategySort> getSort() {
+        return sort;
     }
 
     /**
@@ -117,7 +117,7 @@ public final class ContentStrategyAttributes {
     private boolean equalTo(ContentStrategyAttributes other) {
         return name.equals(other.name)
                 && organizationId.equals(other.organizationId)
-                && filter.equals(other.filter)
+                && sort.equals(other.sort)
                 && categories.equals(other.categories)
                 && categoryExclusions.equals(other.categoryExclusions)
                 && merchantExclusions.equals(other.merchantExclusions);
@@ -128,7 +128,7 @@ public final class ContentStrategyAttributes {
         return Objects.hash(
                 this.name,
                 this.organizationId,
-                this.filter,
+                this.sort,
                 this.categories,
                 this.categoryExclusions,
                 this.merchantExclusions);
@@ -167,11 +167,11 @@ public final class ContentStrategyAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Filter applied when selecting offers for the strategy</p>
+         * <p>Sort applied when selecting offers for the strategy</p>
          */
-        _FinalStage filter(Optional<ContentStrategyFilter> filter);
+        _FinalStage sort(Optional<ContentStrategySort> sort);
 
-        _FinalStage filter(ContentStrategyFilter filter);
+        _FinalStage sort(ContentStrategySort sort);
 
         /**
          * <p>Merchant categories to include</p>
@@ -213,7 +213,7 @@ public final class ContentStrategyAttributes {
 
         private List<CategoryOption> categories = new ArrayList<>();
 
-        private Optional<ContentStrategyFilter> filter = Optional.empty();
+        private Optional<ContentStrategySort> sort = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -224,7 +224,7 @@ public final class ContentStrategyAttributes {
         public Builder from(ContentStrategyAttributes other) {
             name(other.getName());
             organizationId(other.getOrganizationId());
-            filter(other.getFilter());
+            sort(other.getSort());
             categories(other.getCategories());
             categoryExclusions(other.getCategoryExclusions());
             merchantExclusions(other.getMerchantExclusions());
@@ -361,22 +361,22 @@ public final class ContentStrategyAttributes {
         }
 
         /**
-         * <p>Filter applied when selecting offers for the strategy</p>
+         * <p>Sort applied when selecting offers for the strategy</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage filter(ContentStrategyFilter filter) {
-            this.filter = Optional.ofNullable(filter);
+        public _FinalStage sort(ContentStrategySort sort) {
+            this.sort = Optional.ofNullable(sort);
             return this;
         }
 
         /**
-         * <p>Filter applied when selecting offers for the strategy</p>
+         * <p>Sort applied when selecting offers for the strategy</p>
          */
         @java.lang.Override
-        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
-        public _FinalStage filter(Optional<ContentStrategyFilter> filter) {
-            this.filter = filter;
+        @JsonSetter(value = "sort", nulls = Nulls.SKIP)
+        public _FinalStage sort(Optional<ContentStrategySort> sort) {
+            this.sort = sort;
             return this;
         }
 
@@ -385,7 +385,7 @@ public final class ContentStrategyAttributes {
             return new ContentStrategyAttributes(
                     name,
                     organizationId,
-                    filter,
+                    sort,
                     categories,
                     categoryExclusions,
                     merchantExclusions,

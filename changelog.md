@@ -1,3 +1,10 @@
+## 6.0.0 - 2026-05-21
+### Breaking Changes
+* **`ContentStrategyFilter`** — class removed and replaced by `ContentStrategySort`; update all references from `ContentStrategyFilter` to `ContentStrategySort`.
+* **`ContentStrategyAttributes.getFilter()`**, **`CreateContentStrategyAttributes.getFilter()`**, and **`UpdateContentStrategyAttributes.getFilter()`** — removed; replaced by `getSort()` returning `Optional<ContentStrategySort>`. Update all call sites to use `getSort()`.
+* **`_FinalStage.filter(ContentStrategyFilter)`** and **`_FinalStage.filter(Optional<ContentStrategyFilter>)`** — removed from the builder interfaces of all three attributes types; replace with `sort(ContentStrategySort)` or `sort(Optional<ContentStrategySort>)`.
+* The serialized JSON field name changed from `"filter"` to `"sort"` on all three attributes types; any code constructing or parsing raw JSON payloads must be updated accordingly.
+
 ## 5.0.0 - 2026-05-20
 ### Breaking Changes
 * **`PushNotificationPlacementAttributes.getCreatedAt()`** and **`getLastModified()`** — removed; these fields are no longer returned by the API. Remove any call sites that read these values.

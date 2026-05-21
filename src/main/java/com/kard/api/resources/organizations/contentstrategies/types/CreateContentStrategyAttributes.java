@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 public final class CreateContentStrategyAttributes {
     private final String name;
 
-    private final Optional<ContentStrategyFilter> filter;
+    private final Optional<ContentStrategySort> sort;
 
     private final List<CategoryOption> categories;
 
@@ -38,13 +38,13 @@ public final class CreateContentStrategyAttributes {
 
     private CreateContentStrategyAttributes(
             String name,
-            Optional<ContentStrategyFilter> filter,
+            Optional<ContentStrategySort> sort,
             List<CategoryOption> categories,
             List<CategoryOption> categoryExclusions,
             List<String> merchantExclusions,
             Map<String, Object> additionalProperties) {
         this.name = name;
-        this.filter = filter;
+        this.sort = sort;
         this.categories = categories;
         this.categoryExclusions = categoryExclusions;
         this.merchantExclusions = merchantExclusions;
@@ -60,11 +60,11 @@ public final class CreateContentStrategyAttributes {
     }
 
     /**
-     * @return Filter applied when selecting offers for the strategy
+     * @return Sort applied when selecting offers for the strategy
      */
-    @JsonProperty("filter")
-    public Optional<ContentStrategyFilter> getFilter() {
-        return filter;
+    @JsonProperty("sort")
+    public Optional<ContentStrategySort> getSort() {
+        return sort;
     }
 
     /**
@@ -104,7 +104,7 @@ public final class CreateContentStrategyAttributes {
 
     private boolean equalTo(CreateContentStrategyAttributes other) {
         return name.equals(other.name)
-                && filter.equals(other.filter)
+                && sort.equals(other.sort)
                 && categories.equals(other.categories)
                 && categoryExclusions.equals(other.categoryExclusions)
                 && merchantExclusions.equals(other.merchantExclusions);
@@ -112,7 +112,7 @@ public final class CreateContentStrategyAttributes {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.filter, this.categories, this.categoryExclusions, this.merchantExclusions);
+        return Objects.hash(this.name, this.sort, this.categories, this.categoryExclusions, this.merchantExclusions);
     }
 
     @java.lang.Override
@@ -141,11 +141,11 @@ public final class CreateContentStrategyAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Filter applied when selecting offers for the strategy</p>
+         * <p>Sort applied when selecting offers for the strategy</p>
          */
-        _FinalStage filter(Optional<ContentStrategyFilter> filter);
+        _FinalStage sort(Optional<ContentStrategySort> sort);
 
-        _FinalStage filter(ContentStrategyFilter filter);
+        _FinalStage sort(ContentStrategySort sort);
 
         /**
          * <p>Merchant categories to include</p>
@@ -185,7 +185,7 @@ public final class CreateContentStrategyAttributes {
 
         private List<CategoryOption> categories = new ArrayList<>();
 
-        private Optional<ContentStrategyFilter> filter = Optional.empty();
+        private Optional<ContentStrategySort> sort = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -195,7 +195,7 @@ public final class CreateContentStrategyAttributes {
         @java.lang.Override
         public Builder from(CreateContentStrategyAttributes other) {
             name(other.getName());
-            filter(other.getFilter());
+            sort(other.getSort());
             categories(other.getCategories());
             categoryExclusions(other.getCategoryExclusions());
             merchantExclusions(other.getMerchantExclusions());
@@ -320,29 +320,29 @@ public final class CreateContentStrategyAttributes {
         }
 
         /**
-         * <p>Filter applied when selecting offers for the strategy</p>
+         * <p>Sort applied when selecting offers for the strategy</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage filter(ContentStrategyFilter filter) {
-            this.filter = Optional.ofNullable(filter);
+        public _FinalStage sort(ContentStrategySort sort) {
+            this.sort = Optional.ofNullable(sort);
             return this;
         }
 
         /**
-         * <p>Filter applied when selecting offers for the strategy</p>
+         * <p>Sort applied when selecting offers for the strategy</p>
          */
         @java.lang.Override
-        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
-        public _FinalStage filter(Optional<ContentStrategyFilter> filter) {
-            this.filter = filter;
+        @JsonSetter(value = "sort", nulls = Nulls.SKIP)
+        public _FinalStage sort(Optional<ContentStrategySort> sort) {
+            this.sort = sort;
             return this;
         }
 
         @java.lang.Override
         public CreateContentStrategyAttributes build() {
             return new CreateContentStrategyAttributes(
-                    name, filter, categories, categoryExclusions, merchantExclusions, additionalProperties);
+                    name, sort, categories, categoryExclusions, merchantExclusions, additionalProperties);
         }
 
         @java.lang.Override
