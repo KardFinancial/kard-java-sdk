@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,12 +26,26 @@ public final class ProgressBarSegment {
 
     private final ProgressBarSegmentPosition position;
 
+    private final Optional<ProgressBarSegmentSeparator> separator;
+
+    private final Optional<List<ProgressBarSegmentLabel>> labels;
+
+    private final Optional<ProgressBarSegmentSelection> selection;
+
     private final Map<String, Object> additionalProperties;
 
     private ProgressBarSegment(
-            Optional<String> icon, ProgressBarSegmentPosition position, Map<String, Object> additionalProperties) {
+            Optional<String> icon,
+            ProgressBarSegmentPosition position,
+            Optional<ProgressBarSegmentSeparator> separator,
+            Optional<List<ProgressBarSegmentLabel>> labels,
+            Optional<ProgressBarSegmentSelection> selection,
+            Map<String, Object> additionalProperties) {
         this.icon = icon;
         this.position = position;
+        this.separator = separator;
+        this.labels = labels;
+        this.selection = selection;
         this.additionalProperties = additionalProperties;
     }
 
@@ -50,6 +65,30 @@ public final class ProgressBarSegment {
         return position;
     }
 
+    /**
+     * @return Separator style to render between segment nodes
+     */
+    @JsonProperty("separator")
+    public Optional<ProgressBarSegmentSeparator> getSeparator() {
+        return separator;
+    }
+
+    /**
+     * @return Label configuration for each node in the segment
+     */
+    @JsonProperty("labels")
+    public Optional<List<ProgressBarSegmentLabel>> getLabels() {
+        return labels;
+    }
+
+    /**
+     * @return Which segment nodes the UI should render as selected based on currentProgress
+     */
+    @JsonProperty("selection")
+    public Optional<ProgressBarSegmentSelection> getSelection() {
+        return selection;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -62,12 +101,16 @@ public final class ProgressBarSegment {
     }
 
     private boolean equalTo(ProgressBarSegment other) {
-        return icon.equals(other.icon) && position.equals(other.position);
+        return icon.equals(other.icon)
+                && position.equals(other.position)
+                && separator.equals(other.separator)
+                && labels.equals(other.labels)
+                && selection.equals(other.selection);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.icon, this.position);
+        return Objects.hash(this.icon, this.position, this.separator, this.labels, this.selection);
     }
 
     @java.lang.Override
@@ -101,11 +144,38 @@ public final class ProgressBarSegment {
         _FinalStage icon(Optional<String> icon);
 
         _FinalStage icon(String icon);
+
+        /**
+         * <p>Separator style to render between segment nodes</p>
+         */
+        _FinalStage separator(Optional<ProgressBarSegmentSeparator> separator);
+
+        _FinalStage separator(ProgressBarSegmentSeparator separator);
+
+        /**
+         * <p>Label configuration for each node in the segment</p>
+         */
+        _FinalStage labels(Optional<List<ProgressBarSegmentLabel>> labels);
+
+        _FinalStage labels(List<ProgressBarSegmentLabel> labels);
+
+        /**
+         * <p>Which segment nodes the UI should render as selected based on currentProgress</p>
+         */
+        _FinalStage selection(Optional<ProgressBarSegmentSelection> selection);
+
+        _FinalStage selection(ProgressBarSegmentSelection selection);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements PositionStage, _FinalStage {
         private ProgressBarSegmentPosition position;
+
+        private Optional<ProgressBarSegmentSelection> selection = Optional.empty();
+
+        private Optional<List<ProgressBarSegmentLabel>> labels = Optional.empty();
+
+        private Optional<ProgressBarSegmentSeparator> separator = Optional.empty();
 
         private Optional<String> icon = Optional.empty();
 
@@ -118,6 +188,9 @@ public final class ProgressBarSegment {
         public Builder from(ProgressBarSegment other) {
             icon(other.getIcon());
             position(other.getPosition());
+            separator(other.getSeparator());
+            labels(other.getLabels());
+            selection(other.getSelection());
             return this;
         }
 
@@ -130,6 +203,66 @@ public final class ProgressBarSegment {
         @JsonSetter("position")
         public _FinalStage position(@NotNull ProgressBarSegmentPosition position) {
             this.position = Objects.requireNonNull(position, "position must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Which segment nodes the UI should render as selected based on currentProgress</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage selection(ProgressBarSegmentSelection selection) {
+            this.selection = Optional.ofNullable(selection);
+            return this;
+        }
+
+        /**
+         * <p>Which segment nodes the UI should render as selected based on currentProgress</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "selection", nulls = Nulls.SKIP)
+        public _FinalStage selection(Optional<ProgressBarSegmentSelection> selection) {
+            this.selection = selection;
+            return this;
+        }
+
+        /**
+         * <p>Label configuration for each node in the segment</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage labels(List<ProgressBarSegmentLabel> labels) {
+            this.labels = Optional.ofNullable(labels);
+            return this;
+        }
+
+        /**
+         * <p>Label configuration for each node in the segment</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "labels", nulls = Nulls.SKIP)
+        public _FinalStage labels(Optional<List<ProgressBarSegmentLabel>> labels) {
+            this.labels = labels;
+            return this;
+        }
+
+        /**
+         * <p>Separator style to render between segment nodes</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage separator(ProgressBarSegmentSeparator separator) {
+            this.separator = Optional.ofNullable(separator);
+            return this;
+        }
+
+        /**
+         * <p>Separator style to render between segment nodes</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "separator", nulls = Nulls.SKIP)
+        public _FinalStage separator(Optional<ProgressBarSegmentSeparator> separator) {
+            this.separator = separator;
             return this;
         }
 
@@ -155,7 +288,7 @@ public final class ProgressBarSegment {
 
         @java.lang.Override
         public ProgressBarSegment build() {
-            return new ProgressBarSegment(icon, position, additionalProperties);
+            return new ProgressBarSegment(icon, position, separator, labels, selection, additionalProperties);
         }
 
         @java.lang.Override

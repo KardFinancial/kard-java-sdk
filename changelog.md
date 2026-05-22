@@ -1,3 +1,11 @@
+## 6.1.0 - 2026-05-22
+### Added
+* **`ProgressBarSegment.getSeparator()`** — new optional accessor returning `Optional<ProgressBarSegmentSeparator>` that specifies the separator style to render between segment nodes.
+* **`ProgressBarSegment.getLabels()`** — new optional accessor returning `Optional<List<ProgressBarSegmentLabel>>` for per-node label configuration on a progress bar segment.
+* **`ProgressBarSegment.getSelection()`** — new optional accessor returning `Optional<ProgressBarSegmentSelection>` indicating which segment nodes the UI should render as selected based on current progress.
+* **`ProgressBarSegmentLabel`** — new type with required `getTitle()` and `getDescription()` fields representing label text for a segment node.
+* **`ProgressBarSegmentSeparator`** and **`ProgressBarSegmentSelection`** — new enum-like types supporting `LINE` and `CURRENT`/`CURRENT_AND_BELOW` values respectively, used by the new `ProgressBarSegment` fields.
+
 ## 6.0.0 - 2026-05-21
 ### Breaking Changes
 * **`ContentStrategyFilter`** — class removed and replaced by `ContentStrategySort`; update all references from `ContentStrategyFilter` to `ContentStrategySort`.
