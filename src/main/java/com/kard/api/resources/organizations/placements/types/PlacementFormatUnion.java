@@ -34,12 +34,20 @@ public final class PlacementFormatUnion {
         return new PlacementFormatUnion(new PlacementPushNotificationValue(value));
     }
 
+    public static PlacementFormatUnion placementBatchActivation(BatchActivationPlacementData value) {
+        return new PlacementFormatUnion(new PlacementBatchActivationValue(value));
+    }
+
     public boolean isPlacementMainPage() {
         return value instanceof PlacementMainPageValue;
     }
 
     public boolean isPlacementPushNotification() {
         return value instanceof PlacementPushNotificationValue;
+    }
+
+    public boolean isPlacementBatchActivation() {
+        return value instanceof PlacementBatchActivationValue;
     }
 
     public boolean _isUnknown() {
@@ -56,6 +64,13 @@ public final class PlacementFormatUnion {
     public Optional<PushNotificationPlacementData> getPlacementPushNotification() {
         if (isPlacementPushNotification()) {
             return Optional.of(((PlacementPushNotificationValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<BatchActivationPlacementData> getPlacementBatchActivation() {
+        if (isPlacementBatchActivation()) {
+            return Optional.of(((PlacementBatchActivationValue) value).value);
         }
         return Optional.empty();
     }
@@ -93,13 +108,16 @@ public final class PlacementFormatUnion {
 
         T visitPlacementPushNotification(PushNotificationPlacementData placementPushNotification);
 
+        T visitPlacementBatchActivation(BatchActivationPlacementData placementBatchActivation);
+
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
     @JsonSubTypes({
         @JsonSubTypes.Type(PlacementMainPageValue.class),
-        @JsonSubTypes.Type(PlacementPushNotificationValue.class)
+        @JsonSubTypes.Type(PlacementPushNotificationValue.class),
+        @JsonSubTypes.Type(PlacementBatchActivationValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -172,6 +190,46 @@ public final class PlacementFormatUnion {
         }
 
         private boolean equalTo(PlacementPushNotificationValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "PlacementFormatUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("placementBatchActivation")
+    @JsonIgnoreProperties("type")
+    private static final class PlacementBatchActivationValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private BatchActivationPlacementData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PlacementBatchActivationValue() {}
+
+        private PlacementBatchActivationValue(BatchActivationPlacementData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPlacementBatchActivation(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PlacementBatchActivationValue && equalTo((PlacementBatchActivationValue) other);
+        }
+
+        private boolean equalTo(PlacementBatchActivationValue other) {
             return value.equals(other.value);
         }
 

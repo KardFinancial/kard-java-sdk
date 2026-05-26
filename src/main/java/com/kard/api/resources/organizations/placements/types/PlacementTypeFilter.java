@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class PlacementTypeFilter {
+    public static final PlacementTypeFilter PLACEMENT_BATCH_ACTIVATION =
+            new PlacementTypeFilter(Value.PLACEMENT_BATCH_ACTIVATION, "placementBatchActivation");
+
     public static final PlacementTypeFilter PLACEMENT_MAIN_PAGE =
             new PlacementTypeFilter(Value.PLACEMENT_MAIN_PAGE, "placementMainPage");
 
@@ -45,6 +48,8 @@ public final class PlacementTypeFilter {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case PLACEMENT_BATCH_ACTIVATION:
+                return visitor.visitPlacementBatchActivation();
             case PLACEMENT_MAIN_PAGE:
                 return visitor.visitPlacementMainPage();
             case PLACEMENT_PUSH_NOTIFICATION:
@@ -58,6 +63,8 @@ public final class PlacementTypeFilter {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static PlacementTypeFilter valueOf(String value) {
         switch (value) {
+            case "placementBatchActivation":
+                return PLACEMENT_BATCH_ACTIVATION;
             case "placementMainPage":
                 return PLACEMENT_MAIN_PAGE;
             case "placementPushNotification":
@@ -72,6 +79,8 @@ public final class PlacementTypeFilter {
 
         PLACEMENT_PUSH_NOTIFICATION,
 
+        PLACEMENT_BATCH_ACTIVATION,
+
         UNKNOWN
     }
 
@@ -79,6 +88,8 @@ public final class PlacementTypeFilter {
         T visitPlacementMainPage();
 
         T visitPlacementPushNotification();
+
+        T visitPlacementBatchActivation();
 
         T visitUnknown(String unknownType);
     }

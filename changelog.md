@@ -1,3 +1,11 @@
+## 6.2.0 - 2026-05-26
+### Added
+* **`BatchActivationPlacementData`** and **`BatchActivationPlacementAttributes`** — new types representing a batch activation placement, exposing name, organization ID, refresh interval, and slots via staged builders and accessors.
+* **`BatchActivationSlot`**, **`CreateBatchActivationSlot`**, and **`UpdateBatchActivationSlot`** — new types describing individual slots within a batch activation placement, carrying `contentStrategyId`, `alias`, and an optional `slotId` for update identity.
+* **`CreateBatchActivationPlacementData`** and **`UpdateBatchActivationPlacementData`** — new request wrapper types for creating and updating batch activation placements, bundling their respective attributes types.
+* **`PlacementFormatUnion`**, **`CreatePlacementDataUnion`**, and **`UpdatePlacementDataUnion`** — each extended with a `placementBatchActivation()` factory method, `isPlacementBatchActivation()` predicate, `getPlacementBatchActivation()` accessor, and `visitPlacementBatchActivation()` visitor arm.
+* **`PlacementTypeFilter.PLACEMENT_BATCH_ACTIVATION`** — new filter constant, `Value` enum entry, and `Visitor.visitPlacementBatchActivation()` method for filtering and visiting batch activation placements.
+
 ## 6.1.0 - 2026-05-22
 ### Added
 * **`ProgressBarSegment.getSeparator()`** — new optional accessor returning `Optional<ProgressBarSegmentSeparator>` that specifies the separator style to render between segment nodes.
