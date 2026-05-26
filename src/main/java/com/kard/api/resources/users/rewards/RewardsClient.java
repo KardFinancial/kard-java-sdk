@@ -5,9 +5,11 @@ package com.kard.api.resources.users.rewards;
 
 import com.kard.api.core.ClientOptions;
 import com.kard.api.core.RequestOptions;
+import com.kard.api.resources.users.rewards.requests.GetBatchesByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetLocationsByUserRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByUserRequest;
+import com.kard.api.resources.users.rewards.types.BatchesResponseObject;
 import com.kard.api.resources.users.rewards.types.LocationsResponseObject;
 import com.kard.api.resources.users.rewards.types.OffersResponseObject;
 
@@ -119,6 +121,81 @@ public class RewardsClient {
             RequestOptions requestOptions) {
         return this.rawClient
                 .placementOffers(organizationId, userId, placementId, request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public BatchesResponseObject placementBatches(String organizationId, String userId, String placementId) {
+        return this.rawClient
+                .placementBatches(organizationId, userId, placementId)
+                .body();
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public BatchesResponseObject placementBatches(
+            String organizationId, String userId, String placementId, RequestOptions requestOptions) {
+        return this.rawClient
+                .placementBatches(organizationId, userId, placementId, requestOptions)
+                .body();
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public BatchesResponseObject placementBatches(
+            String organizationId, String userId, String placementId, GetBatchesByPlacementRequest request) {
+        return this.rawClient
+                .placementBatches(organizationId, userId, placementId, request)
+                .body();
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public BatchesResponseObject placementBatches(
+            String organizationId,
+            String userId,
+            String placementId,
+            GetBatchesByPlacementRequest request,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .placementBatches(organizationId, userId, placementId, request, requestOptions)
                 .body();
     }
 

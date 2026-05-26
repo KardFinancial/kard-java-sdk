@@ -16,9 +16,11 @@ import com.kard.api.resources.commons.errors.InternalServerError;
 import com.kard.api.resources.commons.errors.InvalidRequest;
 import com.kard.api.resources.commons.errors.UnauthorizedError;
 import com.kard.api.resources.commons.types.ErrorResponse;
+import com.kard.api.resources.users.rewards.requests.GetBatchesByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetLocationsByUserRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByUserRequest;
+import com.kard.api.resources.users.rewards.types.BatchesResponseObject;
 import com.kard.api.resources.users.rewards.types.LocationsResponseObject;
 import com.kard.api.resources.users.rewards.types.OffersResponseObject;
 import java.io.IOException;
@@ -316,6 +318,166 @@ public class AsyncRawRewardsClient {
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OffersResponseObject.class),
+                                response));
+                        return;
+                    }
+                    try {
+                        switch (response.code()) {
+                            case 400:
+                                future.completeExceptionally(new InvalidRequest(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                            case 401:
+                                future.completeExceptionally(new UnauthorizedError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                            case 404:
+                                future.completeExceptionally(new DoesNotExistError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new KardApiApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new KardApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new KardApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(
+            String organizationId, String userId, String placementId) {
+        return placementBatches(
+                organizationId,
+                userId,
+                placementId,
+                GetBatchesByPlacementRequest.builder().build());
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(
+            String organizationId, String userId, String placementId, RequestOptions requestOptions) {
+        return placementBatches(
+                organizationId,
+                userId,
+                placementId,
+                GetBatchesByPlacementRequest.builder().build(),
+                requestOptions);
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(
+            String organizationId, String userId, String placementId, GetBatchesByPlacementRequest request) {
+        return placementBatches(organizationId, userId, placementId, request, null);
+    }
+
+    /**
+     * Retrieve batches for a batch-activation placement. Returns each slot in slot
+     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
+     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
+     * per-slot content-strategy filter as Get Offers By Placement, independently
+     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
+     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
+     * slot is still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(
+            String organizationId,
+            String userId,
+            String placementId,
+            GetBatchesByPlacementRequest request,
+            RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/issuers")
+                .addPathSegment(organizationId)
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .addPathSegments("placements")
+                .addPathSegment(placementId)
+                .addPathSegments("batches");
+        if (request.getSupportedComponents().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "supportedComponents",
+                    request.getSupportedComponents().get(),
+                    true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new KardApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BatchesResponseObject.class),
                                 response));
                         return;
                     }

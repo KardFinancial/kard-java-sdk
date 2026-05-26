@@ -1,3 +1,11 @@
+## 6.3.0 - 2026-05-26
+### Added
+* **`RewardsClient.placementBatches()`** and **`AsyncRewardsClient.placementBatches()`** — new methods to retrieve batch-activation placement slots in slot order, including offer set, alias, and freshness fields.
+* **`RawRewardsClient.placementBatches()`** and **`AsyncRawRewardsClient.placementBatches()`** — raw HTTP response variants of the batch retrieval methods, returning `KardApiHttpResponse<BatchesResponseObject>`.
+* **`GetBatchesByPlacementRequest`** — new request type with an optional `supportedComponents` field (`List<ComponentType>`) to filter UI component types in the batch response.
+* **`BatchesResponseObject`** — new response wrapper type containing a `List<BatchSlotData>` returned by batch activation reward queries.
+* **`BatchSlotData`** — new type representing a single placement slot, exposing `slotId`, `alias`, `isActive`, `lastActivatedAt`, `expiresAt`, and `offers` via a staged builder.
+
 ## 6.2.0 - 2026-05-26
 ### Added
 * **`BatchActivationPlacementData`** and **`BatchActivationPlacementAttributes`** — new types representing a batch activation placement, exposing name, organization ID, refresh interval, and slots via staged builders and accessors.
