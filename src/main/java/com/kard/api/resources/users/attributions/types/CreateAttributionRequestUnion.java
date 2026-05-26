@@ -34,12 +34,20 @@ public final class CreateAttributionRequestUnion {
         return new CreateAttributionRequestUnion(new NotificationAttributionValue(value));
     }
 
+    public static CreateAttributionRequestUnion placementSlotAttribution(PlacementSlotAttributionRequest value) {
+        return new CreateAttributionRequestUnion(new PlacementSlotAttributionValue(value));
+    }
+
     public boolean isOfferAttribution() {
         return value instanceof OfferAttributionValue;
     }
 
     public boolean isNotificationAttribution() {
         return value instanceof NotificationAttributionValue;
+    }
+
+    public boolean isPlacementSlotAttribution() {
+        return value instanceof PlacementSlotAttributionValue;
     }
 
     public boolean _isUnknown() {
@@ -56,6 +64,13 @@ public final class CreateAttributionRequestUnion {
     public Optional<NotificationAttributionRequest> getNotificationAttribution() {
         if (isNotificationAttribution()) {
             return Optional.of(((NotificationAttributionValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<PlacementSlotAttributionRequest> getPlacementSlotAttribution() {
+        if (isPlacementSlotAttribution()) {
+            return Optional.of(((PlacementSlotAttributionValue) value).value);
         }
         return Optional.empty();
     }
@@ -94,13 +109,16 @@ public final class CreateAttributionRequestUnion {
 
         T visitNotificationAttribution(NotificationAttributionRequest notificationAttribution);
 
+        T visitPlacementSlotAttribution(PlacementSlotAttributionRequest placementSlotAttribution);
+
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
     @JsonSubTypes({
         @JsonSubTypes.Type(OfferAttributionValue.class),
-        @JsonSubTypes.Type(NotificationAttributionValue.class)
+        @JsonSubTypes.Type(NotificationAttributionValue.class),
+        @JsonSubTypes.Type(PlacementSlotAttributionValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -173,6 +191,46 @@ public final class CreateAttributionRequestUnion {
         }
 
         private boolean equalTo(NotificationAttributionValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateAttributionRequestUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("placementSlotAttribution")
+    @JsonIgnoreProperties("type")
+    private static final class PlacementSlotAttributionValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private PlacementSlotAttributionRequest value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PlacementSlotAttributionValue() {}
+
+        private PlacementSlotAttributionValue(PlacementSlotAttributionRequest value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPlacementSlotAttribution(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PlacementSlotAttributionValue && equalTo((PlacementSlotAttributionValue) other);
+        }
+
+        private boolean equalTo(PlacementSlotAttributionValue other) {
             return value.equals(other.value);
         }
 

@@ -1,3 +1,11 @@
+## 6.4.0 - 2026-05-26
+### Added
+* **`AttributionsClient.activatePlacementSlot()`** and **`AsyncAttributionsClient.activatePlacementSlot()`** — new methods to record a user's activation of a batch-activation placement slot, writing slot-level and per-offer ACTIVATE events.
+* **`RawAttributionsClient.activatePlacementSlot()`** and **`AsyncRawAttributionsClient.activatePlacementSlot()`** — raw HTTP response variants of the slot activation methods, returning `KardApiHttpResponse<ActivatePlacementSlotResponse>`.
+* **`ActivatePlacementSlotResponse`**, **`ActivatePlacementSlotResponseData`**, and **`ActivatePlacementSlotResponseAttributes`** — new response types carrying the slot-level event id, type, and resolved `offerIds` returned by the activation endpoint.
+* **`PlacementSlotAttributionRequest`**, **`PlacementSlotAttributionAttributes`**, and **`PlacementSlotMedium`** — new request types and medium enum for submitting placement slot attribution events.
+* **`CreateAttributionRequestUnion.placementSlotAttribution()`** — new factory method, predicate, accessor, and visitor arm for the `placementSlotAttribution` union variant; **`AttributionState`** gains optional `getPlacementId()` and `getSlotId()` fields.
+
 ## 6.3.0 - 2026-05-26
 ### Added
 * **`RewardsClient.placementBatches()`** and **`AsyncRewardsClient.placementBatches()`** — new methods to retrieve batch-activation placement slots in slot order, including offer set, alias, and freshness fields.

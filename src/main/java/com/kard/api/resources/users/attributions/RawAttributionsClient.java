@@ -19,6 +19,7 @@ import com.kard.api.resources.commons.types.ErrorResponse;
 import com.kard.api.resources.users.attributions.requests.ActivateOfferRequest;
 import com.kard.api.resources.users.attributions.requests.BoostOfferRequest;
 import com.kard.api.resources.users.attributions.types.ActivateOfferResponse;
+import com.kard.api.resources.users.attributions.types.ActivatePlacementSlotResponse;
 import com.kard.api.resources.users.attributions.types.BoostOfferResponse;
 import com.kard.api.resources.users.attributions.types.CreateAttributionRequestObject;
 import com.kard.api.resources.users.attributions.types.CreateAttributionResponse;
@@ -299,6 +300,88 @@ public class RawAttributionsClient {
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BoostOfferResponse.class), response);
+            }
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new InvalidRequest(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 401:
+                        throw new UnauthorizedError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 500:
+                        throw new InternalServerError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new KardApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new KardApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Record when a user activates a batch-activation placement slot. Writes a slot-level
+     * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
+     * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
+     * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
+     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
+     * round-trip.
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
+     */
+    public KardApiHttpResponse<ActivatePlacementSlotResponse> activatePlacementSlot(
+            String organizationId, String userId, String placementId, String slotId) {
+        return activatePlacementSlot(organizationId, userId, placementId, slotId, null);
+    }
+
+    /**
+     * Record when a user activates a batch-activation placement slot. Writes a slot-level
+     * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
+     * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
+     * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
+     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
+     * round-trip.
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
+     */
+    public KardApiHttpResponse<ActivatePlacementSlotResponse> activatePlacementSlot(
+            String organizationId, String userId, String placementId, String slotId, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/issuers")
+                .addPathSegment(organizationId)
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .addPathSegments("placements")
+                .addPathSegment(placementId)
+                .addPathSegments("slot")
+                .addPathSegment(slotId)
+                .addPathSegments("activate");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new KardApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ActivatePlacementSlotResponse.class),
+                        response);
             }
             try {
                 switch (response.code()) {

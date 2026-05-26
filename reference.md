@@ -2851,6 +2851,91 @@ client.users().attributions().boost(
 </dl>
 </details>
 
+<details><summary><code>client.users.attributions.activatePlacementSlot(organizationId, userId, placementId, slotId) -> ActivatePlacementSlotResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Record when a user activates a batch-activation placement slot. Writes a slot-level
+`placementSlotAttribution` ACTIVATE event and fans out a per-offer
+`offerAttribution` ACTIVATE event for every offer resolved by the slot's content
+strategy. The slot-level event id and the resolved `offerIds` are returned so the
+partner can render the batch immediately without an extra `getBatchesByPlacement`
+round-trip.
+
+<b>Required scopes:</b> `attributions:write`
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().attributions().activatePlacementSlot("organization-123", "user-123", "018f8d6b-1abc-7def-9012-345678901234", "slot-a");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**placementId:** `String` — Unique identifier of the placement (UUID v7)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slotId:** `String` — Stable identifier for the slot within the placement
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## WebView
 <details><summary><code>client.users.auth.getWebViewToken(organizationId, userId) -> WebViewTokenResponse</code></summary>
 <dl>

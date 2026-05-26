@@ -8,6 +8,7 @@ import com.kard.api.core.RequestOptions;
 import com.kard.api.resources.users.attributions.requests.ActivateOfferRequest;
 import com.kard.api.resources.users.attributions.requests.BoostOfferRequest;
 import com.kard.api.resources.users.attributions.types.ActivateOfferResponse;
+import com.kard.api.resources.users.attributions.types.ActivatePlacementSlotResponse;
 import com.kard.api.resources.users.attributions.types.BoostOfferResponse;
 import com.kard.api.resources.users.attributions.types.CreateAttributionRequestObject;
 import com.kard.api.resources.users.attributions.types.CreateAttributionResponse;
@@ -134,6 +135,38 @@ public class AttributionsClient {
             RequestOptions requestOptions) {
         return this.rawClient
                 .boost(organizationId, userId, offerId, request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Record when a user activates a batch-activation placement slot. Writes a slot-level
+     * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
+     * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
+     * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
+     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
+     * round-trip.
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
+     */
+    public ActivatePlacementSlotResponse activatePlacementSlot(
+            String organizationId, String userId, String placementId, String slotId) {
+        return this.rawClient
+                .activatePlacementSlot(organizationId, userId, placementId, slotId)
+                .body();
+    }
+
+    /**
+     * Record when a user activates a batch-activation placement slot. Writes a slot-level
+     * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
+     * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
+     * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
+     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
+     * round-trip.
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
+     */
+    public ActivatePlacementSlotResponse activatePlacementSlot(
+            String organizationId, String userId, String placementId, String slotId, RequestOptions requestOptions) {
+        return this.rawClient
+                .activatePlacementSlot(organizationId, userId, placementId, slotId, requestOptions)
                 .body();
     }
 }

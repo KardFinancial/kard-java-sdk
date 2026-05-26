@@ -25,14 +25,22 @@ public final class AttributionState {
 
     private final Optional<List<AttributionFilter>> filters;
 
+    private final Optional<String> placementId;
+
+    private final Optional<String> slotId;
+
     private final Map<String, Object> additionalProperties;
 
     private AttributionState(
             Optional<Integer> rank,
             Optional<List<AttributionFilter>> filters,
+            Optional<String> placementId,
+            Optional<String> slotId,
             Map<String, Object> additionalProperties) {
         this.rank = rank;
         this.filters = filters;
+        this.placementId = placementId;
+        this.slotId = slotId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -52,6 +60,22 @@ public final class AttributionState {
         return filters;
     }
 
+    /**
+     * @return Unique identifier of the placement the attribution event originated from
+     */
+    @JsonProperty("placementId")
+    public Optional<String> getPlacementId() {
+        return placementId;
+    }
+
+    /**
+     * @return Stable identifier for the slot within the placement
+     */
+    @JsonProperty("slotId")
+    public Optional<String> getSlotId() {
+        return slotId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -64,12 +88,15 @@ public final class AttributionState {
     }
 
     private boolean equalTo(AttributionState other) {
-        return rank.equals(other.rank) && filters.equals(other.filters);
+        return rank.equals(other.rank)
+                && filters.equals(other.filters)
+                && placementId.equals(other.placementId)
+                && slotId.equals(other.slotId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.rank, this.filters);
+        return Objects.hash(this.rank, this.filters, this.placementId, this.slotId);
     }
 
     @java.lang.Override
@@ -87,6 +114,10 @@ public final class AttributionState {
 
         private Optional<List<AttributionFilter>> filters = Optional.empty();
 
+        private Optional<String> placementId = Optional.empty();
+
+        private Optional<String> slotId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -95,6 +126,8 @@ public final class AttributionState {
         public Builder from(AttributionState other) {
             rank(other.getRank());
             filters(other.getFilters());
+            placementId(other.getPlacementId());
+            slotId(other.getSlotId());
             return this;
         }
 
@@ -126,8 +159,36 @@ public final class AttributionState {
             return this;
         }
 
+        /**
+         * <p>Unique identifier of the placement the attribution event originated from</p>
+         */
+        @JsonSetter(value = "placementId", nulls = Nulls.SKIP)
+        public Builder placementId(Optional<String> placementId) {
+            this.placementId = placementId;
+            return this;
+        }
+
+        public Builder placementId(String placementId) {
+            this.placementId = Optional.ofNullable(placementId);
+            return this;
+        }
+
+        /**
+         * <p>Stable identifier for the slot within the placement</p>
+         */
+        @JsonSetter(value = "slotId", nulls = Nulls.SKIP)
+        public Builder slotId(Optional<String> slotId) {
+            this.slotId = slotId;
+            return this;
+        }
+
+        public Builder slotId(String slotId) {
+            this.slotId = Optional.ofNullable(slotId);
+            return this;
+        }
+
         public AttributionState build() {
-            return new AttributionState(rank, filters, additionalProperties);
+            return new AttributionState(rank, filters, placementId, slotId, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

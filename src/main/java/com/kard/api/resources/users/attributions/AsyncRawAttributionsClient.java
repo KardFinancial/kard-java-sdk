@@ -19,6 +19,7 @@ import com.kard.api.resources.commons.types.ErrorResponse;
 import com.kard.api.resources.users.attributions.requests.ActivateOfferRequest;
 import com.kard.api.resources.users.attributions.requests.BoostOfferRequest;
 import com.kard.api.resources.users.attributions.types.ActivateOfferResponse;
+import com.kard.api.resources.users.attributions.types.ActivatePlacementSlotResponse;
 import com.kard.api.resources.users.attributions.types.BoostOfferResponse;
 import com.kard.api.resources.users.attributions.types.CreateAttributionRequestObject;
 import com.kard.api.resources.users.attributions.types.CreateAttributionResponse;
@@ -348,6 +349,108 @@ public class AsyncRawAttributionsClient {
                     if (response.isSuccessful()) {
                         future.complete(new KardApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BoostOfferResponse.class),
+                                response));
+                        return;
+                    }
+                    try {
+                        switch (response.code()) {
+                            case 400:
+                                future.completeExceptionally(new InvalidRequest(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                            case 401:
+                                future.completeExceptionally(new UnauthorizedError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class),
+                                        response));
+                                return;
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new KardApiApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new KardApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new KardApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Record when a user activates a batch-activation placement slot. Writes a slot-level
+     * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
+     * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
+     * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
+     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
+     * round-trip.
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
+     */
+    public CompletableFuture<KardApiHttpResponse<ActivatePlacementSlotResponse>> activatePlacementSlot(
+            String organizationId, String userId, String placementId, String slotId) {
+        return activatePlacementSlot(organizationId, userId, placementId, slotId, null);
+    }
+
+    /**
+     * Record when a user activates a batch-activation placement slot. Writes a slot-level
+     * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
+     * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
+     * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
+     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
+     * round-trip.
+     * <p><b>Required scopes:</b> <code>attributions:write</code></p>
+     */
+    public CompletableFuture<KardApiHttpResponse<ActivatePlacementSlotResponse>> activatePlacementSlot(
+            String organizationId, String userId, String placementId, String slotId, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/issuers")
+                .addPathSegment(organizationId)
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .addPathSegments("placements")
+                .addPathSegment(placementId)
+                .addPathSegments("slot")
+                .addPathSegment(slotId)
+                .addPathSegments("activate");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<KardApiHttpResponse<ActivatePlacementSlotResponse>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new KardApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBodyString, ActivatePlacementSlotResponse.class),
                                 response));
                         return;
                     }
