@@ -42,8 +42,7 @@ public class RawUploadsClient {
 
     /**
      * <b>Deprecated.</b> This endpoint is deprecated in favor of the <a href="/2024-10-01/api/transactions/create-bulk-transactions-upload-url">Create Bulk Transactions Upload URL</a> endpoint. New integrations should use the bulk flow outlined in the <a href="/2024-10-01/api/integration-guides/historical-transaction-uploads">Historical Transaction Uploads</a> integration guide.
-     * <p>Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/api/uploads/create-upload-part">Add Upload
-     * Part</a> endpoint, historical transactions can be sent in batches for further processing.
+     * <p>Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/2024-10-01/api/transactions/uploads/create-part">Add Upload Part</a> endpoint, historical transactions can be sent in batches for further processing.
      * <b>Required scopes:</b> <code>transaction:write</code></p>
      */
     public KardApiHttpResponse<CreateUploadResponseObject> create(
@@ -53,8 +52,7 @@ public class RawUploadsClient {
 
     /**
      * <b>Deprecated.</b> This endpoint is deprecated in favor of the <a href="/2024-10-01/api/transactions/create-bulk-transactions-upload-url">Create Bulk Transactions Upload URL</a> endpoint. New integrations should use the bulk flow outlined in the <a href="/2024-10-01/api/integration-guides/historical-transaction-uploads">Historical Transaction Uploads</a> integration guide.
-     * <p>Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/api/uploads/create-upload-part">Add Upload
-     * Part</a> endpoint, historical transactions can be sent in batches for further processing.
+     * <p>Call this endpoint to create an upload session and retrieve an upload ID. Using the upload ID in the <a href="/2024-10-01/api/transactions/uploads/create-part">Add Upload Part</a> endpoint, historical transactions can be sent in batches for further processing.
      * <b>Required scopes:</b> <code>transaction:write</code></p>
      */
     public KardApiHttpResponse<CreateUploadResponseObject> create(
@@ -122,7 +120,7 @@ public class RawUploadsClient {
 
     /**
      * <b>Deprecated.</b> This endpoint is deprecated in favor of the <a href="/2024-10-01/api/transactions/create-bulk-transactions-upload-url">Create Bulk Transactions Upload URL</a> endpoint. New integrations should use the bulk flow outlined in the <a href="/2024-10-01/api/integration-guides/historical-transaction-uploads">Historical Transaction Uploads</a> integration guide.
-     * <p>Call this endpoint using the upload ID provided in the <a href="/api/uploads/create-upload">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
+     * <p>Call this endpoint using the upload ID provided in the <a href="/2024-10-01/api/transactions/uploads/create">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
      * <b>Required scopes:</b> <code>transaction:write</code>
      * <b>Note:</b> <code>Maximum of 500 transactions can be uploaded per request</code>.</p>
      */
@@ -133,7 +131,7 @@ public class RawUploadsClient {
 
     /**
      * <b>Deprecated.</b> This endpoint is deprecated in favor of the <a href="/2024-10-01/api/transactions/create-bulk-transactions-upload-url">Create Bulk Transactions Upload URL</a> endpoint. New integrations should use the bulk flow outlined in the <a href="/2024-10-01/api/integration-guides/historical-transaction-uploads">Historical Transaction Uploads</a> integration guide.
-     * <p>Call this endpoint using the upload ID provided in the <a href="/api/uploads/create-upload">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
+     * <p>Call this endpoint using the upload ID provided in the <a href="/2024-10-01/api/transactions/uploads/create">Create Upload</a> endpoint to add parts to your upload. Currently, this endpoint supports adding historical transactions.
      * <b>Required scopes:</b> <code>transaction:write</code>
      * <b>Note:</b> <code>Maximum of 500 transactions can be uploaded per request</code>.</p>
      */

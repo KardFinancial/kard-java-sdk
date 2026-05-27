@@ -1,3 +1,15 @@
+## 6.4.1 - 2026-05-27
+* chore: update Javadoc links in uploads clients to versioned API paths
+* Correct stale documentation hyperlinks across all four uploads client
+* classes (UploadsClient, AsyncUploadsClient, RawUploadsClient,
+* AsyncRawUploadsClient). The old unversioned paths have been replaced
+* with their canonical versioned equivalents under /2024-10-01/.
+* Key changes:
+* Replace `/api/uploads/create-upload-part` with `/2024-10-01/api/transactions/uploads/create-part` in `create()` Javadoc
+* Replace `/api/uploads/create-upload` with `/2024-10-01/api/transactions/uploads/create` in `addPart()` Javadoc
+* Fix line-break in "Add Upload Part" anchor text so it renders as a single inline link
+* 🌿 Generated with Fern
+
 ## 6.4.0 - 2026-05-26
 ### Added
 * **`AttributionsClient.activatePlacementSlot()`** and **`AsyncAttributionsClient.activatePlacementSlot()`** — new methods to record a user's activation of a batch-activation placement slot, writing slot-level and per-offer ACTIVATE events.
