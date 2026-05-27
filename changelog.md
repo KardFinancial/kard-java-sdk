@@ -1,3 +1,8 @@
+## 7.0.0 - 2026-05-27
+### Breaking Changes
+* **`EarnedRewardRelationships` builder** — a new required `offer` (`RelationshipSingle`) step has been inserted into the staged builder between `user()` and `transaction()`. Existing call chains of the form `.user(…).transaction(…)` will not compile; migrate by inserting `.offer(…)` between the two calls: `.user(…).offer(…).transaction(…)`.
+* **`EarnedRewardRelationships.UserStage.user()`** — return type changed from `TransactionStage` to the new `OfferStage` interface; any code that stores or casts the return value of `user()` as `TransactionStage` must be updated to `OfferStage`.
+
 ## 6.4.1 - 2026-05-27
 * chore: update Javadoc links in uploads clients to versioned API paths
 * Correct stale documentation hyperlinks across all four uploads client

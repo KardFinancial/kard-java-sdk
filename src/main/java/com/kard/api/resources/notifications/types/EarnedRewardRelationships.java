@@ -22,13 +22,19 @@ import org.jetbrains.annotations.NotNull;
 public final class EarnedRewardRelationships {
     private final RelationshipSingle user;
 
+    private final RelationshipSingle offer;
+
     private final RelationshipSingle transaction;
 
     private final Map<String, Object> additionalProperties;
 
     private EarnedRewardRelationships(
-            RelationshipSingle user, RelationshipSingle transaction, Map<String, Object> additionalProperties) {
+            RelationshipSingle user,
+            RelationshipSingle offer,
+            RelationshipSingle transaction,
+            Map<String, Object> additionalProperties) {
         this.user = user;
+        this.offer = offer;
         this.transaction = transaction;
         this.additionalProperties = additionalProperties;
     }
@@ -36,6 +42,11 @@ public final class EarnedRewardRelationships {
     @JsonProperty("user")
     public RelationshipSingle getUser() {
         return user;
+    }
+
+    @JsonProperty("offer")
+    public RelationshipSingle getOffer() {
+        return offer;
     }
 
     @JsonProperty("transaction")
@@ -55,12 +66,12 @@ public final class EarnedRewardRelationships {
     }
 
     private boolean equalTo(EarnedRewardRelationships other) {
-        return user.equals(other.user) && transaction.equals(other.transaction);
+        return user.equals(other.user) && offer.equals(other.offer) && transaction.equals(other.transaction);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.user, this.transaction);
+        return Objects.hash(this.user, this.offer, this.transaction);
     }
 
     @java.lang.Override
@@ -73,9 +84,13 @@ public final class EarnedRewardRelationships {
     }
 
     public interface UserStage {
-        TransactionStage user(@NotNull RelationshipSingle user);
+        OfferStage user(@NotNull RelationshipSingle user);
 
         Builder from(EarnedRewardRelationships other);
+    }
+
+    public interface OfferStage {
+        TransactionStage offer(@NotNull RelationshipSingle offer);
     }
 
     public interface TransactionStage {
@@ -91,8 +106,10 @@ public final class EarnedRewardRelationships {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UserStage, TransactionStage, _FinalStage {
+    public static final class Builder implements UserStage, OfferStage, TransactionStage, _FinalStage {
         private RelationshipSingle user;
+
+        private RelationshipSingle offer;
 
         private RelationshipSingle transaction;
 
@@ -104,14 +121,22 @@ public final class EarnedRewardRelationships {
         @java.lang.Override
         public Builder from(EarnedRewardRelationships other) {
             user(other.getUser());
+            offer(other.getOffer());
             transaction(other.getTransaction());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user")
-        public TransactionStage user(@NotNull RelationshipSingle user) {
+        public OfferStage user(@NotNull RelationshipSingle user) {
             this.user = Objects.requireNonNull(user, "user must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("offer")
+        public TransactionStage offer(@NotNull RelationshipSingle offer) {
+            this.offer = Objects.requireNonNull(offer, "offer must not be null");
             return this;
         }
 
@@ -124,7 +149,7 @@ public final class EarnedRewardRelationships {
 
         @java.lang.Override
         public EarnedRewardRelationships build() {
-            return new EarnedRewardRelationships(user, transaction, additionalProperties);
+            return new EarnedRewardRelationships(user, offer, transaction, additionalProperties);
         }
 
         @java.lang.Override
