@@ -28,7 +28,7 @@ public final class GetEarnedRewardsMeta {
     }
 
     /**
-     * @return Lifetime rewards earned by the user across all matched transactions in cents.
+     * @return Lifetime rewards earned by the user across matched transactions in cents. By default all matched transactions are included regardless of payment status; pass <code>filter[paidInFullOnly]=true</code> to restrict the total to transactions paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      */
     @JsonProperty("lifetimeRewardsInCents")
     public int getLifetimeRewardsInCents() {
@@ -66,7 +66,7 @@ public final class GetEarnedRewardsMeta {
 
     public interface LifetimeRewardsInCentsStage {
         /**
-         * <p>Lifetime rewards earned by the user across all matched transactions in cents.</p>
+         * <p>Lifetime rewards earned by the user across matched transactions in cents. By default all matched transactions are included regardless of payment status; pass <code>filter[paidInFullOnly]=true</code> to restrict the total to transactions paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).</p>
          */
         _FinalStage lifetimeRewardsInCents(int lifetimeRewardsInCents);
 
@@ -97,8 +97,8 @@ public final class GetEarnedRewardsMeta {
         }
 
         /**
-         * <p>Lifetime rewards earned by the user across all matched transactions in cents.</p>
-         * <p>Lifetime rewards earned by the user across all matched transactions in cents.</p>
+         * <p>Lifetime rewards earned by the user across matched transactions in cents. By default all matched transactions are included regardless of payment status; pass <code>filter[paidInFullOnly]=true</code> to restrict the total to transactions paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).</p>
+         * <p>Lifetime rewards earned by the user across matched transactions in cents. By default all matched transactions are included regardless of payment status; pass <code>filter[paidInFullOnly]=true</code> to restrict the total to transactions paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

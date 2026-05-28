@@ -138,7 +138,7 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -149,7 +149,7 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -163,7 +163,7 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -175,7 +175,7 @@ public class AsyncTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months.
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>

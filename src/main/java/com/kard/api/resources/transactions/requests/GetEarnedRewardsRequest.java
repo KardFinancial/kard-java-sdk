@@ -29,6 +29,8 @@ public final class GetEarnedRewardsRequest {
 
     private final Optional<RewardedTransactionStatus> filterStatus;
 
+    private final Optional<Boolean> filterPaidInFullOnly;
+
     private final Optional<String> include;
 
     private final Map<String, Object> additionalProperties;
@@ -38,12 +40,14 @@ public final class GetEarnedRewardsRequest {
             Optional<String> pageBefore,
             Optional<Integer> pageSize,
             Optional<RewardedTransactionStatus> filterStatus,
+            Optional<Boolean> filterPaidInFullOnly,
             Optional<String> include,
             Map<String, Object> additionalProperties) {
         this.pageAfter = pageAfter;
         this.pageBefore = pageBefore;
         this.pageSize = pageSize;
         this.filterStatus = filterStatus;
+        this.filterPaidInFullOnly = filterPaidInFullOnly;
         this.include = include;
         this.additionalProperties = additionalProperties;
     }
@@ -81,6 +85,14 @@ public final class GetEarnedRewardsRequest {
     }
 
     /**
+     * @return When <code>true</code>, only return transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>). By default (<code>false</code>), any matched transaction is returned regardless of payment status. This also controls whether unpaid transactions contribute to <code>lifetimeRewardsInCents</code>. Has no effect on <code>APPROVED</code> transactions, which are always returned when requested.
+     */
+    @JsonIgnore
+    public Optional<Boolean> getFilterPaidInFullOnly() {
+        return filterPaidInFullOnly;
+    }
+
+    /**
      * @return Comma-separated list of related resources to include in the response. Supported values are <code>merchant</code> and <code>offer</code>.
      */
     @JsonIgnore
@@ -104,12 +116,19 @@ public final class GetEarnedRewardsRequest {
                 && pageBefore.equals(other.pageBefore)
                 && pageSize.equals(other.pageSize)
                 && filterStatus.equals(other.filterStatus)
+                && filterPaidInFullOnly.equals(other.filterPaidInFullOnly)
                 && include.equals(other.include);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.pageAfter, this.pageBefore, this.pageSize, this.filterStatus, this.include);
+        return Objects.hash(
+                this.pageAfter,
+                this.pageBefore,
+                this.pageSize,
+                this.filterStatus,
+                this.filterPaidInFullOnly,
+                this.include);
     }
 
     @java.lang.Override
@@ -131,6 +150,8 @@ public final class GetEarnedRewardsRequest {
 
         private Optional<RewardedTransactionStatus> filterStatus = Optional.empty();
 
+        private Optional<Boolean> filterPaidInFullOnly = Optional.empty();
+
         private Optional<String> include = Optional.empty();
 
         @JsonAnySetter
@@ -143,6 +164,7 @@ public final class GetEarnedRewardsRequest {
             pageBefore(other.getPageBefore());
             pageSize(other.getPageSize());
             filterStatus(other.getFilterStatus());
+            filterPaidInFullOnly(other.getFilterPaidInFullOnly());
             include(other.getInclude());
             return this;
         }
@@ -204,6 +226,20 @@ public final class GetEarnedRewardsRequest {
         }
 
         /**
+         * <p>When <code>true</code>, only return transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>). By default (<code>false</code>), any matched transaction is returned regardless of payment status. This also controls whether unpaid transactions contribute to <code>lifetimeRewardsInCents</code>. Has no effect on <code>APPROVED</code> transactions, which are always returned when requested.</p>
+         */
+        @JsonSetter(value = "filter[paidInFullOnly]", nulls = Nulls.SKIP)
+        public Builder filterPaidInFullOnly(Optional<Boolean> filterPaidInFullOnly) {
+            this.filterPaidInFullOnly = filterPaidInFullOnly;
+            return this;
+        }
+
+        public Builder filterPaidInFullOnly(Boolean filterPaidInFullOnly) {
+            this.filterPaidInFullOnly = Optional.ofNullable(filterPaidInFullOnly);
+            return this;
+        }
+
+        /**
          * <p>Comma-separated list of related resources to include in the response. Supported values are <code>merchant</code> and <code>offer</code>.</p>
          */
         @JsonSetter(value = "include", nulls = Nulls.SKIP)
@@ -219,7 +255,7 @@ public final class GetEarnedRewardsRequest {
 
         public GetEarnedRewardsRequest build() {
             return new GetEarnedRewardsRequest(
-                    pageAfter, pageBefore, pageSize, filterStatus, include, additionalProperties);
+                    pageAfter, pageBefore, pageSize, filterStatus, filterPaidInFullOnly, include, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

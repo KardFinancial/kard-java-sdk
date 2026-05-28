@@ -1,3 +1,9 @@
+## 7.1.0 - 2026-05-28
+### Added
+* **`GetEarnedRewardsRequest.filterPaidInFullOnly`** — new optional `Boolean` filter that, when `true`, restricts the rewarded transaction history to transactions paid in full to the issuer (`paidToIssuer` is `PAID_IN_FULL`) and limits which transactions contribute to `lifetimeRewardsInCents` in the response metadata.
+### Changed
+* **`GetEarnedRewardsMeta.getLifetimeRewardsInCents()`** — Javadoc updated to clarify that by default all matched transactions are included regardless of payment status, and that passing `filter[paidInFullOnly]=true` restricts the lifetime total to fully-paid transactions.
+
 ## 7.0.1 - 2026-05-28
 * chore: update child organization name validation docs
 * Refresh Javadoc across all child organization clients and types to
