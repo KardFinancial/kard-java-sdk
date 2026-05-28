@@ -42,7 +42,7 @@ public final class CreateChildAttributes {
     }
 
     /**
-     * @return Name of the child organization (must be uppercase, no spaces)
+     * @return Name of the child organization (at least one letter; letters and spaces only)
      */
     @JsonProperty("name")
     public String getName() {
@@ -96,7 +96,7 @@ public final class CreateChildAttributes {
 
     public interface NameStage {
         /**
-         * <p>Name of the child organization (must be uppercase, no spaces)</p>
+         * <p>Name of the child organization (at least one letter; letters and spaces only)</p>
          */
         _FinalStage name(@NotNull String name);
 
@@ -147,8 +147,8 @@ public final class CreateChildAttributes {
         }
 
         /**
-         * <p>Name of the child organization (must be uppercase, no spaces)</p>
-         * <p>Name of the child organization (must be uppercase, no spaces)</p>
+         * <p>Name of the child organization (at least one letter; letters and spaces only)</p>
+         * <p>Name of the child organization (at least one letter; letters and spaces only)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

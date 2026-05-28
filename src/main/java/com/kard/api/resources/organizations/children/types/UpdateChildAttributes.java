@@ -41,7 +41,7 @@ public final class UpdateChildAttributes {
     }
 
     /**
-     * @return New name for the child organization (must be uppercase, no spaces)
+     * @return New name for the child organization (at least one letter; letters and spaces only)
      */
     @JsonProperty("name")
     public Optional<String> getName() {
@@ -114,7 +114,7 @@ public final class UpdateChildAttributes {
         }
 
         /**
-         * <p>New name for the child organization (must be uppercase, no spaces)</p>
+         * <p>New name for the child organization (at least one letter; letters and spaces only)</p>
          */
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public Builder name(Optional<String> name) {

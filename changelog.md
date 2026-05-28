@@ -1,3 +1,15 @@
+## 7.0.1 - 2026-05-28
+* chore: update child organization name validation docs
+* Refresh Javadoc across all child organization clients and types to
+* reflect the updated name validation rule: names must now contain at
+* least one letter and may contain only letters and spaces, replacing
+* the previous "uppercase, no spaces" constraint.
+* Key changes:
+* Update `create()` Javadoc in `ChildrenClient`, `AsyncChildrenClient`, `RawChildrenClient`, and `AsyncRawChildrenClient`
+* Update `getName()` and `NameStage.name()` Javadoc in `ChildOrganizationAttributes` and `CreateChildAttributes`
+* Update `getName()` and `Builder.name()` Javadoc in `UpdateChildAttributes`
+* 🌿 Generated with Fern
+
 ## 7.0.0 - 2026-05-27
 ### Breaking Changes
 * **`EarnedRewardRelationships` builder** — a new required `offer` (`RelationshipSingle`) step has been inserted into the staged builder between `user()` and `transaction()`. Existing call chains of the form `.user(…).transaction(…)` will not compile; migrate by inserting `.offer(…)` between the two calls: `.user(…).offer(…).transaction(…)`.

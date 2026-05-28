@@ -158,7 +158,7 @@ public class AsyncRawChildrenClient {
     }
 
     /**
-     * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
+     * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must contain at least one letter, and may contain only letters and spaces.
      */
     public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> create(
             String organizationId, CreateChildRequestBody request) {
@@ -166,7 +166,7 @@ public class AsyncRawChildrenClient {
     }
 
     /**
-     * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must be uppercase, and must not contain spaces.
+     * Create a child organization by cloning the parent and overriding specified fields. An 8-digit numeric ID is generated automatically. The name is required, must contain at least one letter, and may contain only letters and spaces.
      */
     public CompletableFuture<KardApiHttpResponse<ChildOrganizationResponse>> create(
             String organizationId, CreateChildRequestBody request, RequestOptions requestOptions) {
