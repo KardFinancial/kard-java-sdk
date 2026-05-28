@@ -1,3 +1,9 @@
+## 7.2.0 - 2026-05-28
+### Added
+* **`BatchSlotData.getComponents()`** — new optional `OfferComponents` field exposing slot-level UI components; carries a `cta` when the slot has no active activation, or a `logoFlare` decoration when it does.
+* **`BatchSlotData.getAssets()`** — new optional `List<Asset>` field exposing slot-level visual assets (currently a single `IMG_VIEW` SVG showing the slot's initials).
+* **`BatchSlotData` builder** — new `components(OfferComponents)`, `components(Optional<OfferComponents>)`, `assets(List<Asset>)`, and `assets(Optional<List<Asset>>)` builder methods on `_FinalStage`.
+
 ## 7.1.0 - 2026-05-28
 ### Added
 * **`GetEarnedRewardsRequest.filterPaidInFullOnly`** — new optional `Boolean` filter that, when `true`, restricts the rewarded transaction history to transactions paid in full to the issuer (`paidToIssuer` is `PAID_IN_FULL`) and limits which transactions contribute to `lifetimeRewardsInCents` in the response metadata.

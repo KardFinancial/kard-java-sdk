@@ -34,6 +34,10 @@ public final class BatchSlotData {
 
     private final Optional<OffsetDateTime> expiresAt;
 
+    private final Optional<OfferComponents> components;
+
+    private final Optional<List<Asset>> assets;
+
     private final List<OfferDataUnion> offers;
 
     private final Map<String, Object> additionalProperties;
@@ -44,6 +48,8 @@ public final class BatchSlotData {
             boolean isActive,
             Optional<OffsetDateTime> lastActivatedAt,
             Optional<OffsetDateTime> expiresAt,
+            Optional<OfferComponents> components,
+            Optional<List<Asset>> assets,
             List<OfferDataUnion> offers,
             Map<String, Object> additionalProperties) {
         this.slotId = slotId;
@@ -51,6 +57,8 @@ public final class BatchSlotData {
         this.isActive = isActive;
         this.lastActivatedAt = lastActivatedAt;
         this.expiresAt = expiresAt;
+        this.components = components;
+        this.assets = assets;
         this.offers = offers;
         this.additionalProperties = additionalProperties;
     }
@@ -96,6 +104,22 @@ public final class BatchSlotData {
     }
 
     /**
+     * @return Slot-level UI components. Carries a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — mutually exclusive on a single slot.
+     */
+    @JsonProperty("components")
+    public Optional<OfferComponents> getComponents() {
+        return components;
+    }
+
+    /**
+     * @return Slot-level visual assets. Currently a single <code>IMG_VIEW</code> SVG showing the slot's initials, themed via the <code>--icon-fill</code> CSS custom property.
+     */
+    @JsonProperty("assets")
+    public Optional<List<Asset>> getAssets() {
+        return assets;
+    }
+
+    /**
      * @return The set of offers eligible for the user under this slot's content strategy.
      */
     @JsonProperty("offers")
@@ -120,12 +144,22 @@ public final class BatchSlotData {
                 && isActive == other.isActive
                 && lastActivatedAt.equals(other.lastActivatedAt)
                 && expiresAt.equals(other.expiresAt)
+                && components.equals(other.components)
+                && assets.equals(other.assets)
                 && offers.equals(other.offers);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.slotId, this.alias, this.isActive, this.lastActivatedAt, this.expiresAt, this.offers);
+        return Objects.hash(
+                this.slotId,
+                this.alias,
+                this.isActive,
+                this.lastActivatedAt,
+                this.expiresAt,
+                this.components,
+                this.assets,
+                this.offers);
     }
 
     @java.lang.Override
@@ -182,6 +216,20 @@ public final class BatchSlotData {
         _FinalStage expiresAt(OffsetDateTime expiresAt);
 
         /**
+         * <p>Slot-level UI components. Carries a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — mutually exclusive on a single slot.</p>
+         */
+        _FinalStage components(Optional<OfferComponents> components);
+
+        _FinalStage components(OfferComponents components);
+
+        /**
+         * <p>Slot-level visual assets. Currently a single <code>IMG_VIEW</code> SVG showing the slot's initials, themed via the <code>--icon-fill</code> CSS custom property.</p>
+         */
+        _FinalStage assets(Optional<List<Asset>> assets);
+
+        _FinalStage assets(List<Asset> assets);
+
+        /**
          * <p>The set of offers eligible for the user under this slot's content strategy.</p>
          */
         _FinalStage offers(List<OfferDataUnion> offers);
@@ -201,6 +249,10 @@ public final class BatchSlotData {
 
         private List<OfferDataUnion> offers = new ArrayList<>();
 
+        private Optional<List<Asset>> assets = Optional.empty();
+
+        private Optional<OfferComponents> components = Optional.empty();
+
         private Optional<OffsetDateTime> expiresAt = Optional.empty();
 
         private Optional<OffsetDateTime> lastActivatedAt = Optional.empty();
@@ -217,6 +269,8 @@ public final class BatchSlotData {
             isActive(other.getIsActive());
             lastActivatedAt(other.getLastActivatedAt());
             expiresAt(other.getExpiresAt());
+            components(other.getComponents());
+            assets(other.getAssets());
             offers(other.getOffers());
             return this;
         }
@@ -293,6 +347,46 @@ public final class BatchSlotData {
         }
 
         /**
+         * <p>Slot-level visual assets. Currently a single <code>IMG_VIEW</code> SVG showing the slot's initials, themed via the <code>--icon-fill</code> CSS custom property.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage assets(List<Asset> assets) {
+            this.assets = Optional.ofNullable(assets);
+            return this;
+        }
+
+        /**
+         * <p>Slot-level visual assets. Currently a single <code>IMG_VIEW</code> SVG showing the slot's initials, themed via the <code>--icon-fill</code> CSS custom property.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "assets", nulls = Nulls.SKIP)
+        public _FinalStage assets(Optional<List<Asset>> assets) {
+            this.assets = assets;
+            return this;
+        }
+
+        /**
+         * <p>Slot-level UI components. Carries a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — mutually exclusive on a single slot.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage components(OfferComponents components) {
+            this.components = Optional.ofNullable(components);
+            return this;
+        }
+
+        /**
+         * <p>Slot-level UI components. Carries a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — mutually exclusive on a single slot.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "components", nulls = Nulls.SKIP)
+        public _FinalStage components(Optional<OfferComponents> components) {
+            this.components = components;
+            return this;
+        }
+
+        /**
          * <p>Computed as <code>lastActivatedAt + placement.refreshInterval</code>. Absent for cold slots that have never been activated.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -334,7 +428,16 @@ public final class BatchSlotData {
 
         @java.lang.Override
         public BatchSlotData build() {
-            return new BatchSlotData(slotId, alias, isActive, lastActivatedAt, expiresAt, offers, additionalProperties);
+            return new BatchSlotData(
+                    slotId,
+                    alias,
+                    isActive,
+                    lastActivatedAt,
+                    expiresAt,
+                    components,
+                    assets,
+                    offers,
+                    additionalProperties);
         }
 
         @java.lang.Override
