@@ -1,3 +1,10 @@
+## 10.0.0 - 2026-06-01
+### Breaking Changes
+* **`PlacementBatchAttributes` builder** — two new required stages (`ShortDescriptionStage` and `LongDescriptionStage`) are inserted between `NameStage` and `IsActiveStage`; any existing builder chain calling `.name(...).isActive(...)` will fail to compile. Migrate by inserting `.shortDescription("...")` and `.longDescription("...")` between those two calls.
+### Added
+* **`PlacementBatchAttributes.getShortDescription()`** — new required `String` field containing a short, human-readable description of how long the slot stays activated after a user taps activate (e.g. `"Activated for 24 hours"`).
+* **`PlacementBatchAttributes.getLongDescription()`** — new required `String` field containing a longer description of the slot's activation behavior, clarifying which offers will be activated and for how long.
+
 ## 9.0.0 - 2026-06-01
 ### Breaking Changes
 * **`BatchSlotData`** — renamed to `PlacementBatchAttributes`; `getSlotId()` and `getAlias()` are removed, replaced by `getName()`; update all references and builder chains (`slotId(...).alias(...)`) to use `PlacementBatchAttributes.builder().name(...)` instead.

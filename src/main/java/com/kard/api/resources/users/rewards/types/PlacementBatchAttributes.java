@@ -26,6 +26,10 @@ import org.jetbrains.annotations.NotNull;
 public final class PlacementBatchAttributes {
     private final String name;
 
+    private final String shortDescription;
+
+    private final String longDescription;
+
     private final boolean isActive;
 
     private final Optional<OffsetDateTime> lastActivatedAt;
@@ -42,6 +46,8 @@ public final class PlacementBatchAttributes {
 
     private PlacementBatchAttributes(
             String name,
+            String shortDescription,
+            String longDescription,
             boolean isActive,
             Optional<OffsetDateTime> lastActivatedAt,
             Optional<OffsetDateTime> expiresAt,
@@ -50,6 +56,8 @@ public final class PlacementBatchAttributes {
             List<OfferDataUnion> offers,
             Map<String, Object> additionalProperties) {
         this.name = name;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
         this.isActive = isActive;
         this.lastActivatedAt = lastActivatedAt;
         this.expiresAt = expiresAt;
@@ -65,6 +73,22 @@ public final class PlacementBatchAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Short, human-readable description of how long the slot stays activated after a user taps activate. Derived from the parent placement's <code>refreshInterval</code> (e.g. <code>&quot;Activated for 24 hours&quot;</code>).
+     */
+    @JsonProperty("shortDescription")
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    /**
+     * @return Longer, human-readable description of the slot's activation behavior: clarifies that the offers displayed under this slot are the ones that will be activated for the user when they tap activate, and for how long they will remain active.
+     */
+    @JsonProperty("longDescription")
+    public String getLongDescription() {
+        return longDescription;
     }
 
     /**
@@ -128,6 +152,8 @@ public final class PlacementBatchAttributes {
 
     private boolean equalTo(PlacementBatchAttributes other) {
         return name.equals(other.name)
+                && shortDescription.equals(other.shortDescription)
+                && longDescription.equals(other.longDescription)
                 && isActive == other.isActive
                 && lastActivatedAt.equals(other.lastActivatedAt)
                 && expiresAt.equals(other.expiresAt)
@@ -140,6 +166,8 @@ public final class PlacementBatchAttributes {
     public int hashCode() {
         return Objects.hash(
                 this.name,
+                this.shortDescription,
+                this.longDescription,
                 this.isActive,
                 this.lastActivatedAt,
                 this.expiresAt,
@@ -161,9 +189,23 @@ public final class PlacementBatchAttributes {
         /**
          * <p>Display name for the slot. Falls back to the slot's customer-defined alias, or — when the alias is absent — the name of the placement referenced by the slot.</p>
          */
-        IsActiveStage name(@NotNull String name);
+        ShortDescriptionStage name(@NotNull String name);
 
         Builder from(PlacementBatchAttributes other);
+    }
+
+    public interface ShortDescriptionStage {
+        /**
+         * <p>Short, human-readable description of how long the slot stays activated after a user taps activate. Derived from the parent placement's <code>refreshInterval</code> (e.g. <code>&quot;Activated for 24 hours&quot;</code>).</p>
+         */
+        LongDescriptionStage shortDescription(@NotNull String shortDescription);
+    }
+
+    public interface LongDescriptionStage {
+        /**
+         * <p>Longer, human-readable description of the slot's activation behavior: clarifies that the offers displayed under this slot are the ones that will be activated for the user when they tap activate, and for how long they will remain active.</p>
+         */
+        IsActiveStage longDescription(@NotNull String longDescription);
     }
 
     public interface IsActiveStage {
@@ -219,8 +261,13 @@ public final class PlacementBatchAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, IsActiveStage, _FinalStage {
+    public static final class Builder
+            implements NameStage, ShortDescriptionStage, LongDescriptionStage, IsActiveStage, _FinalStage {
         private String name;
+
+        private String shortDescription;
+
+        private String longDescription;
 
         private boolean isActive;
 
@@ -242,6 +289,8 @@ public final class PlacementBatchAttributes {
         @java.lang.Override
         public Builder from(PlacementBatchAttributes other) {
             name(other.getName());
+            shortDescription(other.getShortDescription());
+            longDescription(other.getLongDescription());
             isActive(other.getIsActive());
             lastActivatedAt(other.getLastActivatedAt());
             expiresAt(other.getExpiresAt());
@@ -258,8 +307,32 @@ public final class PlacementBatchAttributes {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public IsActiveStage name(@NotNull String name) {
+        public ShortDescriptionStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Short, human-readable description of how long the slot stays activated after a user taps activate. Derived from the parent placement's <code>refreshInterval</code> (e.g. <code>&quot;Activated for 24 hours&quot;</code>).</p>
+         * <p>Short, human-readable description of how long the slot stays activated after a user taps activate. Derived from the parent placement's <code>refreshInterval</code> (e.g. <code>&quot;Activated for 24 hours&quot;</code>).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("shortDescription")
+        public LongDescriptionStage shortDescription(@NotNull String shortDescription) {
+            this.shortDescription = Objects.requireNonNull(shortDescription, "shortDescription must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Longer, human-readable description of the slot's activation behavior: clarifies that the offers displayed under this slot are the ones that will be activated for the user when they tap activate, and for how long they will remain active.</p>
+         * <p>Longer, human-readable description of the slot's activation behavior: clarifies that the offers displayed under this slot are the ones that will be activated for the user when they tap activate, and for how long they will remain active.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("longDescription")
+        public IsActiveStage longDescription(@NotNull String longDescription) {
+            this.longDescription = Objects.requireNonNull(longDescription, "longDescription must not be null");
             return this;
         }
 
@@ -393,7 +466,16 @@ public final class PlacementBatchAttributes {
         @java.lang.Override
         public PlacementBatchAttributes build() {
             return new PlacementBatchAttributes(
-                    name, isActive, lastActivatedAt, expiresAt, components, assets, offers, additionalProperties);
+                    name,
+                    shortDescription,
+                    longDescription,
+                    isActive,
+                    lastActivatedAt,
+                    expiresAt,
+                    components,
+                    assets,
+                    offers,
+                    additionalProperties);
         }
 
         @java.lang.Override
