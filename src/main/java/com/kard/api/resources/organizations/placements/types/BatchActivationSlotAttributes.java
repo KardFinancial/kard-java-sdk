@@ -19,37 +19,23 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = CreateBatchActivationSlot.Builder.class)
-public final class CreateBatchActivationSlot {
-    private final String placementId;
-
+@JsonDeserialize(builder = BatchActivationSlotAttributes.Builder.class)
+public final class BatchActivationSlotAttributes {
     private final String alias;
 
     private final Optional<String> shortDescription;
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateBatchActivationSlot(
-            String placementId,
-            String alias,
-            Optional<String> shortDescription,
-            Map<String, Object> additionalProperties) {
-        this.placementId = placementId;
+    private BatchActivationSlotAttributes(
+            String alias, Optional<String> shortDescription, Map<String, Object> additionalProperties) {
         this.alias = alias;
         this.shortDescription = shortDescription;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.
-     */
-    @JsonProperty("placementId")
-    public String getPlacementId() {
-        return placementId;
-    }
-
-    /**
-     * @return Customer-defined alias for the slot, unique within the placement
+     * @return Customer-defined alias for the slot, unique within the placement.
      */
     @JsonProperty("alias")
     public String getAlias() {
@@ -57,7 +43,7 @@ public final class CreateBatchActivationSlot {
     }
 
     /**
-     * @return Optional short description of the slot, limited to 50 characters
+     * @return Optional short description of the slot, limited to 50 characters.
      */
     @JsonProperty("shortDescription")
     public Optional<String> getShortDescription() {
@@ -67,7 +53,7 @@ public final class CreateBatchActivationSlot {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateBatchActivationSlot && equalTo((CreateBatchActivationSlot) other);
+        return other instanceof BatchActivationSlotAttributes && equalTo((BatchActivationSlotAttributes) other);
     }
 
     @JsonAnyGetter
@@ -75,15 +61,13 @@ public final class CreateBatchActivationSlot {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(CreateBatchActivationSlot other) {
-        return placementId.equals(other.placementId)
-                && alias.equals(other.alias)
-                && shortDescription.equals(other.shortDescription);
+    private boolean equalTo(BatchActivationSlotAttributes other) {
+        return alias.equals(other.alias) && shortDescription.equals(other.shortDescription);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.placementId, this.alias, this.shortDescription);
+        return Objects.hash(this.alias, this.shortDescription);
     }
 
     @java.lang.Override
@@ -91,35 +75,28 @@ public final class CreateBatchActivationSlot {
         return ObjectMappers.stringify(this);
     }
 
-    public static PlacementIdStage builder() {
+    public static AliasStage builder() {
         return new Builder();
-    }
-
-    public interface PlacementIdStage {
-        /**
-         * <p>ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.</p>
-         */
-        AliasStage placementId(@NotNull String placementId);
-
-        Builder from(CreateBatchActivationSlot other);
     }
 
     public interface AliasStage {
         /**
-         * <p>Customer-defined alias for the slot, unique within the placement</p>
+         * <p>Customer-defined alias for the slot, unique within the placement.</p>
          */
         _FinalStage alias(@NotNull String alias);
+
+        Builder from(BatchActivationSlotAttributes other);
     }
 
     public interface _FinalStage {
-        CreateBatchActivationSlot build();
+        BatchActivationSlotAttributes build();
 
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Optional short description of the slot, limited to 50 characters</p>
+         * <p>Optional short description of the slot, limited to 50 characters.</p>
          */
         _FinalStage shortDescription(Optional<String> shortDescription);
 
@@ -127,9 +104,7 @@ public final class CreateBatchActivationSlot {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PlacementIdStage, AliasStage, _FinalStage {
-        private String placementId;
-
+    public static final class Builder implements AliasStage, _FinalStage {
         private String alias;
 
         private Optional<String> shortDescription = Optional.empty();
@@ -140,28 +115,15 @@ public final class CreateBatchActivationSlot {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(CreateBatchActivationSlot other) {
-            placementId(other.getPlacementId());
+        public Builder from(BatchActivationSlotAttributes other) {
             alias(other.getAlias());
             shortDescription(other.getShortDescription());
             return this;
         }
 
         /**
-         * <p>ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.</p>
-         * <p>ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("placementId")
-        public AliasStage placementId(@NotNull String placementId) {
-            this.placementId = Objects.requireNonNull(placementId, "placementId must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Customer-defined alias for the slot, unique within the placement</p>
-         * <p>Customer-defined alias for the slot, unique within the placement</p>
+         * <p>Customer-defined alias for the slot, unique within the placement.</p>
+         * <p>Customer-defined alias for the slot, unique within the placement.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -172,7 +134,7 @@ public final class CreateBatchActivationSlot {
         }
 
         /**
-         * <p>Optional short description of the slot, limited to 50 characters</p>
+         * <p>Optional short description of the slot, limited to 50 characters.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -182,7 +144,7 @@ public final class CreateBatchActivationSlot {
         }
 
         /**
-         * <p>Optional short description of the slot, limited to 50 characters</p>
+         * <p>Optional short description of the slot, limited to 50 characters.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "shortDescription", nulls = Nulls.SKIP)
@@ -192,8 +154,8 @@ public final class CreateBatchActivationSlot {
         }
 
         @java.lang.Override
-        public CreateBatchActivationSlot build() {
-            return new CreateBatchActivationSlot(placementId, alias, shortDescription, additionalProperties);
+        public BatchActivationSlotAttributes build() {
+            return new BatchActivationSlotAttributes(alias, shortDescription, additionalProperties);
         }
 
         @java.lang.Override

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
-import com.kard.api.resources.organizations.contentstrategies.types.ContentStrategyResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +24,13 @@ import org.jetbrains.annotations.NotNull;
 public final class PlacementResource {
     private final PlacementFormatUnion data;
 
-    private final Optional<List<ContentStrategyResponse>> included;
+    private final Optional<List<IncludedResource>> included;
 
     private final Map<String, Object> additionalProperties;
 
     private PlacementResource(
             PlacementFormatUnion data,
-            Optional<List<ContentStrategyResponse>> included,
+            Optional<List<IncludedResource>> included,
             Map<String, Object> additionalProperties) {
         this.data = data;
         this.included = included;
@@ -47,10 +46,10 @@ public final class PlacementResource {
     }
 
     /**
-     * @return Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and the placement is linked to a content strategy.
+     * @return Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).
      */
     @JsonProperty("included")
-    public Optional<List<ContentStrategyResponse>> getIncluded() {
+    public Optional<List<IncludedResource>> getIncluded() {
         return included;
     }
 
@@ -100,18 +99,18 @@ public final class PlacementResource {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and the placement is linked to a content strategy.</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
          */
-        _FinalStage included(Optional<List<ContentStrategyResponse>> included);
+        _FinalStage included(Optional<List<IncludedResource>> included);
 
-        _FinalStage included(List<ContentStrategyResponse> included);
+        _FinalStage included(List<IncludedResource> included);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DataStage, _FinalStage {
         private PlacementFormatUnion data;
 
-        private Optional<List<ContentStrategyResponse>> included = Optional.empty();
+        private Optional<List<IncludedResource>> included = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -138,21 +137,21 @@ public final class PlacementResource {
         }
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and the placement is linked to a content strategy.</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage included(List<ContentStrategyResponse> included) {
+        public _FinalStage included(List<IncludedResource> included) {
             this.included = Optional.ofNullable(included);
             return this;
         }
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and the placement is linked to a content strategy.</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
          */
         @java.lang.Override
         @JsonSetter(value = "included", nulls = Nulls.SKIP)
-        public _FinalStage included(Optional<List<ContentStrategyResponse>> included) {
+        public _FinalStage included(Optional<List<IncludedResource>> included) {
             this.included = included;
             return this;
         }

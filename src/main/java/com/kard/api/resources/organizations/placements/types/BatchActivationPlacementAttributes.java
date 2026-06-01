@@ -9,12 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
@@ -28,20 +25,13 @@ public final class BatchActivationPlacementAttributes {
 
     private final String refreshInterval;
 
-    private final List<BatchActivationSlot> slots;
-
     private final Map<String, Object> additionalProperties;
 
     private BatchActivationPlacementAttributes(
-            String name,
-            String organizationId,
-            String refreshInterval,
-            List<BatchActivationSlot> slots,
-            Map<String, Object> additionalProperties) {
+            String name, String organizationId, String refreshInterval, Map<String, Object> additionalProperties) {
         this.name = name;
         this.organizationId = organizationId;
         this.refreshInterval = refreshInterval;
-        this.slots = slots;
         this.additionalProperties = additionalProperties;
     }
 
@@ -69,14 +59,6 @@ public final class BatchActivationPlacementAttributes {
         return refreshInterval;
     }
 
-    /**
-     * @return Slots that make up the activation cohort
-     */
-    @JsonProperty("slots")
-    public List<BatchActivationSlot> getSlots() {
-        return slots;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -92,13 +74,12 @@ public final class BatchActivationPlacementAttributes {
     private boolean equalTo(BatchActivationPlacementAttributes other) {
         return name.equals(other.name)
                 && organizationId.equals(other.organizationId)
-                && refreshInterval.equals(other.refreshInterval)
-                && slots.equals(other.slots);
+                && refreshInterval.equals(other.refreshInterval);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.organizationId, this.refreshInterval, this.slots);
+        return Objects.hash(this.name, this.organizationId, this.refreshInterval);
     }
 
     @java.lang.Override
@@ -139,15 +120,6 @@ public final class BatchActivationPlacementAttributes {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>Slots that make up the activation cohort</p>
-         */
-        _FinalStage slots(List<BatchActivationSlot> slots);
-
-        _FinalStage addSlots(BatchActivationSlot slots);
-
-        _FinalStage addAllSlots(List<BatchActivationSlot> slots);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -157,8 +129,6 @@ public final class BatchActivationPlacementAttributes {
         private String organizationId;
 
         private String refreshInterval;
-
-        private List<BatchActivationSlot> slots = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -170,7 +140,6 @@ public final class BatchActivationPlacementAttributes {
             name(other.getName());
             organizationId(other.getOrganizationId());
             refreshInterval(other.getRefreshInterval());
-            slots(other.getSlots());
             return this;
         }
 
@@ -210,45 +179,9 @@ public final class BatchActivationPlacementAttributes {
             return this;
         }
 
-        /**
-         * <p>Slots that make up the activation cohort</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage addAllSlots(List<BatchActivationSlot> slots) {
-            if (slots != null) {
-                this.slots.addAll(slots);
-            }
-            return this;
-        }
-
-        /**
-         * <p>Slots that make up the activation cohort</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage addSlots(BatchActivationSlot slots) {
-            this.slots.add(slots);
-            return this;
-        }
-
-        /**
-         * <p>Slots that make up the activation cohort</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "slots", nulls = Nulls.SKIP)
-        public _FinalStage slots(List<BatchActivationSlot> slots) {
-            this.slots.clear();
-            if (slots != null) {
-                this.slots.addAll(slots);
-            }
-            return this;
-        }
-
         @java.lang.Override
         public BatchActivationPlacementAttributes build() {
-            return new BatchActivationPlacementAttributes(
-                    name, organizationId, refreshInterval, slots, additionalProperties);
+            return new BatchActivationPlacementAttributes(name, organizationId, refreshInterval, additionalProperties);
         }
 
         @java.lang.Override

@@ -23,22 +23,29 @@ import org.jetbrains.annotations.NotNull;
 public final class UpdateBatchActivationSlot {
     private final Optional<String> slotId;
 
-    private final String contentStrategyId;
+    private final String placementId;
 
     private final String alias;
+
+    private final Optional<String> shortDescription;
 
     private final Map<String, Object> additionalProperties;
 
     private UpdateBatchActivationSlot(
-            Optional<String> slotId, String contentStrategyId, String alias, Map<String, Object> additionalProperties) {
+            Optional<String> slotId,
+            String placementId,
+            String alias,
+            Optional<String> shortDescription,
+            Map<String, Object> additionalProperties) {
         this.slotId = slotId;
-        this.contentStrategyId = contentStrategyId;
+        this.placementId = placementId;
         this.alias = alias;
+        this.shortDescription = shortDescription;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the contentStrategyId changes, the slotId is regenerated regardless of what was echoed.
+     * @return Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the placementId changes, the slotId is regenerated regardless of what was echoed.
      */
     @JsonProperty("slotId")
     public Optional<String> getSlotId() {
@@ -46,11 +53,11 @@ public final class UpdateBatchActivationSlot {
     }
 
     /**
-     * @return ID of the content strategy that fills this slot
+     * @return ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.
      */
-    @JsonProperty("contentStrategyId")
-    public String getContentStrategyId() {
-        return contentStrategyId;
+    @JsonProperty("placementId")
+    public String getPlacementId() {
+        return placementId;
     }
 
     /**
@@ -59,6 +66,14 @@ public final class UpdateBatchActivationSlot {
     @JsonProperty("alias")
     public String getAlias() {
         return alias;
+    }
+
+    /**
+     * @return Optional short description of the slot, limited to 50 characters
+     */
+    @JsonProperty("shortDescription")
+    public Optional<String> getShortDescription() {
+        return shortDescription;
     }
 
     @java.lang.Override
@@ -74,13 +89,14 @@ public final class UpdateBatchActivationSlot {
 
     private boolean equalTo(UpdateBatchActivationSlot other) {
         return slotId.equals(other.slotId)
-                && contentStrategyId.equals(other.contentStrategyId)
-                && alias.equals(other.alias);
+                && placementId.equals(other.placementId)
+                && alias.equals(other.alias)
+                && shortDescription.equals(other.shortDescription);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.slotId, this.contentStrategyId, this.alias);
+        return Objects.hash(this.slotId, this.placementId, this.alias, this.shortDescription);
     }
 
     @java.lang.Override
@@ -88,15 +104,15 @@ public final class UpdateBatchActivationSlot {
         return ObjectMappers.stringify(this);
     }
 
-    public static ContentStrategyIdStage builder() {
+    public static PlacementIdStage builder() {
         return new Builder();
     }
 
-    public interface ContentStrategyIdStage {
+    public interface PlacementIdStage {
         /**
-         * <p>ID of the content strategy that fills this slot</p>
+         * <p>ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.</p>
          */
-        AliasStage contentStrategyId(@NotNull String contentStrategyId);
+        AliasStage placementId(@NotNull String placementId);
 
         Builder from(UpdateBatchActivationSlot other);
     }
@@ -116,18 +132,27 @@ public final class UpdateBatchActivationSlot {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the contentStrategyId changes, the slotId is regenerated regardless of what was echoed.</p>
+         * <p>Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the placementId changes, the slotId is regenerated regardless of what was echoed.</p>
          */
         _FinalStage slotId(Optional<String> slotId);
 
         _FinalStage slotId(String slotId);
+
+        /**
+         * <p>Optional short description of the slot, limited to 50 characters</p>
+         */
+        _FinalStage shortDescription(Optional<String> shortDescription);
+
+        _FinalStage shortDescription(String shortDescription);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ContentStrategyIdStage, AliasStage, _FinalStage {
-        private String contentStrategyId;
+    public static final class Builder implements PlacementIdStage, AliasStage, _FinalStage {
+        private String placementId;
 
         private String alias;
+
+        private Optional<String> shortDescription = Optional.empty();
 
         private Optional<String> slotId = Optional.empty();
 
@@ -139,20 +164,21 @@ public final class UpdateBatchActivationSlot {
         @java.lang.Override
         public Builder from(UpdateBatchActivationSlot other) {
             slotId(other.getSlotId());
-            contentStrategyId(other.getContentStrategyId());
+            placementId(other.getPlacementId());
             alias(other.getAlias());
+            shortDescription(other.getShortDescription());
             return this;
         }
 
         /**
-         * <p>ID of the content strategy that fills this slot</p>
-         * <p>ID of the content strategy that fills this slot</p>
+         * <p>ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.</p>
+         * <p>ID of another placement that fills this slot. The referenced placement provides both the content strategy and the limit on the number of offers available to the slot.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("contentStrategyId")
-        public AliasStage contentStrategyId(@NotNull String contentStrategyId) {
-            this.contentStrategyId = Objects.requireNonNull(contentStrategyId, "contentStrategyId must not be null");
+        @JsonSetter("placementId")
+        public AliasStage placementId(@NotNull String placementId) {
+            this.placementId = Objects.requireNonNull(placementId, "placementId must not be null");
             return this;
         }
 
@@ -169,7 +195,27 @@ public final class UpdateBatchActivationSlot {
         }
 
         /**
-         * <p>Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the contentStrategyId changes, the slotId is regenerated regardless of what was echoed.</p>
+         * <p>Optional short description of the slot, limited to 50 characters</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage shortDescription(String shortDescription) {
+            this.shortDescription = Optional.ofNullable(shortDescription);
+            return this;
+        }
+
+        /**
+         * <p>Optional short description of the slot, limited to 50 characters</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "shortDescription", nulls = Nulls.SKIP)
+        public _FinalStage shortDescription(Optional<String> shortDescription) {
+            this.shortDescription = shortDescription;
+            return this;
+        }
+
+        /**
+         * <p>Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the placementId changes, the slotId is regenerated regardless of what was echoed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -179,7 +225,7 @@ public final class UpdateBatchActivationSlot {
         }
 
         /**
-         * <p>Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the contentStrategyId changes, the slotId is regenerated regardless of what was echoed.</p>
+         * <p>Existing slot identifier. Echo the value from a prior GET to keep the slot stable; omit to mint a fresh slot. If the placementId changes, the slotId is regenerated regardless of what was echoed.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "slotId", nulls = Nulls.SKIP)
@@ -190,7 +236,7 @@ public final class UpdateBatchActivationSlot {
 
         @java.lang.Override
         public UpdateBatchActivationSlot build() {
-            return new UpdateBatchActivationSlot(slotId, contentStrategyId, alias, additionalProperties);
+            return new UpdateBatchActivationSlot(slotId, placementId, alias, shortDescription, additionalProperties);
         }
 
         @java.lang.Override

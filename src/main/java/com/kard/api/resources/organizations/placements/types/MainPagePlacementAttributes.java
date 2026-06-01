@@ -69,7 +69,7 @@ public final class MainPagePlacementAttributes {
     }
 
     /**
-     * @return ID of the content strategy linked to this placement, if any
+     * @return ID of the content strategy linked to this placement, if any. Retained alongside <code>relationships.contentStrategy</code> for backward compatibility.
      */
     @JsonProperty("contentStrategyId")
     public Optional<String> getContentStrategyId() {
@@ -139,7 +139,7 @@ public final class MainPagePlacementAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>ID of the content strategy linked to this placement, if any</p>
+         * <p>ID of the content strategy linked to this placement, if any. Retained alongside <code>relationships.contentStrategy</code> for backward compatibility.</p>
          */
         _FinalStage contentStrategyId(Optional<String> contentStrategyId);
 
@@ -207,7 +207,7 @@ public final class MainPagePlacementAttributes {
         }
 
         /**
-         * <p>ID of the content strategy linked to this placement, if any</p>
+         * <p>ID of the content strategy linked to this placement, if any. Retained alongside <code>relationships.contentStrategy</code> for backward compatibility.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -217,7 +217,7 @@ public final class MainPagePlacementAttributes {
         }
 
         /**
-         * <p>ID of the content strategy linked to this placement, if any</p>
+         * <p>ID of the content strategy linked to this placement, if any. Retained alongside <code>relationships.contentStrategy</code> for backward compatibility.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "contentStrategyId", nulls = Nulls.SKIP)

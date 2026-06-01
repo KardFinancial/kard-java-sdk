@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -23,12 +25,18 @@ public final class MainPagePlacementData {
 
     private final MainPagePlacementAttributes attributes;
 
+    private final Optional<PlacementRelationships> relationships;
+
     private final Map<String, Object> additionalProperties;
 
     private MainPagePlacementData(
-            String id, MainPagePlacementAttributes attributes, Map<String, Object> additionalProperties) {
+            String id,
+            MainPagePlacementAttributes attributes,
+            Optional<PlacementRelationships> relationships,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.attributes = attributes;
+        this.relationships = relationships;
         this.additionalProperties = additionalProperties;
     }
 
@@ -45,6 +53,14 @@ public final class MainPagePlacementData {
         return attributes;
     }
 
+    /**
+     * @return JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.
+     */
+    @JsonProperty("relationships")
+    public Optional<PlacementRelationships> getRelationships() {
+        return relationships;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -57,12 +73,12 @@ public final class MainPagePlacementData {
     }
 
     private boolean equalTo(MainPagePlacementData other) {
-        return id.equals(other.id) && attributes.equals(other.attributes);
+        return id.equals(other.id) && attributes.equals(other.attributes) && relationships.equals(other.relationships);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.attributes);
+        return Objects.hash(this.id, this.attributes, this.relationships);
     }
 
     @java.lang.Override
@@ -93,6 +109,13 @@ public final class MainPagePlacementData {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
+         */
+        _FinalStage relationships(Optional<PlacementRelationships> relationships);
+
+        _FinalStage relationships(PlacementRelationships relationships);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -100,6 +123,8 @@ public final class MainPagePlacementData {
         private String id;
 
         private MainPagePlacementAttributes attributes;
+
+        private Optional<PlacementRelationships> relationships = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -110,6 +135,7 @@ public final class MainPagePlacementData {
         public Builder from(MainPagePlacementData other) {
             id(other.getId());
             attributes(other.getAttributes());
+            relationships(other.getRelationships());
             return this;
         }
 
@@ -132,9 +158,29 @@ public final class MainPagePlacementData {
             return this;
         }
 
+        /**
+         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage relationships(PlacementRelationships relationships) {
+            this.relationships = Optional.ofNullable(relationships);
+            return this;
+        }
+
+        /**
+         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "relationships", nulls = Nulls.SKIP)
+        public _FinalStage relationships(Optional<PlacementRelationships> relationships) {
+            this.relationships = relationships;
+            return this;
+        }
+
         @java.lang.Override
         public MainPagePlacementData build() {
-            return new MainPagePlacementData(id, attributes, additionalProperties);
+            return new MainPagePlacementData(id, attributes, relationships, additionalProperties);
         }
 
         @java.lang.Override

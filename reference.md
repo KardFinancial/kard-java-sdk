@@ -1391,7 +1391,7 @@ client.organizations().placements().list(
 <dl>
 <dd>
 
-**include:** `Optional<String>` — CSV list of related resources to embed in the `included` array (allowed value is `contentStrategy`).
+**include:** `Optional<String>` — CSV list of related resources to embed in the `included` array. Supported paths: `contentStrategy` (the direct content strategy of a non-batch placement), `slots` (the slot resources of a batch-activation placement), `slots.placement` (and the placement each slot references), and `slots.placement.contentStrategy` (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.
     
 </dd>
 </dl>
@@ -1483,7 +1483,7 @@ client.organizations().placements().get(
 <dl>
 <dd>
 
-**include:** `Optional<String>` — CSV list of related resources to embed in the `included` array (allowed value is `contentStrategy`).
+**include:** `Optional<String>` — CSV list of related resources to embed in the `included` array. Supported paths: `contentStrategy` (the direct content strategy of a non-batch placement), `slots` (the slot resources of a batch-activation placement), `slots.placement` (and the placement each slot references), and `slots.placement.contentStrategy` (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.
     
 </dd>
 </dl>

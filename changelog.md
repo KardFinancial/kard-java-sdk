@@ -1,3 +1,16 @@
+## 8.0.0 - 2026-06-01
+### Breaking Changes
+* **`BatchActivationSlot`** — renamed to `BatchActivationSlotAttributes`; `getSlotId()` and `getContentStrategyId()` removed; replace all references and builder chains with the new type name.
+* **`CreateBatchActivationSlot` / `UpdateBatchActivationSlot`** — `getContentStrategyId()` replaced by `getPlacementId()` and `ContentStrategyIdStage` renamed to `PlacementIdStage`; replace `contentStrategyId(...)` calls with `placementId(...)`.
+* **`BatchActivationPlacementAttributes.getSlots()`** — removed; slots are now accessed via `BatchActivationPlacementData.getRelationships()` (now required) using the new `BatchActivationPlacementRelationships` type.
+* **`PlacementListResponse.getIncluded()` / `PlacementResource.getIncluded()`** — return type changed from `Optional<List<ContentStrategyResponse>>` to `Optional<List<IncludedResource>>`; update all code that reads or builds the `included` list.
+### Added
+* **`IncludedResource`** — new sealed union type (visitor pattern) discriminating between `contentStrategy`, `batchActivationSlot`, `placementMainPage`, and `placementPushNotification` variants in the JSON:API `included` array; also introduces **`ResourceIdentifier`** for `type`/`id` pointers.
+* **`BatchActivationPlacementRelationships`**, **`BatchActivationSlotRelationships`**, and **`PlacementRelationships`** — new relationship types exposing JSON:API `relationships` objects for placements and slots; surfaced via new `getRelationships()` fields on `BatchActivationPlacementData`, `MainPagePlacementData`, and `PushNotificationPlacementData`.
+* **`ToManyRelationship` / `ToOneRelationship`** — new types representing JSON:API to-many and to-one relationships with fluent builders.
+* **`BatchActivationSlotAttributes.getShortDescription()`** and corresponding fields on `CreateBatchActivationSlot` / `UpdateBatchActivationSlot` — new optional `String` (max 50 chars) for a slot short description.
+* **`BatchActivationSlotInclusion` / `ContentStrategyInclusion`** — new inclusion types representing embedded `batchActivationSlot` and `contentStrategy` resources in the JSON:API `included` array.
+
 ## 7.2.0 - 2026-05-28
 ### Added
 * **`BatchSlotData.getComponents()`** — new optional `OfferComponents` field exposing slot-level UI components; carries a `cta` when the slot has no active activation, or a `logoFlare` decoration when it does.

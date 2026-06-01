@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import com.kard.api.resources.commons.types.Links;
 import com.kard.api.resources.internalorganizations.types.OrganizationPaginationMetadata;
-import com.kard.api.resources.organizations.contentstrategies.types.ContentStrategyResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,7 @@ import java.util.Optional;
 public final class PlacementListResponse {
     private final List<PlacementFormatUnion> data;
 
-    private final Optional<List<ContentStrategyResponse>> included;
+    private final Optional<List<IncludedResource>> included;
 
     private final Optional<Links> links;
 
@@ -37,7 +36,7 @@ public final class PlacementListResponse {
 
     private PlacementListResponse(
             List<PlacementFormatUnion> data,
-            Optional<List<ContentStrategyResponse>> included,
+            Optional<List<IncludedResource>> included,
             Optional<Links> links,
             Optional<OrganizationPaginationMetadata> meta,
             Map<String, Object> additionalProperties) {
@@ -57,10 +56,10 @@ public final class PlacementListResponse {
     }
 
     /**
-     * @return Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and at least one placement in <code>data</code> is linked to a content strategy.
+     * @return Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).
      */
     @JsonProperty("included")
-    public Optional<List<ContentStrategyResponse>> getIncluded() {
+    public Optional<List<IncludedResource>> getIncluded() {
         return included;
     }
 
@@ -113,7 +112,7 @@ public final class PlacementListResponse {
     public static final class Builder {
         private List<PlacementFormatUnion> data = new ArrayList<>();
 
-        private Optional<List<ContentStrategyResponse>> included = Optional.empty();
+        private Optional<List<IncludedResource>> included = Optional.empty();
 
         private Optional<Links> links = Optional.empty();
 
@@ -157,15 +156,15 @@ public final class PlacementListResponse {
         }
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Only populated when <code>include=contentStrategy</code> is supplied and at least one placement in <code>data</code> is linked to a content strategy.</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
          */
         @JsonSetter(value = "included", nulls = Nulls.SKIP)
-        public Builder included(Optional<List<ContentStrategyResponse>> included) {
+        public Builder included(Optional<List<IncludedResource>> included) {
             this.included = included;
             return this;
         }
 
-        public Builder included(List<ContentStrategyResponse> included) {
+        public Builder included(List<IncludedResource> included) {
             this.included = Optional.ofNullable(included);
             return this;
         }

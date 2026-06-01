@@ -77,7 +77,7 @@ public final class ListPlacementsRequest {
     }
 
     /**
-     * @return CSV list of related resources to embed in the <code>included</code> array (allowed value is <code>contentStrategy</code>).
+     * @return CSV list of related resources to embed in the <code>included</code> array. Supported paths: <code>contentStrategy</code> (the direct content strategy of a non-batch placement), <code>slots</code> (the slot resources of a batch-activation placement), <code>slots.placement</code> (and the placement each slot references), and <code>slots.placement.contentStrategy</code> (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.
      */
     @JsonIgnore
     public Optional<String> getInclude() {
@@ -212,7 +212,7 @@ public final class ListPlacementsRequest {
         }
 
         /**
-         * <p>CSV list of related resources to embed in the <code>included</code> array (allowed value is <code>contentStrategy</code>).</p>
+         * <p>CSV list of related resources to embed in the <code>included</code> array. Supported paths: <code>contentStrategy</code> (the direct content strategy of a non-batch placement), <code>slots</code> (the slot resources of a batch-activation placement), <code>slots.placement</code> (and the placement each slot references), and <code>slots.placement.contentStrategy</code> (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.</p>
          */
         @JsonSetter(value = "include", nulls = Nulls.SKIP)
         public Builder include(Optional<String> include) {
