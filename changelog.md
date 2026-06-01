@@ -1,3 +1,9 @@
+## 11.0.0 - 2026-06-01
+### Breaking Changes
+* **`PlacementBatchAttributes.getShortDescription()`** and **`getShortDescription()`** — both methods are removed; access these values via `getComponents()` → `OfferComponents` instead.
+* **`PlacementBatchAttributes.getLongDescription()`** — removed; access this value via `getComponents()` → `OfferComponents` instead.
+* **`PlacementBatchAttributes` builder** — `ShortDescriptionStage` and `LongDescriptionStage` are removed; `name()` now returns `IsActiveStage` directly. Existing builder chains calling `.name(...).shortDescription(...).longDescription(...).isActive(...)` will fail to compile — remove the `.shortDescription(...)` and `.longDescription(...)` calls.
+
 ## 10.0.0 - 2026-06-01
 ### Breaking Changes
 * **`PlacementBatchAttributes` builder** — two new required stages (`ShortDescriptionStage` and `LongDescriptionStage`) are inserted between `NameStage` and `IsActiveStage`; any existing builder chain calling `.name(...).isActive(...)` will fail to compile. Migrate by inserting `.shortDescription("...")` and `.longDescription("...")` between those two calls.
