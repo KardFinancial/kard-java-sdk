@@ -22,11 +22,9 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = BatchSlotData.Builder.class)
-public final class BatchSlotData {
-    private final String slotId;
-
-    private final String alias;
+@JsonDeserialize(builder = PlacementBatchAttributes.Builder.class)
+public final class PlacementBatchAttributes {
+    private final String name;
 
     private final boolean isActive;
 
@@ -42,9 +40,8 @@ public final class BatchSlotData {
 
     private final Map<String, Object> additionalProperties;
 
-    private BatchSlotData(
-            String slotId,
-            String alias,
+    private PlacementBatchAttributes(
+            String name,
             boolean isActive,
             Optional<OffsetDateTime> lastActivatedAt,
             Optional<OffsetDateTime> expiresAt,
@@ -52,8 +49,7 @@ public final class BatchSlotData {
             Optional<List<Asset>> assets,
             List<OfferDataUnion> offers,
             Map<String, Object> additionalProperties) {
-        this.slotId = slotId;
-        this.alias = alias;
+        this.name = name;
         this.isActive = isActive;
         this.lastActivatedAt = lastActivatedAt;
         this.expiresAt = expiresAt;
@@ -64,19 +60,11 @@ public final class BatchSlotData {
     }
 
     /**
-     * @return Stable identifier for the slot within the placement
+     * @return Display name for the slot. Falls back to the slot's customer-defined alias, or — when the alias is absent — the name of the placement referenced by the slot.
      */
-    @JsonProperty("slotId")
-    public String getSlotId() {
-        return slotId;
-    }
-
-    /**
-     * @return Customer-defined alias for the slot, unique within the placement
-     */
-    @JsonProperty("alias")
-    public String getAlias() {
-        return alias;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
     }
 
     /**
@@ -130,7 +118,7 @@ public final class BatchSlotData {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof BatchSlotData && equalTo((BatchSlotData) other);
+        return other instanceof PlacementBatchAttributes && equalTo((PlacementBatchAttributes) other);
     }
 
     @JsonAnyGetter
@@ -138,9 +126,8 @@ public final class BatchSlotData {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(BatchSlotData other) {
-        return slotId.equals(other.slotId)
-                && alias.equals(other.alias)
+    private boolean equalTo(PlacementBatchAttributes other) {
+        return name.equals(other.name)
                 && isActive == other.isActive
                 && lastActivatedAt.equals(other.lastActivatedAt)
                 && expiresAt.equals(other.expiresAt)
@@ -152,8 +139,7 @@ public final class BatchSlotData {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.slotId,
-                this.alias,
+                this.name,
                 this.isActive,
                 this.lastActivatedAt,
                 this.expiresAt,
@@ -167,24 +153,17 @@ public final class BatchSlotData {
         return ObjectMappers.stringify(this);
     }
 
-    public static SlotIdStage builder() {
+    public static NameStage builder() {
         return new Builder();
     }
 
-    public interface SlotIdStage {
+    public interface NameStage {
         /**
-         * <p>Stable identifier for the slot within the placement</p>
+         * <p>Display name for the slot. Falls back to the slot's customer-defined alias, or — when the alias is absent — the name of the placement referenced by the slot.</p>
          */
-        AliasStage slotId(@NotNull String slotId);
+        IsActiveStage name(@NotNull String name);
 
-        Builder from(BatchSlotData other);
-    }
-
-    public interface AliasStage {
-        /**
-         * <p>Customer-defined alias for the slot, unique within the placement</p>
-         */
-        IsActiveStage alias(@NotNull String alias);
+        Builder from(PlacementBatchAttributes other);
     }
 
     public interface IsActiveStage {
@@ -195,7 +174,7 @@ public final class BatchSlotData {
     }
 
     public interface _FinalStage {
-        BatchSlotData build();
+        PlacementBatchAttributes build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -240,10 +219,8 @@ public final class BatchSlotData {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SlotIdStage, AliasStage, IsActiveStage, _FinalStage {
-        private String slotId;
-
-        private String alias;
+    public static final class Builder implements NameStage, IsActiveStage, _FinalStage {
+        private String name;
 
         private boolean isActive;
 
@@ -263,9 +240,8 @@ public final class BatchSlotData {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(BatchSlotData other) {
-            slotId(other.getSlotId());
-            alias(other.getAlias());
+        public Builder from(PlacementBatchAttributes other) {
+            name(other.getName());
             isActive(other.getIsActive());
             lastActivatedAt(other.getLastActivatedAt());
             expiresAt(other.getExpiresAt());
@@ -276,26 +252,14 @@ public final class BatchSlotData {
         }
 
         /**
-         * <p>Stable identifier for the slot within the placement</p>
-         * <p>Stable identifier for the slot within the placement</p>
+         * <p>Display name for the slot. Falls back to the slot's customer-defined alias, or — when the alias is absent — the name of the placement referenced by the slot.</p>
+         * <p>Display name for the slot. Falls back to the slot's customer-defined alias, or — when the alias is absent — the name of the placement referenced by the slot.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("slotId")
-        public AliasStage slotId(@NotNull String slotId) {
-            this.slotId = Objects.requireNonNull(slotId, "slotId must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Customer-defined alias for the slot, unique within the placement</p>
-         * <p>Customer-defined alias for the slot, unique within the placement</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("alias")
-        public IsActiveStage alias(@NotNull String alias) {
-            this.alias = Objects.requireNonNull(alias, "alias must not be null");
+        @JsonSetter("name")
+        public IsActiveStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -427,17 +391,9 @@ public final class BatchSlotData {
         }
 
         @java.lang.Override
-        public BatchSlotData build() {
-            return new BatchSlotData(
-                    slotId,
-                    alias,
-                    isActive,
-                    lastActivatedAt,
-                    expiresAt,
-                    components,
-                    assets,
-                    offers,
-                    additionalProperties);
+        public PlacementBatchAttributes build() {
+            return new PlacementBatchAttributes(
+                    name, isActive, lastActivatedAt, expiresAt, components, assets, offers, additionalProperties);
         }
 
         @java.lang.Override

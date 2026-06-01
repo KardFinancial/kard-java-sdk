@@ -1,3 +1,11 @@
+## 9.0.0 - 2026-06-01
+### Breaking Changes
+* **`BatchSlotData`** — renamed to `PlacementBatchAttributes`; `getSlotId()` and `getAlias()` are removed, replaced by `getName()`; update all references and builder chains (`slotId(...).alias(...)`) to use `PlacementBatchAttributes.builder().name(...)` instead.
+* **`BatchesResponseObject.getData()`** — return type changed from `List<BatchSlotData>` to `List<PlacementBatchData>`; update all code that reads or builds the `data` list to use the new `PlacementBatchData` wrapper type.
+* **`BatchSlotData` builder stages `SlotIdStage` and `AliasStage`**  — removed; the builder now starts at `NameStage` with a single `name(String)` step; replace two-step `slotId(...).alias(...)` chains with `name(...)`.
+### Added
+* **`PlacementBatchData`** — new JSON:API resource wrapper exposing `getId()`, `getType()` (always `"placementBatch"`), and `getAttributes()` (`PlacementBatchAttributes`); used as the element type in `BatchesResponseObject.getData()`.
+
 ## 8.0.0 - 2026-06-01
 ### Breaking Changes
 * **`BatchActivationSlot`** — renamed to `BatchActivationSlotAttributes`; `getSlotId()` and `getContentStrategyId()` removed; replace all references and builder chains with the new type name.

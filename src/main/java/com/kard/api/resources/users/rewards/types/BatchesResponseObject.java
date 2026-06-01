@@ -21,17 +21,17 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BatchesResponseObject.Builder.class)
 public final class BatchesResponseObject {
-    private final List<BatchSlotData> data;
+    private final List<PlacementBatchData> data;
 
     private final Map<String, Object> additionalProperties;
 
-    private BatchesResponseObject(List<BatchSlotData> data, Map<String, Object> additionalProperties) {
+    private BatchesResponseObject(List<PlacementBatchData> data, Map<String, Object> additionalProperties) {
         this.data = data;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("data")
-    public List<BatchSlotData> getData() {
+    public List<PlacementBatchData> getData() {
         return data;
     }
 
@@ -66,7 +66,7 @@ public final class BatchesResponseObject {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<BatchSlotData> data = new ArrayList<>();
+        private List<PlacementBatchData> data = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -79,7 +79,7 @@ public final class BatchesResponseObject {
         }
 
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public Builder data(List<BatchSlotData> data) {
+        public Builder data(List<PlacementBatchData> data) {
             this.data.clear();
             if (data != null) {
                 this.data.addAll(data);
@@ -87,12 +87,12 @@ public final class BatchesResponseObject {
             return this;
         }
 
-        public Builder addData(BatchSlotData data) {
+        public Builder addData(PlacementBatchData data) {
             this.data.add(data);
             return this;
         }
 
-        public Builder addAllData(List<BatchSlotData> data) {
+        public Builder addAllData(List<PlacementBatchData> data) {
             if (data != null) {
                 this.data.addAll(data);
             }
