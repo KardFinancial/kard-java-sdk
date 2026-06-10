@@ -1,3 +1,7 @@
+## 11.1.0 - 2026-06-10
+### Added
+* **`UpdateUserRequestAttributes.getHistoricalTransactionsSent()`** — new optional `Boolean` field that, when set to `true`, confirms historical transactions have been sent for the user; this is a one-way flag and cannot be reverted once set.
+
 ## 11.0.0 - 2026-06-01
 ### Breaking Changes
 * **`PlacementBatchAttributes.getShortDescription()`** and **`getShortDescription()`** — both methods are removed; access these values via `getComponents()` → `OfferComponents` instead.

@@ -35,6 +35,8 @@ public final class UpdateUserRequestAttributes {
 
     private final Optional<String> birthYear;
 
+    private final Optional<Boolean> historicalTransactionsSent;
+
     private final Map<String, Object> additionalProperties;
 
     private UpdateUserRequestAttributes(
@@ -44,6 +46,7 @@ public final class UpdateUserRequestAttributes {
             Optional<String> hashedEmail,
             Optional<String> phoneNumber,
             Optional<String> birthYear,
+            Optional<Boolean> historicalTransactionsSent,
             Map<String, Object> additionalProperties) {
         this.enrolledRewards = enrolledRewards;
         this.zipCode = zipCode;
@@ -51,6 +54,7 @@ public final class UpdateUserRequestAttributes {
         this.hashedEmail = hashedEmail;
         this.phoneNumber = phoneNumber;
         this.birthYear = birthYear;
+        this.historicalTransactionsSent = historicalTransactionsSent;
         this.additionalProperties = additionalProperties;
     }
 
@@ -102,6 +106,14 @@ public final class UpdateUserRequestAttributes {
         return birthYear;
     }
 
+    /**
+     * @return Set to <code>true</code> to confirm that historical transactions have been sent for this user. This is a one-way flag: once <code>true</code> it cannot be set back to <code>false</code>, and a request attempting to do so is rejected.
+     */
+    @JsonProperty("historicalTransactionsSent")
+    public Optional<Boolean> getHistoricalTransactionsSent() {
+        return historicalTransactionsSent;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -119,13 +131,20 @@ public final class UpdateUserRequestAttributes {
                 && email.equals(other.email)
                 && hashedEmail.equals(other.hashedEmail)
                 && phoneNumber.equals(other.phoneNumber)
-                && birthYear.equals(other.birthYear);
+                && birthYear.equals(other.birthYear)
+                && historicalTransactionsSent.equals(other.historicalTransactionsSent);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.enrolledRewards, this.zipCode, this.email, this.hashedEmail, this.phoneNumber, this.birthYear);
+                this.enrolledRewards,
+                this.zipCode,
+                this.email,
+                this.hashedEmail,
+                this.phoneNumber,
+                this.birthYear,
+                this.historicalTransactionsSent);
     }
 
     @java.lang.Override
@@ -151,6 +170,8 @@ public final class UpdateUserRequestAttributes {
 
         private Optional<String> birthYear = Optional.empty();
 
+        private Optional<Boolean> historicalTransactionsSent = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -163,6 +184,7 @@ public final class UpdateUserRequestAttributes {
             hashedEmail(other.getHashedEmail());
             phoneNumber(other.getPhoneNumber());
             birthYear(other.getBirthYear());
+            historicalTransactionsSent(other.getHistoricalTransactionsSent());
             return this;
         }
 
@@ -260,9 +282,30 @@ public final class UpdateUserRequestAttributes {
             return this;
         }
 
+        /**
+         * <p>Set to <code>true</code> to confirm that historical transactions have been sent for this user. This is a one-way flag: once <code>true</code> it cannot be set back to <code>false</code>, and a request attempting to do so is rejected.</p>
+         */
+        @JsonSetter(value = "historicalTransactionsSent", nulls = Nulls.SKIP)
+        public Builder historicalTransactionsSent(Optional<Boolean> historicalTransactionsSent) {
+            this.historicalTransactionsSent = historicalTransactionsSent;
+            return this;
+        }
+
+        public Builder historicalTransactionsSent(Boolean historicalTransactionsSent) {
+            this.historicalTransactionsSent = Optional.ofNullable(historicalTransactionsSent);
+            return this;
+        }
+
         public UpdateUserRequestAttributes build() {
             return new UpdateUserRequestAttributes(
-                    enrolledRewards, zipCode, email, hashedEmail, phoneNumber, birthYear, additionalProperties);
+                    enrolledRewards,
+                    zipCode,
+                    email,
+                    hashedEmail,
+                    phoneNumber,
+                    birthYear,
+                    historicalTransactionsSent,
+                    additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {
