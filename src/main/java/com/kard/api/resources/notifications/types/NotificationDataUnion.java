@@ -54,6 +54,14 @@ public final class NotificationDataUnion {
         return new NotificationDataUnion(new FileProcessingResultValue(value));
     }
 
+    public static NotificationDataUnion pushNotificationPlacementFile(PushNotificationPlacementFileData value) {
+        return new NotificationDataUnion(new PushNotificationPlacementFileValue(value));
+    }
+
+    public static NotificationDataUnion emailNotificationPlacementFile(EmailNotificationPlacementFileData value) {
+        return new NotificationDataUnion(new EmailNotificationPlacementFileValue(value));
+    }
+
     public boolean isEarnedRewardApproved() {
         return value instanceof EarnedRewardApprovedValue;
     }
@@ -80,6 +88,14 @@ public final class NotificationDataUnion {
 
     public boolean isFileProcessingResult() {
         return value instanceof FileProcessingResultValue;
+    }
+
+    public boolean isPushNotificationPlacementFile() {
+        return value instanceof PushNotificationPlacementFileValue;
+    }
+
+    public boolean isEmailNotificationPlacementFile() {
+        return value instanceof EmailNotificationPlacementFileValue;
     }
 
     public boolean _isUnknown() {
@@ -135,6 +151,20 @@ public final class NotificationDataUnion {
         return Optional.empty();
     }
 
+    public Optional<PushNotificationPlacementFileData> getPushNotificationPlacementFile() {
+        if (isPushNotificationPlacementFile()) {
+            return Optional.of(((PushNotificationPlacementFileValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<EmailNotificationPlacementFileData> getEmailNotificationPlacementFile() {
+        if (isEmailNotificationPlacementFile()) {
+            return Optional.of(((EmailNotificationPlacementFileValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -178,6 +208,10 @@ public final class NotificationDataUnion {
 
         T visitFileProcessingResult(FileResultData fileProcessingResult);
 
+        T visitPushNotificationPlacementFile(PushNotificationPlacementFileData pushNotificationPlacementFile);
+
+        T visitEmailNotificationPlacementFile(EmailNotificationPlacementFileData emailNotificationPlacementFile);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -189,7 +223,9 @@ public final class NotificationDataUnion {
         @JsonSubTypes.Type(FailedTransactionValue.class),
         @JsonSubTypes.Type(ClawbackValue.class),
         @JsonSubTypes.Type(AuditUpdateValue.class),
-        @JsonSubTypes.Type(FileProcessingResultValue.class)
+        @JsonSubTypes.Type(FileProcessingResultValue.class),
+        @JsonSubTypes.Type(PushNotificationPlacementFileValue.class),
+        @JsonSubTypes.Type(EmailNotificationPlacementFileValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -462,6 +498,88 @@ public final class NotificationDataUnion {
         }
 
         private boolean equalTo(FileProcessingResultValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "NotificationDataUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("pushNotificationPlacementFile")
+    @JsonIgnoreProperties("type")
+    private static final class PushNotificationPlacementFileValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private PushNotificationPlacementFileData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PushNotificationPlacementFileValue() {}
+
+        private PushNotificationPlacementFileValue(PushNotificationPlacementFileData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPushNotificationPlacementFile(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PushNotificationPlacementFileValue
+                    && equalTo((PushNotificationPlacementFileValue) other);
+        }
+
+        private boolean equalTo(PushNotificationPlacementFileValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "NotificationDataUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("emailNotificationPlacementFile")
+    @JsonIgnoreProperties("type")
+    private static final class EmailNotificationPlacementFileValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private EmailNotificationPlacementFileData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EmailNotificationPlacementFileValue() {}
+
+        private EmailNotificationPlacementFileValue(EmailNotificationPlacementFileData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEmailNotificationPlacementFile(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EmailNotificationPlacementFileValue
+                    && equalTo((EmailNotificationPlacementFileValue) other);
+        }
+
+        private boolean equalTo(EmailNotificationPlacementFileValue other) {
             return value.equals(other.value);
         }
 

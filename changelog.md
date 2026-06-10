@@ -1,3 +1,10 @@
+## 11.2.0 - 2026-06-10
+### Added
+* **`NotificationDataUnion`** — new factory methods `pushNotificationPlacementFile()` and `emailNotificationPlacementFile()` to construct union variants, with matching `is*`, `get*` accessors for each variant.
+* **`NotificationType`** — new enum constants `PUSH_NOTIFICATION_PLACEMENT_FILE` and `EMAIL_NOTIFICATION_PLACEMENT_FILE`, with corresponding `visit*` methods added to the `Visitor` interface.
+* **`PushNotificationPlacementFileData`**, **`PushNotificationPlacementFileAttributes`**, and **`PushNotificationPlacementFileRelationships`** — new types representing push placement-file notification payloads, including placement name, available slots, cadence, and a presigned gzipped JSONL download URL.
+* **`EmailNotificationPlacementFileData`**, **`EmailNotificationPlacementFileAttributes`**, and **`EmailNotificationPlacementFileRelationships`** — new types representing email placement-file notification payloads, including placement name, organization ID, available slots, cadence, and a presigned download URL.
+
 ## 11.1.0 - 2026-06-10
 ### Added
 * **`UpdateUserRequestAttributes.getHistoricalTransactionsSent()`** — new optional `Boolean` field that, when set to `true`, confirms historical transactions have been sent for the user; this is a one-way flag and cannot be reverted once set.
