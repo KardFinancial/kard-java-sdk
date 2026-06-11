@@ -26,37 +26,53 @@ public final class CreatePlacementDataUnion {
         return value.visit(visitor);
     }
 
-    public static CreatePlacementDataUnion placementMainPage(CreateMainPagePlacementData value) {
-        return new CreatePlacementDataUnion(new PlacementMainPageValue(value));
+    public static CreatePlacementDataUnion placement(CreateStandardPlacementData value) {
+        return new CreatePlacementDataUnion(new PlacementValue(value));
     }
 
     public static CreatePlacementDataUnion placementPushNotification(CreatePushNotificationPlacementData value) {
         return new CreatePlacementDataUnion(new PlacementPushNotificationValue(value));
     }
 
+    public static CreatePlacementDataUnion placementEmail(CreateEmailPlacementData value) {
+        return new CreatePlacementDataUnion(new PlacementEmailValue(value));
+    }
+
     public static CreatePlacementDataUnion placementBatchActivation(CreateBatchActivationPlacementData value) {
         return new CreatePlacementDataUnion(new PlacementBatchActivationValue(value));
     }
 
-    public boolean isPlacementMainPage() {
-        return value instanceof PlacementMainPageValue;
+    public static CreatePlacementDataUnion placementGroup(CreateGroupPlacementData value) {
+        return new CreatePlacementDataUnion(new PlacementGroupValue(value));
+    }
+
+    public boolean isPlacement() {
+        return value instanceof PlacementValue;
     }
 
     public boolean isPlacementPushNotification() {
         return value instanceof PlacementPushNotificationValue;
     }
 
+    public boolean isPlacementEmail() {
+        return value instanceof PlacementEmailValue;
+    }
+
     public boolean isPlacementBatchActivation() {
         return value instanceof PlacementBatchActivationValue;
+    }
+
+    public boolean isPlacementGroup() {
+        return value instanceof PlacementGroupValue;
     }
 
     public boolean _isUnknown() {
         return value instanceof _UnknownValue;
     }
 
-    public Optional<CreateMainPagePlacementData> getPlacementMainPage() {
-        if (isPlacementMainPage()) {
-            return Optional.of(((PlacementMainPageValue) value).value);
+    public Optional<CreateStandardPlacementData> getPlacement() {
+        if (isPlacement()) {
+            return Optional.of(((PlacementValue) value).value);
         }
         return Optional.empty();
     }
@@ -68,9 +84,23 @@ public final class CreatePlacementDataUnion {
         return Optional.empty();
     }
 
+    public Optional<CreateEmailPlacementData> getPlacementEmail() {
+        if (isPlacementEmail()) {
+            return Optional.of(((PlacementEmailValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<CreateBatchActivationPlacementData> getPlacementBatchActivation() {
         if (isPlacementBatchActivation()) {
             return Optional.of(((PlacementBatchActivationValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateGroupPlacementData> getPlacementGroup() {
+        if (isPlacementGroup()) {
+            return Optional.of(((PlacementGroupValue) value).value);
         }
         return Optional.empty();
     }
@@ -104,52 +134,58 @@ public final class CreatePlacementDataUnion {
     }
 
     public interface Visitor<T> {
-        T visitPlacementMainPage(CreateMainPagePlacementData placementMainPage);
+        T visitPlacement(CreateStandardPlacementData placement);
 
         T visitPlacementPushNotification(CreatePushNotificationPlacementData placementPushNotification);
 
+        T visitPlacementEmail(CreateEmailPlacementData placementEmail);
+
         T visitPlacementBatchActivation(CreateBatchActivationPlacementData placementBatchActivation);
+
+        T visitPlacementGroup(CreateGroupPlacementData placementGroup);
 
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
     @JsonSubTypes({
-        @JsonSubTypes.Type(PlacementMainPageValue.class),
+        @JsonSubTypes.Type(PlacementValue.class),
         @JsonSubTypes.Type(PlacementPushNotificationValue.class),
-        @JsonSubTypes.Type(PlacementBatchActivationValue.class)
+        @JsonSubTypes.Type(PlacementEmailValue.class),
+        @JsonSubTypes.Type(PlacementBatchActivationValue.class),
+        @JsonSubTypes.Type(PlacementGroupValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
     }
 
-    @JsonTypeName("placementMainPage")
+    @JsonTypeName("placement")
     @JsonIgnoreProperties("type")
-    private static final class PlacementMainPageValue implements Value {
+    private static final class PlacementValue implements Value {
         @JsonUnwrapped
         @JsonIgnoreProperties(value = "type", allowSetters = true)
-        private CreateMainPagePlacementData value;
+        private CreateStandardPlacementData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private PlacementMainPageValue() {}
+        private PlacementValue() {}
 
-        private PlacementMainPageValue(CreateMainPagePlacementData value) {
+        private PlacementValue(CreateStandardPlacementData value) {
             this.value = value;
         }
 
         @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitPlacementMainPage(value);
+            return visitor.visitPlacement(value);
         }
 
         @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
-            return other instanceof PlacementMainPageValue && equalTo((PlacementMainPageValue) other);
+            return other instanceof PlacementValue && equalTo((PlacementValue) other);
         }
 
-        private boolean equalTo(PlacementMainPageValue other) {
+        private boolean equalTo(PlacementValue other) {
             return value.equals(other.value);
         }
 
@@ -204,6 +240,46 @@ public final class CreatePlacementDataUnion {
         }
     }
 
+    @JsonTypeName("placementEmail")
+    @JsonIgnoreProperties("type")
+    private static final class PlacementEmailValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private CreateEmailPlacementData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PlacementEmailValue() {}
+
+        private PlacementEmailValue(CreateEmailPlacementData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPlacementEmail(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PlacementEmailValue && equalTo((PlacementEmailValue) other);
+        }
+
+        private boolean equalTo(PlacementEmailValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreatePlacementDataUnion{" + "value: " + value + "}";
+        }
+    }
+
     @JsonTypeName("placementBatchActivation")
     @JsonIgnoreProperties("type")
     private static final class PlacementBatchActivationValue implements Value {
@@ -230,6 +306,46 @@ public final class CreatePlacementDataUnion {
         }
 
         private boolean equalTo(PlacementBatchActivationValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreatePlacementDataUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("placementGroup")
+    @JsonIgnoreProperties("type")
+    private static final class PlacementGroupValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private CreateGroupPlacementData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PlacementGroupValue() {}
+
+        private PlacementGroupValue(CreateGroupPlacementData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPlacementGroup(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PlacementGroupValue && equalTo((PlacementGroupValue) other);
+        }
+
+        private boolean equalTo(PlacementGroupValue other) {
             return value.equals(other.value);
         }
 

@@ -17,29 +17,29 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = CreateMainPagePlacementData.Builder.class)
-public final class CreateMainPagePlacementData {
-    private final CreateMainPageAttributes attributes;
+@JsonDeserialize(builder = UpdateEmailPlacementData.Builder.class)
+public final class UpdateEmailPlacementData {
+    private final UpdateEmailAttributes attributes;
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateMainPagePlacementData(CreateMainPageAttributes attributes, Map<String, Object> additionalProperties) {
+    private UpdateEmailPlacementData(UpdateEmailAttributes attributes, Map<String, Object> additionalProperties) {
         this.attributes = attributes;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return Main-page placement attributes for creation
+     * @return Email placement attributes for update
      */
     @JsonProperty("attributes")
-    public CreateMainPageAttributes getAttributes() {
+    public UpdateEmailAttributes getAttributes() {
         return attributes;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateMainPagePlacementData && equalTo((CreateMainPagePlacementData) other);
+        return other instanceof UpdateEmailPlacementData && equalTo((UpdateEmailPlacementData) other);
     }
 
     @JsonAnyGetter
@@ -47,7 +47,7 @@ public final class CreateMainPagePlacementData {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(CreateMainPagePlacementData other) {
+    private boolean equalTo(UpdateEmailPlacementData other) {
         return attributes.equals(other.attributes);
     }
 
@@ -67,15 +67,15 @@ public final class CreateMainPagePlacementData {
 
     public interface AttributesStage {
         /**
-         * <p>Main-page placement attributes for creation</p>
+         * <p>Email placement attributes for update</p>
          */
-        _FinalStage attributes(@NotNull CreateMainPageAttributes attributes);
+        _FinalStage attributes(@NotNull UpdateEmailAttributes attributes);
 
-        Builder from(CreateMainPagePlacementData other);
+        Builder from(UpdateEmailPlacementData other);
     }
 
     public interface _FinalStage {
-        CreateMainPagePlacementData build();
+        UpdateEmailPlacementData build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -84,7 +84,7 @@ public final class CreateMainPagePlacementData {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements AttributesStage, _FinalStage {
-        private CreateMainPageAttributes attributes;
+        private UpdateEmailAttributes attributes;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -92,26 +92,26 @@ public final class CreateMainPagePlacementData {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(CreateMainPagePlacementData other) {
+        public Builder from(UpdateEmailPlacementData other) {
             attributes(other.getAttributes());
             return this;
         }
 
         /**
-         * <p>Main-page placement attributes for creation</p>
-         * <p>Main-page placement attributes for creation</p>
+         * <p>Email placement attributes for update</p>
+         * <p>Email placement attributes for update</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("attributes")
-        public _FinalStage attributes(@NotNull CreateMainPageAttributes attributes) {
+        public _FinalStage attributes(@NotNull UpdateEmailAttributes attributes) {
             this.attributes = Objects.requireNonNull(attributes, "attributes must not be null");
             return this;
         }
 
         @java.lang.Override
-        public CreateMainPagePlacementData build() {
-            return new CreateMainPagePlacementData(attributes, additionalProperties);
+        public UpdateEmailPlacementData build() {
+            return new UpdateEmailPlacementData(attributes, additionalProperties);
         }
 
         @java.lang.Override

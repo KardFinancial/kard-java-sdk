@@ -56,7 +56,7 @@ public final class PlacementListResponse {
     }
 
     /**
-     * @return Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).
+     * @return Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placement</code>, <code>placementPushNotification</code>, <code>placementEmail</code>).
      */
     @JsonProperty("included")
     public Optional<List<IncludedResource>> getIncluded() {
@@ -156,7 +156,7 @@ public final class PlacementListResponse {
         }
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placement</code>, <code>placementPushNotification</code>, <code>placementEmail</code>).</p>
          */
         @JsonSetter(value = "included", nulls = Nulls.SKIP)
         public Builder included(Optional<List<IncludedResource>> included) {

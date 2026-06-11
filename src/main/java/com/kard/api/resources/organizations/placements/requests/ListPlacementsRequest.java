@@ -53,7 +53,7 @@ public final class ListPlacementsRequest {
     }
 
     /**
-     * @return Filter by placement type (placementMainPage or placementPushNotification)
+     * @return Filter by placement type (placement, placementPushNotification, placementEmail, placementBatchActivation, or placementGroup)
      */
     @JsonIgnore
     public Optional<PlacementTypeFilter> getFilterType() {
@@ -77,7 +77,7 @@ public final class ListPlacementsRequest {
     }
 
     /**
-     * @return CSV list of related resources to embed in the <code>included</code> array. Supported paths: <code>contentStrategy</code> (the direct content strategy of a non-batch placement), <code>slots</code> (the slot resources of a batch-activation placement), <code>slots.placement</code> (and the placement each slot references), and <code>slots.placement.contentStrategy</code> (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.
+     * @return CSV list of related resources to embed in the <code>included</code> array. Supported paths: <code>contentStrategy</code> (the direct content strategy of a non-batch placement), <code>slots</code> (the slot resources of a batch-activation or group placement), <code>slots.placement</code> (and the placement each slot references), and <code>slots.placement.contentStrategy</code> (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.
      */
     @JsonIgnore
     public Optional<String> getInclude() {
@@ -170,7 +170,7 @@ public final class ListPlacementsRequest {
         }
 
         /**
-         * <p>Filter by placement type (placementMainPage or placementPushNotification)</p>
+         * <p>Filter by placement type (placement, placementPushNotification, placementEmail, placementBatchActivation, or placementGroup)</p>
          */
         @JsonSetter(value = "filter[type]", nulls = Nulls.SKIP)
         public Builder filterType(Optional<PlacementTypeFilter> filterType) {
@@ -212,7 +212,7 @@ public final class ListPlacementsRequest {
         }
 
         /**
-         * <p>CSV list of related resources to embed in the <code>included</code> array. Supported paths: <code>contentStrategy</code> (the direct content strategy of a non-batch placement), <code>slots</code> (the slot resources of a batch-activation placement), <code>slots.placement</code> (and the placement each slot references), and <code>slots.placement.contentStrategy</code> (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.</p>
+         * <p>CSV list of related resources to embed in the <code>included</code> array. Supported paths: <code>contentStrategy</code> (the direct content strategy of a non-batch placement), <code>slots</code> (the slot resources of a batch-activation or group placement), <code>slots.placement</code> (and the placement each slot references), and <code>slots.placement.contentStrategy</code> (and the content strategy of each referenced placement). Dotted paths implicitly include all intermediate resources.</p>
          */
         @JsonSetter(value = "include", nulls = Nulls.SKIP)
         public Builder include(Optional<String> include) {

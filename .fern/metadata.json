@@ -1,10 +1,10 @@
 {
-  "cliVersion": "5.46.0",
+  "cliVersion": "5.46.1",
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "4.1.4",
   "generatorConfig": {
     "publish-to": "central"
   },
-  "originGitCommit": "c22468d6bc3496a15ddd3c0c95cd77fb73256791",
-  "sdkVersion": "11.2.0"
+  "originGitCommit": "72a38eff7488c32cbcc1b6933ff37274930f20de",
+  "sdkVersion": "12.0.0"
 }

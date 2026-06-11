@@ -9,30 +9,28 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = MainPagePlacementData.Builder.class)
-public final class MainPagePlacementData {
+@JsonDeserialize(builder = GroupPlacementData.Builder.class)
+public final class GroupPlacementData {
     private final String id;
 
-    private final MainPagePlacementAttributes attributes;
+    private final GroupPlacementAttributes attributes;
 
-    private final Optional<PlacementRelationships> relationships;
+    private final SlottedPlacementRelationships relationships;
 
     private final Map<String, Object> additionalProperties;
 
-    private MainPagePlacementData(
+    private GroupPlacementData(
             String id,
-            MainPagePlacementAttributes attributes,
-            Optional<PlacementRelationships> relationships,
+            GroupPlacementAttributes attributes,
+            SlottedPlacementRelationships relationships,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.attributes = attributes;
@@ -49,22 +47,22 @@ public final class MainPagePlacementData {
     }
 
     @JsonProperty("attributes")
-    public MainPagePlacementAttributes getAttributes() {
+    public GroupPlacementAttributes getAttributes() {
         return attributes;
     }
 
     /**
-     * @return JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.
+     * @return JSON:API relationships for the placement. Always present on a group placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.
      */
     @JsonProperty("relationships")
-    public Optional<PlacementRelationships> getRelationships() {
+    public SlottedPlacementRelationships getRelationships() {
         return relationships;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof MainPagePlacementData && equalTo((MainPagePlacementData) other);
+        return other instanceof GroupPlacementData && equalTo((GroupPlacementData) other);
     }
 
     @JsonAnyGetter
@@ -72,7 +70,7 @@ public final class MainPagePlacementData {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(MainPagePlacementData other) {
+    private boolean equalTo(GroupPlacementData other) {
         return id.equals(other.id) && attributes.equals(other.attributes) && relationships.equals(other.relationships);
     }
 
@@ -96,35 +94,35 @@ public final class MainPagePlacementData {
          */
         AttributesStage id(@NotNull String id);
 
-        Builder from(MainPagePlacementData other);
+        Builder from(GroupPlacementData other);
     }
 
     public interface AttributesStage {
-        _FinalStage attributes(@NotNull MainPagePlacementAttributes attributes);
+        RelationshipsStage attributes(@NotNull GroupPlacementAttributes attributes);
+    }
+
+    public interface RelationshipsStage {
+        /**
+         * <p>JSON:API relationships for the placement. Always present on a group placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.</p>
+         */
+        _FinalStage relationships(@NotNull SlottedPlacementRelationships relationships);
     }
 
     public interface _FinalStage {
-        MainPagePlacementData build();
+        GroupPlacementData build();
 
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
-         */
-        _FinalStage relationships(Optional<PlacementRelationships> relationships);
-
-        _FinalStage relationships(PlacementRelationships relationships);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, AttributesStage, _FinalStage {
+    public static final class Builder implements IdStage, AttributesStage, RelationshipsStage, _FinalStage {
         private String id;
 
-        private MainPagePlacementAttributes attributes;
+        private GroupPlacementAttributes attributes;
 
-        private Optional<PlacementRelationships> relationships = Optional.empty();
+        private SlottedPlacementRelationships relationships;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -132,7 +130,7 @@ public final class MainPagePlacementData {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(MainPagePlacementData other) {
+        public Builder from(GroupPlacementData other) {
             id(other.getId());
             attributes(other.getAttributes());
             relationships(other.getRelationships());
@@ -153,34 +151,26 @@ public final class MainPagePlacementData {
 
         @java.lang.Override
         @JsonSetter("attributes")
-        public _FinalStage attributes(@NotNull MainPagePlacementAttributes attributes) {
+        public RelationshipsStage attributes(@NotNull GroupPlacementAttributes attributes) {
             this.attributes = Objects.requireNonNull(attributes, "attributes must not be null");
             return this;
         }
 
         /**
-         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
+         * <p>JSON:API relationships for the placement. Always present on a group placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.</p>
+         * <p>JSON:API relationships for the placement. Always present on a group placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage relationships(PlacementRelationships relationships) {
-            this.relationships = Optional.ofNullable(relationships);
-            return this;
-        }
-
-        /**
-         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "relationships", nulls = Nulls.SKIP)
-        public _FinalStage relationships(Optional<PlacementRelationships> relationships) {
-            this.relationships = relationships;
+        @JsonSetter("relationships")
+        public _FinalStage relationships(@NotNull SlottedPlacementRelationships relationships) {
+            this.relationships = Objects.requireNonNull(relationships, "relationships must not be null");
             return this;
         }
 
         @java.lang.Override
-        public MainPagePlacementData build() {
-            return new MainPagePlacementData(id, attributes, relationships, additionalProperties);
+        public GroupPlacementData build() {
+            return new GroupPlacementData(id, attributes, relationships, additionalProperties);
         }
 
         @java.lang.Override

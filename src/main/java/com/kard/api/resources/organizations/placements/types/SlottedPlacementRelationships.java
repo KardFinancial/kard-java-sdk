@@ -17,19 +17,19 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = BatchActivationPlacementRelationships.Builder.class)
-public final class BatchActivationPlacementRelationships {
+@JsonDeserialize(builder = SlottedPlacementRelationships.Builder.class)
+public final class SlottedPlacementRelationships {
     private final ToManyRelationship slots;
 
     private final Map<String, Object> additionalProperties;
 
-    private BatchActivationPlacementRelationships(ToManyRelationship slots, Map<String, Object> additionalProperties) {
+    private SlottedPlacementRelationships(ToManyRelationship slots, Map<String, Object> additionalProperties) {
         this.slots = slots;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return Resource identifiers for the slots that make up the activation cohort. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).
+     * @return Resource identifiers for the slots that make up the placement. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).
      */
     @JsonProperty("slots")
     public ToManyRelationship getSlots() {
@@ -39,8 +39,7 @@ public final class BatchActivationPlacementRelationships {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof BatchActivationPlacementRelationships
-                && equalTo((BatchActivationPlacementRelationships) other);
+        return other instanceof SlottedPlacementRelationships && equalTo((SlottedPlacementRelationships) other);
     }
 
     @JsonAnyGetter
@@ -48,7 +47,7 @@ public final class BatchActivationPlacementRelationships {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(BatchActivationPlacementRelationships other) {
+    private boolean equalTo(SlottedPlacementRelationships other) {
         return slots.equals(other.slots);
     }
 
@@ -68,15 +67,15 @@ public final class BatchActivationPlacementRelationships {
 
     public interface SlotsStage {
         /**
-         * <p>Resource identifiers for the slots that make up the activation cohort. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).</p>
+         * <p>Resource identifiers for the slots that make up the placement. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).</p>
          */
         _FinalStage slots(@NotNull ToManyRelationship slots);
 
-        Builder from(BatchActivationPlacementRelationships other);
+        Builder from(SlottedPlacementRelationships other);
     }
 
     public interface _FinalStage {
-        BatchActivationPlacementRelationships build();
+        SlottedPlacementRelationships build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -93,14 +92,14 @@ public final class BatchActivationPlacementRelationships {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(BatchActivationPlacementRelationships other) {
+        public Builder from(SlottedPlacementRelationships other) {
             slots(other.getSlots());
             return this;
         }
 
         /**
-         * <p>Resource identifiers for the slots that make up the activation cohort. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).</p>
-         * <p>Resource identifiers for the slots that make up the activation cohort. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).</p>
+         * <p>Resource identifiers for the slots that make up the placement. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).</p>
+         * <p>Resource identifiers for the slots that make up the placement. Each entry corresponds to a <code>batchActivationSlot</code> resource that appears in <code>included</code> when the request asks for <code>slots</code> (or any deeper path that implies it).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -111,8 +110,8 @@ public final class BatchActivationPlacementRelationships {
         }
 
         @java.lang.Override
-        public BatchActivationPlacementRelationships build() {
-            return new BatchActivationPlacementRelationships(slots, additionalProperties);
+        public SlottedPlacementRelationships build() {
+            return new SlottedPlacementRelationships(slots, additionalProperties);
         }
 
         @java.lang.Override

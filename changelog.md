@@ -1,3 +1,11 @@
+## 12.0.0 - 2026-06-11
+### Added
+* **`CreateEmailAttributes`** and **`CreateEmailPlacementData`** — new types for constructing email placement creation request bodies, carrying `name`, `availableSlots`, `cadence`, and an optional `contentStrategyId`.
+* **`CreateGroupAttributes`** and **`CreateGroupPlacementData`** — new types for constructing group placement creation request bodies, carrying `name` and a list of `CreateBatchActivationSlot` slots.
+* **`UpdateEmailAttributes`** and **`UpdateEmailPlacementData`** — new types for constructing email placement update (PUT) request bodies with required `name`, `availableSlots`, and `cadence` fields plus an optional `contentStrategyId`.
+* **`UpdateGroupAttributes`** and **`UpdateGroupPlacementData`** — new types for constructing group placement update request bodies; slots absent from the provided list are removed from the prior state.
+* **`EmailPlacementAttributes`**, **`GroupPlacementAttributes`**, **`GroupPlacementData`**, and **`PlacementData`** — new response-side types representing the full attributes and resource structures for email and group placements.
+
 ## 11.2.0 - 2026-06-10
 ### Added
 * **`NotificationDataUnion`** — new factory methods `pushNotificationPlacementFile()` and `emailNotificationPlacementFile()` to construct union variants, with matching `is*`, `get*` accessors for each variant.

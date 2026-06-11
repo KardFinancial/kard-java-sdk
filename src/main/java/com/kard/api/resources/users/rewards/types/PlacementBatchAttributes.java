@@ -68,7 +68,7 @@ public final class PlacementBatchAttributes {
     }
 
     /**
-     * @return Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show.
+     * @return Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show. Always true for slots of a group placement, which has no activation cycle.
      */
     @JsonProperty("isActive")
     public boolean getIsActive() {
@@ -92,7 +92,7 @@ public final class PlacementBatchAttributes {
     }
 
     /**
-     * @return Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot.
+     * @return Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot. Omitted for slots of a group placement, which has no activation cycle.
      */
     @JsonProperty("components")
     public Optional<OfferComponents> getComponents() {
@@ -168,7 +168,7 @@ public final class PlacementBatchAttributes {
 
     public interface IsActiveStage {
         /**
-         * <p>Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show.</p>
+         * <p>Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show. Always true for slots of a group placement, which has no activation cycle.</p>
          */
         _FinalStage isActive(boolean isActive);
     }
@@ -195,7 +195,7 @@ public final class PlacementBatchAttributes {
         _FinalStage expiresAt(OffsetDateTime expiresAt);
 
         /**
-         * <p>Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot.</p>
+         * <p>Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot. Omitted for slots of a group placement, which has no activation cycle.</p>
          */
         _FinalStage components(Optional<OfferComponents> components);
 
@@ -264,8 +264,8 @@ public final class PlacementBatchAttributes {
         }
 
         /**
-         * <p>Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show.</p>
-         * <p>Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show.</p>
+         * <p>Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show. Always true for slots of a group placement, which has no activation cycle.</p>
+         * <p>Whether the slot is still considered &quot;fresh&quot; for the user. Set to false only when the slot's <code>expiresAt</code> is in the past AND the slot resolves to a non-empty offer set; an empty offer set keeps the slot active so partner UIs do not promote &quot;tap to refresh&quot; with nothing to show. Always true for slots of a group placement, which has no activation cycle.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -331,7 +331,7 @@ public final class PlacementBatchAttributes {
         }
 
         /**
-         * <p>Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot.</p>
+         * <p>Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot. Omitted for slots of a group placement, which has no activation cycle.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -341,7 +341,7 @@ public final class PlacementBatchAttributes {
         }
 
         /**
-         * <p>Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot.</p>
+         * <p>Slot-level UI components. Carries <code>shortDescription</code> and <code>longDescription</code> (activation copy derived from the parent placement's <code>refreshInterval</code>), plus either a <code>cta</code> (POST to the slot's activate endpoint) when the slot has no active (non-expired) activation, or a <code>logoFlare</code> decoration when it does — <code>cta</code> and <code>logoFlare</code> are mutually exclusive on a single slot. Omitted for slots of a group placement, which has no activation cycle.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "components", nulls = Nulls.SKIP)

@@ -46,7 +46,7 @@ public final class PlacementResource {
     }
 
     /**
-     * @return Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).
+     * @return Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placement</code>, <code>placementPushNotification</code>, <code>placementEmail</code>).
      */
     @JsonProperty("included")
     public Optional<List<IncludedResource>> getIncluded() {
@@ -99,7 +99,7 @@ public final class PlacementResource {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placement</code>, <code>placementPushNotification</code>, <code>placementEmail</code>).</p>
          */
         _FinalStage included(Optional<List<IncludedResource>> included);
 
@@ -137,7 +137,7 @@ public final class PlacementResource {
         }
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placement</code>, <code>placementPushNotification</code>, <code>placementEmail</code>).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -147,7 +147,7 @@ public final class PlacementResource {
         }
 
         /**
-         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placementMainPage</code>, <code>placementPushNotification</code>).</p>
+         * <p>Related resources requested via the <code>include</code> query parameter. Each entry is keyed by its <code>type</code> discriminant (<code>contentStrategy</code>, <code>batchActivationSlot</code>, <code>placement</code>, <code>placementPushNotification</code>, <code>placementEmail</code>).</p>
          */
         @java.lang.Override
         @JsonSetter(value = "included", nulls = Nulls.SKIP)

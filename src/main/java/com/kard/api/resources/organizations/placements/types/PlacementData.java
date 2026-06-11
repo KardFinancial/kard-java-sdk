@@ -9,28 +9,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = BatchActivationPlacementData.Builder.class)
-public final class BatchActivationPlacementData {
+@JsonDeserialize(builder = PlacementData.Builder.class)
+public final class PlacementData {
     private final String id;
 
-    private final BatchActivationPlacementAttributes attributes;
+    private final PlacementAttributes attributes;
 
-    private final SlottedPlacementRelationships relationships;
+    private final Optional<PlacementRelationships> relationships;
 
     private final Map<String, Object> additionalProperties;
 
-    private BatchActivationPlacementData(
+    private PlacementData(
             String id,
-            BatchActivationPlacementAttributes attributes,
-            SlottedPlacementRelationships relationships,
+            PlacementAttributes attributes,
+            Optional<PlacementRelationships> relationships,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.attributes = attributes;
@@ -47,22 +49,22 @@ public final class BatchActivationPlacementData {
     }
 
     @JsonProperty("attributes")
-    public BatchActivationPlacementAttributes getAttributes() {
+    public PlacementAttributes getAttributes() {
         return attributes;
     }
 
     /**
-     * @return JSON:API relationships for the placement. Always present on a batch-activation placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.
+     * @return JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.
      */
     @JsonProperty("relationships")
-    public SlottedPlacementRelationships getRelationships() {
+    public Optional<PlacementRelationships> getRelationships() {
         return relationships;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof BatchActivationPlacementData && equalTo((BatchActivationPlacementData) other);
+        return other instanceof PlacementData && equalTo((PlacementData) other);
     }
 
     @JsonAnyGetter
@@ -70,7 +72,7 @@ public final class BatchActivationPlacementData {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(BatchActivationPlacementData other) {
+    private boolean equalTo(PlacementData other) {
         return id.equals(other.id) && attributes.equals(other.attributes) && relationships.equals(other.relationships);
     }
 
@@ -94,35 +96,35 @@ public final class BatchActivationPlacementData {
          */
         AttributesStage id(@NotNull String id);
 
-        Builder from(BatchActivationPlacementData other);
+        Builder from(PlacementData other);
     }
 
     public interface AttributesStage {
-        RelationshipsStage attributes(@NotNull BatchActivationPlacementAttributes attributes);
-    }
-
-    public interface RelationshipsStage {
-        /**
-         * <p>JSON:API relationships for the placement. Always present on a batch-activation placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.</p>
-         */
-        _FinalStage relationships(@NotNull SlottedPlacementRelationships relationships);
+        _FinalStage attributes(@NotNull PlacementAttributes attributes);
     }
 
     public interface _FinalStage {
-        BatchActivationPlacementData build();
+        PlacementData build();
 
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
+         */
+        _FinalStage relationships(Optional<PlacementRelationships> relationships);
+
+        _FinalStage relationships(PlacementRelationships relationships);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, AttributesStage, RelationshipsStage, _FinalStage {
+    public static final class Builder implements IdStage, AttributesStage, _FinalStage {
         private String id;
 
-        private BatchActivationPlacementAttributes attributes;
+        private PlacementAttributes attributes;
 
-        private SlottedPlacementRelationships relationships;
+        private Optional<PlacementRelationships> relationships = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -130,7 +132,7 @@ public final class BatchActivationPlacementData {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(BatchActivationPlacementData other) {
+        public Builder from(PlacementData other) {
             id(other.getId());
             attributes(other.getAttributes());
             relationships(other.getRelationships());
@@ -151,26 +153,34 @@ public final class BatchActivationPlacementData {
 
         @java.lang.Override
         @JsonSetter("attributes")
-        public RelationshipsStage attributes(@NotNull BatchActivationPlacementAttributes attributes) {
+        public _FinalStage attributes(@NotNull PlacementAttributes attributes) {
             this.attributes = Objects.requireNonNull(attributes, "attributes must not be null");
             return this;
         }
 
         /**
-         * <p>JSON:API relationships for the placement. Always present on a batch-activation placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.</p>
-         * <p>JSON:API relationships for the placement. Always present on a batch-activation placement; the <code>slots</code> to-many relationship lists the slot resource identifiers.</p>
+         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("relationships")
-        public _FinalStage relationships(@NotNull SlottedPlacementRelationships relationships) {
-            this.relationships = Objects.requireNonNull(relationships, "relationships must not be null");
+        public _FinalStage relationships(PlacementRelationships relationships) {
+            this.relationships = Optional.ofNullable(relationships);
+            return this;
+        }
+
+        /**
+         * <p>JSON:API relationships for the placement. Omitted entirely when the placement has no linked resources.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "relationships", nulls = Nulls.SKIP)
+        public _FinalStage relationships(Optional<PlacementRelationships> relationships) {
+            this.relationships = relationships;
             return this;
         }
 
         @java.lang.Override
-        public BatchActivationPlacementData build() {
-            return new BatchActivationPlacementData(id, attributes, relationships, additionalProperties);
+        public PlacementData build() {
+            return new PlacementData(id, attributes, relationships, additionalProperties);
         }
 
         @java.lang.Override

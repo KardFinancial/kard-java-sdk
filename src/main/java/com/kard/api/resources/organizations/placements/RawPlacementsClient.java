@@ -43,14 +43,14 @@ public class RawPlacementsClient {
     }
 
     /**
-     * Create a placement for the organization. Use type &quot;placementMainPage&quot; for main-page placements (requires name and availableSlots) or &quot;placementPushNotification&quot; for push-notification placements (requires name and cadence; availableSlots is automatically set to 1).
+     * Create a placement for the organization. Use type &quot;placement&quot; for standard placements (requires name and availableSlots), &quot;placementPushNotification&quot; for push-notification placements (requires name and cadence; availableSlots is automatically set to 1), &quot;placementEmail&quot; for email placements (requires name, cadence, and availableSlots), &quot;placementBatchActivation&quot; for batch-activation placements (requires name, refreshInterval, and slots), or &quot;placementGroup&quot; for group placements (requires name and slots).
      */
     public KardApiHttpResponse<PlacementFormatUnion> create(String organizationId, CreatePlacementRequestBody request) {
         return create(organizationId, request, null);
     }
 
     /**
-     * Create a placement for the organization. Use type &quot;placementMainPage&quot; for main-page placements (requires name and availableSlots) or &quot;placementPushNotification&quot; for push-notification placements (requires name and cadence; availableSlots is automatically set to 1).
+     * Create a placement for the organization. Use type &quot;placement&quot; for standard placements (requires name and availableSlots), &quot;placementPushNotification&quot; for push-notification placements (requires name and cadence; availableSlots is automatically set to 1), &quot;placementEmail&quot; for email placements (requires name, cadence, and availableSlots), &quot;placementBatchActivation&quot; for batch-activation placements (requires name, refreshInterval, and slots), or &quot;placementGroup&quot; for group placements (requires name and slots).
      */
     public KardApiHttpResponse<PlacementFormatUnion> create(
             String organizationId, CreatePlacementRequestBody request, RequestOptions requestOptions) {
@@ -314,7 +314,7 @@ public class RawPlacementsClient {
     }
 
     /**
-     * Replace a placement. All fields must be provided. Use type &quot;placementMainPage&quot; or &quot;placementPushNotification&quot; to set the placement kind. If the type is &quot;placementPushNotification&quot;, availableSlots is automatically set to 1.
+     * Replace a placement. All fields must be provided. Use type &quot;placement&quot;, &quot;placementPushNotification&quot;, &quot;placementEmail&quot;, &quot;placementBatchActivation&quot;, or &quot;placementGroup&quot; to set the placement kind. If the type is &quot;placementPushNotification&quot;, availableSlots is automatically set to 1.
      */
     public KardApiHttpResponse<PlacementFormatUnion> update(
             String organizationId, String placementId, UpdatePlacementRequestBody request) {
@@ -322,7 +322,7 @@ public class RawPlacementsClient {
     }
 
     /**
-     * Replace a placement. All fields must be provided. Use type &quot;placementMainPage&quot; or &quot;placementPushNotification&quot; to set the placement kind. If the type is &quot;placementPushNotification&quot;, availableSlots is automatically set to 1.
+     * Replace a placement. All fields must be provided. Use type &quot;placement&quot;, &quot;placementPushNotification&quot;, &quot;placementEmail&quot;, &quot;placementBatchActivation&quot;, or &quot;placementGroup&quot; to set the placement kind. If the type is &quot;placementPushNotification&quot;, availableSlots is automatically set to 1.
      */
     public KardApiHttpResponse<PlacementFormatUnion> update(
             String organizationId,

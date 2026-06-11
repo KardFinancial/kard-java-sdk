@@ -34,12 +34,16 @@ public final class IncludedResource {
         return new IncludedResource(new BatchActivationSlotValue(value));
     }
 
-    public static IncludedResource placementMainPage(MainPagePlacementData value) {
-        return new IncludedResource(new PlacementMainPageValue(value));
+    public static IncludedResource placement(PlacementData value) {
+        return new IncludedResource(new PlacementValue(value));
     }
 
     public static IncludedResource placementPushNotification(PushNotificationPlacementData value) {
         return new IncludedResource(new PlacementPushNotificationValue(value));
+    }
+
+    public static IncludedResource placementEmail(EmailPlacementData value) {
+        return new IncludedResource(new PlacementEmailValue(value));
     }
 
     public boolean isContentStrategy() {
@@ -50,12 +54,16 @@ public final class IncludedResource {
         return value instanceof BatchActivationSlotValue;
     }
 
-    public boolean isPlacementMainPage() {
-        return value instanceof PlacementMainPageValue;
+    public boolean isPlacement() {
+        return value instanceof PlacementValue;
     }
 
     public boolean isPlacementPushNotification() {
         return value instanceof PlacementPushNotificationValue;
+    }
+
+    public boolean isPlacementEmail() {
+        return value instanceof PlacementEmailValue;
     }
 
     public boolean _isUnknown() {
@@ -76,9 +84,9 @@ public final class IncludedResource {
         return Optional.empty();
     }
 
-    public Optional<MainPagePlacementData> getPlacementMainPage() {
-        if (isPlacementMainPage()) {
-            return Optional.of(((PlacementMainPageValue) value).value);
+    public Optional<PlacementData> getPlacement() {
+        if (isPlacement()) {
+            return Optional.of(((PlacementValue) value).value);
         }
         return Optional.empty();
     }
@@ -86,6 +94,13 @@ public final class IncludedResource {
     public Optional<PushNotificationPlacementData> getPlacementPushNotification() {
         if (isPlacementPushNotification()) {
             return Optional.of(((PlacementPushNotificationValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<EmailPlacementData> getPlacementEmail() {
+        if (isPlacementEmail()) {
+            return Optional.of(((PlacementEmailValue) value).value);
         }
         return Optional.empty();
     }
@@ -123,9 +138,11 @@ public final class IncludedResource {
 
         T visitBatchActivationSlot(BatchActivationSlotInclusion batchActivationSlot);
 
-        T visitPlacementMainPage(MainPagePlacementData placementMainPage);
+        T visitPlacement(PlacementData placement);
 
         T visitPlacementPushNotification(PushNotificationPlacementData placementPushNotification);
+
+        T visitPlacementEmail(EmailPlacementData placementEmail);
 
         T _visitUnknown(Object unknownType);
     }
@@ -134,8 +151,9 @@ public final class IncludedResource {
     @JsonSubTypes({
         @JsonSubTypes.Type(ContentStrategyValue.class),
         @JsonSubTypes.Type(BatchActivationSlotValue.class),
-        @JsonSubTypes.Type(PlacementMainPageValue.class),
-        @JsonSubTypes.Type(PlacementPushNotificationValue.class)
+        @JsonSubTypes.Type(PlacementValue.class),
+        @JsonSubTypes.Type(PlacementPushNotificationValue.class),
+        @JsonSubTypes.Type(PlacementEmailValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -222,32 +240,32 @@ public final class IncludedResource {
         }
     }
 
-    @JsonTypeName("placementMainPage")
+    @JsonTypeName("placement")
     @JsonIgnoreProperties("type")
-    private static final class PlacementMainPageValue implements Value {
+    private static final class PlacementValue implements Value {
         @JsonUnwrapped
         @JsonIgnoreProperties(value = "type", allowSetters = true)
-        private MainPagePlacementData value;
+        private PlacementData value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private PlacementMainPageValue() {}
+        private PlacementValue() {}
 
-        private PlacementMainPageValue(MainPagePlacementData value) {
+        private PlacementValue(PlacementData value) {
             this.value = value;
         }
 
         @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitPlacementMainPage(value);
+            return visitor.visitPlacement(value);
         }
 
         @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
-            return other instanceof PlacementMainPageValue && equalTo((PlacementMainPageValue) other);
+            return other instanceof PlacementValue && equalTo((PlacementValue) other);
         }
 
-        private boolean equalTo(PlacementMainPageValue other) {
+        private boolean equalTo(PlacementValue other) {
             return value.equals(other.value);
         }
 
@@ -288,6 +306,46 @@ public final class IncludedResource {
         }
 
         private boolean equalTo(PlacementPushNotificationValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "IncludedResource{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("placementEmail")
+    @JsonIgnoreProperties("type")
+    private static final class PlacementEmailValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private EmailPlacementData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PlacementEmailValue() {}
+
+        private PlacementEmailValue(EmailPlacementData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPlacementEmail(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PlacementEmailValue && equalTo((PlacementEmailValue) other);
+        }
+
+        private boolean equalTo(PlacementEmailValue other) {
             return value.equals(other.value);
         }
 

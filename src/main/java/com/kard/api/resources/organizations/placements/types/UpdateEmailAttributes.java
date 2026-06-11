@@ -19,23 +19,27 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = UpdateMainPageAttributes.Builder.class)
-public final class UpdateMainPageAttributes {
+@JsonDeserialize(builder = UpdateEmailAttributes.Builder.class)
+public final class UpdateEmailAttributes {
     private final String name;
 
     private final int availableSlots;
+
+    private final Cadence cadence;
 
     private final Optional<String> contentStrategyId;
 
     private final Map<String, Object> additionalProperties;
 
-    private UpdateMainPageAttributes(
+    private UpdateEmailAttributes(
             String name,
             int availableSlots,
+            Cadence cadence,
             Optional<String> contentStrategyId,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.availableSlots = availableSlots;
+        this.cadence = cadence;
         this.contentStrategyId = contentStrategyId;
         this.additionalProperties = additionalProperties;
     }
@@ -57,6 +61,14 @@ public final class UpdateMainPageAttributes {
     }
 
     /**
+     * @return Delivery cadence for the email
+     */
+    @JsonProperty("cadence")
+    public Cadence getCadence() {
+        return cadence;
+    }
+
+    /**
      * @return ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).
      */
     @JsonProperty("contentStrategyId")
@@ -67,7 +79,7 @@ public final class UpdateMainPageAttributes {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof UpdateMainPageAttributes && equalTo((UpdateMainPageAttributes) other);
+        return other instanceof UpdateEmailAttributes && equalTo((UpdateEmailAttributes) other);
     }
 
     @JsonAnyGetter
@@ -75,15 +87,16 @@ public final class UpdateMainPageAttributes {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(UpdateMainPageAttributes other) {
+    private boolean equalTo(UpdateEmailAttributes other) {
         return name.equals(other.name)
                 && availableSlots == other.availableSlots
+                && cadence.equals(other.cadence)
                 && contentStrategyId.equals(other.contentStrategyId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.availableSlots, this.contentStrategyId);
+        return Objects.hash(this.name, this.availableSlots, this.cadence, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -101,18 +114,25 @@ public final class UpdateMainPageAttributes {
          */
         AvailableSlotsStage name(@NotNull String name);
 
-        Builder from(UpdateMainPageAttributes other);
+        Builder from(UpdateEmailAttributes other);
     }
 
     public interface AvailableSlotsStage {
         /**
          * <p>Number of available slots (minimum 1)</p>
          */
-        _FinalStage availableSlots(int availableSlots);
+        CadenceStage availableSlots(int availableSlots);
+    }
+
+    public interface CadenceStage {
+        /**
+         * <p>Delivery cadence for the email</p>
+         */
+        _FinalStage cadence(@NotNull Cadence cadence);
     }
 
     public interface _FinalStage {
-        UpdateMainPageAttributes build();
+        UpdateEmailAttributes build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -127,10 +147,12 @@ public final class UpdateMainPageAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, AvailableSlotsStage, _FinalStage {
+    public static final class Builder implements NameStage, AvailableSlotsStage, CadenceStage, _FinalStage {
         private String name;
 
         private int availableSlots;
+
+        private Cadence cadence;
 
         private Optional<String> contentStrategyId = Optional.empty();
 
@@ -140,9 +162,10 @@ public final class UpdateMainPageAttributes {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(UpdateMainPageAttributes other) {
+        public Builder from(UpdateEmailAttributes other) {
             name(other.getName());
             availableSlots(other.getAvailableSlots());
+            cadence(other.getCadence());
             contentStrategyId(other.getContentStrategyId());
             return this;
         }
@@ -166,8 +189,20 @@ public final class UpdateMainPageAttributes {
          */
         @java.lang.Override
         @JsonSetter("availableSlots")
-        public _FinalStage availableSlots(int availableSlots) {
+        public CadenceStage availableSlots(int availableSlots) {
             this.availableSlots = availableSlots;
+            return this;
+        }
+
+        /**
+         * <p>Delivery cadence for the email</p>
+         * <p>Delivery cadence for the email</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("cadence")
+        public _FinalStage cadence(@NotNull Cadence cadence) {
+            this.cadence = Objects.requireNonNull(cadence, "cadence must not be null");
             return this;
         }
 
@@ -192,8 +227,8 @@ public final class UpdateMainPageAttributes {
         }
 
         @java.lang.Override
-        public UpdateMainPageAttributes build() {
-            return new UpdateMainPageAttributes(name, availableSlots, contentStrategyId, additionalProperties);
+        public UpdateEmailAttributes build() {
+            return new UpdateEmailAttributes(name, availableSlots, cadence, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override

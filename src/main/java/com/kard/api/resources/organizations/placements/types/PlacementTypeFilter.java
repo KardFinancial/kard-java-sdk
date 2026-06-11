@@ -10,8 +10,13 @@ public final class PlacementTypeFilter {
     public static final PlacementTypeFilter PLACEMENT_BATCH_ACTIVATION =
             new PlacementTypeFilter(Value.PLACEMENT_BATCH_ACTIVATION, "placementBatchActivation");
 
-    public static final PlacementTypeFilter PLACEMENT_MAIN_PAGE =
-            new PlacementTypeFilter(Value.PLACEMENT_MAIN_PAGE, "placementMainPage");
+    public static final PlacementTypeFilter PLACEMENT_GROUP =
+            new PlacementTypeFilter(Value.PLACEMENT_GROUP, "placementGroup");
+
+    public static final PlacementTypeFilter PLACEMENT_EMAIL =
+            new PlacementTypeFilter(Value.PLACEMENT_EMAIL, "placementEmail");
+
+    public static final PlacementTypeFilter PLACEMENT = new PlacementTypeFilter(Value.PLACEMENT, "placement");
 
     public static final PlacementTypeFilter PLACEMENT_PUSH_NOTIFICATION =
             new PlacementTypeFilter(Value.PLACEMENT_PUSH_NOTIFICATION, "placementPushNotification");
@@ -50,8 +55,12 @@ public final class PlacementTypeFilter {
         switch (value) {
             case PLACEMENT_BATCH_ACTIVATION:
                 return visitor.visitPlacementBatchActivation();
-            case PLACEMENT_MAIN_PAGE:
-                return visitor.visitPlacementMainPage();
+            case PLACEMENT_GROUP:
+                return visitor.visitPlacementGroup();
+            case PLACEMENT_EMAIL:
+                return visitor.visitPlacementEmail();
+            case PLACEMENT:
+                return visitor.visitPlacement();
             case PLACEMENT_PUSH_NOTIFICATION:
                 return visitor.visitPlacementPushNotification();
             case UNKNOWN:
@@ -65,8 +74,12 @@ public final class PlacementTypeFilter {
         switch (value) {
             case "placementBatchActivation":
                 return PLACEMENT_BATCH_ACTIVATION;
-            case "placementMainPage":
-                return PLACEMENT_MAIN_PAGE;
+            case "placementGroup":
+                return PLACEMENT_GROUP;
+            case "placementEmail":
+                return PLACEMENT_EMAIL;
+            case "placement":
+                return PLACEMENT;
             case "placementPushNotification":
                 return PLACEMENT_PUSH_NOTIFICATION;
             default:
@@ -75,21 +88,29 @@ public final class PlacementTypeFilter {
     }
 
     public enum Value {
-        PLACEMENT_MAIN_PAGE,
+        PLACEMENT,
 
         PLACEMENT_PUSH_NOTIFICATION,
 
+        PLACEMENT_EMAIL,
+
         PLACEMENT_BATCH_ACTIVATION,
+
+        PLACEMENT_GROUP,
 
         UNKNOWN
     }
 
     public interface Visitor<T> {
-        T visitPlacementMainPage();
+        T visitPlacement();
 
         T visitPlacementPushNotification();
 
+        T visitPlacementEmail();
+
         T visitPlacementBatchActivation();
+
+        T visitPlacementGroup();
 
         T visitUnknown(String unknownType);
     }

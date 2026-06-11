@@ -365,14 +365,18 @@ public class AsyncRawRewardsClient {
     }
 
     /**
-     * Retrieve batches for a batch-activation placement. Returns each slot in slot
-     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
-     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
-     * per-slot content-strategy filter as Get Offers By Placement, independently
-     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
-     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
-     * slot is still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show.<br/>
+     * Retrieve batches for a batch-activation or group placement. Returns each
+     * slot in slot order with its current offer set, alias, and freshness fields
+     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
+     * eligibility and per-slot content-strategy filter as Get Offers By
+     * Placement, independently per slot. For a batch-activation placement, a
+     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
+     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
+     * still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
+     * active and each slot returns its offers regardless of activation state,
+     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
+     * no activation record.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(
@@ -385,14 +389,18 @@ public class AsyncRawRewardsClient {
     }
 
     /**
-     * Retrieve batches for a batch-activation placement. Returns each slot in slot
-     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
-     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
-     * per-slot content-strategy filter as Get Offers By Placement, independently
-     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
-     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
-     * slot is still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show.<br/>
+     * Retrieve batches for a batch-activation or group placement. Returns each
+     * slot in slot order with its current offer set, alias, and freshness fields
+     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
+     * eligibility and per-slot content-strategy filter as Get Offers By
+     * Placement, independently per slot. For a batch-activation placement, a
+     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
+     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
+     * still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
+     * active and each slot returns its offers regardless of activation state,
+     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
+     * no activation record.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(
@@ -406,14 +414,18 @@ public class AsyncRawRewardsClient {
     }
 
     /**
-     * Retrieve batches for a batch-activation placement. Returns each slot in slot
-     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
-     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
-     * per-slot content-strategy filter as Get Offers By Placement, independently
-     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
-     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
-     * slot is still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show.<br/>
+     * Retrieve batches for a batch-activation or group placement. Returns each
+     * slot in slot order with its current offer set, alias, and freshness fields
+     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
+     * eligibility and per-slot content-strategy filter as Get Offers By
+     * Placement, independently per slot. For a batch-activation placement, a
+     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
+     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
+     * still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
+     * active and each slot returns its offers regardless of activation state,
+     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
+     * no activation record.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(
@@ -422,14 +434,18 @@ public class AsyncRawRewardsClient {
     }
 
     /**
-     * Retrieve batches for a batch-activation placement. Returns each slot in slot
-     * order with its current offer set, alias, and freshness fields (<code>isActive</code>,
-     * <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user eligibility and
-     * per-slot content-strategy filter as Get Offers By Placement, independently
-     * per slot. A slot only flips to <code>isActive: false</code> when its refresh interval
-     * has elapsed AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the
-     * slot is still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show.<br/>
+     * Retrieve batches for a batch-activation or group placement. Returns each
+     * slot in slot order with its current offer set, alias, and freshness fields
+     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
+     * eligibility and per-slot content-strategy filter as Get Offers By
+     * Placement, independently per slot. For a batch-activation placement, a
+     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
+     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
+     * still returned and stays active so the partner UI does not promote
+     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
+     * active and each slot returns its offers regardless of activation state,
+     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
+     * no activation record.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public CompletableFuture<KardApiHttpResponse<BatchesResponseObject>> placementBatches(

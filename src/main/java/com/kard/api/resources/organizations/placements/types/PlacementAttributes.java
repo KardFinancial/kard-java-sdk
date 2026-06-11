@@ -19,8 +19,8 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = MainPagePlacementAttributes.Builder.class)
-public final class MainPagePlacementAttributes {
+@JsonDeserialize(builder = PlacementAttributes.Builder.class)
+public final class PlacementAttributes {
     private final String name;
 
     private final String organizationId;
@@ -31,7 +31,7 @@ public final class MainPagePlacementAttributes {
 
     private final Map<String, Object> additionalProperties;
 
-    private MainPagePlacementAttributes(
+    private PlacementAttributes(
             String name,
             String organizationId,
             int availableSlots,
@@ -79,7 +79,7 @@ public final class MainPagePlacementAttributes {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof MainPagePlacementAttributes && equalTo((MainPagePlacementAttributes) other);
+        return other instanceof PlacementAttributes && equalTo((PlacementAttributes) other);
     }
 
     @JsonAnyGetter
@@ -87,7 +87,7 @@ public final class MainPagePlacementAttributes {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(MainPagePlacementAttributes other) {
+    private boolean equalTo(PlacementAttributes other) {
         return name.equals(other.name)
                 && organizationId.equals(other.organizationId)
                 && availableSlots == other.availableSlots
@@ -114,7 +114,7 @@ public final class MainPagePlacementAttributes {
          */
         OrganizationIdStage name(@NotNull String name);
 
-        Builder from(MainPagePlacementAttributes other);
+        Builder from(PlacementAttributes other);
     }
 
     public interface OrganizationIdStage {
@@ -132,7 +132,7 @@ public final class MainPagePlacementAttributes {
     }
 
     public interface _FinalStage {
-        MainPagePlacementAttributes build();
+        PlacementAttributes build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -162,7 +162,7 @@ public final class MainPagePlacementAttributes {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(MainPagePlacementAttributes other) {
+        public Builder from(PlacementAttributes other) {
             name(other.getName());
             organizationId(other.getOrganizationId());
             availableSlots(other.getAvailableSlots());
@@ -227,8 +227,8 @@ public final class MainPagePlacementAttributes {
         }
 
         @java.lang.Override
-        public MainPagePlacementAttributes build() {
-            return new MainPagePlacementAttributes(
+        public PlacementAttributes build() {
+            return new PlacementAttributes(
                     name, organizationId, availableSlots, contentStrategyId, additionalProperties);
         }
 

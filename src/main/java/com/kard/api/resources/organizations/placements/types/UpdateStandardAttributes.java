@@ -19,8 +19,8 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = CreateMainPageAttributes.Builder.class)
-public final class CreateMainPageAttributes {
+@JsonDeserialize(builder = UpdateStandardAttributes.Builder.class)
+public final class UpdateStandardAttributes {
     private final String name;
 
     private final int availableSlots;
@@ -29,7 +29,7 @@ public final class CreateMainPageAttributes {
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateMainPageAttributes(
+    private UpdateStandardAttributes(
             String name,
             int availableSlots,
             Optional<String> contentStrategyId,
@@ -57,7 +57,7 @@ public final class CreateMainPageAttributes {
     }
 
     /**
-     * @return ID of the content strategy to link this placement to
+     * @return ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).
      */
     @JsonProperty("contentStrategyId")
     public Optional<String> getContentStrategyId() {
@@ -67,7 +67,7 @@ public final class CreateMainPageAttributes {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateMainPageAttributes && equalTo((CreateMainPageAttributes) other);
+        return other instanceof UpdateStandardAttributes && equalTo((UpdateStandardAttributes) other);
     }
 
     @JsonAnyGetter
@@ -75,7 +75,7 @@ public final class CreateMainPageAttributes {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(CreateMainPageAttributes other) {
+    private boolean equalTo(UpdateStandardAttributes other) {
         return name.equals(other.name)
                 && availableSlots == other.availableSlots
                 && contentStrategyId.equals(other.contentStrategyId);
@@ -101,7 +101,7 @@ public final class CreateMainPageAttributes {
          */
         AvailableSlotsStage name(@NotNull String name);
 
-        Builder from(CreateMainPageAttributes other);
+        Builder from(UpdateStandardAttributes other);
     }
 
     public interface AvailableSlotsStage {
@@ -112,14 +112,14 @@ public final class CreateMainPageAttributes {
     }
 
     public interface _FinalStage {
-        CreateMainPageAttributes build();
+        UpdateStandardAttributes build();
 
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>ID of the content strategy to link this placement to</p>
+         * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
          */
         _FinalStage contentStrategyId(Optional<String> contentStrategyId);
 
@@ -140,7 +140,7 @@ public final class CreateMainPageAttributes {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(CreateMainPageAttributes other) {
+        public Builder from(UpdateStandardAttributes other) {
             name(other.getName());
             availableSlots(other.getAvailableSlots());
             contentStrategyId(other.getContentStrategyId());
@@ -172,7 +172,7 @@ public final class CreateMainPageAttributes {
         }
 
         /**
-         * <p>ID of the content strategy to link this placement to</p>
+         * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -182,7 +182,7 @@ public final class CreateMainPageAttributes {
         }
 
         /**
-         * <p>ID of the content strategy to link this placement to</p>
+         * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
          */
         @java.lang.Override
         @JsonSetter(value = "contentStrategyId", nulls = Nulls.SKIP)
@@ -192,8 +192,8 @@ public final class CreateMainPageAttributes {
         }
 
         @java.lang.Override
-        public CreateMainPageAttributes build() {
-            return new CreateMainPageAttributes(name, availableSlots, contentStrategyId, additionalProperties);
+        public UpdateStandardAttributes build() {
+            return new UpdateStandardAttributes(name, availableSlots, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override
