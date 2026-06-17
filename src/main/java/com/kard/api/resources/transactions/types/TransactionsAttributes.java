@@ -79,6 +79,8 @@ public final class TransactionsAttributes {
 
     private final Optional<ProcessorMid> processorMids;
 
+    private final Optional<String> accountId;
+
     private final Map<String, Object> additionalProperties;
 
     private TransactionsAttributes(
@@ -110,6 +112,7 @@ public final class TransactionsAttributes {
             Optional<String> cardProductId,
             Optional<String> userZipCode,
             Optional<ProcessorMid> processorMids,
+            Optional<String> accountId,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.amount = amount;
@@ -139,6 +142,7 @@ public final class TransactionsAttributes {
         this.cardProductId = cardProductId;
         this.userZipCode = userZipCode;
         this.processorMids = processorMids;
+        this.accountId = accountId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -366,6 +370,14 @@ public final class TransactionsAttributes {
         return processorMids;
     }
 
+    /**
+     * @return An account identifier associated to transaction
+     */
+    @JsonProperty("accountId")
+    public Optional<String> getAccountId() {
+        return accountId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -405,7 +417,8 @@ public final class TransactionsAttributes {
                 && transactionId.equals(other.transactionId)
                 && cardProductId.equals(other.cardProductId)
                 && userZipCode.equals(other.userZipCode)
-                && processorMids.equals(other.processorMids);
+                && processorMids.equals(other.processorMids)
+                && accountId.equals(other.accountId);
     }
 
     @java.lang.Override
@@ -438,7 +451,8 @@ public final class TransactionsAttributes {
                 this.transactionId,
                 this.cardProductId,
                 this.userZipCode,
-                this.processorMids);
+                this.processorMids,
+                this.accountId);
     }
 
     @java.lang.Override
@@ -654,6 +668,13 @@ public final class TransactionsAttributes {
         _FinalStage processorMids(Optional<ProcessorMid> processorMids);
 
         _FinalStage processorMids(ProcessorMid processorMids);
+
+        /**
+         * <p>An account identifier associated to transaction</p>
+         */
+        _FinalStage accountId(Optional<String> accountId);
+
+        _FinalStage accountId(String accountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -688,6 +709,8 @@ public final class TransactionsAttributes {
         private TransactionPaymentType paymentType;
 
         private String transactionId;
+
+        private Optional<String> accountId = Optional.empty();
 
         private Optional<ProcessorMid> processorMids = Optional.empty();
 
@@ -760,6 +783,7 @@ public final class TransactionsAttributes {
             cardProductId(other.getCardProductId());
             userZipCode(other.getUserZipCode());
             processorMids(other.getProcessorMids());
+            accountId(other.getAccountId());
             return this;
         }
 
@@ -880,6 +904,26 @@ public final class TransactionsAttributes {
         @JsonSetter("transactionId")
         public _FinalStage transactionId(@NotNull String transactionId) {
             this.transactionId = Objects.requireNonNull(transactionId, "transactionId must not be null");
+            return this;
+        }
+
+        /**
+         * <p>An account identifier associated to transaction</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage accountId(String accountId) {
+            this.accountId = Optional.ofNullable(accountId);
+            return this;
+        }
+
+        /**
+         * <p>An account identifier associated to transaction</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "accountId", nulls = Nulls.SKIP)
+        public _FinalStage accountId(Optional<String> accountId) {
+            this.accountId = accountId;
             return this;
         }
 
@@ -1274,6 +1318,7 @@ public final class TransactionsAttributes {
                     cardProductId,
                     userZipCode,
                     processorMids,
+                    accountId,
                     additionalProperties);
         }
 

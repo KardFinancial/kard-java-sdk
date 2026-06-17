@@ -1,3 +1,7 @@
+## 12.1.0 - 2026-06-17
+### Added
+* **`TransactionsAttributes.getAccountId()`** — new optional `String` field that returns an account identifier associated with a transaction; exposed via `accountId(String)` and `accountId(Optional<String>)` builder methods.
+
 ## 12.0.0 - 2026-06-11
 ### Added
 * **`CreateEmailAttributes`** and **`CreateEmailPlacementData`** — new types for constructing email placement creation request bodies, carrying `name`, `availableSlots`, `cadence`, and an optional `contentStrategyId`.
