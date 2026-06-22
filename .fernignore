@@ -6,3 +6,4 @@ changelog.md
 src/main/java/com/kard/hem/HEM.java
 src/test/java/com/kard/hem/HEMTest.java
 test_vectors.json
+LICENSE
