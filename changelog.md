@@ -1,3 +1,10 @@
+## 12.2.0 - 2026-06-22
+### Added
+* **`RewardsClient.placementContent()`** and **`AsyncRewardsClient.placementContent()`** — new unified endpoint method (with `RequestOptions` and `GetPlacementContentRequest` overloads) that retrieves content for any placement type, returning `standardOffer` or `placementBatch` resources.
+* **`GetPlacementContentRequest`** — new request type with optional `include` (CSV resource list) and `supportedComponents` (`ComponentType` list) builder fields.
+* **`PlacementContentResponse`** — new response type carrying a `data` list of `PlacementContentData`, optional `links`, `included`, and `meta` fields.
+* **`PlacementContentData`** — new union type wrapping either an `OfferDataUnion` or `PlacementBatchData` variant, with a `Visitor<T>` interface for exhaustive handling.
+
 ## 12.1.0 - 2026-06-17
 ### Added
 * **`TransactionsAttributes.getAccountId()`** — new optional `String` field that returns an account identifier associated with a transaction; exposed via `accountId(String)` and `accountId(Optional<String>)` builder methods.

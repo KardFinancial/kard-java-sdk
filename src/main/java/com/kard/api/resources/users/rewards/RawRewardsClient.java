@@ -20,9 +20,11 @@ import com.kard.api.resources.users.rewards.requests.GetBatchesByPlacementReques
 import com.kard.api.resources.users.rewards.requests.GetLocationsByUserRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByUserRequest;
+import com.kard.api.resources.users.rewards.requests.GetPlacementContentRequest;
 import com.kard.api.resources.users.rewards.types.BatchesResponseObject;
 import com.kard.api.resources.users.rewards.types.LocationsResponseObject;
 import com.kard.api.resources.users.rewards.types.OffersResponseObject;
+import com.kard.api.resources.users.rewards.types.PlacementContentResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -443,6 +445,157 @@ public class RawRewardsClient {
             if (response.isSuccessful()) {
                 return new KardApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BatchesResponseObject.class), response);
+            }
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new InvalidRequest(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 401:
+                        throw new UnauthorizedError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 404:
+                        throw new DoesNotExistError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                    case 500:
+                        throw new InternalServerError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new KardApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new KardApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public KardApiHttpResponse<PlacementContentResponse> placementContent(
+            String organizationId, String userId, String placementId) {
+        return placementContent(
+                organizationId,
+                userId,
+                placementId,
+                GetPlacementContentRequest.builder().build());
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public KardApiHttpResponse<PlacementContentResponse> placementContent(
+            String organizationId, String userId, String placementId, RequestOptions requestOptions) {
+        return placementContent(
+                organizationId,
+                userId,
+                placementId,
+                GetPlacementContentRequest.builder().build(),
+                requestOptions);
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public KardApiHttpResponse<PlacementContentResponse> placementContent(
+            String organizationId, String userId, String placementId, GetPlacementContentRequest request) {
+        return placementContent(organizationId, userId, placementId, request, null);
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public KardApiHttpResponse<PlacementContentResponse> placementContent(
+            String organizationId,
+            String userId,
+            String placementId,
+            GetPlacementContentRequest request,
+            RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/issuers")
+                .addPathSegment(organizationId)
+                .addPathSegments("users")
+                .addPathSegment(userId)
+                .addPathSegments("placements")
+                .addPathSegment(placementId)
+                .addPathSegments("content");
+        if (request.getInclude().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "include", request.getInclude().get(), true);
+        }
+        if (request.getSupportedComponents().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "supportedComponents",
+                    request.getSupportedComponents().get(),
+                    true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new KardApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PlacementContentResponse.class),
+                        response);
             }
             try {
                 switch (response.code()) {

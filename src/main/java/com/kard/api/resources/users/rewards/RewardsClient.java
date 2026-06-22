@@ -9,9 +9,11 @@ import com.kard.api.resources.users.rewards.requests.GetBatchesByPlacementReques
 import com.kard.api.resources.users.rewards.requests.GetLocationsByUserRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByUserRequest;
+import com.kard.api.resources.users.rewards.requests.GetPlacementContentRequest;
 import com.kard.api.resources.users.rewards.types.BatchesResponseObject;
 import com.kard.api.resources.users.rewards.types.LocationsResponseObject;
 import com.kard.api.resources.users.rewards.types.OffersResponseObject;
+import com.kard.api.resources.users.rewards.types.PlacementContentResponse;
 
 public class RewardsClient {
     protected final ClientOptions clientOptions;
@@ -212,6 +214,89 @@ public class RewardsClient {
             RequestOptions requestOptions) {
         return this.rawClient
                 .placementBatches(organizationId, userId, placementId, request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public PlacementContentResponse placementContent(String organizationId, String userId, String placementId) {
+        return this.rawClient
+                .placementContent(organizationId, userId, placementId)
+                .body();
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public PlacementContentResponse placementContent(
+            String organizationId, String userId, String placementId, RequestOptions requestOptions) {
+        return this.rawClient
+                .placementContent(organizationId, userId, placementId, requestOptions)
+                .body();
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public PlacementContentResponse placementContent(
+            String organizationId, String userId, String placementId, GetPlacementContentRequest request) {
+        return this.rawClient
+                .placementContent(organizationId, userId, placementId, request)
+                .body();
+    }
+
+    /**
+     * Retrieve the content for a placement. The placement type is resolved
+     * server-side so callers no longer pick an endpoint by placement type.
+     * Returns a JSON:API document whose <code>data</code> resources are self-describing
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
+     * same payload as Get Offers By Placement — with <code>links</code>, optional
+     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
+     * placement returns <code>placementBatch</code> slot resources (the same payload as
+     * Get Batches By Placement). Distinguish the two by each resource's
+     * <code>type</code>. Email and push-notification placements are not servable through
+     * this endpoint and respond with a <code>400</code>.<br/>
+     * <b>Required scopes:</b> <code>rewards:read</code>
+     */
+    public PlacementContentResponse placementContent(
+            String organizationId,
+            String userId,
+            String placementId,
+            GetPlacementContentRequest request,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .placementContent(organizationId, userId, placementId, request, requestOptions)
                 .body();
     }
 
