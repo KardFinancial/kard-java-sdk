@@ -3,67 +3,40 @@
  */
 package com.kard.api.resources.users.rewards.types;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.kard.api.core.ObjectMappers;
-import com.kard.api.resources.commons.types.Links;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = PlacementContentResponse.Builder.class)
+@JsonDeserialize(using = PlacementContentResponse.Deserializer.class)
 public final class PlacementContentResponse {
-    private final List<PlacementContentData> data;
+    private final Object value;
 
-    private final Optional<Links> links;
+    private final int type;
 
-    private final Optional<List<EligibilityOfferIncluded>> included;
-
-    private final Optional<OffersMeta> meta;
-
-    private final Map<String, Object> additionalProperties;
-
-    private PlacementContentResponse(
-            List<PlacementContentData> data,
-            Optional<Links> links,
-            Optional<List<EligibilityOfferIncluded>> included,
-            Optional<OffersMeta> meta,
-            Map<String, Object> additionalProperties) {
-        this.data = data;
-        this.links = links;
-        this.included = included;
-        this.meta = meta;
-        this.additionalProperties = additionalProperties;
+    private PlacementContentResponse(Object value, int type) {
+        this.value = value;
+        this.type = type;
     }
 
-    @JsonProperty("data")
-    public List<PlacementContentData> getData() {
-        return data;
+    @JsonValue
+    public Object get() {
+        return this.value;
     }
 
-    @JsonProperty("links")
-    public Optional<Links> getLinks() {
-        return links;
-    }
-
-    @JsonProperty("included")
-    public Optional<List<EligibilityOfferIncluded>> getIncluded() {
-        return included;
-    }
-
-    @JsonProperty("meta")
-    public Optional<OffersMeta> getMeta() {
-        return meta;
+    @SuppressWarnings("unchecked")
+    public <T> T visit(Visitor<T> visitor) {
+        if (this.type == 0) {
+            return visitor.visit((OffersResponseObject) this.value);
+        } else if (this.type == 1) {
+            return visitor.visit((BatchesResponseObject) this.value);
+        }
+        throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
 
     @java.lang.Override
@@ -72,121 +45,51 @@ public final class PlacementContentResponse {
         return other instanceof PlacementContentResponse && equalTo((PlacementContentResponse) other);
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
     private boolean equalTo(PlacementContentResponse other) {
-        return data.equals(other.data)
-                && links.equals(other.links)
-                && included.equals(other.included)
-                && meta.equals(other.meta);
+        return value.equals(other.value);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data, this.links, this.included, this.meta);
+        return Objects.hash(this.value);
     }
 
     @java.lang.Override
     public String toString() {
-        return ObjectMappers.stringify(this);
+        return this.value.toString();
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static PlacementContentResponse of(OffersResponseObject value) {
+        return new PlacementContentResponse(value, 0);
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private List<PlacementContentData> data = new ArrayList<>();
+    public static PlacementContentResponse of(BatchesResponseObject value) {
+        return new PlacementContentResponse(value, 1);
+    }
 
-        private Optional<Links> links = Optional.empty();
+    public interface Visitor<T> {
+        T visit(OffersResponseObject value);
 
-        private Optional<List<EligibilityOfferIncluded>> included = Optional.empty();
+        T visit(BatchesResponseObject value);
+    }
 
-        private Optional<OffersMeta> meta = Optional.empty();
-
-        @JsonAnySetter
-        private Map<String, Object> additionalProperties = new HashMap<>();
-
-        private Builder() {}
-
-        public Builder from(PlacementContentResponse other) {
-            data(other.getData());
-            links(other.getLinks());
-            included(other.getIncluded());
-            meta(other.getMeta());
-            return this;
+    static final class Deserializer extends StdDeserializer<PlacementContentResponse> {
+        Deserializer() {
+            super(PlacementContentResponse.class);
         }
 
-        @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public Builder data(List<PlacementContentData> data) {
-            this.data.clear();
-            if (data != null) {
-                this.data.addAll(data);
+        @java.lang.Override
+        public PlacementContentResponse deserialize(JsonParser p, DeserializationContext context) throws IOException {
+            Object value = p.readValueAs(Object.class);
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, OffersResponseObject.class));
+            } catch (RuntimeException e) {
             }
-            return this;
-        }
-
-        public Builder addData(PlacementContentData data) {
-            this.data.add(data);
-            return this;
-        }
-
-        public Builder addAllData(List<PlacementContentData> data) {
-            if (data != null) {
-                this.data.addAll(data);
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, BatchesResponseObject.class));
+            } catch (RuntimeException e) {
             }
-            return this;
-        }
-
-        @JsonSetter(value = "links", nulls = Nulls.SKIP)
-        public Builder links(Optional<Links> links) {
-            this.links = links;
-            return this;
-        }
-
-        public Builder links(Links links) {
-            this.links = Optional.ofNullable(links);
-            return this;
-        }
-
-        @JsonSetter(value = "included", nulls = Nulls.SKIP)
-        public Builder included(Optional<List<EligibilityOfferIncluded>> included) {
-            this.included = included;
-            return this;
-        }
-
-        public Builder included(List<EligibilityOfferIncluded> included) {
-            this.included = Optional.ofNullable(included);
-            return this;
-        }
-
-        @JsonSetter(value = "meta", nulls = Nulls.SKIP)
-        public Builder meta(Optional<OffersMeta> meta) {
-            this.meta = meta;
-            return this;
-        }
-
-        public Builder meta(OffersMeta meta) {
-            this.meta = Optional.ofNullable(meta);
-            return this;
-        }
-
-        public PlacementContentResponse build() {
-            return new PlacementContentResponse(data, links, included, meta, additionalProperties);
-        }
-
-        public Builder additionalProperty(String key, Object value) {
-            this.additionalProperties.put(key, value);
-            return this;
-        }
-
-        public Builder additionalProperties(Map<String, Object> additionalProperties) {
-            this.additionalProperties.putAll(additionalProperties);
-            return this;
+            throw new JsonParseException(p, "Failed to deserialize");
         }
     }
 }

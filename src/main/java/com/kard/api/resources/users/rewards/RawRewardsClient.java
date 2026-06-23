@@ -16,12 +16,9 @@ import com.kard.api.resources.commons.errors.InternalServerError;
 import com.kard.api.resources.commons.errors.InvalidRequest;
 import com.kard.api.resources.commons.errors.UnauthorizedError;
 import com.kard.api.resources.commons.types.ErrorResponse;
-import com.kard.api.resources.users.rewards.requests.GetBatchesByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetLocationsByUserRequest;
-import com.kard.api.resources.users.rewards.requests.GetOffersByPlacementRequest;
 import com.kard.api.resources.users.rewards.requests.GetOffersByUserRequest;
 import com.kard.api.resources.users.rewards.requests.GetPlacementContentRequest;
-import com.kard.api.resources.users.rewards.types.BatchesResponseObject;
 import com.kard.api.resources.users.rewards.types.LocationsResponseObject;
 import com.kard.api.resources.users.rewards.types.OffersResponseObject;
 import com.kard.api.resources.users.rewards.types.PlacementContentResponse;
@@ -182,307 +179,15 @@ public class RawRewardsClient {
     }
 
     /**
-     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
-     * limited by the placement's available slots.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<OffersResponseObject> placementOffers(
-            String organizationId, String userId, String placementId) {
-        return placementOffers(
-                organizationId,
-                userId,
-                placementId,
-                GetOffersByPlacementRequest.builder().build());
-    }
-
-    /**
-     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
-     * limited by the placement's available slots.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<OffersResponseObject> placementOffers(
-            String organizationId, String userId, String placementId, RequestOptions requestOptions) {
-        return placementOffers(
-                organizationId,
-                userId,
-                placementId,
-                GetOffersByPlacementRequest.builder().build(),
-                requestOptions);
-    }
-
-    /**
-     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
-     * limited by the placement's available slots.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<OffersResponseObject> placementOffers(
-            String organizationId, String userId, String placementId, GetOffersByPlacementRequest request) {
-        return placementOffers(organizationId, userId, placementId, request, null);
-    }
-
-    /**
-     * Retrieve offers for a placement slot. Returns offers sorted by highest cash back,
-     * limited by the placement's available slots.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<OffersResponseObject> placementOffers(
-            String organizationId,
-            String userId,
-            String placementId,
-            GetOffersByPlacementRequest request,
-            RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/issuers")
-                .addPathSegment(organizationId)
-                .addPathSegments("users")
-                .addPathSegment(userId)
-                .addPathSegments("placements")
-                .addPathSegment(placementId)
-                .addPathSegments("offers");
-        if (request.getFilterSearch().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "filter[search]", request.getFilterSearch().get(), false);
-        }
-        if (request.getFilterPurchaseChannel().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "filter[purchaseChannel]",
-                    request.getFilterPurchaseChannel().get(),
-                    false);
-        }
-        if (request.getFilterCategory().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "filter[category]", request.getFilterCategory().get(), false);
-        }
-        if (request.getFilterIsTargeted().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "filter[isTargeted]", request.getFilterIsTargeted().get(), false);
-        }
-        if (request.getInclude().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "include", request.getInclude().get(), true);
-        }
-        if (request.getSupportedComponents().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "supportedComponents",
-                    request.getSupportedComponents().get(),
-                    true);
-        }
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                httpUrl.addQueryParameter(_key, _value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OffersResponseObject.class), response);
-            }
-            try {
-                switch (response.code()) {
-                    case 400:
-                        throw new InvalidRequest(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 401:
-                        throw new UnauthorizedError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 404:
-                        throw new DoesNotExistError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 500:
-                        throw new InternalServerError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new KardApiApiException(
-                    "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new KardApiException("Network error executing HTTP request", e);
-        }
-    }
-
-    /**
-     * Retrieve batches for a batch-activation or group placement. Returns each
-     * slot in slot order with its current offer set, alias, and freshness fields
-     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
-     * eligibility and per-slot content-strategy filter as Get Offers By
-     * Placement, independently per slot. For a batch-activation placement, a
-     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
-     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
-     * still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
-     * active and each slot returns its offers regardless of activation state,
-     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
-     * no activation record.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<BatchesResponseObject> placementBatches(
-            String organizationId, String userId, String placementId) {
-        return placementBatches(
-                organizationId,
-                userId,
-                placementId,
-                GetBatchesByPlacementRequest.builder().build());
-    }
-
-    /**
-     * Retrieve batches for a batch-activation or group placement. Returns each
-     * slot in slot order with its current offer set, alias, and freshness fields
-     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
-     * eligibility and per-slot content-strategy filter as Get Offers By
-     * Placement, independently per slot. For a batch-activation placement, a
-     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
-     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
-     * still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
-     * active and each slot returns its offers regardless of activation state,
-     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
-     * no activation record.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<BatchesResponseObject> placementBatches(
-            String organizationId, String userId, String placementId, RequestOptions requestOptions) {
-        return placementBatches(
-                organizationId,
-                userId,
-                placementId,
-                GetBatchesByPlacementRequest.builder().build(),
-                requestOptions);
-    }
-
-    /**
-     * Retrieve batches for a batch-activation or group placement. Returns each
-     * slot in slot order with its current offer set, alias, and freshness fields
-     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
-     * eligibility and per-slot content-strategy filter as Get Offers By
-     * Placement, independently per slot. For a batch-activation placement, a
-     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
-     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
-     * still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
-     * active and each slot returns its offers regardless of activation state,
-     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
-     * no activation record.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<BatchesResponseObject> placementBatches(
-            String organizationId, String userId, String placementId, GetBatchesByPlacementRequest request) {
-        return placementBatches(organizationId, userId, placementId, request, null);
-    }
-
-    /**
-     * Retrieve batches for a batch-activation or group placement. Returns each
-     * slot in slot order with its current offer set, alias, and freshness fields
-     * (<code>isActive</code>, <code>lastActivatedAt</code>, <code>expiresAt</code>). Applies the same per-user
-     * eligibility and per-slot content-strategy filter as Get Offers By
-     * Placement, independently per slot. For a batch-activation placement, a
-     * slot only flips to <code>isActive: false</code> when its refresh interval has elapsed
-     * AND its post-eligibility <code>offers[]</code> is non-empty; otherwise the slot is
-     * still returned and stays active so the partner UI does not promote
-     * &quot;refresh&quot; with nothing to show. For a group placement, slots are always
-     * active and each slot returns its offers regardless of activation state,
-     * hiding only offers that require activation (<code>requiredInBatch</code>) and have
-     * no activation record.<br/>
-     * <b>Required scopes:</b> <code>rewards:read</code>
-     */
-    public KardApiHttpResponse<BatchesResponseObject> placementBatches(
-            String organizationId,
-            String userId,
-            String placementId,
-            GetBatchesByPlacementRequest request,
-            RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/issuers")
-                .addPathSegment(organizationId)
-                .addPathSegments("users")
-                .addPathSegment(userId)
-                .addPathSegments("placements")
-                .addPathSegment(placementId)
-                .addPathSegments("batches");
-        if (request.getSupportedComponents().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "supportedComponents",
-                    request.getSupportedComponents().get(),
-                    true);
-        }
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                httpUrl.addQueryParameter(_key, _value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new KardApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BatchesResponseObject.class), response);
-            }
-            try {
-                switch (response.code()) {
-                    case 400:
-                        throw new InvalidRequest(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 401:
-                        throw new UnauthorizedError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 404:
-                        throw new DoesNotExistError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                    case 500:
-                        throw new InternalServerError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponse.class), response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new KardApiApiException(
-                    "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new KardApiException("Network error executing HTTP request", e);
-        }
-    }
-
-    /**
      * Retrieve the content for a placement. The placement type is resolved
      * server-side so callers no longer pick an endpoint by placement type.
      * Returns a JSON:API document whose <code>data</code> resources are self-describing
-     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
-     * same payload as Get Offers By Placement — with <code>links</code>, optional
-     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
-     * placement returns <code>placementBatch</code> slot resources (the same payload as
-     * Get Batches By Placement). Distinguish the two by each resource's
-     * <code>type</code>. Email and push-notification placements are not servable through
-     * this endpoint and respond with a <code>400</code>.<br/>
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (with
+     * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
+     * or group placement returns <code>placementBatch</code> slot resources. Distinguish
+     * the two by each resource's <code>type</code>. Email and push-notification
+     * placements are not servable through this endpoint and respond with a
+     * <code>400</code>.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(
@@ -498,13 +203,12 @@ public class RawRewardsClient {
      * Retrieve the content for a placement. The placement type is resolved
      * server-side so callers no longer pick an endpoint by placement type.
      * Returns a JSON:API document whose <code>data</code> resources are self-describing
-     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
-     * same payload as Get Offers By Placement — with <code>links</code>, optional
-     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
-     * placement returns <code>placementBatch</code> slot resources (the same payload as
-     * Get Batches By Placement). Distinguish the two by each resource's
-     * <code>type</code>. Email and push-notification placements are not servable through
-     * this endpoint and respond with a <code>400</code>.<br/>
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (with
+     * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
+     * or group placement returns <code>placementBatch</code> slot resources. Distinguish
+     * the two by each resource's <code>type</code>. Email and push-notification
+     * placements are not servable through this endpoint and respond with a
+     * <code>400</code>.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(
@@ -521,13 +225,12 @@ public class RawRewardsClient {
      * Retrieve the content for a placement. The placement type is resolved
      * server-side so callers no longer pick an endpoint by placement type.
      * Returns a JSON:API document whose <code>data</code> resources are self-describing
-     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
-     * same payload as Get Offers By Placement — with <code>links</code>, optional
-     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
-     * placement returns <code>placementBatch</code> slot resources (the same payload as
-     * Get Batches By Placement). Distinguish the two by each resource's
-     * <code>type</code>. Email and push-notification placements are not servable through
-     * this endpoint and respond with a <code>400</code>.<br/>
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (with
+     * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
+     * or group placement returns <code>placementBatch</code> slot resources. Distinguish
+     * the two by each resource's <code>type</code>. Email and push-notification
+     * placements are not servable through this endpoint and respond with a
+     * <code>400</code>.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(
@@ -539,13 +242,12 @@ public class RawRewardsClient {
      * Retrieve the content for a placement. The placement type is resolved
      * server-side so callers no longer pick an endpoint by placement type.
      * Returns a JSON:API document whose <code>data</code> resources are self-describing
-     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (the
-     * same payload as Get Offers By Placement — with <code>links</code>, optional
-     * <code>included</code> categories, and <code>meta</code>); a batch-activation or group
-     * placement returns <code>placementBatch</code> slot resources (the same payload as
-     * Get Batches By Placement). Distinguish the two by each resource's
-     * <code>type</code>. Email and push-notification placements are not servable through
-     * this endpoint and respond with a <code>400</code>.<br/>
+     * by <code>type</code>: a standard placement returns <code>standardOffer</code> resources (with
+     * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
+     * or group placement returns <code>placementBatch</code> slot resources. Distinguish
+     * the two by each resource's <code>type</code>. Email and push-notification
+     * placements are not servable through this endpoint and respond with a
+     * <code>400</code>.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(

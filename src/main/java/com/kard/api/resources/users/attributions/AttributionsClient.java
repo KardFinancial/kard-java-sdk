@@ -143,8 +143,8 @@ public class AttributionsClient {
      * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
      * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
      * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
-     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
-     * round-trip.
+     * partner can render the batch immediately without an extra round-trip to re-fetch
+     * the placement content.
      * <p><b>Required scopes:</b> <code>attributions:write</code></p>
      */
     public ActivatePlacementSlotResponse activatePlacementSlot(
@@ -159,8 +159,8 @@ public class AttributionsClient {
      * <code>placementSlotAttribution</code> ACTIVATE event and fans out a per-offer
      * <code>offerAttribution</code> ACTIVATE event for every offer resolved by the slot's content
      * strategy. The slot-level event id and the resolved <code>offerIds</code> are returned so the
-     * partner can render the batch immediately without an extra <code>getBatchesByPlacement</code>
-     * round-trip.
+     * partner can render the batch immediately without an extra round-trip to re-fetch
+     * the placement content.
      * <p><b>Required scopes:</b> <code>attributions:write</code></p>
      */
     public ActivatePlacementSlotResponse activatePlacementSlot(

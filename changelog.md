@@ -1,3 +1,7 @@
+## 12.2.1 - 2026-06-23
+* SDK regeneration
+* Unable to analyze changes with AI, incrementing PATCH version.
+
 ## 12.2.0 - 2026-06-22
 ### Added
 * **`RewardsClient.placementContent()`** and **`AsyncRewardsClient.placementContent()`** — new unified endpoint method (with `RequestOptions` and `GetPlacementContentRequest` overloads) that retrieves content for any placement type, returning `standardOffer` or `placementBatch` resources.
