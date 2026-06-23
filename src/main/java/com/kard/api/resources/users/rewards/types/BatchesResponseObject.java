@@ -17,22 +17,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BatchesResponseObject.Builder.class)
 public final class BatchesResponseObject {
     private final List<PlacementBatchData> data;
 
+    private final Optional<BatchesMeta> meta;
+
     private final Map<String, Object> additionalProperties;
 
-    private BatchesResponseObject(List<PlacementBatchData> data, Map<String, Object> additionalProperties) {
+    private BatchesResponseObject(
+            List<PlacementBatchData> data, Optional<BatchesMeta> meta, Map<String, Object> additionalProperties) {
         this.data = data;
+        this.meta = meta;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("data")
     public List<PlacementBatchData> getData() {
         return data;
+    }
+
+    @JsonProperty("meta")
+    public Optional<BatchesMeta> getMeta() {
+        return meta;
     }
 
     @java.lang.Override
@@ -47,12 +57,12 @@ public final class BatchesResponseObject {
     }
 
     private boolean equalTo(BatchesResponseObject other) {
-        return data.equals(other.data);
+        return data.equals(other.data) && meta.equals(other.meta);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data);
+        return Objects.hash(this.data, this.meta);
     }
 
     @java.lang.Override
@@ -68,6 +78,8 @@ public final class BatchesResponseObject {
     public static final class Builder {
         private List<PlacementBatchData> data = new ArrayList<>();
 
+        private Optional<BatchesMeta> meta = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -75,6 +87,7 @@ public final class BatchesResponseObject {
 
         public Builder from(BatchesResponseObject other) {
             data(other.getData());
+            meta(other.getMeta());
             return this;
         }
 
@@ -99,8 +112,19 @@ public final class BatchesResponseObject {
             return this;
         }
 
+        @JsonSetter(value = "meta", nulls = Nulls.SKIP)
+        public Builder meta(Optional<BatchesMeta> meta) {
+            this.meta = meta;
+            return this;
+        }
+
+        public Builder meta(BatchesMeta meta) {
+            this.meta = Optional.ofNullable(meta);
+            return this;
+        }
+
         public BatchesResponseObject build() {
-            return new BatchesResponseObject(data, additionalProperties);
+            return new BatchesResponseObject(data, meta, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -13,39 +13,24 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = OffersMeta.Builder.class)
-public final class OffersMeta {
-    private final Optional<List<CategoryIncluded>> availableCategories;
-
+@JsonDeserialize(builder = BatchesMeta.Builder.class)
+public final class BatchesMeta {
     private final Optional<String> placementName;
 
     private final Map<String, Object> additionalProperties;
 
-    private OffersMeta(
-            Optional<List<CategoryIncluded>> availableCategories,
-            Optional<String> placementName,
-            Map<String, Object> additionalProperties) {
-        this.availableCategories = availableCategories;
+    private BatchesMeta(Optional<String> placementName, Map<String, Object> additionalProperties) {
         this.placementName = placementName;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return All distinct categories available across the entire filtered result set, not just the current page
-     */
-    @JsonProperty("availableCategories")
-    public Optional<List<CategoryIncluded>> getAvailableCategories() {
-        return availableCategories;
-    }
-
-    /**
-     * @return Display name of the placement, resolved server-side from its id. Populated only on the Get Placement Content endpoint; absent on the Get Offers By User endpoint.
+     * @return Display name of the placement, resolved server-side from its id.
      */
     @JsonProperty("placementName")
     public Optional<String> getPlacementName() {
@@ -55,7 +40,7 @@ public final class OffersMeta {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof OffersMeta && equalTo((OffersMeta) other);
+        return other instanceof BatchesMeta && equalTo((BatchesMeta) other);
     }
 
     @JsonAnyGetter
@@ -63,13 +48,13 @@ public final class OffersMeta {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(OffersMeta other) {
-        return availableCategories.equals(other.availableCategories) && placementName.equals(other.placementName);
+    private boolean equalTo(BatchesMeta other) {
+        return placementName.equals(other.placementName);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.availableCategories, this.placementName);
+        return Objects.hash(this.placementName);
     }
 
     @java.lang.Override
@@ -83,8 +68,6 @@ public final class OffersMeta {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<List<CategoryIncluded>> availableCategories = Optional.empty();
-
         private Optional<String> placementName = Optional.empty();
 
         @JsonAnySetter
@@ -92,28 +75,13 @@ public final class OffersMeta {
 
         private Builder() {}
 
-        public Builder from(OffersMeta other) {
-            availableCategories(other.getAvailableCategories());
+        public Builder from(BatchesMeta other) {
             placementName(other.getPlacementName());
             return this;
         }
 
         /**
-         * <p>All distinct categories available across the entire filtered result set, not just the current page</p>
-         */
-        @JsonSetter(value = "availableCategories", nulls = Nulls.SKIP)
-        public Builder availableCategories(Optional<List<CategoryIncluded>> availableCategories) {
-            this.availableCategories = availableCategories;
-            return this;
-        }
-
-        public Builder availableCategories(List<CategoryIncluded> availableCategories) {
-            this.availableCategories = Optional.ofNullable(availableCategories);
-            return this;
-        }
-
-        /**
-         * <p>Display name of the placement, resolved server-side from its id. Populated only on the Get Placement Content endpoint; absent on the Get Offers By User endpoint.</p>
+         * <p>Display name of the placement, resolved server-side from its id.</p>
          */
         @JsonSetter(value = "placementName", nulls = Nulls.SKIP)
         public Builder placementName(Optional<String> placementName) {
@@ -126,8 +94,8 @@ public final class OffersMeta {
             return this;
         }
 
-        public OffersMeta build() {
-            return new OffersMeta(availableCategories, placementName, additionalProperties);
+        public BatchesMeta build() {
+            return new BatchesMeta(placementName, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {
