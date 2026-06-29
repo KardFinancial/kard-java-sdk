@@ -11,6 +11,8 @@ public final class OfferMedium {
 
     public static final OfferMedium BROWSE = new OfferMedium(Value.BROWSE, "BROWSE");
 
+    public static final OfferMedium PUSH = new OfferMedium(Value.PUSH, "PUSH");
+
     public static final OfferMedium EMAIL = new OfferMedium(Value.EMAIL, "EMAIL");
 
     public static final OfferMedium CTA = new OfferMedium(Value.CTA, "CTA");
@@ -52,6 +54,8 @@ public final class OfferMedium {
                 return visitor.visitSearch();
             case BROWSE:
                 return visitor.visitBrowse();
+            case PUSH:
+                return visitor.visitPush();
             case EMAIL:
                 return visitor.visitEmail();
             case CTA:
@@ -71,6 +75,8 @@ public final class OfferMedium {
                 return SEARCH;
             case "BROWSE":
                 return BROWSE;
+            case "PUSH":
+                return PUSH;
             case "EMAIL":
                 return EMAIL;
             case "CTA":
@@ -93,6 +99,8 @@ public final class OfferMedium {
 
         CTA,
 
+        PUSH,
+
         UNKNOWN
     }
 
@@ -106,6 +114,8 @@ public final class OfferMedium {
         T visitSearch();
 
         T visitCta();
+
+        T visitPush();
 
         T visitUnknown(String unknownType);
     }

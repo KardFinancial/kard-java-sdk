@@ -1,3 +1,9 @@
+## 13.0.0 - 2026-06-29
+### Breaking Changes
+* **`OfferMedium.Visitor<T>`** — a new required `visitPush()` method has been added to the visitor interface. Any class that implements `OfferMedium.Visitor<T>` must now add a `visitPush()` override or it will fail to compile.
+### Added
+* **`OfferMedium.PUSH`** — new enum constant representing the `PUSH` offer medium channel.
+
 ## 12.2.2 - 2026-06-23
 * SDK regeneration
 * Unable to analyze changes with AI, incrementing PATCH version.
