@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,14 +27,18 @@ public final class ProgressBarSegments {
 
     private final ProgressBarSegment default_;
 
+    private final List<ProgressBarSegmentProgress> progress;
+
     private final Map<String, Object> additionalProperties;
 
     private ProgressBarSegments(
             Optional<ProgressBarSegment> details,
             ProgressBarSegment default_,
+            List<ProgressBarSegmentProgress> progress,
             Map<String, Object> additionalProperties) {
         this.details = details;
         this.default_ = default_;
+        this.progress = progress;
         this.additionalProperties = additionalProperties;
     }
 
@@ -52,6 +58,14 @@ public final class ProgressBarSegments {
         return default_;
     }
 
+    /**
+     * @return Per-segment fill state: one entry per segment node, index-aligned with the nodes (length equals the progress bar total). Reached nodes report 1 of 1 and not-yet-reached nodes 0 of 1; for a punch-card offer the in-progress node reports qualifying-purchase progress toward the next reward (Q mod N of N).
+     */
+    @JsonProperty("progress")
+    public List<ProgressBarSegmentProgress> getProgress() {
+        return progress;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -64,12 +78,12 @@ public final class ProgressBarSegments {
     }
 
     private boolean equalTo(ProgressBarSegments other) {
-        return details.equals(other.details) && default_.equals(other.default_);
+        return details.equals(other.details) && default_.equals(other.default_) && progress.equals(other.progress);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.details, this.default_);
+        return Objects.hash(this.details, this.default_, this.progress);
     }
 
     @java.lang.Override
@@ -103,11 +117,22 @@ public final class ProgressBarSegments {
         _FinalStage details(Optional<ProgressBarSegment> details);
 
         _FinalStage details(ProgressBarSegment details);
+
+        /**
+         * <p>Per-segment fill state: one entry per segment node, index-aligned with the nodes (length equals the progress bar total). Reached nodes report 1 of 1 and not-yet-reached nodes 0 of 1; for a punch-card offer the in-progress node reports qualifying-purchase progress toward the next reward (Q mod N of N).</p>
+         */
+        _FinalStage progress(List<ProgressBarSegmentProgress> progress);
+
+        _FinalStage addProgress(ProgressBarSegmentProgress progress);
+
+        _FinalStage addAllProgress(List<ProgressBarSegmentProgress> progress);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DefaultStage, _FinalStage {
         private ProgressBarSegment default_;
+
+        private List<ProgressBarSegmentProgress> progress = new ArrayList<>();
 
         private Optional<ProgressBarSegment> details = Optional.empty();
 
@@ -120,6 +145,7 @@ public final class ProgressBarSegments {
         public Builder from(ProgressBarSegments other) {
             details(other.getDetails());
             default_(other.getDefault());
+            progress(other.getProgress());
             return this;
         }
 
@@ -132,6 +158,41 @@ public final class ProgressBarSegments {
         @JsonSetter("default")
         public _FinalStage default_(@NotNull ProgressBarSegment default_) {
             this.default_ = Objects.requireNonNull(default_, "default_ must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Per-segment fill state: one entry per segment node, index-aligned with the nodes (length equals the progress bar total). Reached nodes report 1 of 1 and not-yet-reached nodes 0 of 1; for a punch-card offer the in-progress node reports qualifying-purchase progress toward the next reward (Q mod N of N).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage addAllProgress(List<ProgressBarSegmentProgress> progress) {
+            if (progress != null) {
+                this.progress.addAll(progress);
+            }
+            return this;
+        }
+
+        /**
+         * <p>Per-segment fill state: one entry per segment node, index-aligned with the nodes (length equals the progress bar total). Reached nodes report 1 of 1 and not-yet-reached nodes 0 of 1; for a punch-card offer the in-progress node reports qualifying-purchase progress toward the next reward (Q mod N of N).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage addProgress(ProgressBarSegmentProgress progress) {
+            this.progress.add(progress);
+            return this;
+        }
+
+        /**
+         * <p>Per-segment fill state: one entry per segment node, index-aligned with the nodes (length equals the progress bar total). Reached nodes report 1 of 1 and not-yet-reached nodes 0 of 1; for a punch-card offer the in-progress node reports qualifying-purchase progress toward the next reward (Q mod N of N).</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "progress", nulls = Nulls.SKIP)
+        public _FinalStage progress(List<ProgressBarSegmentProgress> progress) {
+            this.progress.clear();
+            if (progress != null) {
+                this.progress.addAll(progress);
+            }
             return this;
         }
 
@@ -157,7 +218,7 @@ public final class ProgressBarSegments {
 
         @java.lang.Override
         public ProgressBarSegments build() {
-            return new ProgressBarSegments(details, default_, additionalProperties);
+            return new ProgressBarSegments(details, default_, progress, additionalProperties);
         }
 
         @java.lang.Override

@@ -1,3 +1,9 @@
+## 13.1.0 - 2026-07-02
+### Added
+* **`ProgressBarSegmentProgress`** — new type representing the fill state of a single progress bar segment, with `getCompleted()` and `getTotal()` accessors.
+* **`ProgressBarSegments.getProgress()`** — new field returning a `List<ProgressBarSegmentProgress>` with one entry per segment node, index-aligned with the progress bar nodes; supports punch-card qualifying-purchase progress tracking.
+* **`ProgressBarSegments.Builder`** — new builder methods `progress()`, `addProgress()`, and `addAllProgress()` for populating the segment progress list.
+
 ## 13.0.1 - 2026-07-02
 * chore: update filterSearch Javadoc to reflect expanded search behavior
 * The `filterSearch` field in `GetOffersByUserRequest` previously described

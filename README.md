@@ -30,7 +30,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.getkard:kard-financial-sdk:13.0.1'
+  implementation 'com.getkard:kard-financial-sdk:13.1.0'
 }
 ```
 
@@ -42,7 +42,7 @@ Add the dependency in your `pom.xml` file:
 <dependency>
   <groupId>com.getkard</groupId>
   <artifactId>kard-financial-sdk</artifactId>
-  <version>13.0.1</version>
+  <version>13.1.0</version>
 </dependency>
 ```
 
