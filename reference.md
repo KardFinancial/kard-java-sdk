@@ -3104,7 +3104,7 @@ client.users().rewards().offers(
 <dl>
 <dd>
 
-**filterSearch:** `Optional<String>` — Case-insensitive search string to filter offers by merchant name
+**filterSearch:** `Optional<String>` — Case-insensitive substring search. Returns offers whose offer name or category name contains the search string.
     
 </dd>
 </dl>

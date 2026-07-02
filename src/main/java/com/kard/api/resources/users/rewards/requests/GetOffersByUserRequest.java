@@ -113,7 +113,7 @@ public final class GetOffersByUserRequest {
     }
 
     /**
-     * @return Case-insensitive search string to filter offers by merchant name
+     * @return Case-insensitive substring search. Returns offers whose offer name or category name contains the search string.
      */
     @JsonIgnore
     public Optional<String> getFilterSearch() {
@@ -315,7 +315,7 @@ public final class GetOffersByUserRequest {
         }
 
         /**
-         * <p>Case-insensitive search string to filter offers by merchant name</p>
+         * <p>Case-insensitive substring search. Returns offers whose offer name or category name contains the search string.</p>
          */
         @JsonSetter(value = "filter[search]", nulls = Nulls.SKIP)
         public Builder filterSearch(Optional<String> filterSearch) {

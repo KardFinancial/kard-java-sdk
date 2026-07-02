@@ -1,3 +1,14 @@
+## 13.0.1 - 2026-07-02
+* chore: update filterSearch Javadoc to reflect expanded search behavior
+* The `filterSearch` field in `GetOffersByUserRequest` previously described
+* a search that filtered by merchant name only. The documentation has been
+* updated to accurately reflect that the search is a case-insensitive
+* substring match against both offer name and category name.
+* Key changes:
+* Updated `getFilterSearch()` Javadoc from "filter offers by merchant name" to "substring search on offer name or category name"
+* Updated `Builder.filterSearch()` Javadoc to match the same corrected description
+* 🌿 Generated with Fern
+
 ## 13.0.0 - 2026-06-29
 ### Breaking Changes
 * **`OfferMedium.Visitor<T>`** — a new required `visitPush()` method has been added to the visitor interface. Any class that implements `OfferMedium.Visitor<T>` must now add a `visitPush()` override or it will fail to compile.
