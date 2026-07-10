@@ -1,3 +1,9 @@
+## 14.0.0 - 2026-07-10
+### Breaking Changes
+* **`ContentStrategySort.Visitor<T>`** — a new required `visitOffersNearYou()` method has been added to the visitor interface. Any class that implements `ContentStrategySort.Visitor<T>` must now add a `visitOffersNearYou()` override or it will fail to compile.
+### Added
+* **`ContentStrategySort.OFFERS_NEAR_YOU`** — new enum constant representing the `OFFERS_NEAR_YOU` content strategy sort option.
+
 ## 13.1.0 - 2026-07-02
 ### Added
 * **`ProgressBarSegmentProgress`** — new type representing the fill state of a single progress bar segment, with `getCompleted()` and `getTotal()` accessors.

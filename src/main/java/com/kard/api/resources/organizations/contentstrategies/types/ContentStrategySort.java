@@ -10,6 +10,9 @@ public final class ContentStrategySort {
     public static final ContentStrategySort EXPIRING_SOON =
             new ContentStrategySort(Value.EXPIRING_SOON, "EXPIRING_SOON");
 
+    public static final ContentStrategySort OFFERS_NEAR_YOU =
+            new ContentStrategySort(Value.OFFERS_NEAR_YOU, "OFFERS_NEAR_YOU");
+
     public static final ContentStrategySort PERSONALIZED = new ContentStrategySort(Value.PERSONALIZED, "PERSONALIZED");
 
     public static final ContentStrategySort HIGHEST_CASHBACK =
@@ -51,6 +54,8 @@ public final class ContentStrategySort {
         switch (value) {
             case EXPIRING_SOON:
                 return visitor.visitExpiringSoon();
+            case OFFERS_NEAR_YOU:
+                return visitor.visitOffersNearYou();
             case PERSONALIZED:
                 return visitor.visitPersonalized();
             case HIGHEST_CASHBACK:
@@ -68,6 +73,8 @@ public final class ContentStrategySort {
         switch (value) {
             case "EXPIRING_SOON":
                 return EXPIRING_SOON;
+            case "OFFERS_NEAR_YOU":
+                return OFFERS_NEAR_YOU;
             case "PERSONALIZED":
                 return PERSONALIZED;
             case "HIGHEST_CASHBACK":
@@ -88,6 +95,8 @@ public final class ContentStrategySort {
 
         PERSONALIZED,
 
+        OFFERS_NEAR_YOU,
+
         UNKNOWN
     }
 
@@ -99,6 +108,8 @@ public final class ContentStrategySort {
         T visitHighestCashback();
 
         T visitPersonalized();
+
+        T visitOffersNearYou();
 
         T visitUnknown(String unknownType);
     }
