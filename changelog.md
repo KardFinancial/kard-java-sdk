@@ -1,3 +1,12 @@
+## 17.0.0 - 2026-07-15
+### Breaking Changes
+* **`ContentStrategyAttributes.OrganizationIdStage.organizationId()`** — now returns `FiltersStage` instead of `_FinalStage`; add a `.filters(ContentStrategyFilters)` call after `.organizationId(...)` in every builder chain.
+* **`CreateContentStrategyAttributes.NameStage.name()`** — now returns `FiltersStage` instead of `_FinalStage`; add a `.filters(ContentStrategyFilters)` call after `.name(...)` in every builder chain.
+* **`UpdateContentStrategyAttributes.NameStage.name()`** — now returns `FiltersStage` instead of `_FinalStage`; add a `.filters(ContentStrategyFilters)` call after `.name(...)` in every builder chain.
+### Added
+* **`ContentStrategyFilters`** — new type holding optional `categories`, `categoryExclusions`, `merchantExclusions`, and `offerFeatures` lists used to filter offers selected for a content strategy.
+* **`OfferFeatures`** — new enum-like type (with `INTERACTIVE` constant and `Visitor<T>` interface) representing offer feature flags that can be passed to `ContentStrategyFilters`.
+
 ## 16.0.0 - 2026-07-15
 ### Breaking Changes
 * **`EarnedRewardApprovedData.getAttributes()`** — now returns `EarnedRewardNotificationAttributes` instead of `RewardNotificationAttributes`; update any code that assigns or passes the result to a `RewardNotificationAttributes`-typed variable or parameter.

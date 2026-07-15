@@ -877,6 +877,16 @@ client.organizations().contentStrategies().create(
                     CreateContentStrategyAttributes
                         .builder()
                         .name("Featured Travel")
+                        .filters(
+                            ContentStrategyFilters
+                                .builder()
+                                .offerFeatures(
+                                    Optional.of(
+                                        Arrays.asList(OfferFeatures.INTERACTIVE)
+                                    )
+                                )
+                                .build()
+                        )
                         .sort(ContentStrategySort.HIGHEST_CASHBACK)
                         .categories(
                             Arrays.asList(CategoryOption.TRAVEL)
@@ -1111,6 +1121,11 @@ client.organizations().contentStrategies().update(
                     UpdateContentStrategyAttributes
                         .builder()
                         .name("name")
+                        .filters(
+                            ContentStrategyFilters
+                                .builder()
+                                .build()
+                        )
                         .categories(
                             Arrays.asList(CategoryOption.ARTS_ENTERTAINMENT, CategoryOption.ARTS_ENTERTAINMENT)
                         )

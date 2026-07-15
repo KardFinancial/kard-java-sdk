@@ -28,6 +28,8 @@ public final class CreateContentStrategyAttributes {
 
     private final Optional<ContentStrategySort> sort;
 
+    private final ContentStrategyFilters filters;
+
     private final List<CategoryOption> categories;
 
     private final List<CategoryOption> categoryExclusions;
@@ -39,12 +41,14 @@ public final class CreateContentStrategyAttributes {
     private CreateContentStrategyAttributes(
             String name,
             Optional<ContentStrategySort> sort,
+            ContentStrategyFilters filters,
             List<CategoryOption> categories,
             List<CategoryOption> categoryExclusions,
             List<String> merchantExclusions,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.sort = sort;
+        this.filters = filters;
         this.categories = categories;
         this.categoryExclusions = categoryExclusions;
         this.merchantExclusions = merchantExclusions;
@@ -65,6 +69,14 @@ public final class CreateContentStrategyAttributes {
     @JsonProperty("sort")
     public Optional<ContentStrategySort> getSort() {
         return sort;
+    }
+
+    /**
+     * @return Filters applied when selecting offers for the strategy
+     */
+    @JsonProperty("filters")
+    public ContentStrategyFilters getFilters() {
+        return filters;
     }
 
     /**
@@ -105,6 +117,7 @@ public final class CreateContentStrategyAttributes {
     private boolean equalTo(CreateContentStrategyAttributes other) {
         return name.equals(other.name)
                 && sort.equals(other.sort)
+                && filters.equals(other.filters)
                 && categories.equals(other.categories)
                 && categoryExclusions.equals(other.categoryExclusions)
                 && merchantExclusions.equals(other.merchantExclusions);
@@ -112,7 +125,8 @@ public final class CreateContentStrategyAttributes {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.sort, this.categories, this.categoryExclusions, this.merchantExclusions);
+        return Objects.hash(
+                this.name, this.sort, this.filters, this.categories, this.categoryExclusions, this.merchantExclusions);
     }
 
     @java.lang.Override
@@ -128,9 +142,16 @@ public final class CreateContentStrategyAttributes {
         /**
          * <p>Name of the content strategy (unique within an organization)</p>
          */
-        _FinalStage name(@NotNull String name);
+        FiltersStage name(@NotNull String name);
 
         Builder from(CreateContentStrategyAttributes other);
+    }
+
+    public interface FiltersStage {
+        /**
+         * <p>Filters applied when selecting offers for the strategy</p>
+         */
+        _FinalStage filters(@NotNull ContentStrategyFilters filters);
     }
 
     public interface _FinalStage {
@@ -176,8 +197,10 @@ public final class CreateContentStrategyAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, _FinalStage {
+    public static final class Builder implements NameStage, FiltersStage, _FinalStage {
         private String name;
+
+        private ContentStrategyFilters filters;
 
         private List<String> merchantExclusions = new ArrayList<>();
 
@@ -196,6 +219,7 @@ public final class CreateContentStrategyAttributes {
         public Builder from(CreateContentStrategyAttributes other) {
             name(other.getName());
             sort(other.getSort());
+            filters(other.getFilters());
             categories(other.getCategories());
             categoryExclusions(other.getCategoryExclusions());
             merchantExclusions(other.getMerchantExclusions());
@@ -209,8 +233,20 @@ public final class CreateContentStrategyAttributes {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(@NotNull String name) {
+        public FiltersStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Filters applied when selecting offers for the strategy</p>
+         * <p>Filters applied when selecting offers for the strategy</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("filters")
+        public _FinalStage filters(@NotNull ContentStrategyFilters filters) {
+            this.filters = Objects.requireNonNull(filters, "filters must not be null");
             return this;
         }
 
@@ -342,7 +378,7 @@ public final class CreateContentStrategyAttributes {
         @java.lang.Override
         public CreateContentStrategyAttributes build() {
             return new CreateContentStrategyAttributes(
-                    name, sort, categories, categoryExclusions, merchantExclusions, additionalProperties);
+                    name, sort, filters, categories, categoryExclusions, merchantExclusions, additionalProperties);
         }
 
         @java.lang.Override
