@@ -34,6 +34,10 @@ public final class NotificationDataUnion {
         return new NotificationDataUnion(new EarnedRewardSettledValue(value));
     }
 
+    public static NotificationDataUnion earnedRewardRejected(EarnedRewardRejectedData value) {
+        return new NotificationDataUnion(new EarnedRewardRejectedValue(value));
+    }
+
     public static NotificationDataUnion validTransaction(ValidTransactionData value) {
         return new NotificationDataUnion(new ValidTransactionValue(value));
     }
@@ -68,6 +72,10 @@ public final class NotificationDataUnion {
 
     public boolean isEarnedRewardSettled() {
         return value instanceof EarnedRewardSettledValue;
+    }
+
+    public boolean isEarnedRewardRejected() {
+        return value instanceof EarnedRewardRejectedValue;
     }
 
     public boolean isValidTransaction() {
@@ -112,6 +120,13 @@ public final class NotificationDataUnion {
     public Optional<EarnedRewardSettledData> getEarnedRewardSettled() {
         if (isEarnedRewardSettled()) {
             return Optional.of(((EarnedRewardSettledValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<EarnedRewardRejectedData> getEarnedRewardRejected() {
+        if (isEarnedRewardRejected()) {
+            return Optional.of(((EarnedRewardRejectedValue) value).value);
         }
         return Optional.empty();
     }
@@ -198,6 +213,8 @@ public final class NotificationDataUnion {
 
         T visitEarnedRewardSettled(EarnedRewardSettledData earnedRewardSettled);
 
+        T visitEarnedRewardRejected(EarnedRewardRejectedData earnedRewardRejected);
+
         T visitValidTransaction(ValidTransactionData validTransaction);
 
         T visitFailedTransaction(FailedTransactionData failedTransaction);
@@ -219,6 +236,7 @@ public final class NotificationDataUnion {
     @JsonSubTypes({
         @JsonSubTypes.Type(EarnedRewardApprovedValue.class),
         @JsonSubTypes.Type(EarnedRewardSettledValue.class),
+        @JsonSubTypes.Type(EarnedRewardRejectedValue.class),
         @JsonSubTypes.Type(ValidTransactionValue.class),
         @JsonSubTypes.Type(FailedTransactionValue.class),
         @JsonSubTypes.Type(ClawbackValue.class),
@@ -298,6 +316,46 @@ public final class NotificationDataUnion {
         }
 
         private boolean equalTo(EarnedRewardSettledValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "NotificationDataUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("earnedRewardRejected")
+    @JsonIgnoreProperties("type")
+    private static final class EarnedRewardRejectedValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private EarnedRewardRejectedData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EarnedRewardRejectedValue() {}
+
+        private EarnedRewardRejectedValue(EarnedRewardRejectedData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEarnedRewardRejected(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EarnedRewardRejectedValue && equalTo((EarnedRewardRejectedValue) other);
+        }
+
+        private boolean equalTo(EarnedRewardRejectedValue other) {
             return value.equals(other.value);
         }
 

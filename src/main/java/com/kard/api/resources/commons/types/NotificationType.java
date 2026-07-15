@@ -12,6 +12,9 @@ public final class NotificationType {
     public static final NotificationType EARNED_REWARD_SETTLED =
             new NotificationType(Value.EARNED_REWARD_SETTLED, "earnedRewardSettled");
 
+    public static final NotificationType EARNED_REWARD_REJECTED =
+            new NotificationType(Value.EARNED_REWARD_REJECTED, "earnedRewardRejected");
+
     public static final NotificationType FAILED_TRANSACTION =
             new NotificationType(Value.FAILED_TRANSACTION, "failedTransaction");
 
@@ -68,6 +71,8 @@ public final class NotificationType {
                 return visitor.visitAuditUpdate();
             case EARNED_REWARD_SETTLED:
                 return visitor.visitEarnedRewardSettled();
+            case EARNED_REWARD_REJECTED:
+                return visitor.visitEarnedRewardRejected();
             case FAILED_TRANSACTION:
                 return visitor.visitFailedTransaction();
             case EARNED_REWARD_APPROVED:
@@ -95,6 +100,8 @@ public final class NotificationType {
                 return AUDIT_UPDATE;
             case "earnedRewardSettled":
                 return EARNED_REWARD_SETTLED;
+            case "earnedRewardRejected":
+                return EARNED_REWARD_REJECTED;
             case "failedTransaction":
                 return FAILED_TRANSACTION;
             case "earnedRewardApproved":
@@ -119,6 +126,8 @@ public final class NotificationType {
 
         EARNED_REWARD_SETTLED,
 
+        EARNED_REWARD_REJECTED,
+
         VALID_TRANSACTION,
 
         FAILED_TRANSACTION,
@@ -140,6 +149,8 @@ public final class NotificationType {
         T visitEarnedRewardApproved();
 
         T visitEarnedRewardSettled();
+
+        T visitEarnedRewardRejected();
 
         T visitValidTransaction();
 

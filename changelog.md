@@ -1,3 +1,12 @@
+## 15.0.0 - 2026-07-15
+### Breaking Changes
+* **`NotificationType.Visitor<T>`** — a new required `visitEarnedRewardRejected()` method has been added to the visitor interface. Any class implementing `NotificationType.Visitor<T>` must add a `visitEarnedRewardRejected()` override or it will fail to compile.
+* **`NotificationDataUnion.Visitor<T>`** — a new required `visitEarnedRewardRejected(EarnedRewardRejectedData)` method has been added to the visitor interface. Any class implementing `NotificationDataUnion.Visitor<T>` must add a `visitEarnedRewardRejected()` override or it will fail to compile.
+### Added
+* **`NotificationType.EARNED_REWARD_REJECTED`** — new enum constant representing the `earnedRewardRejected` notification type.
+* **`EarnedRewardRejectedAttributes`** — new type carrying the rejection reason code, display message, transaction ID, amount in cents, and optional transaction timestamp for a rejected earned reward.
+* **`EarnedRewardRejectedData`** and **`RejectedTransactionRelationships`** — new types representing the full notification data payload and its user/transaction relationships for rejected earned reward notifications.
+
 ## 14.0.0 - 2026-07-10
 ### Breaking Changes
 * **`ContentStrategySort.Visitor<T>`** — a new required `visitOffersNearYou()` method has been added to the visitor interface. Any class that implements `ContentStrategySort.Visitor<T>` must now add a `visitOffersNearYou()` override or it will fail to compile.
