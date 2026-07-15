@@ -1,3 +1,13 @@
+## 16.0.0 - 2026-07-15
+### Breaking Changes
+* **`EarnedRewardApprovedData.getAttributes()`** — now returns `EarnedRewardNotificationAttributes` instead of `RewardNotificationAttributes`; update any code that assigns or passes the result to a `RewardNotificationAttributes`-typed variable or parameter.
+* **`EarnedRewardApprovedData.AttributesStage.attributes()`** — builder method now accepts `EarnedRewardNotificationAttributes` instead of `RewardNotificationAttributes`; update builder call sites accordingly.
+### Added
+* **`EarnedRewardNotificationAttributes`** — new type implementing both `IEarnedRewardNotificationAttributes` and `IRewardNotificationAttributes`, carrying optional `categoryName`, `userReward`, `assets`, and `purchaseChannel` fields alongside all existing reward notification fields.
+* **`IEarnedRewardNotificationAttributes`** — new interface extending `IRewardNotificationAttributes` that exposes `getCategoryName()`, `getUserReward()`, `getAssets()`, and `getPurchaseChannel()` accessors.
+* **`EarnedRewardSettledAttributes`** — now implements `IEarnedRewardNotificationAttributes` and gains optional `categoryName`, `userReward`, `assets`, and `purchaseChannel` fields with corresponding builder methods.
+* **`UserReward`** — new type in the notifications package representing a user reward, exposing `getType()` (`CommissionType`) and `getValue()` (reward amount), with a staged builder for safe construction.
+
 ## 15.0.0 - 2026-07-15
 ### Breaking Changes
 * **`NotificationType.Visitor<T>`** — a new required `visitEarnedRewardRejected()` method has been added to the visitor interface. Any class implementing `NotificationType.Visitor<T>` must add a `visitEarnedRewardRejected()` override or it will fail to compile.

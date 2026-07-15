@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
-import com.kard.api.resources.commons.types.CommissionValue;
 import com.kard.api.resources.commons.types.PurchaseChannel;
 import com.kard.api.resources.transactions.types.MerchantAsset;
 import java.time.OffsetDateTime;
@@ -24,8 +23,8 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = EarnedRewardSettledAttributes.Builder.class)
-public final class EarnedRewardSettledAttributes
+@JsonDeserialize(builder = EarnedRewardNotificationAttributes.Builder.class)
+public final class EarnedRewardNotificationAttributes
         implements IEarnedRewardNotificationAttributes, IRewardNotificationAttributes {
     private final Optional<String> categoryName;
 
@@ -51,11 +50,9 @@ public final class EarnedRewardSettledAttributes
 
     private final int transactionAmountInCents;
 
-    private final CommissionValue commissionEarned;
-
     private final Map<String, Object> additionalProperties;
 
-    private EarnedRewardSettledAttributes(
+    private EarnedRewardNotificationAttributes(
             Optional<String> categoryName,
             Optional<UserReward> userReward,
             Optional<List<MerchantAsset>> assets,
@@ -68,7 +65,6 @@ public final class EarnedRewardSettledAttributes
             Optional<OffsetDateTime> transactionTimestamp,
             String transactionId,
             int transactionAmountInCents,
-            CommissionValue commissionEarned,
             Map<String, Object> additionalProperties) {
         this.categoryName = categoryName;
         this.userReward = userReward;
@@ -82,7 +78,6 @@ public final class EarnedRewardSettledAttributes
         this.transactionTimestamp = transactionTimestamp;
         this.transactionId = transactionId;
         this.transactionAmountInCents = transactionAmountInCents;
-        this.commissionEarned = commissionEarned;
         this.additionalProperties = additionalProperties;
     }
 
@@ -196,15 +191,11 @@ public final class EarnedRewardSettledAttributes
         return transactionAmountInCents;
     }
 
-    @JsonProperty("commissionEarned")
-    public CommissionValue getCommissionEarned() {
-        return commissionEarned;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof EarnedRewardSettledAttributes && equalTo((EarnedRewardSettledAttributes) other);
+        return other instanceof EarnedRewardNotificationAttributes
+                && equalTo((EarnedRewardNotificationAttributes) other);
     }
 
     @JsonAnyGetter
@@ -212,7 +203,7 @@ public final class EarnedRewardSettledAttributes
         return this.additionalProperties;
     }
 
-    private boolean equalTo(EarnedRewardSettledAttributes other) {
+    private boolean equalTo(EarnedRewardNotificationAttributes other) {
         return categoryName.equals(other.categoryName)
                 && userReward.equals(other.userReward)
                 && assets.equals(other.assets)
@@ -224,8 +215,7 @@ public final class EarnedRewardSettledAttributes
                 && cardProductId.equals(other.cardProductId)
                 && transactionTimestamp.equals(other.transactionTimestamp)
                 && transactionId.equals(other.transactionId)
-                && transactionAmountInCents == other.transactionAmountInCents
-                && commissionEarned.equals(other.commissionEarned);
+                && transactionAmountInCents == other.transactionAmountInCents;
     }
 
     @java.lang.Override
@@ -242,8 +232,7 @@ public final class EarnedRewardSettledAttributes
                 this.cardProductId,
                 this.transactionTimestamp,
                 this.transactionId,
-                this.transactionAmountInCents,
-                this.commissionEarned);
+                this.transactionAmountInCents);
     }
 
     @java.lang.Override
@@ -261,7 +250,7 @@ public final class EarnedRewardSettledAttributes
          */
         NameStage message(@NotNull String message);
 
-        Builder from(EarnedRewardSettledAttributes other);
+        Builder from(EarnedRewardNotificationAttributes other);
     }
 
     public interface NameStage {
@@ -289,15 +278,11 @@ public final class EarnedRewardSettledAttributes
         /**
          * <p>The amount of the originating transaction in cents</p>
          */
-        CommissionEarnedStage transactionAmountInCents(int transactionAmountInCents);
-    }
-
-    public interface CommissionEarnedStage {
-        _FinalStage commissionEarned(@NotNull CommissionValue commissionEarned);
+        _FinalStage transactionAmountInCents(int transactionAmountInCents);
     }
 
     public interface _FinalStage {
-        EarnedRewardSettledAttributes build();
+        EarnedRewardNotificationAttributes build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -362,7 +347,6 @@ public final class EarnedRewardSettledAttributes
                     AttributionUrlStage,
                     TransactionIdStage,
                     TransactionAmountInCentsStage,
-                    CommissionEarnedStage,
                     _FinalStage {
         private String message;
 
@@ -373,8 +357,6 @@ public final class EarnedRewardSettledAttributes
         private String transactionId;
 
         private int transactionAmountInCents;
-
-        private CommissionValue commissionEarned;
 
         private Optional<OffsetDateTime> transactionTimestamp = Optional.empty();
 
@@ -396,7 +378,7 @@ public final class EarnedRewardSettledAttributes
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(EarnedRewardSettledAttributes other) {
+        public Builder from(EarnedRewardNotificationAttributes other) {
             categoryName(other.getCategoryName());
             userReward(other.getUserReward());
             assets(other.getAssets());
@@ -409,7 +391,6 @@ public final class EarnedRewardSettledAttributes
             transactionTimestamp(other.getTransactionTimestamp());
             transactionId(other.getTransactionId());
             transactionAmountInCents(other.getTransactionAmountInCents());
-            commissionEarned(other.getCommissionEarned());
             return this;
         }
 
@@ -468,15 +449,8 @@ public final class EarnedRewardSettledAttributes
          */
         @java.lang.Override
         @JsonSetter("transactionAmountInCents")
-        public CommissionEarnedStage transactionAmountInCents(int transactionAmountInCents) {
+        public _FinalStage transactionAmountInCents(int transactionAmountInCents) {
             this.transactionAmountInCents = transactionAmountInCents;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("commissionEarned")
-        public _FinalStage commissionEarned(@NotNull CommissionValue commissionEarned) {
-            this.commissionEarned = Objects.requireNonNull(commissionEarned, "commissionEarned must not be null");
             return this;
         }
 
@@ -625,8 +599,8 @@ public final class EarnedRewardSettledAttributes
         }
 
         @java.lang.Override
-        public EarnedRewardSettledAttributes build() {
-            return new EarnedRewardSettledAttributes(
+        public EarnedRewardNotificationAttributes build() {
+            return new EarnedRewardNotificationAttributes(
                     categoryName,
                     userReward,
                     assets,
@@ -639,7 +613,6 @@ public final class EarnedRewardSettledAttributes
                     transactionTimestamp,
                     transactionId,
                     transactionAmountInCents,
-                    commissionEarned,
                     additionalProperties);
         }
 
