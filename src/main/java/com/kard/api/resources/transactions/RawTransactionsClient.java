@@ -399,7 +399,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[range]</code> to narrow the window to the last 6 months (<code>6M</code>), last 3 months (<code>3M</code>), or year to date (<code>YTD</code>). Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -411,7 +411,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[range]</code> to narrow the window to the last 6 months (<code>6M</code>), last 3 months (<code>3M</code>), or year to date (<code>YTD</code>). Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -424,7 +424,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[range]</code> to narrow the window to the last 6 months (<code>6M</code>), last 3 months (<code>3M</code>), or year to date (<code>YTD</code>). Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -436,7 +436,7 @@ public class RawTransactionsClient {
     }
 
     /**
-     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
+     * Retrieve rewarded transaction history for a specific user. By default this returns only SETTLED transactions within the last 12 months regardless of payment status. Pass <code>filter[range]</code> to narrow the window to the last 6 months (<code>6M</code>), last 3 months (<code>3M</code>), or year to date (<code>YTD</code>). Pass <code>filter[paidInFullOnly]=true</code> to restrict the response to matched transactions that have been paid in full to the issuer (<code>paidToIssuer</code> is <code>PAID_IN_FULL</code>).
      * <br/>
      * <b>Required scopes:</b> <code>transaction:read</code>
      * <br/>
@@ -473,6 +473,10 @@ public class RawTransactionsClient {
                     "filter[paidInFullOnly]",
                     request.getFilterPaidInFullOnly().get(),
                     false);
+        }
+        if (request.getFilterRange().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "filter[range]", request.getFilterRange().get(), false);
         }
         if (request.getInclude().isPresent()) {
             QueryStringMapper.addQueryParameter(

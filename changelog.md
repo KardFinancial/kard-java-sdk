@@ -1,3 +1,9 @@
+## 17.1.0 - 2026-07-28
+### Added
+* **`EarnedRewardsRange`** — new type representing the time window for rewarded transaction history, with constants `LAST_12_MONTHS`, `LAST_6_MONTHS`, `LAST_3_MONTHS`, and `YEAR_TO_DATE`, plus a `Visitor<T>` interface for exhaustive handling.
+* **`GetEarnedRewardsRequest.getFilterRange()`** — new optional `filter[range]` parameter that narrows the transaction history window to the last 3 months (`3M`), last 6 months (`6M`), last 12 months (`12M`), or year to date (`YTD`); defaults to `12M` when omitted.
+* **`GetEarnedRewardsMeta.getLifetimeRewardsInCents()`** — documentation updated to clarify that the lifetime rewards total is now scoped to the window selected by `filter[range]`, so the meta total always matches the returned rows.
+
 ## 17.0.0 - 2026-07-15
 ### Breaking Changes
 * **`ContentStrategyAttributes.OrganizationIdStage.organizationId()`** — now returns `FiltersStage` instead of `_FinalStage`; add a `.filters(ContentStrategyFilters)` call after `.organizationId(...)` in every builder chain.

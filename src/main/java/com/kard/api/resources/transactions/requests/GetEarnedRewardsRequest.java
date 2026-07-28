@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.transactions.types.EarnedRewardsRange;
 import com.kard.api.resources.transactions.types.RewardedTransactionStatus;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,8 @@ public final class GetEarnedRewardsRequest {
 
     private final Optional<Boolean> filterPaidInFullOnly;
 
+    private final Optional<EarnedRewardsRange> filterRange;
+
     private final Optional<String> include;
 
     private final Map<String, Object> additionalProperties;
@@ -41,6 +44,7 @@ public final class GetEarnedRewardsRequest {
             Optional<Integer> pageSize,
             Optional<RewardedTransactionStatus> filterStatus,
             Optional<Boolean> filterPaidInFullOnly,
+            Optional<EarnedRewardsRange> filterRange,
             Optional<String> include,
             Map<String, Object> additionalProperties) {
         this.pageAfter = pageAfter;
@@ -48,6 +52,7 @@ public final class GetEarnedRewardsRequest {
         this.pageSize = pageSize;
         this.filterStatus = filterStatus;
         this.filterPaidInFullOnly = filterPaidInFullOnly;
+        this.filterRange = filterRange;
         this.include = include;
         this.additionalProperties = additionalProperties;
     }
@@ -93,6 +98,14 @@ public final class GetEarnedRewardsRequest {
     }
 
     /**
+     * @return Time window for the returned transactions, ending now. Supported values are <code>12M</code>, <code>6M</code>, <code>3M</code>, and <code>YTD</code> (since January 1 of the current year). Defaults to <code>12M</code> when omitted. Also scopes <code>lifetimeRewardsInCents</code>, so the meta total always matches the returned rows.
+     */
+    @JsonIgnore
+    public Optional<EarnedRewardsRange> getFilterRange() {
+        return filterRange;
+    }
+
+    /**
      * @return Comma-separated list of related resources to include in the response. Supported values are <code>merchant</code> and <code>offer</code>.
      */
     @JsonIgnore
@@ -117,6 +130,7 @@ public final class GetEarnedRewardsRequest {
                 && pageSize.equals(other.pageSize)
                 && filterStatus.equals(other.filterStatus)
                 && filterPaidInFullOnly.equals(other.filterPaidInFullOnly)
+                && filterRange.equals(other.filterRange)
                 && include.equals(other.include);
     }
 
@@ -128,6 +142,7 @@ public final class GetEarnedRewardsRequest {
                 this.pageSize,
                 this.filterStatus,
                 this.filterPaidInFullOnly,
+                this.filterRange,
                 this.include);
     }
 
@@ -152,6 +167,8 @@ public final class GetEarnedRewardsRequest {
 
         private Optional<Boolean> filterPaidInFullOnly = Optional.empty();
 
+        private Optional<EarnedRewardsRange> filterRange = Optional.empty();
+
         private Optional<String> include = Optional.empty();
 
         @JsonAnySetter
@@ -165,6 +182,7 @@ public final class GetEarnedRewardsRequest {
             pageSize(other.getPageSize());
             filterStatus(other.getFilterStatus());
             filterPaidInFullOnly(other.getFilterPaidInFullOnly());
+            filterRange(other.getFilterRange());
             include(other.getInclude());
             return this;
         }
@@ -240,6 +258,20 @@ public final class GetEarnedRewardsRequest {
         }
 
         /**
+         * <p>Time window for the returned transactions, ending now. Supported values are <code>12M</code>, <code>6M</code>, <code>3M</code>, and <code>YTD</code> (since January 1 of the current year). Defaults to <code>12M</code> when omitted. Also scopes <code>lifetimeRewardsInCents</code>, so the meta total always matches the returned rows.</p>
+         */
+        @JsonSetter(value = "filter[range]", nulls = Nulls.SKIP)
+        public Builder filterRange(Optional<EarnedRewardsRange> filterRange) {
+            this.filterRange = filterRange;
+            return this;
+        }
+
+        public Builder filterRange(EarnedRewardsRange filterRange) {
+            this.filterRange = Optional.ofNullable(filterRange);
+            return this;
+        }
+
+        /**
          * <p>Comma-separated list of related resources to include in the response. Supported values are <code>merchant</code> and <code>offer</code>.</p>
          */
         @JsonSetter(value = "include", nulls = Nulls.SKIP)
@@ -255,7 +287,14 @@ public final class GetEarnedRewardsRequest {
 
         public GetEarnedRewardsRequest build() {
             return new GetEarnedRewardsRequest(
-                    pageAfter, pageBefore, pageSize, filterStatus, filterPaidInFullOnly, include, additionalProperties);
+                    pageAfter,
+                    pageBefore,
+                    pageSize,
+                    filterStatus,
+                    filterPaidInFullOnly,
+                    filterRange,
+                    include,
+                    additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {
