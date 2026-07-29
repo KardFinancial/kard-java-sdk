@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.commons.types.RejectedReason;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EarnedRewardRejectedAttributes.Builder.class)
 public final class EarnedRewardRejectedAttributes {
-    private final String reason;
+    private final RejectedReason reason;
 
     private final String message;
 
@@ -35,7 +36,7 @@ public final class EarnedRewardRejectedAttributes {
     private final Map<String, Object> additionalProperties;
 
     private EarnedRewardRejectedAttributes(
-            String reason,
+            RejectedReason reason,
             String message,
             String transactionId,
             int transactionAmountInCents,
@@ -53,7 +54,7 @@ public final class EarnedRewardRejectedAttributes {
      * @return The reason code for why the transaction did not result in a reward
      */
     @JsonProperty("reason")
-    public String getReason() {
+    public RejectedReason getReason() {
         return reason;
     }
 
@@ -131,7 +132,7 @@ public final class EarnedRewardRejectedAttributes {
         /**
          * <p>The reason code for why the transaction did not result in a reward</p>
          */
-        MessageStage reason(@NotNull String reason);
+        MessageStage reason(@NotNull RejectedReason reason);
 
         Builder from(EarnedRewardRejectedAttributes other);
     }
@@ -175,7 +176,7 @@ public final class EarnedRewardRejectedAttributes {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements ReasonStage, MessageStage, TransactionIdStage, TransactionAmountInCentsStage, _FinalStage {
-        private String reason;
+        private RejectedReason reason;
 
         private String message;
 
@@ -207,7 +208,7 @@ public final class EarnedRewardRejectedAttributes {
          */
         @java.lang.Override
         @JsonSetter("reason")
-        public MessageStage reason(@NotNull String reason) {
+        public MessageStage reason(@NotNull RejectedReason reason) {
             this.reason = Objects.requireNonNull(reason, "reason must not be null");
             return this;
         }

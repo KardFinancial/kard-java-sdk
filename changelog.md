@@ -1,3 +1,10 @@
+## 18.0.0 - 2026-07-29
+### Breaking Changes
+* **`EarnedRewardRejectedAttributes.getReason()`** — now returns `RejectedReason` instead of `String`; update any code that assigns or passes the result to a `String`-typed variable or parameter to use `RejectedReason` instead.
+* **`EarnedRewardRejectedAttributes.ReasonStage.reason()`** — builder method now accepts `RejectedReason` instead of `String`; replace string literals with the appropriate constant (e.g., `RejectedReason.USER_NOT_ENROLLED`).
+### Added
+* **`RejectedReason`** — new strongly-typed enum in the commons package representing why a transaction did not result in a reward, with constants `USER_NOT_ENROLLED`, `AGGREGATOR_CARD_OVERLAP`, `USER_NOT_IN_AUDIENCE_SEGMENT`, and `SETTLEMENT_REJECTED`, plus a `Visitor<T>` interface for exhaustive handling.
+
 ## 17.1.0 - 2026-07-28
 ### Added
 * **`EarnedRewardsRange`** — new type representing the time window for rewarded transaction history, with constants `LAST_12_MONTHS`, `LAST_6_MONTHS`, `LAST_3_MONTHS`, and `YEAR_TO_DATE`, plus a `Visitor<T>` interface for exhaustive handling.
