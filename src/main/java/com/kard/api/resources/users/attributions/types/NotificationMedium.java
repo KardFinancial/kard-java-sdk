@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public final class NotificationMedium {
     public static final NotificationMedium PUSH = new NotificationMedium(Value.PUSH, "PUSH");
 
+    public static final NotificationMedium EMAIL = new NotificationMedium(Value.EMAIL, "EMAIL");
+
     private final Value value;
 
     private final String string;
@@ -43,6 +45,8 @@ public final class NotificationMedium {
         switch (value) {
             case PUSH:
                 return visitor.visitPush();
+            case EMAIL:
+                return visitor.visitEmail();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -54,6 +58,8 @@ public final class NotificationMedium {
         switch (value) {
             case "PUSH":
                 return PUSH;
+            case "EMAIL":
+                return EMAIL;
             default:
                 return new NotificationMedium(Value.UNKNOWN, value);
         }
@@ -62,11 +68,15 @@ public final class NotificationMedium {
     public enum Value {
         PUSH,
 
+        EMAIL,
+
         UNKNOWN
     }
 
     public interface Visitor<T> {
         T visitPush();
+
+        T visitEmail();
 
         T visitUnknown(String unknownType);
     }

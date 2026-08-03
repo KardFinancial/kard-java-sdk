@@ -1,3 +1,9 @@
+## 19.0.0 - 2026-08-03
+### Breaking Changes
+* **`NotificationMedium.Visitor<T>`** — new required `visitEmail()` method added to the `Visitor` interface; any existing implementation that does not add `visitEmail()` will fail to compile. Add a `visitEmail()` implementation to every class that implements `NotificationMedium.Visitor<T>`.
+### Added
+* **`NotificationMedium.EMAIL`** — new constant representing the email notification channel, available via `NotificationMedium.EMAIL` and handled by the new `visitEmail()` visitor method.
+
 ## 18.0.0 - 2026-07-29
 ### Breaking Changes
 * **`EarnedRewardRejectedAttributes.getReason()`** — now returns `RejectedReason` instead of `String`; update any code that assigns or passes the result to a `String`-typed variable or parameter to use `RejectedReason` instead.
