@@ -5,6 +5,6 @@
   "generatorConfig": {
     "publish-to": "central"
   },
-  "originGitCommit": "03ad4ca4a2da0200e7a35867c09a4e6891b7993a",
-  "sdkVersion": "19.0.0"
+  "originGitCommit": "cb7452c3382bf9c44e789336dead14e3369bb0fb",
+  "sdkVersion": "20.0.0"
 }

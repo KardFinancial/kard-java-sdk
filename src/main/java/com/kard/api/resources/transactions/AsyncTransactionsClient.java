@@ -39,7 +39,6 @@ public class AsyncTransactionsClient {
      * Please use the correct type when calling the endpoint:
      * <ul>
      * <li><code>transaction</code>: These incoming transactions will be processed and matched by the Kard system. Learn more about the <a href="https://github.com/kard-financial/kard-postman#c-transaction-clo-matching">Transaction CLO Matching</a> flow here.</li>
-     * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
      * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.<br/></li>
      * </ul>
      * <p><b>Required scopes:</b> <code>transaction:write</code><br/>
@@ -54,7 +53,6 @@ public class AsyncTransactionsClient {
      * Please use the correct type when calling the endpoint:
      * <ul>
      * <li><code>transaction</code>: These incoming transactions will be processed and matched by the Kard system. Learn more about the <a href="https://github.com/kard-financial/kard-postman#c-transaction-clo-matching">Transaction CLO Matching</a> flow here.</li>
-     * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
      * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.<br/></li>
      * </ul>
      * <p><b>Required scopes:</b> <code>transaction:write</code><br/>

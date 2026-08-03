@@ -15,22 +15,14 @@ public final class NotificationType {
     public static final NotificationType EARNED_REWARD_REJECTED =
             new NotificationType(Value.EARNED_REWARD_REJECTED, "earnedRewardRejected");
 
-    public static final NotificationType FAILED_TRANSACTION =
-            new NotificationType(Value.FAILED_TRANSACTION, "failedTransaction");
-
     public static final NotificationType EARNED_REWARD_APPROVED =
             new NotificationType(Value.EARNED_REWARD_APPROVED, "earnedRewardApproved");
 
     public static final NotificationType EMAIL_NOTIFICATION_PLACEMENT_FILE =
             new NotificationType(Value.EMAIL_NOTIFICATION_PLACEMENT_FILE, "emailNotificationPlacementFile");
 
-    public static final NotificationType CLAWBACK = new NotificationType(Value.CLAWBACK, "clawback");
-
     public static final NotificationType FILE_PROCESSING_RESULT =
             new NotificationType(Value.FILE_PROCESSING_RESULT, "fileProcessingResult");
-
-    public static final NotificationType VALID_TRANSACTION =
-            new NotificationType(Value.VALID_TRANSACTION, "validTransaction");
 
     public static final NotificationType PUSH_NOTIFICATION_PLACEMENT_FILE =
             new NotificationType(Value.PUSH_NOTIFICATION_PLACEMENT_FILE, "pushNotificationPlacementFile");
@@ -73,18 +65,12 @@ public final class NotificationType {
                 return visitor.visitEarnedRewardSettled();
             case EARNED_REWARD_REJECTED:
                 return visitor.visitEarnedRewardRejected();
-            case FAILED_TRANSACTION:
-                return visitor.visitFailedTransaction();
             case EARNED_REWARD_APPROVED:
                 return visitor.visitEarnedRewardApproved();
             case EMAIL_NOTIFICATION_PLACEMENT_FILE:
                 return visitor.visitEmailNotificationPlacementFile();
-            case CLAWBACK:
-                return visitor.visitClawback();
             case FILE_PROCESSING_RESULT:
                 return visitor.visitFileProcessingResult();
-            case VALID_TRANSACTION:
-                return visitor.visitValidTransaction();
             case PUSH_NOTIFICATION_PLACEMENT_FILE:
                 return visitor.visitPushNotificationPlacementFile();
             case UNKNOWN:
@@ -102,18 +88,12 @@ public final class NotificationType {
                 return EARNED_REWARD_SETTLED;
             case "earnedRewardRejected":
                 return EARNED_REWARD_REJECTED;
-            case "failedTransaction":
-                return FAILED_TRANSACTION;
             case "earnedRewardApproved":
                 return EARNED_REWARD_APPROVED;
             case "emailNotificationPlacementFile":
                 return EMAIL_NOTIFICATION_PLACEMENT_FILE;
-            case "clawback":
-                return CLAWBACK;
             case "fileProcessingResult":
                 return FILE_PROCESSING_RESULT;
-            case "validTransaction":
-                return VALID_TRANSACTION;
             case "pushNotificationPlacementFile":
                 return PUSH_NOTIFICATION_PLACEMENT_FILE;
             default:
@@ -127,12 +107,6 @@ public final class NotificationType {
         EARNED_REWARD_SETTLED,
 
         EARNED_REWARD_REJECTED,
-
-        VALID_TRANSACTION,
-
-        FAILED_TRANSACTION,
-
-        CLAWBACK,
 
         AUDIT_UPDATE,
 
@@ -151,12 +125,6 @@ public final class NotificationType {
         T visitEarnedRewardSettled();
 
         T visitEarnedRewardRejected();
-
-        T visitValidTransaction();
-
-        T visitFailedTransaction();
-
-        T visitClawback();
 
         T visitAuditUpdate();
 

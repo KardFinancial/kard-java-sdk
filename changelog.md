@@ -1,3 +1,8 @@
+## 20.0.0 - 2026-08-03
+### Breaking Changes
+* **`NotificationType.FAILED_TRANSACTION`**, **`NotificationType.CLAWBACK`**, and **`NotificationType.VALID_TRANSACTION`** — these constants and their corresponding `Value` enum entries have been removed; any code referencing them will fail to compile. Remove all usages of these constants.
+* **`NotificationType.Visitor<T>`** — the `visitFailedTransaction()`, `visitClawback()`, and `visitValidTransaction()` methods have been removed from the interface; any existing implementation that defines these methods will fail to compile. Remove those method implementations from all classes that implement `NotificationType.Visitor<T>`.
+
 ## 19.0.0 - 2026-08-03
 ### Breaking Changes
 * **`NotificationMedium.Visitor<T>`** — new required `visitEmail()` method added to the `Visitor` interface; any existing implementation that does not add `visitEmail()` will fail to compile. Add a `visitEmail()` implementation to every class that implements `NotificationMedium.Visitor<T>`.

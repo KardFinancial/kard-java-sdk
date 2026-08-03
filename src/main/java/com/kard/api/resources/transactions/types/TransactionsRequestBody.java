@@ -35,7 +35,6 @@ public final class TransactionsRequestBody {
      * Use <code>type</code> to distinguish between the two:
      * <ul>
      * <li><code>transaction</code>: For transactions requiring processing and matching by the Kard system.</li>
-     * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
      * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.</li>
      * </ul>
      */
@@ -92,7 +91,6 @@ public final class TransactionsRequestBody {
          * Use <code>type</code> to distinguish between the two:</p>
          * <ul>
          * <li><code>transaction</code>: For transactions requiring processing and matching by the Kard system.</li>
-         * <li><code>matchedTransaction</code>: For pre-matched transactions that need validation on match by the Kard system.</li>
          * <li><code>coreTransaction</code>: For transactions from core banking systems with limited card-level data.</li>
          * </ul>
          */
