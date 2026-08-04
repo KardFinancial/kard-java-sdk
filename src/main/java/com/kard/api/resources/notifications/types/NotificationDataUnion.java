@@ -38,18 +38,6 @@ public final class NotificationDataUnion {
         return new NotificationDataUnion(new EarnedRewardRejectedValue(value));
     }
 
-    public static NotificationDataUnion validTransaction(ValidTransactionData value) {
-        return new NotificationDataUnion(new ValidTransactionValue(value));
-    }
-
-    public static NotificationDataUnion failedTransaction(FailedTransactionData value) {
-        return new NotificationDataUnion(new FailedTransactionValue(value));
-    }
-
-    public static NotificationDataUnion clawback(ClawbackData value) {
-        return new NotificationDataUnion(new ClawbackValue(value));
-    }
-
     public static NotificationDataUnion auditUpdate(AuditUpdateData value) {
         return new NotificationDataUnion(new AuditUpdateValue(value));
     }
@@ -76,18 +64,6 @@ public final class NotificationDataUnion {
 
     public boolean isEarnedRewardRejected() {
         return value instanceof EarnedRewardRejectedValue;
-    }
-
-    public boolean isValidTransaction() {
-        return value instanceof ValidTransactionValue;
-    }
-
-    public boolean isFailedTransaction() {
-        return value instanceof FailedTransactionValue;
-    }
-
-    public boolean isClawback() {
-        return value instanceof ClawbackValue;
     }
 
     public boolean isAuditUpdate() {
@@ -127,27 +103,6 @@ public final class NotificationDataUnion {
     public Optional<EarnedRewardRejectedData> getEarnedRewardRejected() {
         if (isEarnedRewardRejected()) {
             return Optional.of(((EarnedRewardRejectedValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<ValidTransactionData> getValidTransaction() {
-        if (isValidTransaction()) {
-            return Optional.of(((ValidTransactionValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<FailedTransactionData> getFailedTransaction() {
-        if (isFailedTransaction()) {
-            return Optional.of(((FailedTransactionValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<ClawbackData> getClawback() {
-        if (isClawback()) {
-            return Optional.of(((ClawbackValue) value).value);
         }
         return Optional.empty();
     }
@@ -215,12 +170,6 @@ public final class NotificationDataUnion {
 
         T visitEarnedRewardRejected(EarnedRewardRejectedData earnedRewardRejected);
 
-        T visitValidTransaction(ValidTransactionData validTransaction);
-
-        T visitFailedTransaction(FailedTransactionData failedTransaction);
-
-        T visitClawback(ClawbackData clawback);
-
         T visitAuditUpdate(AuditUpdateData auditUpdate);
 
         T visitFileProcessingResult(FileResultData fileProcessingResult);
@@ -237,9 +186,6 @@ public final class NotificationDataUnion {
         @JsonSubTypes.Type(EarnedRewardApprovedValue.class),
         @JsonSubTypes.Type(EarnedRewardSettledValue.class),
         @JsonSubTypes.Type(EarnedRewardRejectedValue.class),
-        @JsonSubTypes.Type(ValidTransactionValue.class),
-        @JsonSubTypes.Type(FailedTransactionValue.class),
-        @JsonSubTypes.Type(ClawbackValue.class),
         @JsonSubTypes.Type(AuditUpdateValue.class),
         @JsonSubTypes.Type(FileProcessingResultValue.class),
         @JsonSubTypes.Type(PushNotificationPlacementFileValue.class),
@@ -356,126 +302,6 @@ public final class NotificationDataUnion {
         }
 
         private boolean equalTo(EarnedRewardRejectedValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "NotificationDataUnion{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("validTransaction")
-    @JsonIgnoreProperties("type")
-    private static final class ValidTransactionValue implements Value {
-        @JsonUnwrapped
-        @JsonIgnoreProperties(value = "type", allowSetters = true)
-        private ValidTransactionData value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private ValidTransactionValue() {}
-
-        private ValidTransactionValue(ValidTransactionData value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitValidTransaction(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof ValidTransactionValue && equalTo((ValidTransactionValue) other);
-        }
-
-        private boolean equalTo(ValidTransactionValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "NotificationDataUnion{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("failedTransaction")
-    @JsonIgnoreProperties("type")
-    private static final class FailedTransactionValue implements Value {
-        @JsonUnwrapped
-        @JsonIgnoreProperties(value = "type", allowSetters = true)
-        private FailedTransactionData value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private FailedTransactionValue() {}
-
-        private FailedTransactionValue(FailedTransactionData value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitFailedTransaction(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof FailedTransactionValue && equalTo((FailedTransactionValue) other);
-        }
-
-        private boolean equalTo(FailedTransactionValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "NotificationDataUnion{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("clawback")
-    @JsonIgnoreProperties("type")
-    private static final class ClawbackValue implements Value {
-        @JsonUnwrapped
-        @JsonIgnoreProperties(value = "type", allowSetters = true)
-        private ClawbackData value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private ClawbackValue() {}
-
-        private ClawbackValue(ClawbackData value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitClawback(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof ClawbackValue && equalTo((ClawbackValue) other);
-        }
-
-        private boolean equalTo(ClawbackValue other) {
             return value.equals(other.value);
         }
 

@@ -1,3 +1,11 @@
+## 22.0.0 - 2026-08-04
+### Breaking Changes
+* **`NotificationDataUnion` factory methods** — `validTransaction()`, `failedTransaction()`, and `clawback()` static factory methods have been removed; remove all call sites.
+* **`NotificationDataUnion` type-check and accessor methods** — `isValidTransaction()`, `isFailedTransaction()`, `isClawback()`, `getValidTransaction()`, `getFailedTransaction()`, and `getClawback()` have been removed; remove all call sites.
+* **`NotificationDataUnion.Visitor<T>`** — `visitValidTransaction()`, `visitFailedTransaction()`, and `visitClawback()` have been removed from the interface; remove these implementations from all `Visitor<T>` implementations.
+* **`ClawbackData`, `FailedTransactionData`, `FailedTransactionAttributes`, `FailedTransactionRelationships`** — classes have been deleted entirely; remove all usages.
+* **`TransactionRelationships`, `ValidTransactionAttributes`, `ValidTransactionCommissionEarned`, `ValidTransactionData`** — classes and their full staged builder APIs have been removed; remove all usages.
+
 ## 21.0.0 - 2026-08-04
 ### Breaking Changes
 * **`MatchedTransactionsAttributes`** — class and its entire staged builder API (`UserIdStage`, `AmountStage`, `DescriptionStage`, `AuthorizationDateStage`, `PaymentTypeStage`, `DirectionStage`, `TransactionIdStage`, `_FinalStage`) have been removed; remove all usages.
