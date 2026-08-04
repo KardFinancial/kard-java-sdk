@@ -30,20 +30,12 @@ public final class Transactions {
         return new Transactions(new TransactionValue(value));
     }
 
-    public static Transactions matchedTransaction(MatchedTransactionsRequest value) {
-        return new Transactions(new MatchedTransactionValue(value));
-    }
-
     public static Transactions coreTransaction(CoreTransactionRequest value) {
         return new Transactions(new CoreTransactionValue(value));
     }
 
     public boolean isTransaction() {
         return value instanceof TransactionValue;
-    }
-
-    public boolean isMatchedTransaction() {
-        return value instanceof MatchedTransactionValue;
     }
 
     public boolean isCoreTransaction() {
@@ -57,13 +49,6 @@ public final class Transactions {
     public Optional<TransactionsRequest> getTransaction() {
         if (isTransaction()) {
             return Optional.of(((TransactionValue) value).value);
-        }
-        return Optional.empty();
-    }
-
-    public Optional<MatchedTransactionsRequest> getMatchedTransaction() {
-        if (isMatchedTransaction()) {
-            return Optional.of(((MatchedTransactionValue) value).value);
         }
         return Optional.empty();
     }
@@ -106,19 +91,13 @@ public final class Transactions {
     public interface Visitor<T> {
         T visitTransaction(TransactionsRequest transaction);
 
-        T visitMatchedTransaction(MatchedTransactionsRequest matchedTransaction);
-
         T visitCoreTransaction(CoreTransactionRequest coreTransaction);
 
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
-    @JsonSubTypes({
-        @JsonSubTypes.Type(TransactionValue.class),
-        @JsonSubTypes.Type(MatchedTransactionValue.class),
-        @JsonSubTypes.Type(CoreTransactionValue.class)
-    })
+    @JsonSubTypes({@JsonSubTypes.Type(TransactionValue.class), @JsonSubTypes.Type(CoreTransactionValue.class)})
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
@@ -150,46 +129,6 @@ public final class Transactions {
         }
 
         private boolean equalTo(TransactionValue other) {
-            return value.equals(other.value);
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            return Objects.hash(this.value);
-        }
-
-        @java.lang.Override
-        public String toString() {
-            return "Transactions{" + "value: " + value + "}";
-        }
-    }
-
-    @JsonTypeName("matchedTransaction")
-    @JsonIgnoreProperties("type")
-    private static final class MatchedTransactionValue implements Value {
-        @JsonUnwrapped
-        @JsonIgnoreProperties(value = "type", allowSetters = true)
-        private MatchedTransactionsRequest value;
-
-        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-        private MatchedTransactionValue() {}
-
-        private MatchedTransactionValue(MatchedTransactionsRequest value) {
-            this.value = value;
-        }
-
-        @java.lang.Override
-        public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitMatchedTransaction(value);
-        }
-
-        @java.lang.Override
-        public boolean equals(Object other) {
-            if (this == other) return true;
-            return other instanceof MatchedTransactionValue && equalTo((MatchedTransactionValue) other);
-        }
-
-        private boolean equalTo(MatchedTransactionValue other) {
             return value.equals(other.value);
         }
 

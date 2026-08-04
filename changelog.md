@@ -1,3 +1,11 @@
+## 21.0.0 - 2026-08-04
+### Breaking Changes
+* **`MatchedTransactionsAttributes`** — class and its entire staged builder API (`UserIdStage`, `AmountStage`, `DescriptionStage`, `AuthorizationDateStage`, `PaymentTypeStage`, `DirectionStage`, `TransactionIdStage`, `_FinalStage`) have been removed; remove all usages.
+* **`MatchedTransactionsRequest`** — class has been removed; remove all usages.
+* **`PaymentType`** — enum and its `Visitor<T>` interface have been removed; remove all references to `CARD`, `CASH`, `UNKNOWN`, and any `PaymentType.Visitor<T>` implementations.
+* **`ReceiptMediumType`** — enum and its `Visitor<T>` interface have been removed; remove all references to `PHYSICAL`, `ELECTRONIC`, and any `ReceiptMediumType.Visitor<T>` implementations.
+* **`Transactions`** — `matchedTransaction()`, `isMatchedTransaction()`, `getMatchedTransaction()`, and `Visitor<T>.visitMatchedTransaction()` have been removed; update all call sites and visitor implementations accordingly.
+
 ## 20.0.0 - 2026-08-03
 ### Breaking Changes
 * **`NotificationType.FAILED_TRANSACTION`**, **`NotificationType.CLAWBACK`**, and **`NotificationType.VALID_TRANSACTION`** — these constants and their corresponding `Value` enum entries have been removed; any code referencing them will fail to compile. Remove all usages of these constants.
