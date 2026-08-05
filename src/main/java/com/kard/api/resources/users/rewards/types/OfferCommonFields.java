@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.commons.types.OfferComponents;
 import com.kard.api.resources.commons.types.PurchaseChannel;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

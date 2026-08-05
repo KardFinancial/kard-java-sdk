@@ -1,3 +1,9 @@
+## 23.0.0 - 2026-08-05
+### Breaking Changes
+* **`ButtonStyle`, `CtaAction`, `CtaComponent`, `LogoFlare`, `LogoFlareBadge`, `LogoFlareBadgePosition`, `LogoFlareBorderColor`, `OfferComponents`, `ProgressBar`, `ProgressBarLabelPair`, `ProgressBarLabels`, `ProgressBarSegment`, `ProgressBarSegmentLabel`, `ProgressBarSegmentPosition`, `ProgressBarSegmentProgress`, `ProgressBarSegmentSelection`, `ProgressBarSegmentSeparator`, and `ProgressBarSegments`** — these classes have moved from `com.kard.api.resources.users.rewards.types` to `com.kard.api.resources.commons.types`; update all import statements to use the new package.
+### Added
+* **`RewardedTransactionAttributes.getComponents()`** — new optional `OfferComponents` field exposing UI component data (e.g. progress bars for progressive and punch-card offers) on rewarded transactions; use the new `components()` builder method to set it.
+
 ## 22.0.0 - 2026-08-04
 ### Breaking Changes
 * **`NotificationDataUnion` factory methods** — `validTransaction()`, `failedTransaction()`, and `clawback()` static factory methods have been removed; remove all call sites.

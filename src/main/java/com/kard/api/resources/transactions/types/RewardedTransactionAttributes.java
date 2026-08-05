@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.commons.types.OfferComponents;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,8 @@ public final class RewardedTransactionAttributes {
 
     private final Optional<OffsetDateTime> payoutTimestamp;
 
+    private final Optional<OfferComponents> components;
+
     private final Map<String, Object> additionalProperties;
 
     private RewardedTransactionAttributes(
@@ -43,6 +46,7 @@ public final class RewardedTransactionAttributes {
             PaymentStatus paidToIssuer,
             CommissionEarnedDetails commissionEarned,
             Optional<OffsetDateTime> payoutTimestamp,
+            Optional<OfferComponents> components,
             Map<String, Object> additionalProperties) {
         this.transactionId = transactionId;
         this.transactionAmountInCents = transactionAmountInCents;
@@ -50,6 +54,7 @@ public final class RewardedTransactionAttributes {
         this.paidToIssuer = paidToIssuer;
         this.commissionEarned = commissionEarned;
         this.payoutTimestamp = payoutTimestamp;
+        this.components = components;
         this.additionalProperties = additionalProperties;
     }
 
@@ -106,6 +111,14 @@ public final class RewardedTransactionAttributes {
         return payoutTimestamp;
     }
 
+    /**
+     * @return UI component data for the reward, built from the offer state persisted on the matched transaction (e.g. a progress bar for progressive and punch-card offers). Omitted when the reward carries no persisted state.
+     */
+    @JsonProperty("components")
+    public Optional<OfferComponents> getComponents() {
+        return components;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -123,7 +136,8 @@ public final class RewardedTransactionAttributes {
                 && transactionTimestamp.equals(other.transactionTimestamp)
                 && paidToIssuer.equals(other.paidToIssuer)
                 && commissionEarned.equals(other.commissionEarned)
-                && payoutTimestamp.equals(other.payoutTimestamp);
+                && payoutTimestamp.equals(other.payoutTimestamp)
+                && components.equals(other.components);
     }
 
     @java.lang.Override
@@ -134,7 +148,8 @@ public final class RewardedTransactionAttributes {
                 this.transactionTimestamp,
                 this.paidToIssuer,
                 this.commissionEarned,
-                this.payoutTimestamp);
+                this.payoutTimestamp,
+                this.components);
     }
 
     @java.lang.Override
@@ -193,6 +208,13 @@ public final class RewardedTransactionAttributes {
         _FinalStage payoutTimestamp(Optional<OffsetDateTime> payoutTimestamp);
 
         _FinalStage payoutTimestamp(OffsetDateTime payoutTimestamp);
+
+        /**
+         * <p>UI component data for the reward, built from the offer state persisted on the matched transaction (e.g. a progress bar for progressive and punch-card offers). Omitted when the reward carries no persisted state.</p>
+         */
+        _FinalStage components(Optional<OfferComponents> components);
+
+        _FinalStage components(OfferComponents components);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -213,6 +235,8 @@ public final class RewardedTransactionAttributes {
 
         private CommissionEarnedDetails commissionEarned;
 
+        private Optional<OfferComponents> components = Optional.empty();
+
         private Optional<OffsetDateTime> payoutTimestamp = Optional.empty();
 
         @JsonAnySetter
@@ -228,6 +252,7 @@ public final class RewardedTransactionAttributes {
             paidToIssuer(other.getPaidToIssuer());
             commissionEarned(other.getCommissionEarned());
             payoutTimestamp(other.getPayoutTimestamp());
+            components(other.getComponents());
             return this;
         }
 
@@ -288,6 +313,26 @@ public final class RewardedTransactionAttributes {
         }
 
         /**
+         * <p>UI component data for the reward, built from the offer state persisted on the matched transaction (e.g. a progress bar for progressive and punch-card offers). Omitted when the reward carries no persisted state.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage components(OfferComponents components) {
+            this.components = Optional.ofNullable(components);
+            return this;
+        }
+
+        /**
+         * <p>UI component data for the reward, built from the offer state persisted on the matched transaction (e.g. a progress bar for progressive and punch-card offers). Omitted when the reward carries no persisted state.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "components", nulls = Nulls.SKIP)
+        public _FinalStage components(Optional<OfferComponents> components) {
+            this.components = components;
+            return this;
+        }
+
+        /**
          * <p>Timestamp representing the month when the transaction has been paid out to issuer</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -316,6 +361,7 @@ public final class RewardedTransactionAttributes {
                     paidToIssuer,
                     commissionEarned,
                     payoutTimestamp,
+                    components,
                     additionalProperties);
         }
 

@@ -3,6 +3,7 @@
  */
 package com.kard.api.resources.users.rewards.types;
 
+import com.kard.api.resources.commons.types.OfferComponents;
 import com.kard.api.resources.commons.types.PurchaseChannel;
 import java.time.OffsetDateTime;
 import java.util.List;
