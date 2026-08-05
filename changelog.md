@@ -1,3 +1,10 @@
+## 24.0.0 - 2026-08-05
+### Breaking Changes
+* **`ExternalOrganizationAttributes.getCardNetworks()`** — return type changed from `List<CardNetwork>` to `List<OrganizationCardNetwork>`; update all call sites to use `OrganizationCardNetwork` from `com.kard.api.resources.internalorganizations.types`.
+* **`ExternalOrganizationAttributes` builder methods `cardNetworks()`, `addCardNetworks()`, and `addAllCardNetworks()`** — parameter types changed from `CardNetwork` to `OrganizationCardNetwork`; replace all usages with the new type.
+### Added
+* **`OrganizationCardNetwork`** — new card network type in `com.kard.api.resources.internalorganizations.types` with values `VISA`, `MASTERCARD`, `AMERICAN_EXPRESS`, and `DISCOVER`, replacing the shared `CardNetwork` type for organization-scoped card network fields.
+
 ## 23.0.0 - 2026-08-05
 ### Breaking Changes
 * **`ButtonStyle`, `CtaAction`, `CtaComponent`, `LogoFlare`, `LogoFlareBadge`, `LogoFlareBadgePosition`, `LogoFlareBorderColor`, `OfferComponents`, `ProgressBar`, `ProgressBarLabelPair`, `ProgressBarLabels`, `ProgressBarSegment`, `ProgressBarSegmentLabel`, `ProgressBarSegmentPosition`, `ProgressBarSegmentProgress`, `ProgressBarSegmentSelection`, `ProgressBarSegmentSeparator`, and `ProgressBarSegments`** — these classes have moved from `com.kard.api.resources.users.rewards.types` to `com.kard.api.resources.commons.types`; update all import statements to use the new package.

@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
-import com.kard.api.resources.commons.types.CardNetwork;
 import com.kard.api.resources.internalorganizations.types.EnrolledReward;
+import com.kard.api.resources.internalorganizations.types.OrganizationCardNetwork;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public final class ExternalOrganizationAttributes {
 
     private final List<EnrolledReward> enrolledRewards;
 
-    private final List<CardNetwork> cardNetworks;
+    private final List<OrganizationCardNetwork> cardNetworks;
 
     private final List<String> bins;
 
@@ -43,7 +43,7 @@ public final class ExternalOrganizationAttributes {
     private ExternalOrganizationAttributes(
             String name,
             List<EnrolledReward> enrolledRewards,
-            List<CardNetwork> cardNetworks,
+            List<OrganizationCardNetwork> cardNetworks,
             List<String> bins,
             double affiliateCommissionSplit,
             double cardlinkedCommissionSplit,
@@ -79,7 +79,7 @@ public final class ExternalOrganizationAttributes {
      * @return Card networks supported by the organization
      */
     @JsonProperty("cardNetworks")
-    public List<CardNetwork> getCardNetworks() {
+    public List<OrganizationCardNetwork> getCardNetworks() {
         return cardNetworks;
     }
 
@@ -206,11 +206,11 @@ public final class ExternalOrganizationAttributes {
         /**
          * <p>Card networks supported by the organization</p>
          */
-        _FinalStage cardNetworks(List<CardNetwork> cardNetworks);
+        _FinalStage cardNetworks(List<OrganizationCardNetwork> cardNetworks);
 
-        _FinalStage addCardNetworks(CardNetwork cardNetworks);
+        _FinalStage addCardNetworks(OrganizationCardNetwork cardNetworks);
 
-        _FinalStage addAllCardNetworks(List<CardNetwork> cardNetworks);
+        _FinalStage addAllCardNetworks(List<OrganizationCardNetwork> cardNetworks);
 
         /**
          * <p>Bank Identification Numbers for the organization</p>
@@ -239,7 +239,7 @@ public final class ExternalOrganizationAttributes {
 
         private List<String> bins = new ArrayList<>();
 
-        private List<CardNetwork> cardNetworks = new ArrayList<>();
+        private List<OrganizationCardNetwork> cardNetworks = new ArrayList<>();
 
         private List<EnrolledReward> enrolledRewards = new ArrayList<>();
 
@@ -348,7 +348,7 @@ public final class ExternalOrganizationAttributes {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addAllCardNetworks(List<CardNetwork> cardNetworks) {
+        public _FinalStage addAllCardNetworks(List<OrganizationCardNetwork> cardNetworks) {
             if (cardNetworks != null) {
                 this.cardNetworks.addAll(cardNetworks);
             }
@@ -360,7 +360,7 @@ public final class ExternalOrganizationAttributes {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage addCardNetworks(CardNetwork cardNetworks) {
+        public _FinalStage addCardNetworks(OrganizationCardNetwork cardNetworks) {
             this.cardNetworks.add(cardNetworks);
             return this;
         }
@@ -370,7 +370,7 @@ public final class ExternalOrganizationAttributes {
          */
         @java.lang.Override
         @JsonSetter(value = "cardNetworks", nulls = Nulls.SKIP)
-        public _FinalStage cardNetworks(List<CardNetwork> cardNetworks) {
+        public _FinalStage cardNetworks(List<OrganizationCardNetwork> cardNetworks) {
             this.cardNetworks.clear();
             if (cardNetworks != null) {
                 this.cardNetworks.addAll(cardNetworks);
