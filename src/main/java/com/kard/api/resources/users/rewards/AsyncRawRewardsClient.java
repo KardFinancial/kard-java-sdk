@@ -374,9 +374,7 @@ public class AsyncRawRewardsClient {
 
     /**
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
-     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
-     * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.<br/>
+     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>.<br/>
      * <br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
@@ -388,9 +386,7 @@ public class AsyncRawRewardsClient {
 
     /**
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
-     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
-     * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.<br/>
+     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>.<br/>
      * <br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
@@ -402,9 +398,7 @@ public class AsyncRawRewardsClient {
 
     /**
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
-     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
-     * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.<br/>
+     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>.<br/>
      * <br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
@@ -415,9 +409,7 @@ public class AsyncRawRewardsClient {
 
     /**
      * Retrieve national and local geographic locations that a specified user has eligible in-store offers at. Use this endpoint to build
-     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>. Please note
-     * that Longitude and Latitude fields are prioritized over State, City and Zipcode and are the recommended search
-     * pattern.<br/>
+     * out your <a href="/2024-10-01/api/getting-started#c-discover-clos-near-you-map-view">map-specific UX experiences</a>.<br/>
      * <br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */

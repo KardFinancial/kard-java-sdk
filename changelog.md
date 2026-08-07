@@ -1,3 +1,15 @@
+## 24.0.1 - 2026-08-07
+* chore: update Javadoc for GetLocationsByUserRequest filter fields
+* Clarify the semantics of geographic filter parameters in the
+* `GetLocationsByUserRequest` class and trim redundant search-priority
+* notes from the `getLocations` endpoint Javadoc across all four rewards
+* client variants.
+* Key changes:
+* Add Javadoc to `getFilterCity()`, `getFilterZipCode()`, `getFilterState()`, `getFilterLongitude()`, `getFilterLatitude()`, and `getFilterRadius()` getters describing each field's role and constraints
+* Add matching Javadoc to the corresponding `Builder` setter methods (`filterCity()`, `filterZipCode()`, `filterState()`, `filterLongitude()`, `filterLatitude()`, `filterRadius()`)
+* Remove the outdated "Longitude and Latitude fields are prioritized over State, City and Zipcode" note from `getLocations` Javadoc in `RewardsClient`, `AsyncRewardsClient`, `RawRewardsClient`, and `AsyncRawRewardsClient`
+* 🌿 Generated with Fern
+
 ## 24.0.0 - 2026-08-05
 ### Breaking Changes
 * **`ExternalOrganizationAttributes.getCardNetworks()`** — return type changed from `List<CardNetwork>` to `List<OrganizationCardNetwork>`; update all call sites to use `OrganizationCardNetwork` from `com.kard.api.resources.internalorganizations.types`.

@@ -133,16 +133,25 @@ public final class GetLocationsByUserRequest {
         return filterName;
     }
 
+    /**
+     * @return Case-insensitive substring match on the location's city. Never defines the search area; applied as an additional constraint alongside a radius search when <code>filter[latitude]</code>/<code>filter[longitude]</code>/<code>filter[radius]</code> are also provided.
+     */
     @JsonIgnore
     public Optional<String> getFilterCity() {
         return filterCity;
     }
 
+    /**
+     * @return Exact-match filter on the location's zip code. Never defines the search area; applied as an additional constraint alongside a radius search when <code>filter[latitude]</code>/<code>filter[longitude]</code>/<code>filter[radius]</code> are also provided.
+     */
     @JsonIgnore
     public Optional<String> getFilterZipCode() {
         return filterZipCode;
     }
 
+    /**
+     * @return Exact-match filter on the location's state. Never defines the search area; applied as an additional constraint alongside a radius search when <code>filter[latitude]</code>/<code>filter[longitude]</code>/<code>filter[radius]</code> are also provided.
+     */
     @JsonIgnore
     public Optional<State> getFilterState() {
         return filterState;
@@ -153,16 +162,25 @@ public final class GetLocationsByUserRequest {
         return filterCategory;
     }
 
+    /**
+     * @return Longitude of the point to search around. Must be provided together with <code>filter[latitude]</code>; combine with <code>filter[radius]</code> to run a radius search.
+     */
     @JsonIgnore
     public Optional<Double> getFilterLongitude() {
         return filterLongitude;
     }
 
+    /**
+     * @return Latitude of the point to search around. Must be provided together with <code>filter[longitude]</code>; combine with <code>filter[radius]</code> to run a radius search.
+     */
     @JsonIgnore
     public Optional<Double> getFilterLatitude() {
         return filterLatitude;
     }
 
+    /**
+     * @return Radius in miles to search around the point given by <code>filter[latitude]</code>/<code>filter[longitude]</code> (default 10, minimum 1). Has no effect unless both latitude and longitude are also provided — it is ignored when only <code>filter[zipCode]</code>, <code>filter[city]</code>, or <code>filter[state]</code> is used, without lat/long.
+     */
     @JsonIgnore
     public Optional<Integer> getFilterRadius() {
         return filterRadius;
@@ -378,6 +396,9 @@ public final class GetLocationsByUserRequest {
             return this;
         }
 
+        /**
+         * <p>Case-insensitive substring match on the location's city. Never defines the search area; applied as an additional constraint alongside a radius search when <code>filter[latitude]</code>/<code>filter[longitude]</code>/<code>filter[radius]</code> are also provided.</p>
+         */
         @JsonSetter(value = "filter[city]", nulls = Nulls.SKIP)
         public Builder filterCity(Optional<String> filterCity) {
             this.filterCity = filterCity;
@@ -389,6 +410,9 @@ public final class GetLocationsByUserRequest {
             return this;
         }
 
+        /**
+         * <p>Exact-match filter on the location's zip code. Never defines the search area; applied as an additional constraint alongside a radius search when <code>filter[latitude]</code>/<code>filter[longitude]</code>/<code>filter[radius]</code> are also provided.</p>
+         */
         @JsonSetter(value = "filter[zipCode]", nulls = Nulls.SKIP)
         public Builder filterZipCode(Optional<String> filterZipCode) {
             this.filterZipCode = filterZipCode;
@@ -400,6 +424,9 @@ public final class GetLocationsByUserRequest {
             return this;
         }
 
+        /**
+         * <p>Exact-match filter on the location's state. Never defines the search area; applied as an additional constraint alongside a radius search when <code>filter[latitude]</code>/<code>filter[longitude]</code>/<code>filter[radius]</code> are also provided.</p>
+         */
         @JsonSetter(value = "filter[state]", nulls = Nulls.SKIP)
         public Builder filterState(Optional<State> filterState) {
             this.filterState = filterState;
@@ -422,6 +449,9 @@ public final class GetLocationsByUserRequest {
             return this;
         }
 
+        /**
+         * <p>Longitude of the point to search around. Must be provided together with <code>filter[latitude]</code>; combine with <code>filter[radius]</code> to run a radius search.</p>
+         */
         @JsonSetter(value = "filter[longitude]", nulls = Nulls.SKIP)
         public Builder filterLongitude(Optional<Double> filterLongitude) {
             this.filterLongitude = filterLongitude;
@@ -433,6 +463,9 @@ public final class GetLocationsByUserRequest {
             return this;
         }
 
+        /**
+         * <p>Latitude of the point to search around. Must be provided together with <code>filter[longitude]</code>; combine with <code>filter[radius]</code> to run a radius search.</p>
+         */
         @JsonSetter(value = "filter[latitude]", nulls = Nulls.SKIP)
         public Builder filterLatitude(Optional<Double> filterLatitude) {
             this.filterLatitude = filterLatitude;
@@ -444,6 +477,9 @@ public final class GetLocationsByUserRequest {
             return this;
         }
 
+        /**
+         * <p>Radius in miles to search around the point given by <code>filter[latitude]</code>/<code>filter[longitude]</code> (default 10, minimum 1). Has no effect unless both latitude and longitude are also provided — it is ignored when only <code>filter[zipCode]</code>, <code>filter[city]</code>, or <code>filter[state]</code> is used, without lat/long.</p>
+         */
         @JsonSetter(value = "filter[radius]", nulls = Nulls.SKIP)
         public Builder filterRadius(Optional<Integer> filterRadius) {
             this.filterRadius = filterRadius;
