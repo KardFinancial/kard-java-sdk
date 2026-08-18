@@ -5,18 +5,23 @@ package com.kard.api.resources.users.rewards.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.kard.api.core.Nullable;
+import com.kard.api.core.NullableNonemptyFilter;
 import com.kard.api.core.ObjectMappers;
+import com.kard.api.resources.commons.types.CuisineOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -34,6 +39,12 @@ public final class LocationAttributes {
 
     private final List<LocationPartnerId> partnerIds;
 
+    private final Optional<CuisineOption> cuisine;
+
+    private final Optional<LocationRating> rating;
+
+    private final Optional<Integer> priceLevel;
+
     private final Map<String, Object> additionalProperties;
 
     private LocationAttributes(
@@ -43,6 +54,9 @@ public final class LocationAttributes {
             String phone,
             OperationHours operationHours,
             List<LocationPartnerId> partnerIds,
+            Optional<CuisineOption> cuisine,
+            Optional<LocationRating> rating,
+            Optional<Integer> priceLevel,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.address = address;
@@ -50,6 +64,9 @@ public final class LocationAttributes {
         this.phone = phone;
         this.operationHours = operationHours;
         this.partnerIds = partnerIds;
+        this.cuisine = cuisine;
+        this.rating = rating;
+        this.priceLevel = priceLevel;
         this.additionalProperties = additionalProperties;
     }
 
@@ -86,6 +103,57 @@ public final class LocationAttributes {
         return partnerIds;
     }
 
+    /**
+     * @return The kind of food or venue this location offers, for example &quot;Pizza Restaurant&quot;.
+     */
+    @JsonIgnore
+    public Optional<CuisineOption> getCuisine() {
+        if (cuisine == null) {
+            return Optional.empty();
+        }
+        return cuisine;
+    }
+
+    /**
+     * @return Customer rating for this location.
+     */
+    @JsonIgnore
+    public Optional<LocationRating> getRating() {
+        if (rating == null) {
+            return Optional.empty();
+        }
+        return rating;
+    }
+
+    /**
+     * @return Typical price range for this location, from 1 (least expensive) to 4 (most expensive).
+     */
+    @JsonIgnore
+    public Optional<Integer> getPriceLevel() {
+        if (priceLevel == null) {
+            return Optional.empty();
+        }
+        return priceLevel;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("cuisine")
+    private Optional<CuisineOption> _getCuisine() {
+        return cuisine;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("rating")
+    private Optional<LocationRating> _getRating() {
+        return rating;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("priceLevel")
+    private Optional<Integer> _getPriceLevel() {
+        return priceLevel;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -103,13 +171,24 @@ public final class LocationAttributes {
                 && coordinates.equals(other.coordinates)
                 && phone.equals(other.phone)
                 && operationHours.equals(other.operationHours)
-                && partnerIds.equals(other.partnerIds);
+                && partnerIds.equals(other.partnerIds)
+                && cuisine.equals(other.cuisine)
+                && rating.equals(other.rating)
+                && priceLevel.equals(other.priceLevel);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name, this.address, this.coordinates, this.phone, this.operationHours, this.partnerIds);
+                this.name,
+                this.address,
+                this.coordinates,
+                this.phone,
+                this.operationHours,
+                this.partnerIds,
+                this.cuisine,
+                this.rating,
+                this.priceLevel);
     }
 
     @java.lang.Override
@@ -158,6 +237,33 @@ public final class LocationAttributes {
         _FinalStage addPartnerIds(LocationPartnerId partnerIds);
 
         _FinalStage addAllPartnerIds(List<LocationPartnerId> partnerIds);
+
+        /**
+         * <p>The kind of food or venue this location offers, for example &quot;Pizza Restaurant&quot;.</p>
+         */
+        _FinalStage cuisine(Optional<CuisineOption> cuisine);
+
+        _FinalStage cuisine(CuisineOption cuisine);
+
+        _FinalStage cuisine(Nullable<CuisineOption> cuisine);
+
+        /**
+         * <p>Customer rating for this location.</p>
+         */
+        _FinalStage rating(Optional<LocationRating> rating);
+
+        _FinalStage rating(LocationRating rating);
+
+        _FinalStage rating(Nullable<LocationRating> rating);
+
+        /**
+         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         */
+        _FinalStage priceLevel(Optional<Integer> priceLevel);
+
+        _FinalStage priceLevel(Integer priceLevel);
+
+        _FinalStage priceLevel(Nullable<Integer> priceLevel);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -172,6 +278,12 @@ public final class LocationAttributes {
         private String phone;
 
         private OperationHours operationHours;
+
+        private Optional<Integer> priceLevel = Optional.empty();
+
+        private Optional<LocationRating> rating = Optional.empty();
+
+        private Optional<CuisineOption> cuisine = Optional.empty();
 
         private List<LocationPartnerId> partnerIds = new ArrayList<>();
 
@@ -188,6 +300,9 @@ public final class LocationAttributes {
             phone(other.getPhone());
             operationHours(other.getOperationHours());
             partnerIds(other.getPartnerIds());
+            cuisine(other.getCuisine());
+            rating(other.getRating());
+            priceLevel(other.getPriceLevel());
             return this;
         }
 
@@ -223,6 +338,114 @@ public final class LocationAttributes {
         @JsonSetter("operationHours")
         public _FinalStage operationHours(@NotNull OperationHours operationHours) {
             this.operationHours = Objects.requireNonNull(operationHours, "operationHours must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage priceLevel(Nullable<Integer> priceLevel) {
+            if (priceLevel.isNull()) {
+                this.priceLevel = null;
+            } else if (priceLevel.isEmpty()) {
+                this.priceLevel = Optional.empty();
+            } else {
+                this.priceLevel = Optional.of(priceLevel.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage priceLevel(Integer priceLevel) {
+            this.priceLevel = Optional.ofNullable(priceLevel);
+            return this;
+        }
+
+        /**
+         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "priceLevel", nulls = Nulls.SKIP)
+        public _FinalStage priceLevel(Optional<Integer> priceLevel) {
+            this.priceLevel = priceLevel;
+            return this;
+        }
+
+        /**
+         * <p>Customer rating for this location.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage rating(Nullable<LocationRating> rating) {
+            if (rating.isNull()) {
+                this.rating = null;
+            } else if (rating.isEmpty()) {
+                this.rating = Optional.empty();
+            } else {
+                this.rating = Optional.of(rating.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Customer rating for this location.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage rating(LocationRating rating) {
+            this.rating = Optional.ofNullable(rating);
+            return this;
+        }
+
+        /**
+         * <p>Customer rating for this location.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "rating", nulls = Nulls.SKIP)
+        public _FinalStage rating(Optional<LocationRating> rating) {
+            this.rating = rating;
+            return this;
+        }
+
+        /**
+         * <p>The kind of food or venue this location offers, for example &quot;Pizza Restaurant&quot;.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage cuisine(Nullable<CuisineOption> cuisine) {
+            if (cuisine.isNull()) {
+                this.cuisine = null;
+            } else if (cuisine.isEmpty()) {
+                this.cuisine = Optional.empty();
+            } else {
+                this.cuisine = Optional.of(cuisine.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>The kind of food or venue this location offers, for example &quot;Pizza Restaurant&quot;.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage cuisine(CuisineOption cuisine) {
+            this.cuisine = Optional.ofNullable(cuisine);
+            return this;
+        }
+
+        /**
+         * <p>The kind of food or venue this location offers, for example &quot;Pizza Restaurant&quot;.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "cuisine", nulls = Nulls.SKIP)
+        public _FinalStage cuisine(Optional<CuisineOption> cuisine) {
+            this.cuisine = cuisine;
             return this;
         }
 
@@ -264,7 +487,16 @@ public final class LocationAttributes {
         @java.lang.Override
         public LocationAttributes build() {
             return new LocationAttributes(
-                    name, address, coordinates, phone, operationHours, partnerIds, additionalProperties);
+                    name,
+                    address,
+                    coordinates,
+                    phone,
+                    operationHours,
+                    partnerIds,
+                    cuisine,
+                    rating,
+                    priceLevel,
+                    additionalProperties);
         }
 
         @java.lang.Override

@@ -1,3 +1,10 @@
+## 24.1.0 - 2026-08-18
+### Added
+* **`LocationAttributes.getCuisine()`**, **`getRating()`**, and **`getPriceLevel()`** — new optional fields exposing cuisine category, customer rating, and price level (1–4) for a location.
+* **`LocationAttributes.Builder`** — new builder methods `cuisine()`, `rating()`, and `priceLevel()` supporting plain value, `Optional`, and `Nullable` overloads.
+* **`CuisineOption`** — new enum-like type in `com.kard.api.resources.commons.types` representing cuisine and venue categories (e.g. `PIZZA`, `SUSHI`, `BREWERY`, `MUSEUM`) with visitor-pattern and JSON support.
+* **`LocationRating`** — new type in `com.kard.api.resources.users.rewards.types` representing a location's customer rating with a required `getValue()` (1–5 scale) and optional `getCount()` for the number of ratings.
+
 ## 24.0.1 - 2026-08-07
 * chore: update Javadoc for GetLocationsByUserRequest filter fields
 * Clarify the semantics of geographic filter parameters in the

@@ -34,6 +34,10 @@ public final class Asset {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return What the asset shows. <code>IMG_VIEW</code> is the merchant logo, <code>BANNER_VIEW</code> a promotional
+     * banner, and <code>LOCATION_IMG_VIEW</code> a photo of the location. New values may be added over time.
+     */
     @JsonProperty("type")
     public String getType() {
         return type;
@@ -85,6 +89,10 @@ public final class Asset {
     }
 
     public interface TypeStage {
+        /**
+         * <p>What the asset shows. <code>IMG_VIEW</code> is the merchant logo, <code>BANNER_VIEW</code> a promotional
+         * banner, and <code>LOCATION_IMG_VIEW</code> a photo of the location. New values may be added over time.</p>
+         */
         UrlStage type(@NotNull String type);
 
         Builder from(Asset other);
@@ -133,6 +141,13 @@ public final class Asset {
             return this;
         }
 
+        /**
+         * <p>What the asset shows. <code>IMG_VIEW</code> is the merchant logo, <code>BANNER_VIEW</code> a promotional
+         * banner, and <code>LOCATION_IMG_VIEW</code> a photo of the location. New values may be added over time.</p>
+         * <p>What the asset shows. <code>IMG_VIEW</code> is the merchant logo, <code>BANNER_VIEW</code> a promotional
+         * banner, and <code>LOCATION_IMG_VIEW</code> a photo of the location. New values may be added over time.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("type")
         public UrlStage type(@NotNull String type) {
