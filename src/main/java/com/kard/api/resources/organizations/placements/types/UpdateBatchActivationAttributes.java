@@ -17,12 +17,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UpdateBatchActivationAttributes.Builder.class)
 public final class UpdateBatchActivationAttributes {
     private final String name;
+
+    private final Optional<PlacementStatus> status;
 
     private final String refreshInterval;
 
@@ -32,10 +35,12 @@ public final class UpdateBatchActivationAttributes {
 
     private UpdateBatchActivationAttributes(
             String name,
+            Optional<PlacementStatus> status,
             String refreshInterval,
             List<UpdateBatchActivationSlot> slots,
             Map<String, Object> additionalProperties) {
         this.name = name;
+        this.status = status;
         this.refreshInterval = refreshInterval;
         this.slots = slots;
         this.additionalProperties = additionalProperties;
@@ -47,6 +52,14 @@ public final class UpdateBatchActivationAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.
+     */
+    @JsonProperty("status")
+    public Optional<PlacementStatus> getStatus() {
+        return status;
     }
 
     /**
@@ -77,12 +90,15 @@ public final class UpdateBatchActivationAttributes {
     }
 
     private boolean equalTo(UpdateBatchActivationAttributes other) {
-        return name.equals(other.name) && refreshInterval.equals(other.refreshInterval) && slots.equals(other.slots);
+        return name.equals(other.name)
+                && status.equals(other.status)
+                && refreshInterval.equals(other.refreshInterval)
+                && slots.equals(other.slots);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.refreshInterval, this.slots);
+        return Objects.hash(this.name, this.status, this.refreshInterval, this.slots);
     }
 
     @java.lang.Override
@@ -118,6 +134,13 @@ public final class UpdateBatchActivationAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
+         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
+         */
+        _FinalStage status(Optional<PlacementStatus> status);
+
+        _FinalStage status(PlacementStatus status);
+
+        /**
          * <p>Slots that make up the activation cohort. Slots present in the prior state but absent from this list are removed.</p>
          */
         _FinalStage slots(List<UpdateBatchActivationSlot> slots);
@@ -135,6 +158,8 @@ public final class UpdateBatchActivationAttributes {
 
         private List<UpdateBatchActivationSlot> slots = new ArrayList<>();
 
+        private Optional<PlacementStatus> status = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -143,6 +168,7 @@ public final class UpdateBatchActivationAttributes {
         @java.lang.Override
         public Builder from(UpdateBatchActivationAttributes other) {
             name(other.getName());
+            status(other.getStatus());
             refreshInterval(other.getRefreshInterval());
             slots(other.getSlots());
             return this;
@@ -207,9 +233,29 @@ public final class UpdateBatchActivationAttributes {
             return this;
         }
 
+        /**
+         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage status(PlacementStatus status) {
+            this.status = Optional.ofNullable(status);
+            return this;
+        }
+
+        /**
+         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "status", nulls = Nulls.SKIP)
+        public _FinalStage status(Optional<PlacementStatus> status) {
+            this.status = status;
+            return this;
+        }
+
         @java.lang.Override
         public UpdateBatchActivationAttributes build() {
-            return new UpdateBatchActivationAttributes(name, refreshInterval, slots, additionalProperties);
+            return new UpdateBatchActivationAttributes(name, status, refreshInterval, slots, additionalProperties);
         }
 
         @java.lang.Override

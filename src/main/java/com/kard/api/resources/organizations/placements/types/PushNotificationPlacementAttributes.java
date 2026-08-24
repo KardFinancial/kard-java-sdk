@@ -23,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 public final class PushNotificationPlacementAttributes {
     private final String name;
 
+    private final PlacementStatus status;
+
     private final String organizationId;
 
     private final Cadence cadence;
@@ -33,11 +35,13 @@ public final class PushNotificationPlacementAttributes {
 
     private PushNotificationPlacementAttributes(
             String name,
+            PlacementStatus status,
             String organizationId,
             Cadence cadence,
             Optional<String> contentStrategyId,
             Map<String, Object> additionalProperties) {
         this.name = name;
+        this.status = status;
         this.organizationId = organizationId;
         this.cadence = cadence;
         this.contentStrategyId = contentStrategyId;
@@ -50,6 +54,14 @@ public final class PushNotificationPlacementAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.
+     */
+    @JsonProperty("status")
+    public PlacementStatus getStatus() {
+        return status;
     }
 
     /**
@@ -90,6 +102,7 @@ public final class PushNotificationPlacementAttributes {
 
     private boolean equalTo(PushNotificationPlacementAttributes other) {
         return name.equals(other.name)
+                && status.equals(other.status)
                 && organizationId.equals(other.organizationId)
                 && cadence.equals(other.cadence)
                 && contentStrategyId.equals(other.contentStrategyId);
@@ -97,7 +110,7 @@ public final class PushNotificationPlacementAttributes {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.organizationId, this.cadence, this.contentStrategyId);
+        return Objects.hash(this.name, this.status, this.organizationId, this.cadence, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -113,9 +126,16 @@ public final class PushNotificationPlacementAttributes {
         /**
          * <p>Name of the placement</p>
          */
-        OrganizationIdStage name(@NotNull String name);
+        StatusStage name(@NotNull String name);
 
         Builder from(PushNotificationPlacementAttributes other);
+    }
+
+    public interface StatusStage {
+        /**
+         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
+         */
+        OrganizationIdStage status(@NotNull PlacementStatus status);
     }
 
     public interface OrganizationIdStage {
@@ -148,8 +168,11 @@ public final class PushNotificationPlacementAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, OrganizationIdStage, CadenceStage, _FinalStage {
+    public static final class Builder
+            implements NameStage, StatusStage, OrganizationIdStage, CadenceStage, _FinalStage {
         private String name;
+
+        private PlacementStatus status;
 
         private String organizationId;
 
@@ -165,6 +188,7 @@ public final class PushNotificationPlacementAttributes {
         @java.lang.Override
         public Builder from(PushNotificationPlacementAttributes other) {
             name(other.getName());
+            status(other.getStatus());
             organizationId(other.getOrganizationId());
             cadence(other.getCadence());
             contentStrategyId(other.getContentStrategyId());
@@ -178,8 +202,20 @@ public final class PushNotificationPlacementAttributes {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public OrganizationIdStage name(@NotNull String name) {
+        public StatusStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
+         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("status")
+        public OrganizationIdStage status(@NotNull PlacementStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -230,7 +266,7 @@ public final class PushNotificationPlacementAttributes {
         @java.lang.Override
         public PushNotificationPlacementAttributes build() {
             return new PushNotificationPlacementAttributes(
-                    name, organizationId, cadence, contentStrategyId, additionalProperties);
+                    name, status, organizationId, cadence, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override

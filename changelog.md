@@ -1,3 +1,12 @@
+## 25.0.0 - 2026-08-24
+### Breaking Changes
+* **Staged builders for all `*PlacementAttributes` response types** — a new required `StatusStage` is inserted between `NameStage` and `OrganizationIdStage` in `BatchActivationPlacementAttributes`, `EmailPlacementAttributes`, `GroupPlacementAttributes`, `PlacementAttributes`, and `PushNotificationPlacementAttributes`; existing chains of `.name(...).organizationId(...)` will no longer compile — insert `.status(PlacementStatus)` between the two calls.
+* **`getStatus()` on all `*PlacementAttributes` response types** — `PlacementStatus` is now a required field on `BatchActivationPlacementAttributes`, `EmailPlacementAttributes`, `GroupPlacementAttributes`, `PlacementAttributes`, and `PushNotificationPlacementAttributes`; deserialization of payloads missing this field will fail.
+### Added
+* **`PlacementStatus`** — new enum type in `com.kard.api.resources.organizations.placements.types` representing a placement's lifecycle state (`ACTIVE` / `INACTIVE`) with full visitor-pattern support; an inactive placement retains its configuration but serves empty content and skips scheduled deliveries.
+* **`getStatus()` on all `Create*Attributes` and `Update*Attributes` types** — new optional `Optional<PlacementStatus>` field added to `CreateBatchActivationAttributes`, `CreateEmailAttributes`, `CreateGroupAttributes`, `CreatePushNotificationAttributes`, `CreateStandardAttributes`, `UpdateBatchActivationAttributes`, `UpdateEmailAttributes`, `UpdateGroupAttributes`, `UpdatePushNotificationAttributes`, and `UpdateStandardAttributes`; defaults to `ACTIVE` on create and preserves the current status when omitted on update.
+* **`status(PlacementStatus)` and `status(Optional<PlacementStatus>)` builder methods** — optional `_FinalStage` setters added to all `Create*Attributes` and `Update*Attributes` builder types.
+
 ## 24.1.0 - 2026-08-18
 ### Added
 * **`LocationAttributes.getCuisine()`**, **`getRating()`**, and **`getPriceLevel()`** — new optional fields exposing cuisine category, customer rating, and price level (1–4) for a location.

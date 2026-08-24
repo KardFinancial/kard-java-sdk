@@ -23,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 public final class CreateStandardAttributes {
     private final String name;
 
+    private final Optional<PlacementStatus> status;
+
     private final int availableSlots;
 
     private final Optional<String> contentStrategyId;
@@ -31,10 +33,12 @@ public final class CreateStandardAttributes {
 
     private CreateStandardAttributes(
             String name,
+            Optional<PlacementStatus> status,
             int availableSlots,
             Optional<String> contentStrategyId,
             Map<String, Object> additionalProperties) {
         this.name = name;
+        this.status = status;
         this.availableSlots = availableSlots;
         this.contentStrategyId = contentStrategyId;
         this.additionalProperties = additionalProperties;
@@ -46,6 +50,14 @@ public final class CreateStandardAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.
+     */
+    @JsonProperty("status")
+    public Optional<PlacementStatus> getStatus() {
+        return status;
     }
 
     /**
@@ -77,13 +89,14 @@ public final class CreateStandardAttributes {
 
     private boolean equalTo(CreateStandardAttributes other) {
         return name.equals(other.name)
+                && status.equals(other.status)
                 && availableSlots == other.availableSlots
                 && contentStrategyId.equals(other.contentStrategyId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.availableSlots, this.contentStrategyId);
+        return Objects.hash(this.name, this.status, this.availableSlots, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -119,6 +132,13 @@ public final class CreateStandardAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
+         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
+         */
+        _FinalStage status(Optional<PlacementStatus> status);
+
+        _FinalStage status(PlacementStatus status);
+
+        /**
          * <p>ID of the content strategy to link this placement to</p>
          */
         _FinalStage contentStrategyId(Optional<String> contentStrategyId);
@@ -134,6 +154,8 @@ public final class CreateStandardAttributes {
 
         private Optional<String> contentStrategyId = Optional.empty();
 
+        private Optional<PlacementStatus> status = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -142,6 +164,7 @@ public final class CreateStandardAttributes {
         @java.lang.Override
         public Builder from(CreateStandardAttributes other) {
             name(other.getName());
+            status(other.getStatus());
             availableSlots(other.getAvailableSlots());
             contentStrategyId(other.getContentStrategyId());
             return this;
@@ -191,9 +214,29 @@ public final class CreateStandardAttributes {
             return this;
         }
 
+        /**
+         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage status(PlacementStatus status) {
+            this.status = Optional.ofNullable(status);
+            return this;
+        }
+
+        /**
+         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "status", nulls = Nulls.SKIP)
+        public _FinalStage status(Optional<PlacementStatus> status) {
+            this.status = status;
+            return this;
+        }
+
         @java.lang.Override
         public CreateStandardAttributes build() {
-            return new CreateStandardAttributes(name, availableSlots, contentStrategyId, additionalProperties);
+            return new CreateStandardAttributes(name, status, availableSlots, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override
