@@ -21,8 +21,6 @@ import org.jetbrains.annotations.NotNull;
 public final class BatchActivationPlacementAttributes {
     private final String name;
 
-    private final PlacementStatus status;
-
     private final String organizationId;
 
     private final String refreshInterval;
@@ -30,13 +28,8 @@ public final class BatchActivationPlacementAttributes {
     private final Map<String, Object> additionalProperties;
 
     private BatchActivationPlacementAttributes(
-            String name,
-            PlacementStatus status,
-            String organizationId,
-            String refreshInterval,
-            Map<String, Object> additionalProperties) {
+            String name, String organizationId, String refreshInterval, Map<String, Object> additionalProperties) {
         this.name = name;
-        this.status = status;
         this.organizationId = organizationId;
         this.refreshInterval = refreshInterval;
         this.additionalProperties = additionalProperties;
@@ -48,14 +41,6 @@ public final class BatchActivationPlacementAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
-    }
-
-    /**
-     * @return Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.
-     */
-    @JsonProperty("status")
-    public PlacementStatus getStatus() {
-        return status;
     }
 
     /**
@@ -88,14 +73,13 @@ public final class BatchActivationPlacementAttributes {
 
     private boolean equalTo(BatchActivationPlacementAttributes other) {
         return name.equals(other.name)
-                && status.equals(other.status)
                 && organizationId.equals(other.organizationId)
                 && refreshInterval.equals(other.refreshInterval);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.status, this.organizationId, this.refreshInterval);
+        return Objects.hash(this.name, this.organizationId, this.refreshInterval);
     }
 
     @java.lang.Override
@@ -111,16 +95,9 @@ public final class BatchActivationPlacementAttributes {
         /**
          * <p>Name of the placement</p>
          */
-        StatusStage name(@NotNull String name);
+        OrganizationIdStage name(@NotNull String name);
 
         Builder from(BatchActivationPlacementAttributes other);
-    }
-
-    public interface StatusStage {
-        /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         */
-        OrganizationIdStage status(@NotNull PlacementStatus status);
     }
 
     public interface OrganizationIdStage {
@@ -146,11 +123,8 @@ public final class BatchActivationPlacementAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements NameStage, StatusStage, OrganizationIdStage, RefreshIntervalStage, _FinalStage {
+    public static final class Builder implements NameStage, OrganizationIdStage, RefreshIntervalStage, _FinalStage {
         private String name;
-
-        private PlacementStatus status;
 
         private String organizationId;
 
@@ -164,7 +138,6 @@ public final class BatchActivationPlacementAttributes {
         @java.lang.Override
         public Builder from(BatchActivationPlacementAttributes other) {
             name(other.getName());
-            status(other.getStatus());
             organizationId(other.getOrganizationId());
             refreshInterval(other.getRefreshInterval());
             return this;
@@ -177,20 +150,8 @@ public final class BatchActivationPlacementAttributes {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public StatusStage name(@NotNull String name) {
+        public OrganizationIdStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("status")
-        public OrganizationIdStage status(@NotNull PlacementStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -220,8 +181,7 @@ public final class BatchActivationPlacementAttributes {
 
         @java.lang.Override
         public BatchActivationPlacementAttributes build() {
-            return new BatchActivationPlacementAttributes(
-                    name, status, organizationId, refreshInterval, additionalProperties);
+            return new BatchActivationPlacementAttributes(name, organizationId, refreshInterval, additionalProperties);
         }
 
         @java.lang.Override

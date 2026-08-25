@@ -21,16 +21,12 @@ import org.jetbrains.annotations.NotNull;
 public final class GroupPlacementAttributes {
     private final String name;
 
-    private final PlacementStatus status;
-
     private final String organizationId;
 
     private final Map<String, Object> additionalProperties;
 
-    private GroupPlacementAttributes(
-            String name, PlacementStatus status, String organizationId, Map<String, Object> additionalProperties) {
+    private GroupPlacementAttributes(String name, String organizationId, Map<String, Object> additionalProperties) {
         this.name = name;
-        this.status = status;
         this.organizationId = organizationId;
         this.additionalProperties = additionalProperties;
     }
@@ -41,14 +37,6 @@ public final class GroupPlacementAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
-    }
-
-    /**
-     * @return Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.
-     */
-    @JsonProperty("status")
-    public PlacementStatus getStatus() {
-        return status;
     }
 
     /**
@@ -71,12 +59,12 @@ public final class GroupPlacementAttributes {
     }
 
     private boolean equalTo(GroupPlacementAttributes other) {
-        return name.equals(other.name) && status.equals(other.status) && organizationId.equals(other.organizationId);
+        return name.equals(other.name) && organizationId.equals(other.organizationId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.status, this.organizationId);
+        return Objects.hash(this.name, this.organizationId);
     }
 
     @java.lang.Override
@@ -92,16 +80,9 @@ public final class GroupPlacementAttributes {
         /**
          * <p>Name of the placement</p>
          */
-        StatusStage name(@NotNull String name);
+        OrganizationIdStage name(@NotNull String name);
 
         Builder from(GroupPlacementAttributes other);
-    }
-
-    public interface StatusStage {
-        /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         */
-        OrganizationIdStage status(@NotNull PlacementStatus status);
     }
 
     public interface OrganizationIdStage {
@@ -120,10 +101,8 @@ public final class GroupPlacementAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StatusStage, OrganizationIdStage, _FinalStage {
+    public static final class Builder implements NameStage, OrganizationIdStage, _FinalStage {
         private String name;
-
-        private PlacementStatus status;
 
         private String organizationId;
 
@@ -135,7 +114,6 @@ public final class GroupPlacementAttributes {
         @java.lang.Override
         public Builder from(GroupPlacementAttributes other) {
             name(other.getName());
-            status(other.getStatus());
             organizationId(other.getOrganizationId());
             return this;
         }
@@ -147,20 +125,8 @@ public final class GroupPlacementAttributes {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public StatusStage name(@NotNull String name) {
+        public OrganizationIdStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("status")
-        public OrganizationIdStage status(@NotNull PlacementStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -178,7 +144,7 @@ public final class GroupPlacementAttributes {
 
         @java.lang.Override
         public GroupPlacementAttributes build() {
-            return new GroupPlacementAttributes(name, status, organizationId, additionalProperties);
+            return new GroupPlacementAttributes(name, organizationId, additionalProperties);
         }
 
         @java.lang.Override

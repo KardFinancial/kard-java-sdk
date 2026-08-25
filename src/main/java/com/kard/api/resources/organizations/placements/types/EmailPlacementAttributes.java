@@ -61,7 +61,7 @@ public final class EmailPlacementAttributes {
     }
 
     /**
-     * @return Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.
+     * @return Whether the placement's scheduled deliveries are paused. Has no effect on content serving.
      */
     @JsonProperty("status")
     public PlacementStatus getStatus() {
@@ -146,7 +146,7 @@ public final class EmailPlacementAttributes {
 
     public interface StatusStage {
         /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
+         * <p>Whether the placement's scheduled deliveries are paused. Has no effect on content serving.</p>
          */
         OrganizationIdStage status(@NotNull PlacementStatus status);
     }
@@ -231,8 +231,8 @@ public final class EmailPlacementAttributes {
         }
 
         /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
+         * <p>Whether the placement's scheduled deliveries are paused. Has no effect on content serving.</p>
+         * <p>Whether the placement's scheduled deliveries are paused. Has no effect on content serving.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

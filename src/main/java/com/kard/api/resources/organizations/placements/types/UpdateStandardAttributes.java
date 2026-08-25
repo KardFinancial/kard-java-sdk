@@ -23,8 +23,6 @@ import org.jetbrains.annotations.NotNull;
 public final class UpdateStandardAttributes {
     private final String name;
 
-    private final Optional<PlacementStatus> status;
-
     private final int availableSlots;
 
     private final Optional<String> contentStrategyId;
@@ -33,12 +31,10 @@ public final class UpdateStandardAttributes {
 
     private UpdateStandardAttributes(
             String name,
-            Optional<PlacementStatus> status,
             int availableSlots,
             Optional<String> contentStrategyId,
             Map<String, Object> additionalProperties) {
         this.name = name;
-        this.status = status;
         this.availableSlots = availableSlots;
         this.contentStrategyId = contentStrategyId;
         this.additionalProperties = additionalProperties;
@@ -50,14 +46,6 @@ public final class UpdateStandardAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
-    }
-
-    /**
-     * @return Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.
-     */
-    @JsonProperty("status")
-    public Optional<PlacementStatus> getStatus() {
-        return status;
     }
 
     /**
@@ -89,14 +77,13 @@ public final class UpdateStandardAttributes {
 
     private boolean equalTo(UpdateStandardAttributes other) {
         return name.equals(other.name)
-                && status.equals(other.status)
                 && availableSlots == other.availableSlots
                 && contentStrategyId.equals(other.contentStrategyId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.status, this.availableSlots, this.contentStrategyId);
+        return Objects.hash(this.name, this.availableSlots, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -132,13 +119,6 @@ public final class UpdateStandardAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
-         */
-        _FinalStage status(Optional<PlacementStatus> status);
-
-        _FinalStage status(PlacementStatus status);
-
-        /**
          * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
          */
         _FinalStage contentStrategyId(Optional<String> contentStrategyId);
@@ -154,8 +134,6 @@ public final class UpdateStandardAttributes {
 
         private Optional<String> contentStrategyId = Optional.empty();
 
-        private Optional<PlacementStatus> status = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -164,7 +142,6 @@ public final class UpdateStandardAttributes {
         @java.lang.Override
         public Builder from(UpdateStandardAttributes other) {
             name(other.getName());
-            status(other.getStatus());
             availableSlots(other.getAvailableSlots());
             contentStrategyId(other.getContentStrategyId());
             return this;
@@ -214,29 +191,9 @@ public final class UpdateStandardAttributes {
             return this;
         }
 
-        /**
-         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage status(PlacementStatus status) {
-            this.status = Optional.ofNullable(status);
-            return this;
-        }
-
-        /**
-         * <p>Placement status. Defaults to ACTIVE on create; when omitted on update, the current status is preserved.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "status", nulls = Nulls.SKIP)
-        public _FinalStage status(Optional<PlacementStatus> status) {
-            this.status = status;
-            return this;
-        }
-
         @java.lang.Override
         public UpdateStandardAttributes build() {
-            return new UpdateStandardAttributes(name, status, availableSlots, contentStrategyId, additionalProperties);
+            return new UpdateStandardAttributes(name, availableSlots, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override

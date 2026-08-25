@@ -1,3 +1,11 @@
+## 26.0.0 - 2026-08-25
+### Breaking Changes
+* **`getStatus()` on placement attribute types** — removed from `BatchActivationPlacementAttributes`, `GroupPlacementAttributes`, and `PlacementAttributes`; delete any calls to `.getStatus()` on these types.
+* **`StatusStage` interface removed from staged builders** — `BatchActivationPlacementAttributes.Builder`, `GroupPlacementAttributes.Builder`, and `PlacementAttributes.Builder` no longer implement `StatusStage`; drop the `.status(...)` call from any builder chain.
+* **`getStatus()` and `status()` builder methods removed from create/update attribute types** — removed from `CreateBatchActivationAttributes`, `CreateGroupAttributes`, `CreateStandardAttributes`, `UpdateBatchActivationAttributes`, `UpdateGroupAttributes`, and `UpdateStandardAttributes`; remove all `status(PlacementStatus)` and `status(Optional<PlacementStatus>)` calls from request construction code.
+### Changed
+* **`EmailPlacementAttributes.getStatus()` and `PushNotificationPlacementAttributes.getStatus()`** — Javadoc clarified that `INACTIVE` only pauses scheduled deliveries and has no effect on content serving.
+
 ## 25.0.0 - 2026-08-24
 ### Breaking Changes
 * **Staged builders for all `*PlacementAttributes` response types** — a new required `StatusStage` is inserted between `NameStage` and `OrganizationIdStage` in `BatchActivationPlacementAttributes`, `EmailPlacementAttributes`, `GroupPlacementAttributes`, `PlacementAttributes`, and `PushNotificationPlacementAttributes`; existing chains of `.name(...).organizationId(...)` will no longer compile — insert `.status(PlacementStatus)` between the two calls.

@@ -23,8 +23,6 @@ import org.jetbrains.annotations.NotNull;
 public final class PlacementAttributes {
     private final String name;
 
-    private final PlacementStatus status;
-
     private final String organizationId;
 
     private final int availableSlots;
@@ -35,13 +33,11 @@ public final class PlacementAttributes {
 
     private PlacementAttributes(
             String name,
-            PlacementStatus status,
             String organizationId,
             int availableSlots,
             Optional<String> contentStrategyId,
             Map<String, Object> additionalProperties) {
         this.name = name;
-        this.status = status;
         this.organizationId = organizationId;
         this.availableSlots = availableSlots;
         this.contentStrategyId = contentStrategyId;
@@ -54,14 +50,6 @@ public final class PlacementAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
-    }
-
-    /**
-     * @return Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.
-     */
-    @JsonProperty("status")
-    public PlacementStatus getStatus() {
-        return status;
     }
 
     /**
@@ -101,7 +89,6 @@ public final class PlacementAttributes {
 
     private boolean equalTo(PlacementAttributes other) {
         return name.equals(other.name)
-                && status.equals(other.status)
                 && organizationId.equals(other.organizationId)
                 && availableSlots == other.availableSlots
                 && contentStrategyId.equals(other.contentStrategyId);
@@ -109,7 +96,7 @@ public final class PlacementAttributes {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.status, this.organizationId, this.availableSlots, this.contentStrategyId);
+        return Objects.hash(this.name, this.organizationId, this.availableSlots, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -125,16 +112,9 @@ public final class PlacementAttributes {
         /**
          * <p>Name of the placement</p>
          */
-        StatusStage name(@NotNull String name);
+        OrganizationIdStage name(@NotNull String name);
 
         Builder from(PlacementAttributes other);
-    }
-
-    public interface StatusStage {
-        /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         */
-        OrganizationIdStage status(@NotNull PlacementStatus status);
     }
 
     public interface OrganizationIdStage {
@@ -167,11 +147,8 @@ public final class PlacementAttributes {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements NameStage, StatusStage, OrganizationIdStage, AvailableSlotsStage, _FinalStage {
+    public static final class Builder implements NameStage, OrganizationIdStage, AvailableSlotsStage, _FinalStage {
         private String name;
-
-        private PlacementStatus status;
 
         private String organizationId;
 
@@ -187,7 +164,6 @@ public final class PlacementAttributes {
         @java.lang.Override
         public Builder from(PlacementAttributes other) {
             name(other.getName());
-            status(other.getStatus());
             organizationId(other.getOrganizationId());
             availableSlots(other.getAvailableSlots());
             contentStrategyId(other.getContentStrategyId());
@@ -201,20 +177,8 @@ public final class PlacementAttributes {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public StatusStage name(@NotNull String name) {
+        public OrganizationIdStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         * <p>Whether the placement serves content and fires scheduled deliveries. An INACTIVE placement keeps its configuration but serves empty content and skips scheduled deliveries.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("status")
-        public OrganizationIdStage status(@NotNull PlacementStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -265,7 +229,7 @@ public final class PlacementAttributes {
         @java.lang.Override
         public PlacementAttributes build() {
             return new PlacementAttributes(
-                    name, status, organizationId, availableSlots, contentStrategyId, additionalProperties);
+                    name, organizationId, availableSlots, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override
