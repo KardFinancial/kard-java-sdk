@@ -7,9 +7,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class FileType {
-    public static final FileType VALIDATED_TRANSACTION_DAILY_RECONCILIATION_FILE = new FileType(
-            Value.VALIDATED_TRANSACTION_DAILY_RECONCILIATION_FILE, "validatedTransactionDailyReconciliationFile");
-
     public static final FileType MONTHLY_RECONCILIATION_FILE =
             new FileType(Value.MONTHLY_RECONCILIATION_FILE, "monthlyReconciliationFile");
 
@@ -50,8 +47,6 @@ public final class FileType {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case VALIDATED_TRANSACTION_DAILY_RECONCILIATION_FILE:
-                return visitor.visitValidatedTransactionDailyReconciliationFile();
             case MONTHLY_RECONCILIATION_FILE:
                 return visitor.visitMonthlyReconciliationFile();
             case EARNED_REWARD_SETTLED_DAILY_RECONCILIATION_FILE:
@@ -67,8 +62,6 @@ public final class FileType {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static FileType valueOf(String value) {
         switch (value) {
-            case "validatedTransactionDailyReconciliationFile":
-                return VALIDATED_TRANSACTION_DAILY_RECONCILIATION_FILE;
             case "monthlyReconciliationFile":
                 return MONTHLY_RECONCILIATION_FILE;
             case "earnedRewardSettledDailyReconciliationFile":
@@ -85,8 +78,6 @@ public final class FileType {
 
         EARNED_REWARD_SETTLED_DAILY_RECONCILIATION_FILE,
 
-        VALIDATED_TRANSACTION_DAILY_RECONCILIATION_FILE,
-
         MONTHLY_RECONCILIATION_FILE,
 
         UNKNOWN
@@ -96,8 +87,6 @@ public final class FileType {
         T visitEarnedRewardApprovedDailyReconciliationFile();
 
         T visitEarnedRewardSettledDailyReconciliationFile();
-
-        T visitValidatedTransactionDailyReconciliationFile();
 
         T visitMonthlyReconciliationFile();
 

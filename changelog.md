@@ -1,3 +1,8 @@
+## 27.0.0 - 2026-08-27
+### Breaking Changes
+* **`FileType.VALIDATED_TRANSACTION_DAILY_RECONCILIATION_FILE`** — this public constant and its corresponding `Value` enum entry have been removed; replace any references with an alternative `FileType` value or handle it as an unknown type.
+* **`FileType.Visitor.visitValidatedTransactionDailyReconciliationFile()`** — this method has been removed from the `Visitor` interface; delete the implementation from any class that implements `FileType.Visitor`.
+
 ## 26.0.0 - 2026-08-25
 ### Breaking Changes
 * **`getStatus()` on placement attribute types** — removed from `BatchActivationPlacementAttributes`, `GroupPlacementAttributes`, and `PlacementAttributes`; delete any calls to `.getStatus()` on these types.
