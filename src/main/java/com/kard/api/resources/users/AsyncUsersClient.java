@@ -13,7 +13,6 @@ import com.kard.api.resources.users.types.CreateUsersObject;
 import com.kard.api.resources.users.types.DeleteUserResponseObject;
 import com.kard.api.resources.users.types.UpdateUserObject;
 import com.kard.api.resources.users.types.UserResponseObject;
-import com.kard.api.resources.users.uploads.AsyncUploadsClient;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -28,15 +27,12 @@ public class AsyncUsersClient {
 
     protected final Supplier<AsyncRewardsClient> rewardsClient;
 
-    protected final Supplier<AsyncUploadsClient> uploadsClient;
-
     public AsyncUsersClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new AsyncRawUsersClient(clientOptions);
         this.attributionsClient = Suppliers.memoize(() -> new AsyncAttributionsClient(clientOptions));
         this.authClient = Suppliers.memoize(() -> new AsyncAuthClient(clientOptions));
         this.rewardsClient = Suppliers.memoize(() -> new AsyncRewardsClient(clientOptions));
-        this.uploadsClient = Suppliers.memoize(() -> new AsyncUploadsClient(clientOptions));
     }
 
     /**
@@ -131,9 +127,5 @@ public class AsyncUsersClient {
 
     public AsyncRewardsClient rewards() {
         return this.rewardsClient.get();
-    }
-
-    public AsyncUploadsClient uploads() {
-        return this.uploadsClient.get();
     }
 }

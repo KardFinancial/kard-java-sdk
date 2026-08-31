@@ -1,3 +1,11 @@
+## 28.0.0 - 2026-08-31
+### Breaking Changes
+* **`UsersClient.uploads()` and `AsyncUsersClient.uploads()`** — both methods have been removed; migrate to the transactions-level bulk upload endpoint.
+* **`UploadsClient`, `AsyncUploadsClient`, `RawUploadsClient`, and `AsyncRawUploadsClient`** — all uploads client classes (including `create()`, `createPart()`, and `update()` methods) have been deleted entirely; remove all direct references and replace with the bulk transactions upload flow.
+* **`UploadPartMultiStatus`** — exception class removed from `com.kard.api.resources.users.uploads.errors`; remove any catch blocks referencing this type.
+* **Upload request/response types** — `CreateUploadPartRequestObject`, `CreateUploadPartResponseObject`, `CreateUploadRequestObject`, `CreateUploadResponseObject`, `UpdateUploadRequestObject`, `UpdateUploadResponseObject`, and all associated `DataUnion`/`Visitor` types have been removed; delete all references and update upload workflow code to use the bulk upload API.
+* **`HistoricalTransactionCompleteNoData`, `StartHistoricalUploadNoData`, and `UpdateUploadResponseData`** — all three classes and their staged builders have been removed; delete any references in upload workflow code.
+
 ## 27.0.0 - 2026-08-27
 ### Breaking Changes
 * **`FileType.VALIDATED_TRANSACTION_DAILY_RECONCILIATION_FILE`** — this public constant and its corresponding `Value` enum entry have been removed; replace any references with an alternative `FileType` value or handle it as an unknown type.

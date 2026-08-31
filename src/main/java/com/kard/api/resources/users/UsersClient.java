@@ -13,7 +13,6 @@ import com.kard.api.resources.users.types.CreateUsersObject;
 import com.kard.api.resources.users.types.DeleteUserResponseObject;
 import com.kard.api.resources.users.types.UpdateUserObject;
 import com.kard.api.resources.users.types.UserResponseObject;
-import com.kard.api.resources.users.uploads.UploadsClient;
 import java.util.function.Supplier;
 
 public class UsersClient {
@@ -27,15 +26,12 @@ public class UsersClient {
 
     protected final Supplier<RewardsClient> rewardsClient;
 
-    protected final Supplier<UploadsClient> uploadsClient;
-
     public UsersClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new RawUsersClient(clientOptions);
         this.attributionsClient = Suppliers.memoize(() -> new AttributionsClient(clientOptions));
         this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
         this.rewardsClient = Suppliers.memoize(() -> new RewardsClient(clientOptions));
-        this.uploadsClient = Suppliers.memoize(() -> new UploadsClient(clientOptions));
     }
 
     /**
@@ -126,9 +122,5 @@ public class UsersClient {
 
     public RewardsClient rewards() {
         return this.rewardsClient.get();
-    }
-
-    public UploadsClient uploads() {
-        return this.uploadsClient.get();
     }
 }
