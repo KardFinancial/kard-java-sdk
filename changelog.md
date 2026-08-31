@@ -1,3 +1,8 @@
+## 29.0.0 - 2026-08-31
+### Breaking Changes
+* **`LocationAttributes.getPriceLevel()`** — return type changed from `Optional<Integer>` to `Optional<String>`; price level is now expressed as dollar-sign strings (`"$"` through `"$$$$"`) instead of integers 1–4. Update any code reading this field to handle `String` values.
+* **`LocationAttributes.Builder.priceLevel()`** — all three overloads (`priceLevel(Integer)`, `priceLevel(Optional<Integer>)`, `priceLevel(Nullable<Integer>)`) now require `String`, `Optional<String>`, and `Nullable<String>` respectively; update all builder call sites to pass string values.
+
 ## 28.0.0 - 2026-08-31
 ### Breaking Changes
 * **`UsersClient.uploads()` and `AsyncUsersClient.uploads()`** — both methods have been removed; migrate to the transactions-level bulk upload endpoint.

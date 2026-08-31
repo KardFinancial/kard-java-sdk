@@ -43,7 +43,7 @@ public final class LocationAttributes {
 
     private final Optional<LocationRating> rating;
 
-    private final Optional<Integer> priceLevel;
+    private final Optional<String> priceLevel;
 
     private final Map<String, Object> additionalProperties;
 
@@ -56,7 +56,7 @@ public final class LocationAttributes {
             List<LocationPartnerId> partnerIds,
             Optional<CuisineOption> cuisine,
             Optional<LocationRating> rating,
-            Optional<Integer> priceLevel,
+            Optional<String> priceLevel,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.address = address;
@@ -126,10 +126,10 @@ public final class LocationAttributes {
     }
 
     /**
-     * @return Typical price range for this location, from 1 (least expensive) to 4 (most expensive).
+     * @return Typical price range for this location, rendered as dollar signs from &quot;$&quot; (least expensive) to &quot;$$$$&quot; (most expensive).
      */
     @JsonIgnore
-    public Optional<Integer> getPriceLevel() {
+    public Optional<String> getPriceLevel() {
         if (priceLevel == null) {
             return Optional.empty();
         }
@@ -150,7 +150,7 @@ public final class LocationAttributes {
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("priceLevel")
-    private Optional<Integer> _getPriceLevel() {
+    private Optional<String> _getPriceLevel() {
         return priceLevel;
     }
 
@@ -257,13 +257,13 @@ public final class LocationAttributes {
         _FinalStage rating(Nullable<LocationRating> rating);
 
         /**
-         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         * <p>Typical price range for this location, rendered as dollar signs from &quot;$&quot; (least expensive) to &quot;$$$$&quot; (most expensive).</p>
          */
-        _FinalStage priceLevel(Optional<Integer> priceLevel);
+        _FinalStage priceLevel(Optional<String> priceLevel);
 
-        _FinalStage priceLevel(Integer priceLevel);
+        _FinalStage priceLevel(String priceLevel);
 
-        _FinalStage priceLevel(Nullable<Integer> priceLevel);
+        _FinalStage priceLevel(Nullable<String> priceLevel);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -279,7 +279,7 @@ public final class LocationAttributes {
 
         private OperationHours operationHours;
 
-        private Optional<Integer> priceLevel = Optional.empty();
+        private Optional<String> priceLevel = Optional.empty();
 
         private Optional<LocationRating> rating = Optional.empty();
 
@@ -342,11 +342,11 @@ public final class LocationAttributes {
         }
 
         /**
-         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         * <p>Typical price range for this location, rendered as dollar signs from &quot;$&quot; (least expensive) to &quot;$$$$&quot; (most expensive).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage priceLevel(Nullable<Integer> priceLevel) {
+        public _FinalStage priceLevel(Nullable<String> priceLevel) {
             if (priceLevel.isNull()) {
                 this.priceLevel = null;
             } else if (priceLevel.isEmpty()) {
@@ -358,21 +358,21 @@ public final class LocationAttributes {
         }
 
         /**
-         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         * <p>Typical price range for this location, rendered as dollar signs from &quot;$&quot; (least expensive) to &quot;$$$$&quot; (most expensive).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage priceLevel(Integer priceLevel) {
+        public _FinalStage priceLevel(String priceLevel) {
             this.priceLevel = Optional.ofNullable(priceLevel);
             return this;
         }
 
         /**
-         * <p>Typical price range for this location, from 1 (least expensive) to 4 (most expensive).</p>
+         * <p>Typical price range for this location, rendered as dollar signs from &quot;$&quot; (least expensive) to &quot;$$$$&quot; (most expensive).</p>
          */
         @java.lang.Override
         @JsonSetter(value = "priceLevel", nulls = Nulls.SKIP)
-        public _FinalStage priceLevel(Optional<Integer> priceLevel) {
+        public _FinalStage priceLevel(Optional<String> priceLevel) {
             this.priceLevel = priceLevel;
             return this;
         }

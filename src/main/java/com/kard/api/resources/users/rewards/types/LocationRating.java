@@ -36,7 +36,7 @@ public final class LocationRating {
     }
 
     /**
-     * @return Rating on a scale of 1 to 5.
+     * @return Restaurant star rating. Rating is out of 5.
      */
     @JsonProperty("value")
     public double getValue() {
@@ -91,7 +91,7 @@ public final class LocationRating {
 
     public interface ValueStage {
         /**
-         * <p>Rating on a scale of 1 to 5.</p>
+         * <p>Restaurant star rating. Rating is out of 5.</p>
          */
         _FinalStage value(double value);
 
@@ -134,8 +134,8 @@ public final class LocationRating {
         }
 
         /**
-         * <p>Rating on a scale of 1 to 5.</p>
-         * <p>Rating on a scale of 1 to 5.</p>
+         * <p>Restaurant star rating. Rating is out of 5.</p>
+         * <p>Restaurant star rating. Rating is out of 5.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
