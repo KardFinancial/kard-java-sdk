@@ -90,7 +90,7 @@ public final class GetLocationsByUserRequest {
     }
 
     /**
-     * @return If provided, response will be sorted by the specified fields
+     * @return If provided, response will be sorted by the specified fields. Defaults to newest first, equivalent to descending <code>createdDate</code>; when <code>filter[latitude]</code>/<code>filter[longitude]</code> are provided, locations are ordered by ascending distance from that point first, then newest first.
      */
     @JsonIgnore
     public Optional<List<LocationSortOptions>> getSort() {
@@ -296,7 +296,7 @@ public final class GetLocationsByUserRequest {
         }
 
         /**
-         * <p>If provided, response will be sorted by the specified fields</p>
+         * <p>If provided, response will be sorted by the specified fields. Defaults to newest first, equivalent to descending <code>createdDate</code>; when <code>filter[latitude]</code>/<code>filter[longitude]</code> are provided, locations are ordered by ascending distance from that point first, then newest first.</p>
          */
         @JsonSetter(value = "sort", nulls = Nulls.SKIP)
         public Builder sort(Optional<List<LocationSortOptions>> sort) {

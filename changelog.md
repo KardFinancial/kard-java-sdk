@@ -1,3 +1,13 @@
+## 29.0.1 - 2026-09-10
+* chore: improve Javadoc for GetLocationsByUserRequest sort field
+* Expand the `getSort()` and `Builder.sort()` Javadoc to document the
+* default sort behavior and the distance-based ordering that applies when
+* latitude/longitude filters are provided. No public API surface changes.
+* Key changes:
+* `getSort()` Javadoc now describes the default sort order (descending `createdDate`) and the distance-first ordering when geo-filters are active
+* `Builder.sort()` Javadoc updated with the same clarifying detail
+* 🌿 Generated with Fern
+
 ## 29.0.0 - 2026-08-31
 ### Breaking Changes
 * **`LocationAttributes.getPriceLevel()`** — return type changed from `Optional<Integer>` to `Optional<String>`; price level is now expressed as dollar-sign strings (`"$"` through `"$$$$"`) instead of integers 1–4. Update any code reading this field to handle `String` values.
