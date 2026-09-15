@@ -1,3 +1,9 @@
+## 29.1.0 - 2026-09-15
+### Added
+* **`CreateStandardAttributes.getDisplayName()`** — new optional `Optional<String>` field representing the cardholder-facing title for a placement section; set via `Builder.displayName(String)` or `Builder.displayName(Optional<String>)`.
+* **`UpdateStandardAttributes.getDisplayName()`** — new optional `Optional<String>` field for the cardholder-facing placement section title; omit to clear the value on PUT requests.
+* **`PlacementAttributes.getDisplayName()`** — new optional `Optional<String>` field surfacing the stored cardholder-facing title on placement responses; absent when no display name was set.
+
 ## 29.0.1 - 2026-09-10
 * chore: improve Javadoc for GetLocationsByUserRequest sort field
 * Expand the `getSort()` and `Builder.sort()` Javadoc to document the

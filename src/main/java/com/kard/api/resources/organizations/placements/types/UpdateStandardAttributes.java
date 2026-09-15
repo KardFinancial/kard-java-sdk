@@ -23,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 public final class UpdateStandardAttributes {
     private final String name;
 
+    private final Optional<String> displayName;
+
     private final int availableSlots;
 
     private final Optional<String> contentStrategyId;
@@ -31,10 +33,12 @@ public final class UpdateStandardAttributes {
 
     private UpdateStandardAttributes(
             String name,
+            Optional<String> displayName,
             int availableSlots,
             Optional<String> contentStrategyId,
             Map<String, Object> additionalProperties) {
         this.name = name;
+        this.displayName = displayName;
         this.availableSlots = availableSlots;
         this.contentStrategyId = contentStrategyId;
         this.additionalProperties = additionalProperties;
@@ -46,6 +50,14 @@ public final class UpdateStandardAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Cardholder-facing title for the section (minimum 1 character). Omit to clear it (PUT requires the full attribute set).
+     */
+    @JsonProperty("displayName")
+    public Optional<String> getDisplayName() {
+        return displayName;
     }
 
     /**
@@ -77,13 +89,14 @@ public final class UpdateStandardAttributes {
 
     private boolean equalTo(UpdateStandardAttributes other) {
         return name.equals(other.name)
+                && displayName.equals(other.displayName)
                 && availableSlots == other.availableSlots
                 && contentStrategyId.equals(other.contentStrategyId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.availableSlots, this.contentStrategyId);
+        return Objects.hash(this.name, this.displayName, this.availableSlots, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -119,6 +132,13 @@ public final class UpdateStandardAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
+         * <p>Cardholder-facing title for the section (minimum 1 character). Omit to clear it (PUT requires the full attribute set).</p>
+         */
+        _FinalStage displayName(Optional<String> displayName);
+
+        _FinalStage displayName(String displayName);
+
+        /**
          * <p>ID of the content strategy to link this placement to. Omit to clear any existing link (PUT requires the full attribute set, so a missing value unlinks the placement).</p>
          */
         _FinalStage contentStrategyId(Optional<String> contentStrategyId);
@@ -134,6 +154,8 @@ public final class UpdateStandardAttributes {
 
         private Optional<String> contentStrategyId = Optional.empty();
 
+        private Optional<String> displayName = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -142,6 +164,7 @@ public final class UpdateStandardAttributes {
         @java.lang.Override
         public Builder from(UpdateStandardAttributes other) {
             name(other.getName());
+            displayName(other.getDisplayName());
             availableSlots(other.getAvailableSlots());
             contentStrategyId(other.getContentStrategyId());
             return this;
@@ -191,9 +214,30 @@ public final class UpdateStandardAttributes {
             return this;
         }
 
+        /**
+         * <p>Cardholder-facing title for the section (minimum 1 character). Omit to clear it (PUT requires the full attribute set).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage displayName(String displayName) {
+            this.displayName = Optional.ofNullable(displayName);
+            return this;
+        }
+
+        /**
+         * <p>Cardholder-facing title for the section (minimum 1 character). Omit to clear it (PUT requires the full attribute set).</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "displayName", nulls = Nulls.SKIP)
+        public _FinalStage displayName(Optional<String> displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+
         @java.lang.Override
         public UpdateStandardAttributes build() {
-            return new UpdateStandardAttributes(name, availableSlots, contentStrategyId, additionalProperties);
+            return new UpdateStandardAttributes(
+                    name, displayName, availableSlots, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override

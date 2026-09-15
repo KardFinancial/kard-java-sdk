@@ -23,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 public final class PlacementAttributes {
     private final String name;
 
+    private final Optional<String> displayName;
+
     private final String organizationId;
 
     private final int availableSlots;
@@ -33,11 +35,13 @@ public final class PlacementAttributes {
 
     private PlacementAttributes(
             String name,
+            Optional<String> displayName,
             String organizationId,
             int availableSlots,
             Optional<String> contentStrategyId,
             Map<String, Object> additionalProperties) {
         this.name = name;
+        this.displayName = displayName;
         this.organizationId = organizationId;
         this.availableSlots = availableSlots;
         this.contentStrategyId = contentStrategyId;
@@ -50,6 +54,14 @@ public final class PlacementAttributes {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Cardholder-facing title for the section, if one was set. When absent, clients fall back to their own default label.
+     */
+    @JsonProperty("displayName")
+    public Optional<String> getDisplayName() {
+        return displayName;
     }
 
     /**
@@ -89,6 +101,7 @@ public final class PlacementAttributes {
 
     private boolean equalTo(PlacementAttributes other) {
         return name.equals(other.name)
+                && displayName.equals(other.displayName)
                 && organizationId.equals(other.organizationId)
                 && availableSlots == other.availableSlots
                 && contentStrategyId.equals(other.contentStrategyId);
@@ -96,7 +109,8 @@ public final class PlacementAttributes {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.organizationId, this.availableSlots, this.contentStrategyId);
+        return Objects.hash(
+                this.name, this.displayName, this.organizationId, this.availableSlots, this.contentStrategyId);
     }
 
     @java.lang.Override
@@ -139,6 +153,13 @@ public final class PlacementAttributes {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
+         * <p>Cardholder-facing title for the section, if one was set. When absent, clients fall back to their own default label.</p>
+         */
+        _FinalStage displayName(Optional<String> displayName);
+
+        _FinalStage displayName(String displayName);
+
+        /**
          * <p>ID of the content strategy linked to this placement, if any. Retained alongside <code>relationships.contentStrategy</code> for backward compatibility.</p>
          */
         _FinalStage contentStrategyId(Optional<String> contentStrategyId);
@@ -156,6 +177,8 @@ public final class PlacementAttributes {
 
         private Optional<String> contentStrategyId = Optional.empty();
 
+        private Optional<String> displayName = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -164,6 +187,7 @@ public final class PlacementAttributes {
         @java.lang.Override
         public Builder from(PlacementAttributes other) {
             name(other.getName());
+            displayName(other.getDisplayName());
             organizationId(other.getOrganizationId());
             availableSlots(other.getAvailableSlots());
             contentStrategyId(other.getContentStrategyId());
@@ -226,10 +250,30 @@ public final class PlacementAttributes {
             return this;
         }
 
+        /**
+         * <p>Cardholder-facing title for the section, if one was set. When absent, clients fall back to their own default label.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage displayName(String displayName) {
+            this.displayName = Optional.ofNullable(displayName);
+            return this;
+        }
+
+        /**
+         * <p>Cardholder-facing title for the section, if one was set. When absent, clients fall back to their own default label.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "displayName", nulls = Nulls.SKIP)
+        public _FinalStage displayName(Optional<String> displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+
         @java.lang.Override
         public PlacementAttributes build() {
             return new PlacementAttributes(
-                    name, organizationId, availableSlots, contentStrategyId, additionalProperties);
+                    name, displayName, organizationId, availableSlots, contentStrategyId, additionalProperties);
         }
 
         @java.lang.Override
