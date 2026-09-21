@@ -1,3 +1,11 @@
+## 30.0.0 - 2026-09-21
+### Breaking Changes
+* **`RewardNotificationAttributes`** and **`IRewardNotificationAttributes`** — both the class and interface have been removed; delete all imports, instantiations, and implementations of these types.
+* **`EarnedRewardNotificationAttributes.getUserReward()`** and **`EarnedRewardSettledAttributes.getUserReward()`** — return type changed from `Optional<UserReward>` to `UserReward`; remove all `Optional` unwrapping (`.get()`, `.orElse()`, etc.) at call sites.
+* **`EarnedRewardNotificationAttributes.Builder`** and **`EarnedRewardSettledAttributes.Builder`** — a new mandatory `UserRewardStage` step is now required in the builder chain; insert a `.userReward(value)` call after `.transactionAmountInCents(...)` or the code will not compile.
+* **`_FinalStage.userReward(UserReward)`** and **`_FinalStage.userReward(Optional<UserReward>)`** — both overloads removed from `_FinalStage`; use `UserRewardStage.userReward(@NotNull UserReward)` instead.
+* **`EarnedRewardNotificationAttributes`**, **`EarnedRewardSettledAttributes`**, and **`IEarnedRewardNotificationAttributes`** — no longer implement or extend `IRewardNotificationAttributes`; update any casts, assignments, or interface hierarchies that relied on this relationship.
+
 ## 29.1.0 - 2026-09-15
 ### Added
 * **`CreateStandardAttributes.getDisplayName()`** — new optional `Optional<String>` field representing the cardholder-facing title for a placement section; set via `Builder.displayName(String)` or `Builder.displayName(Optional<String>)`.

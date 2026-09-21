@@ -5,13 +5,30 @@ package com.kard.api.resources.notifications.types;
 
 import com.kard.api.resources.commons.types.PurchaseChannel;
 import com.kard.api.resources.transactions.types.MerchantAsset;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface IEarnedRewardNotificationAttributes extends IRewardNotificationAttributes {
+public interface IEarnedRewardNotificationAttributes {
+    String getMessage();
+
+    String getName();
+
+    String getAttributionUrl();
+
+    Optional<String> getSurveyUrl();
+
+    Optional<String> getCardProductId();
+
+    Optional<OffsetDateTime> getTransactionTimestamp();
+
+    String getTransactionId();
+
+    int getTransactionAmountInCents();
+
     Optional<String> getCategoryName();
 
-    Optional<UserReward> getUserReward();
+    UserReward getUserReward();
 
     Optional<List<MerchantAsset>> getAssets();
 

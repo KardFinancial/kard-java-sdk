@@ -24,16 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EarnedRewardNotificationAttributes.Builder.class)
-public final class EarnedRewardNotificationAttributes
-        implements IEarnedRewardNotificationAttributes, IRewardNotificationAttributes {
-    private final Optional<String> categoryName;
-
-    private final Optional<UserReward> userReward;
-
-    private final Optional<List<MerchantAsset>> assets;
-
-    private final Optional<List<PurchaseChannel>> purchaseChannel;
-
+public final class EarnedRewardNotificationAttributes implements IEarnedRewardNotificationAttributes {
     private final String message;
 
     private final String name;
@@ -50,13 +41,17 @@ public final class EarnedRewardNotificationAttributes
 
     private final int transactionAmountInCents;
 
+    private final Optional<String> categoryName;
+
+    private final UserReward userReward;
+
+    private final Optional<List<MerchantAsset>> assets;
+
+    private final Optional<List<PurchaseChannel>> purchaseChannel;
+
     private final Map<String, Object> additionalProperties;
 
     private EarnedRewardNotificationAttributes(
-            Optional<String> categoryName,
-            Optional<UserReward> userReward,
-            Optional<List<MerchantAsset>> assets,
-            Optional<List<PurchaseChannel>> purchaseChannel,
             String message,
             String name,
             String attributionUrl,
@@ -65,11 +60,11 @@ public final class EarnedRewardNotificationAttributes
             Optional<OffsetDateTime> transactionTimestamp,
             String transactionId,
             int transactionAmountInCents,
+            Optional<String> categoryName,
+            UserReward userReward,
+            Optional<List<MerchantAsset>> assets,
+            Optional<List<PurchaseChannel>> purchaseChannel,
             Map<String, Object> additionalProperties) {
-        this.categoryName = categoryName;
-        this.userReward = userReward;
-        this.assets = assets;
-        this.purchaseChannel = purchaseChannel;
         this.message = message;
         this.name = name;
         this.attributionUrl = attributionUrl;
@@ -78,45 +73,11 @@ public final class EarnedRewardNotificationAttributes
         this.transactionTimestamp = transactionTimestamp;
         this.transactionId = transactionId;
         this.transactionAmountInCents = transactionAmountInCents;
+        this.categoryName = categoryName;
+        this.userReward = userReward;
+        this.assets = assets;
+        this.purchaseChannel = purchaseChannel;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return The category of the offer, e.g. &quot;Food &amp; Dining&quot;
-     */
-    @JsonProperty("categoryName")
-    @java.lang.Override
-    public Optional<String> getCategoryName() {
-        return categoryName;
-    }
-
-    /**
-     * @return Type of commission on offer (% or a flat $)
-     */
-    @JsonProperty("userReward")
-    @java.lang.Override
-    public Optional<UserReward> getUserReward() {
-        return userReward;
-    }
-
-    /**
-     * @return Tracked asset images for the merchant. The asset
-     * URL is signed for attribution tracking and should be loaded as-is by the
-     * client.
-     */
-    @JsonProperty("assets")
-    @java.lang.Override
-    public Optional<List<MerchantAsset>> getAssets() {
-        return assets;
-    }
-
-    /**
-     * @return The purchase channels the offer applies to
-     */
-    @JsonProperty("purchaseChannel")
-    @java.lang.Override
-    public Optional<List<PurchaseChannel>> getPurchaseChannel() {
-        return purchaseChannel;
     }
 
     /**
@@ -191,6 +152,44 @@ public final class EarnedRewardNotificationAttributes
         return transactionAmountInCents;
     }
 
+    /**
+     * @return The category of the offer, e.g. &quot;Food &amp; Dining&quot;
+     */
+    @JsonProperty("categoryName")
+    @java.lang.Override
+    public Optional<String> getCategoryName() {
+        return categoryName;
+    }
+
+    /**
+     * @return Type of commission on offer (% or a flat $)
+     */
+    @JsonProperty("userReward")
+    @java.lang.Override
+    public UserReward getUserReward() {
+        return userReward;
+    }
+
+    /**
+     * @return Tracked asset images for the merchant. The asset
+     * URL is signed for attribution tracking and should be loaded as-is by the
+     * client.
+     */
+    @JsonProperty("assets")
+    @java.lang.Override
+    public Optional<List<MerchantAsset>> getAssets() {
+        return assets;
+    }
+
+    /**
+     * @return The purchase channels the offer applies to
+     */
+    @JsonProperty("purchaseChannel")
+    @java.lang.Override
+    public Optional<List<PurchaseChannel>> getPurchaseChannel() {
+        return purchaseChannel;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -204,27 +203,23 @@ public final class EarnedRewardNotificationAttributes
     }
 
     private boolean equalTo(EarnedRewardNotificationAttributes other) {
-        return categoryName.equals(other.categoryName)
-                && userReward.equals(other.userReward)
-                && assets.equals(other.assets)
-                && purchaseChannel.equals(other.purchaseChannel)
-                && message.equals(other.message)
+        return message.equals(other.message)
                 && name.equals(other.name)
                 && attributionUrl.equals(other.attributionUrl)
                 && surveyUrl.equals(other.surveyUrl)
                 && cardProductId.equals(other.cardProductId)
                 && transactionTimestamp.equals(other.transactionTimestamp)
                 && transactionId.equals(other.transactionId)
-                && transactionAmountInCents == other.transactionAmountInCents;
+                && transactionAmountInCents == other.transactionAmountInCents
+                && categoryName.equals(other.categoryName)
+                && userReward.equals(other.userReward)
+                && assets.equals(other.assets)
+                && purchaseChannel.equals(other.purchaseChannel);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.categoryName,
-                this.userReward,
-                this.assets,
-                this.purchaseChannel,
                 this.message,
                 this.name,
                 this.attributionUrl,
@@ -232,7 +227,11 @@ public final class EarnedRewardNotificationAttributes
                 this.cardProductId,
                 this.transactionTimestamp,
                 this.transactionId,
-                this.transactionAmountInCents);
+                this.transactionAmountInCents,
+                this.categoryName,
+                this.userReward,
+                this.assets,
+                this.purchaseChannel);
     }
 
     @java.lang.Override
@@ -278,7 +277,14 @@ public final class EarnedRewardNotificationAttributes
         /**
          * <p>The amount of the originating transaction in cents</p>
          */
-        _FinalStage transactionAmountInCents(int transactionAmountInCents);
+        UserRewardStage transactionAmountInCents(int transactionAmountInCents);
+    }
+
+    public interface UserRewardStage {
+        /**
+         * <p>Type of commission on offer (% or a flat $)</p>
+         */
+        _FinalStage userReward(@NotNull UserReward userReward);
     }
 
     public interface _FinalStage {
@@ -287,36 +293,6 @@ public final class EarnedRewardNotificationAttributes
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>The category of the offer, e.g. &quot;Food &amp; Dining&quot;</p>
-         */
-        _FinalStage categoryName(Optional<String> categoryName);
-
-        _FinalStage categoryName(String categoryName);
-
-        /**
-         * <p>Type of commission on offer (% or a flat $)</p>
-         */
-        _FinalStage userReward(Optional<UserReward> userReward);
-
-        _FinalStage userReward(UserReward userReward);
-
-        /**
-         * <p>Tracked asset images for the merchant. The asset
-         * URL is signed for attribution tracking and should be loaded as-is by the
-         * client.</p>
-         */
-        _FinalStage assets(Optional<List<MerchantAsset>> assets);
-
-        _FinalStage assets(List<MerchantAsset> assets);
-
-        /**
-         * <p>The purchase channels the offer applies to</p>
-         */
-        _FinalStage purchaseChannel(Optional<List<PurchaseChannel>> purchaseChannel);
-
-        _FinalStage purchaseChannel(List<PurchaseChannel> purchaseChannel);
 
         /**
          * <p>Post experience survey URL, if available. This will be present for rewards associated with local offers.</p>
@@ -338,6 +314,29 @@ public final class EarnedRewardNotificationAttributes
         _FinalStage transactionTimestamp(Optional<OffsetDateTime> transactionTimestamp);
 
         _FinalStage transactionTimestamp(OffsetDateTime transactionTimestamp);
+
+        /**
+         * <p>The category of the offer, e.g. &quot;Food &amp; Dining&quot;</p>
+         */
+        _FinalStage categoryName(Optional<String> categoryName);
+
+        _FinalStage categoryName(String categoryName);
+
+        /**
+         * <p>Tracked asset images for the merchant. The asset
+         * URL is signed for attribution tracking and should be loaded as-is by the
+         * client.</p>
+         */
+        _FinalStage assets(Optional<List<MerchantAsset>> assets);
+
+        _FinalStage assets(List<MerchantAsset> assets);
+
+        /**
+         * <p>The purchase channels the offer applies to</p>
+         */
+        _FinalStage purchaseChannel(Optional<List<PurchaseChannel>> purchaseChannel);
+
+        _FinalStage purchaseChannel(List<PurchaseChannel> purchaseChannel);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -347,6 +346,7 @@ public final class EarnedRewardNotificationAttributes
                     AttributionUrlStage,
                     TransactionIdStage,
                     TransactionAmountInCentsStage,
+                    UserRewardStage,
                     _FinalStage {
         private String message;
 
@@ -358,19 +358,19 @@ public final class EarnedRewardNotificationAttributes
 
         private int transactionAmountInCents;
 
-        private Optional<OffsetDateTime> transactionTimestamp = Optional.empty();
-
-        private Optional<String> cardProductId = Optional.empty();
-
-        private Optional<String> surveyUrl = Optional.empty();
+        private UserReward userReward;
 
         private Optional<List<PurchaseChannel>> purchaseChannel = Optional.empty();
 
         private Optional<List<MerchantAsset>> assets = Optional.empty();
 
-        private Optional<UserReward> userReward = Optional.empty();
-
         private Optional<String> categoryName = Optional.empty();
+
+        private Optional<OffsetDateTime> transactionTimestamp = Optional.empty();
+
+        private Optional<String> cardProductId = Optional.empty();
+
+        private Optional<String> surveyUrl = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -379,10 +379,6 @@ public final class EarnedRewardNotificationAttributes
 
         @java.lang.Override
         public Builder from(EarnedRewardNotificationAttributes other) {
-            categoryName(other.getCategoryName());
-            userReward(other.getUserReward());
-            assets(other.getAssets());
-            purchaseChannel(other.getPurchaseChannel());
             message(other.getMessage());
             name(other.getName());
             attributionUrl(other.getAttributionUrl());
@@ -391,6 +387,10 @@ public final class EarnedRewardNotificationAttributes
             transactionTimestamp(other.getTransactionTimestamp());
             transactionId(other.getTransactionId());
             transactionAmountInCents(other.getTransactionAmountInCents());
+            categoryName(other.getCategoryName());
+            userReward(other.getUserReward());
+            assets(other.getAssets());
+            purchaseChannel(other.getPurchaseChannel());
             return this;
         }
 
@@ -449,8 +449,84 @@ public final class EarnedRewardNotificationAttributes
          */
         @java.lang.Override
         @JsonSetter("transactionAmountInCents")
-        public _FinalStage transactionAmountInCents(int transactionAmountInCents) {
+        public UserRewardStage transactionAmountInCents(int transactionAmountInCents) {
             this.transactionAmountInCents = transactionAmountInCents;
+            return this;
+        }
+
+        /**
+         * <p>Type of commission on offer (% or a flat $)</p>
+         * <p>Type of commission on offer (% or a flat $)</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("userReward")
+        public _FinalStage userReward(@NotNull UserReward userReward) {
+            this.userReward = Objects.requireNonNull(userReward, "userReward must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The purchase channels the offer applies to</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage purchaseChannel(List<PurchaseChannel> purchaseChannel) {
+            this.purchaseChannel = Optional.ofNullable(purchaseChannel);
+            return this;
+        }
+
+        /**
+         * <p>The purchase channels the offer applies to</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "purchaseChannel", nulls = Nulls.SKIP)
+        public _FinalStage purchaseChannel(Optional<List<PurchaseChannel>> purchaseChannel) {
+            this.purchaseChannel = purchaseChannel;
+            return this;
+        }
+
+        /**
+         * <p>Tracked asset images for the merchant. The asset
+         * URL is signed for attribution tracking and should be loaded as-is by the
+         * client.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage assets(List<MerchantAsset> assets) {
+            this.assets = Optional.ofNullable(assets);
+            return this;
+        }
+
+        /**
+         * <p>Tracked asset images for the merchant. The asset
+         * URL is signed for attribution tracking and should be loaded as-is by the
+         * client.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "assets", nulls = Nulls.SKIP)
+        public _FinalStage assets(Optional<List<MerchantAsset>> assets) {
+            this.assets = assets;
+            return this;
+        }
+
+        /**
+         * <p>The category of the offer, e.g. &quot;Food &amp; Dining&quot;</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage categoryName(String categoryName) {
+            this.categoryName = Optional.ofNullable(categoryName);
+            return this;
+        }
+
+        /**
+         * <p>The category of the offer, e.g. &quot;Food &amp; Dining&quot;</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "categoryName", nulls = Nulls.SKIP)
+        public _FinalStage categoryName(Optional<String> categoryName) {
+            this.categoryName = categoryName;
             return this;
         }
 
@@ -514,97 +590,9 @@ public final class EarnedRewardNotificationAttributes
             return this;
         }
 
-        /**
-         * <p>The purchase channels the offer applies to</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage purchaseChannel(List<PurchaseChannel> purchaseChannel) {
-            this.purchaseChannel = Optional.ofNullable(purchaseChannel);
-            return this;
-        }
-
-        /**
-         * <p>The purchase channels the offer applies to</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "purchaseChannel", nulls = Nulls.SKIP)
-        public _FinalStage purchaseChannel(Optional<List<PurchaseChannel>> purchaseChannel) {
-            this.purchaseChannel = purchaseChannel;
-            return this;
-        }
-
-        /**
-         * <p>Tracked asset images for the merchant. The asset
-         * URL is signed for attribution tracking and should be loaded as-is by the
-         * client.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage assets(List<MerchantAsset> assets) {
-            this.assets = Optional.ofNullable(assets);
-            return this;
-        }
-
-        /**
-         * <p>Tracked asset images for the merchant. The asset
-         * URL is signed for attribution tracking and should be loaded as-is by the
-         * client.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "assets", nulls = Nulls.SKIP)
-        public _FinalStage assets(Optional<List<MerchantAsset>> assets) {
-            this.assets = assets;
-            return this;
-        }
-
-        /**
-         * <p>Type of commission on offer (% or a flat $)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage userReward(UserReward userReward) {
-            this.userReward = Optional.ofNullable(userReward);
-            return this;
-        }
-
-        /**
-         * <p>Type of commission on offer (% or a flat $)</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "userReward", nulls = Nulls.SKIP)
-        public _FinalStage userReward(Optional<UserReward> userReward) {
-            this.userReward = userReward;
-            return this;
-        }
-
-        /**
-         * <p>The category of the offer, e.g. &quot;Food &amp; Dining&quot;</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage categoryName(String categoryName) {
-            this.categoryName = Optional.ofNullable(categoryName);
-            return this;
-        }
-
-        /**
-         * <p>The category of the offer, e.g. &quot;Food &amp; Dining&quot;</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "categoryName", nulls = Nulls.SKIP)
-        public _FinalStage categoryName(Optional<String> categoryName) {
-            this.categoryName = categoryName;
-            return this;
-        }
-
         @java.lang.Override
         public EarnedRewardNotificationAttributes build() {
             return new EarnedRewardNotificationAttributes(
-                    categoryName,
-                    userReward,
-                    assets,
-                    purchaseChannel,
                     message,
                     name,
                     attributionUrl,
@@ -613,6 +601,10 @@ public final class EarnedRewardNotificationAttributes
                     transactionTimestamp,
                     transactionId,
                     transactionAmountInCents,
+                    categoryName,
+                    userReward,
+                    assets,
+                    purchaseChannel,
                     additionalProperties);
         }
 
