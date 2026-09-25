@@ -1,3 +1,7 @@
+## 31.0.0 - 2026-09-25
+### Breaking Changes
+* **`RejectedReason.Visitor<T>`** — a new required method `visitMaxRedemptionLimitReached()` has been added to the visitor interface; all existing implementations must add this method or the code will not compile.
+
 ## 30.0.0 - 2026-09-21
 ### Breaking Changes
 * **`RewardNotificationAttributes`** and **`IRewardNotificationAttributes`** — both the class and interface have been removed; delete all imports, instantiations, and implementations of these types.

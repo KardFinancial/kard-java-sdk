@@ -16,6 +16,9 @@ public final class RejectedReason {
     public static final RejectedReason USER_NOT_IN_AUDIENCE_SEGMENT =
             new RejectedReason(Value.USER_NOT_IN_AUDIENCE_SEGMENT, "USER_NOT_IN_AUDIENCE_SEGMENT");
 
+    public static final RejectedReason MAX_REDEMPTION_LIMIT_REACHED =
+            new RejectedReason(Value.MAX_REDEMPTION_LIMIT_REACHED, "MAX_REDEMPTION_LIMIT_REACHED");
+
     public static final RejectedReason SETTLEMENT_REJECTED =
             new RejectedReason(Value.SETTLEMENT_REJECTED, "SETTLEMENT_REJECTED");
 
@@ -57,6 +60,8 @@ public final class RejectedReason {
                 return visitor.visitAggregatorCardOverlap();
             case USER_NOT_IN_AUDIENCE_SEGMENT:
                 return visitor.visitUserNotInAudienceSegment();
+            case MAX_REDEMPTION_LIMIT_REACHED:
+                return visitor.visitMaxRedemptionLimitReached();
             case SETTLEMENT_REJECTED:
                 return visitor.visitSettlementRejected();
             case UNKNOWN:
@@ -74,6 +79,8 @@ public final class RejectedReason {
                 return AGGREGATOR_CARD_OVERLAP;
             case "USER_NOT_IN_AUDIENCE_SEGMENT":
                 return USER_NOT_IN_AUDIENCE_SEGMENT;
+            case "MAX_REDEMPTION_LIMIT_REACHED":
+                return MAX_REDEMPTION_LIMIT_REACHED;
             case "SETTLEMENT_REJECTED":
                 return SETTLEMENT_REJECTED;
             default:
@@ -83,6 +90,8 @@ public final class RejectedReason {
 
     public enum Value {
         AGGREGATOR_CARD_OVERLAP,
+
+        MAX_REDEMPTION_LIMIT_REACHED,
 
         SETTLEMENT_REJECTED,
 
@@ -95,6 +104,8 @@ public final class RejectedReason {
 
     public interface Visitor<T> {
         T visitAggregatorCardOverlap();
+
+        T visitMaxRedemptionLimitReached();
 
         T visitSettlementRejected();
 
