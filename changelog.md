@@ -1,3 +1,15 @@
+## 31.0.1 - 2026-10-06
+* chore: update child organization name validation docs
+* Update Javadoc across all child organization clients and types to reflect
+* the revised name validation rule: names now require at least two letters
+* or numbers (previously at least one letter) and may contain letters,
+* numbers, and spaces (previously letters and spaces only).
+* Key changes:
+* Updated method-level Javadoc on `ChildrenClient.create()` and `AsyncChildrenClient.create()` overloads
+* Updated Javadoc on `RawChildrenClient.create()` and `AsyncRawChildrenClient.create()` overloads
+* Updated `@return` and builder Javadoc in `ChildOrganizationAttributes`, `CreateChildAttributes`, and `UpdateChildAttributes`
+* 🌿 Generated with Fern
+
 ## 31.0.0 - 2026-09-25
 ### Breaking Changes
 * **`RejectedReason.Visitor<T>`** — a new required method `visitMaxRedemptionLimitReached()` has been added to the visitor interface; all existing implementations must add this method or the code will not compile.
