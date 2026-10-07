@@ -1,3 +1,10 @@
+## 31.1.0 - 2026-10-07
+### Added
+* **`PhoneNumber`** — new type representing a user phone number in E.164 format with an optional `PhoneNumberType` (WORK, HOME, OTHER, MOBILE).
+* **`PostalCode`** — new type representing a user postal code with an optional `PostalCodeType` (PHYSICAL, BILLING, OTHER).
+* **`UserRequestAttributes.getPhoneNumbers()`** and **`UpdateUserRequestAttributes.getPhoneNumbers()`** — optional list field (up to 10) for supplying structured phone numbers; sending the list replaces all numbers on file.
+* **`UserRequestAttributes.getPostalCodes()`** and **`UpdateUserRequestAttributes.getPostalCodes()`** — optional list field (up to 10) for supplying structured postal codes; sending the list replaces all postal codes on file.
+
 ## 31.0.1 - 2026-10-06
 * chore: update child organization name validation docs
 * Update Javadoc across all child organization clients and types to reflect

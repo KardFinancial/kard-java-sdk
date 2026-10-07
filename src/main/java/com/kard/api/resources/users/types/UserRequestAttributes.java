@@ -37,6 +37,10 @@ public final class UserRequestAttributes {
 
     private final Optional<Boolean> historicalTransactionsSent;
 
+    private final Optional<List<PhoneNumber>> phoneNumbers;
+
+    private final Optional<List<PostalCode>> postalCodes;
+
     private final Map<String, Object> additionalProperties;
 
     private UserRequestAttributes(
@@ -47,6 +51,8 @@ public final class UserRequestAttributes {
             Optional<String> phoneNumber,
             Optional<String> birthYear,
             Optional<Boolean> historicalTransactionsSent,
+            Optional<List<PhoneNumber>> phoneNumbers,
+            Optional<List<PostalCode>> postalCodes,
             Map<String, Object> additionalProperties) {
         this.enrolledRewards = enrolledRewards;
         this.zipCode = zipCode;
@@ -55,6 +61,8 @@ public final class UserRequestAttributes {
         this.phoneNumber = phoneNumber;
         this.birthYear = birthYear;
         this.historicalTransactionsSent = historicalTransactionsSent;
+        this.phoneNumbers = phoneNumbers;
+        this.postalCodes = postalCodes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -114,6 +122,22 @@ public final class UserRequestAttributes {
         return historicalTransactionsSent;
     }
 
+    /**
+     * @return Phone numbers of user, up to 10. Sending the list replaces every number on file.
+     */
+    @JsonProperty("phoneNumbers")
+    public Optional<List<PhoneNumber>> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    /**
+     * @return Postal codes of user, up to 10. Sending the list replaces every postal code on file.
+     */
+    @JsonProperty("postalCodes")
+    public Optional<List<PostalCode>> getPostalCodes() {
+        return postalCodes;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -132,7 +156,9 @@ public final class UserRequestAttributes {
                 && hashedEmail.equals(other.hashedEmail)
                 && phoneNumber.equals(other.phoneNumber)
                 && birthYear.equals(other.birthYear)
-                && historicalTransactionsSent.equals(other.historicalTransactionsSent);
+                && historicalTransactionsSent.equals(other.historicalTransactionsSent)
+                && phoneNumbers.equals(other.phoneNumbers)
+                && postalCodes.equals(other.postalCodes);
     }
 
     @java.lang.Override
@@ -144,7 +170,9 @@ public final class UserRequestAttributes {
                 this.hashedEmail,
                 this.phoneNumber,
                 this.birthYear,
-                this.historicalTransactionsSent);
+                this.historicalTransactionsSent,
+                this.phoneNumbers,
+                this.postalCodes);
     }
 
     @java.lang.Override
@@ -172,6 +200,10 @@ public final class UserRequestAttributes {
 
         private Optional<Boolean> historicalTransactionsSent = Optional.empty();
 
+        private Optional<List<PhoneNumber>> phoneNumbers = Optional.empty();
+
+        private Optional<List<PostalCode>> postalCodes = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -185,6 +217,8 @@ public final class UserRequestAttributes {
             phoneNumber(other.getPhoneNumber());
             birthYear(other.getBirthYear());
             historicalTransactionsSent(other.getHistoricalTransactionsSent());
+            phoneNumbers(other.getPhoneNumbers());
+            postalCodes(other.getPostalCodes());
             return this;
         }
 
@@ -296,6 +330,34 @@ public final class UserRequestAttributes {
             return this;
         }
 
+        /**
+         * <p>Phone numbers of user, up to 10. Sending the list replaces every number on file.</p>
+         */
+        @JsonSetter(value = "phoneNumbers", nulls = Nulls.SKIP)
+        public Builder phoneNumbers(Optional<List<PhoneNumber>> phoneNumbers) {
+            this.phoneNumbers = phoneNumbers;
+            return this;
+        }
+
+        public Builder phoneNumbers(List<PhoneNumber> phoneNumbers) {
+            this.phoneNumbers = Optional.ofNullable(phoneNumbers);
+            return this;
+        }
+
+        /**
+         * <p>Postal codes of user, up to 10. Sending the list replaces every postal code on file.</p>
+         */
+        @JsonSetter(value = "postalCodes", nulls = Nulls.SKIP)
+        public Builder postalCodes(Optional<List<PostalCode>> postalCodes) {
+            this.postalCodes = postalCodes;
+            return this;
+        }
+
+        public Builder postalCodes(List<PostalCode> postalCodes) {
+            this.postalCodes = Optional.ofNullable(postalCodes);
+            return this;
+        }
+
         public UserRequestAttributes build() {
             return new UserRequestAttributes(
                     enrolledRewards,
@@ -305,6 +367,8 @@ public final class UserRequestAttributes {
                     phoneNumber,
                     birthYear,
                     historicalTransactionsSent,
+                    phoneNumbers,
+                    postalCodes,
                     additionalProperties);
         }
 
