@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -27,6 +29,10 @@ public final class FileMetadataAttribute {
 
     private final String downloadUrl;
 
+    private final Optional<String> periodStart;
+
+    private final Optional<String> periodEnd;
+
     private final Map<String, Object> additionalProperties;
 
     private FileMetadataAttribute(
@@ -34,11 +40,15 @@ public final class FileMetadataAttribute {
             String sentAt,
             String lastModified,
             String downloadUrl,
+            Optional<String> periodStart,
+            Optional<String> periodEnd,
             Map<String, Object> additionalProperties) {
         this.fileName = fileName;
         this.sentAt = sentAt;
         this.lastModified = lastModified;
         this.downloadUrl = downloadUrl;
+        this.periodStart = periodStart;
+        this.periodEnd = periodEnd;
         this.additionalProperties = additionalProperties;
     }
 
@@ -74,6 +84,22 @@ public final class FileMetadataAttribute {
         return downloadUrl;
     }
 
+    /**
+     * @return Start of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.
+     */
+    @JsonProperty("periodStart")
+    public Optional<String> getPeriodStart() {
+        return periodStart;
+    }
+
+    /**
+     * @return End of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.
+     */
+    @JsonProperty("periodEnd")
+    public Optional<String> getPeriodEnd() {
+        return periodEnd;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -89,12 +115,15 @@ public final class FileMetadataAttribute {
         return fileName.equals(other.fileName)
                 && sentAt.equals(other.sentAt)
                 && lastModified.equals(other.lastModified)
-                && downloadUrl.equals(other.downloadUrl);
+                && downloadUrl.equals(other.downloadUrl)
+                && periodStart.equals(other.periodStart)
+                && periodEnd.equals(other.periodEnd);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.fileName, this.sentAt, this.lastModified, this.downloadUrl);
+        return Objects.hash(
+                this.fileName, this.sentAt, this.lastModified, this.downloadUrl, this.periodStart, this.periodEnd);
     }
 
     @java.lang.Override
@@ -142,6 +171,20 @@ public final class FileMetadataAttribute {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Start of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.</p>
+         */
+        _FinalStage periodStart(Optional<String> periodStart);
+
+        _FinalStage periodStart(String periodStart);
+
+        /**
+         * <p>End of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.</p>
+         */
+        _FinalStage periodEnd(Optional<String> periodEnd);
+
+        _FinalStage periodEnd(String periodEnd);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -155,6 +198,10 @@ public final class FileMetadataAttribute {
 
         private String downloadUrl;
 
+        private Optional<String> periodEnd = Optional.empty();
+
+        private Optional<String> periodStart = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -166,6 +213,8 @@ public final class FileMetadataAttribute {
             sentAt(other.getSentAt());
             lastModified(other.getLastModified());
             downloadUrl(other.getDownloadUrl());
+            periodStart(other.getPeriodStart());
+            periodEnd(other.getPeriodEnd());
             return this;
         }
 
@@ -217,9 +266,50 @@ public final class FileMetadataAttribute {
             return this;
         }
 
+        /**
+         * <p>End of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage periodEnd(String periodEnd) {
+            this.periodEnd = Optional.ofNullable(periodEnd);
+            return this;
+        }
+
+        /**
+         * <p>End of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "periodEnd", nulls = Nulls.SKIP)
+        public _FinalStage periodEnd(Optional<String> periodEnd) {
+            this.periodEnd = periodEnd;
+            return this;
+        }
+
+        /**
+         * <p>Start of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage periodStart(String periodStart) {
+            this.periodStart = Optional.ofNullable(periodStart);
+            return this;
+        }
+
+        /**
+         * <p>Start of the reporting period, inclusive (RFC 3339, UTC). Present only when a period was informed at upload.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "periodStart", nulls = Nulls.SKIP)
+        public _FinalStage periodStart(Optional<String> periodStart) {
+            this.periodStart = periodStart;
+            return this;
+        }
+
         @java.lang.Override
         public FileMetadataAttribute build() {
-            return new FileMetadataAttribute(fileName, sentAt, lastModified, downloadUrl, additionalProperties);
+            return new FileMetadataAttribute(
+                    fileName, sentAt, lastModified, downloadUrl, periodStart, periodEnd, additionalProperties);
         }
 
         @java.lang.Override

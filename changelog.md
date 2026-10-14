@@ -1,3 +1,8 @@
+## 31.2.0 - 2026-10-14
+### Added
+* **`FileMetadataAttribute.getPeriodStart()`** and **`FileMetadataAttribute.getPeriodEnd()`** — new optional `Optional<String>` fields (RFC 3339, UTC) representing the inclusive start and end of the reporting period associated with a file; present only when a period was supplied at upload time.
+* **`FileMetadataAttribute` builder** — new `periodStart()` and `periodEnd()` builder methods (accepting either `String` or `Optional<String>`) to populate the new period fields.
+
 ## 31.1.0 - 2026-10-07
 ### Added
 * **`PhoneNumber`** — new type representing a user phone number in E.164 format with an optional `PhoneNumberType` (WORK, HOME, OTHER, MOBILE).
