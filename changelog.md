@@ -1,3 +1,18 @@
+## 31.3.1 - 2026-10-15
+* chore: update placementContent Javadoc for email/push placement behavior
+* The Javadoc on all `placementContent` overloads across `RewardsClient`,
+* `AsyncRewardsClient`, `RawRewardsClient`, and `AsyncRawRewardsClient`
+* previously stated that email and push-notification placements are not
+* servable and respond with a 400. This has been corrected to reflect that
+* email and push placements now return `standardOffer` resources as a
+* preview of a send (up to `availableSlots` offers for email, up to one
+* offer for push).
+* Key changes:
+* Updated Javadoc on `RewardsClient.placementContent()` overloads to document email/push `standardOffer` preview behavior
+* Updated Javadoc on `AsyncRewardsClient.placementContent()` overloads with the same correction
+* Updated Javadoc on `RawRewardsClient.placementContent()` and `AsyncRawRewardsClient.placementContent()` overloads consistently
+* 🌿 Generated with Fern
+
 ## 31.3.0 - 2026-10-15
 ### Added
 * **`NotificationType.PAYOUT_RECONCILIATION_FILE`** — new notification type constant representing a payout reconciliation file event, with a corresponding `visitPayoutReconciliationFile()` method on the `Visitor` interface.

@@ -186,8 +186,8 @@ public class RawRewardsClient {
      * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
      * or group placement returns <code>placementBatch</code> slot resources. Distinguish
      * the two by each resource's <code>type</code>. Email and push-notification
-     * placements are not servable through this endpoint and respond with a
-     * <code>400</code>.<br/>
+     * placements also return <code>standardOffer</code> resources, as a preview of a
+     * send: up to <code>availableSlots</code> offers for email and up to one offer for push.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(
@@ -207,8 +207,8 @@ public class RawRewardsClient {
      * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
      * or group placement returns <code>placementBatch</code> slot resources. Distinguish
      * the two by each resource's <code>type</code>. Email and push-notification
-     * placements are not servable through this endpoint and respond with a
-     * <code>400</code>.<br/>
+     * placements also return <code>standardOffer</code> resources, as a preview of a
+     * send: up to <code>availableSlots</code> offers for email and up to one offer for push.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(
@@ -229,8 +229,8 @@ public class RawRewardsClient {
      * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
      * or group placement returns <code>placementBatch</code> slot resources. Distinguish
      * the two by each resource's <code>type</code>. Email and push-notification
-     * placements are not servable through this endpoint and respond with a
-     * <code>400</code>.<br/>
+     * placements also return <code>standardOffer</code> resources, as a preview of a
+     * send: up to <code>availableSlots</code> offers for email and up to one offer for push.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(
@@ -246,8 +246,8 @@ public class RawRewardsClient {
      * <code>links</code>, optional <code>included</code> categories, and <code>meta</code>); a batch-activation
      * or group placement returns <code>placementBatch</code> slot resources. Distinguish
      * the two by each resource's <code>type</code>. Email and push-notification
-     * placements are not servable through this endpoint and respond with a
-     * <code>400</code>.<br/>
+     * placements also return <code>standardOffer</code> resources, as a preview of a
+     * send: up to <code>availableSlots</code> offers for email and up to one offer for push.<br/>
      * <b>Required scopes:</b> <code>rewards:read</code>
      */
     public KardApiHttpResponse<PlacementContentResponse> placementContent(
