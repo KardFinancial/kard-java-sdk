@@ -1,3 +1,11 @@
+## 31.3.0 - 2026-10-15
+### Added
+* **`NotificationType.PAYOUT_RECONCILIATION_FILE`** — new notification type constant representing a payout reconciliation file event, with a corresponding `visitPayoutReconciliationFile()` method on the `Visitor` interface.
+* **`NotificationDataUnion.payoutReconciliationFile()`** — new factory method, `isPayoutReconciliationFile()` predicate, `getPayoutReconciliationFile()` accessor returning `Optional<PayoutReconciliationFileData>`, and `visitPayoutReconciliationFile()` visitor arm for handling payout reconciliation file notification payloads.
+* **`PayoutReconciliationFileData`** — new type carrying the payout reconciliation file notification payload, with fields `id`, `attributes` (`PayoutReconciliationFileAttributes`), and `relationships` (`PayoutReconciliationFileRelationships`).
+* **`PayoutReconciliationFileAttributes`** — new type with `fileName`, `periodStart`, `periodEnd`, `downloadUrl`, and `expiresIn` fields, plus a staged builder.
+* **`PayoutReconciliationFileRelationships`** — new type with a `file` relationship field (`RelationshipSingle`) and a staged builder.
+
 ## 31.2.0 - 2026-10-14
 ### Added
 * **`FileMetadataAttribute.getPeriodStart()`** and **`FileMetadataAttribute.getPeriodEnd()`** — new optional `Optional<String>` fields (RFC 3339, UTC) representing the inclusive start and end of the reporting period associated with a file; present only when a period was supplied at upload time.

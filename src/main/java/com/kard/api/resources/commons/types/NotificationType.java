@@ -27,6 +27,9 @@ public final class NotificationType {
     public static final NotificationType PUSH_NOTIFICATION_PLACEMENT_FILE =
             new NotificationType(Value.PUSH_NOTIFICATION_PLACEMENT_FILE, "pushNotificationPlacementFile");
 
+    public static final NotificationType PAYOUT_RECONCILIATION_FILE =
+            new NotificationType(Value.PAYOUT_RECONCILIATION_FILE, "payoutReconciliationFile");
+
     private final Value value;
 
     private final String string;
@@ -73,6 +76,8 @@ public final class NotificationType {
                 return visitor.visitFileProcessingResult();
             case PUSH_NOTIFICATION_PLACEMENT_FILE:
                 return visitor.visitPushNotificationPlacementFile();
+            case PAYOUT_RECONCILIATION_FILE:
+                return visitor.visitPayoutReconciliationFile();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -96,6 +101,8 @@ public final class NotificationType {
                 return FILE_PROCESSING_RESULT;
             case "pushNotificationPlacementFile":
                 return PUSH_NOTIFICATION_PLACEMENT_FILE;
+            case "payoutReconciliationFile":
+                return PAYOUT_RECONCILIATION_FILE;
             default:
                 return new NotificationType(Value.UNKNOWN, value);
         }
@@ -116,6 +123,8 @@ public final class NotificationType {
 
         EMAIL_NOTIFICATION_PLACEMENT_FILE,
 
+        PAYOUT_RECONCILIATION_FILE,
+
         UNKNOWN
     }
 
@@ -133,6 +142,8 @@ public final class NotificationType {
         T visitPushNotificationPlacementFile();
 
         T visitEmailNotificationPlacementFile();
+
+        T visitPayoutReconciliationFile();
 
         T visitUnknown(String unknownType);
     }

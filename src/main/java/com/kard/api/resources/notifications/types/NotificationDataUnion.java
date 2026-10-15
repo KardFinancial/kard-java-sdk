@@ -54,6 +54,10 @@ public final class NotificationDataUnion {
         return new NotificationDataUnion(new EmailNotificationPlacementFileValue(value));
     }
 
+    public static NotificationDataUnion payoutReconciliationFile(PayoutReconciliationFileData value) {
+        return new NotificationDataUnion(new PayoutReconciliationFileValue(value));
+    }
+
     public boolean isEarnedRewardApproved() {
         return value instanceof EarnedRewardApprovedValue;
     }
@@ -80,6 +84,10 @@ public final class NotificationDataUnion {
 
     public boolean isEmailNotificationPlacementFile() {
         return value instanceof EmailNotificationPlacementFileValue;
+    }
+
+    public boolean isPayoutReconciliationFile() {
+        return value instanceof PayoutReconciliationFileValue;
     }
 
     public boolean _isUnknown() {
@@ -135,6 +143,13 @@ public final class NotificationDataUnion {
         return Optional.empty();
     }
 
+    public Optional<PayoutReconciliationFileData> getPayoutReconciliationFile() {
+        if (isPayoutReconciliationFile()) {
+            return Optional.of(((PayoutReconciliationFileValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -178,6 +193,8 @@ public final class NotificationDataUnion {
 
         T visitEmailNotificationPlacementFile(EmailNotificationPlacementFileData emailNotificationPlacementFile);
 
+        T visitPayoutReconciliationFile(PayoutReconciliationFileData payoutReconciliationFile);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -189,7 +206,8 @@ public final class NotificationDataUnion {
         @JsonSubTypes.Type(AuditUpdateValue.class),
         @JsonSubTypes.Type(FileProcessingResultValue.class),
         @JsonSubTypes.Type(PushNotificationPlacementFileValue.class),
-        @JsonSubTypes.Type(EmailNotificationPlacementFileValue.class)
+        @JsonSubTypes.Type(EmailNotificationPlacementFileValue.class),
+        @JsonSubTypes.Type(PayoutReconciliationFileValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -464,6 +482,46 @@ public final class NotificationDataUnion {
         }
 
         private boolean equalTo(EmailNotificationPlacementFileValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "NotificationDataUnion{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("payoutReconciliationFile")
+    @JsonIgnoreProperties("type")
+    private static final class PayoutReconciliationFileValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "type", allowSetters = true)
+        private PayoutReconciliationFileData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PayoutReconciliationFileValue() {}
+
+        private PayoutReconciliationFileValue(PayoutReconciliationFileData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPayoutReconciliationFile(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PayoutReconciliationFileValue && equalTo((PayoutReconciliationFileValue) other);
+        }
+
+        private boolean equalTo(PayoutReconciliationFileValue other) {
             return value.equals(other.value);
         }
 
