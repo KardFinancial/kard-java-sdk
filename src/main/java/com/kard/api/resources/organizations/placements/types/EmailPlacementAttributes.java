@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kard.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +34,8 @@ public final class EmailPlacementAttributes {
 
     private final Optional<String> contentStrategyId;
 
+    private final OffsetDateTime createdAt;
+
     private final Map<String, Object> additionalProperties;
 
     private EmailPlacementAttributes(
@@ -42,6 +45,7 @@ public final class EmailPlacementAttributes {
             int availableSlots,
             Cadence cadence,
             Optional<String> contentStrategyId,
+            OffsetDateTime createdAt,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.status = status;
@@ -49,6 +53,7 @@ public final class EmailPlacementAttributes {
         this.availableSlots = availableSlots;
         this.cadence = cadence;
         this.contentStrategyId = contentStrategyId;
+        this.createdAt = createdAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -100,6 +105,14 @@ public final class EmailPlacementAttributes {
         return contentStrategyId;
     }
 
+    /**
+     * @return When the placement was created
+     */
+    @JsonProperty("createdAt")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -117,13 +130,20 @@ public final class EmailPlacementAttributes {
                 && organizationId.equals(other.organizationId)
                 && availableSlots == other.availableSlots
                 && cadence.equals(other.cadence)
-                && contentStrategyId.equals(other.contentStrategyId);
+                && contentStrategyId.equals(other.contentStrategyId)
+                && createdAt.equals(other.createdAt);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name, this.status, this.organizationId, this.availableSlots, this.cadence, this.contentStrategyId);
+                this.name,
+                this.status,
+                this.organizationId,
+                this.availableSlots,
+                this.cadence,
+                this.contentStrategyId,
+                this.createdAt);
     }
 
     @java.lang.Override
@@ -169,7 +189,14 @@ public final class EmailPlacementAttributes {
         /**
          * <p>Delivery cadence for the email</p>
          */
-        _FinalStage cadence(@NotNull Cadence cadence);
+        CreatedAtStage cadence(@NotNull Cadence cadence);
+    }
+
+    public interface CreatedAtStage {
+        /**
+         * <p>When the placement was created</p>
+         */
+        _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface _FinalStage {
@@ -189,7 +216,13 @@ public final class EmailPlacementAttributes {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements NameStage, StatusStage, OrganizationIdStage, AvailableSlotsStage, CadenceStage, _FinalStage {
+            implements NameStage,
+                    StatusStage,
+                    OrganizationIdStage,
+                    AvailableSlotsStage,
+                    CadenceStage,
+                    CreatedAtStage,
+                    _FinalStage {
         private String name;
 
         private PlacementStatus status;
@@ -199,6 +232,8 @@ public final class EmailPlacementAttributes {
         private int availableSlots;
 
         private Cadence cadence;
+
+        private OffsetDateTime createdAt;
 
         private Optional<String> contentStrategyId = Optional.empty();
 
@@ -215,6 +250,7 @@ public final class EmailPlacementAttributes {
             availableSlots(other.getAvailableSlots());
             cadence(other.getCadence());
             contentStrategyId(other.getContentStrategyId());
+            createdAt(other.getCreatedAt());
             return this;
         }
 
@@ -273,8 +309,20 @@ public final class EmailPlacementAttributes {
          */
         @java.lang.Override
         @JsonSetter("cadence")
-        public _FinalStage cadence(@NotNull Cadence cadence) {
+        public CreatedAtStage cadence(@NotNull Cadence cadence) {
             this.cadence = Objects.requireNonNull(cadence, "cadence must not be null");
+            return this;
+        }
+
+        /**
+         * <p>When the placement was created</p>
+         * <p>When the placement was created</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("createdAt")
+        public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -301,7 +349,14 @@ public final class EmailPlacementAttributes {
         @java.lang.Override
         public EmailPlacementAttributes build() {
             return new EmailPlacementAttributes(
-                    name, status, organizationId, availableSlots, cadence, contentStrategyId, additionalProperties);
+                    name,
+                    status,
+                    organizationId,
+                    availableSlots,
+                    cadence,
+                    contentStrategyId,
+                    createdAt,
+                    additionalProperties);
         }
 
         @java.lang.Override

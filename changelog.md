@@ -1,3 +1,12 @@
+## 32.0.0 - 2026-10-16
+### Breaking Changes
+* **`EmailPlacementAttributes` builder** — a new mandatory `CreatedAtStage` is now inserted between `CadenceStage` and `_FinalStage`; existing call chains that called `.cadence(...).build()` or chained optional setters directly after `.cadence(...)` will not compile. Add `.createdAt(offsetDateTime)` before `.build()`.
+* **`PushNotificationPlacementAttributes` builder** — same staged-builder breaking change as `EmailPlacementAttributes`; insert `.createdAt(offsetDateTime)` after `.cadence(...)`.
+### Added
+* **`EmailPlacementAttributes.getCreatedAt()`** and **`PushNotificationPlacementAttributes.getCreatedAt()`** — new `OffsetDateTime` field exposing when the placement was created.
+* **`WeekOfMonth`** — new enum type with `FIRST` and `LAST` constants (plus `UNKNOWN` for forward compatibility) and a `Visitor<T>` interface.
+* **`Cadence.getWeekOfMonth()`** — new optional `Optional<WeekOfMonth>` field; deliver on the first or last `dayOfWeek` of the month (requires `MONTHLY` frequency and `dayOfWeek`, cannot be combined with `dayOfMonth`).
+
 ## 31.3.1 - 2026-10-15
 * chore: update placementContent Javadoc for email/push placement behavior
 * The Javadoc on all `placementContent` overloads across `RewardsClient`,

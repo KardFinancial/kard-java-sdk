@@ -29,6 +29,8 @@ public final class Cadence {
 
     private final Optional<Integer> dayOfMonth;
 
+    private final Optional<WeekOfMonth> weekOfMonth;
+
     private final Map<String, Object> additionalProperties;
 
     private Cadence(
@@ -36,11 +38,13 @@ public final class Cadence {
             Optional<String> timeOfDay,
             Optional<DayOfWeek> dayOfWeek,
             Optional<Integer> dayOfMonth,
+            Optional<WeekOfMonth> weekOfMonth,
             Map<String, Object> additionalProperties) {
         this.frequency = frequency;
         this.timeOfDay = timeOfDay;
         this.dayOfWeek = dayOfWeek;
         this.dayOfMonth = dayOfMonth;
+        this.weekOfMonth = weekOfMonth;
         this.additionalProperties = additionalProperties;
     }
 
@@ -76,6 +80,14 @@ public final class Cadence {
         return dayOfMonth;
     }
 
+    /**
+     * @return Deliver on the first or last dayOfWeek of the month. Requires frequency MONTHLY and dayOfWeek, and cannot be combined with dayOfMonth.
+     */
+    @JsonProperty("weekOfMonth")
+    public Optional<WeekOfMonth> getWeekOfMonth() {
+        return weekOfMonth;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -91,12 +103,13 @@ public final class Cadence {
         return frequency.equals(other.frequency)
                 && timeOfDay.equals(other.timeOfDay)
                 && dayOfWeek.equals(other.dayOfWeek)
-                && dayOfMonth.equals(other.dayOfMonth);
+                && dayOfMonth.equals(other.dayOfMonth)
+                && weekOfMonth.equals(other.weekOfMonth);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.frequency, this.timeOfDay, this.dayOfWeek, this.dayOfMonth);
+        return Objects.hash(this.frequency, this.timeOfDay, this.dayOfWeek, this.dayOfMonth, this.weekOfMonth);
     }
 
     @java.lang.Override
@@ -144,11 +157,20 @@ public final class Cadence {
         _FinalStage dayOfMonth(Optional<Integer> dayOfMonth);
 
         _FinalStage dayOfMonth(Integer dayOfMonth);
+
+        /**
+         * <p>Deliver on the first or last dayOfWeek of the month. Requires frequency MONTHLY and dayOfWeek, and cannot be combined with dayOfMonth.</p>
+         */
+        _FinalStage weekOfMonth(Optional<WeekOfMonth> weekOfMonth);
+
+        _FinalStage weekOfMonth(WeekOfMonth weekOfMonth);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements FrequencyStage, _FinalStage {
         private CadenceFrequency frequency;
+
+        private Optional<WeekOfMonth> weekOfMonth = Optional.empty();
 
         private Optional<Integer> dayOfMonth = Optional.empty();
 
@@ -167,6 +189,7 @@ public final class Cadence {
             timeOfDay(other.getTimeOfDay());
             dayOfWeek(other.getDayOfWeek());
             dayOfMonth(other.getDayOfMonth());
+            weekOfMonth(other.getWeekOfMonth());
             return this;
         }
 
@@ -179,6 +202,26 @@ public final class Cadence {
         @JsonSetter("frequency")
         public _FinalStage frequency(@NotNull CadenceFrequency frequency) {
             this.frequency = Objects.requireNonNull(frequency, "frequency must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Deliver on the first or last dayOfWeek of the month. Requires frequency MONTHLY and dayOfWeek, and cannot be combined with dayOfMonth.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage weekOfMonth(WeekOfMonth weekOfMonth) {
+            this.weekOfMonth = Optional.ofNullable(weekOfMonth);
+            return this;
+        }
+
+        /**
+         * <p>Deliver on the first or last dayOfWeek of the month. Requires frequency MONTHLY and dayOfWeek, and cannot be combined with dayOfMonth.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "weekOfMonth", nulls = Nulls.SKIP)
+        public _FinalStage weekOfMonth(Optional<WeekOfMonth> weekOfMonth) {
+            this.weekOfMonth = weekOfMonth;
             return this;
         }
 
@@ -244,7 +287,7 @@ public final class Cadence {
 
         @java.lang.Override
         public Cadence build() {
-            return new Cadence(frequency, timeOfDay, dayOfWeek, dayOfMonth, additionalProperties);
+            return new Cadence(frequency, timeOfDay, dayOfWeek, dayOfMonth, weekOfMonth, additionalProperties);
         }
 
         @java.lang.Override
