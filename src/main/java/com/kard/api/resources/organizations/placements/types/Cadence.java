@@ -73,7 +73,7 @@ public final class Cadence {
     }
 
     /**
-     * @return Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1)
+     * @return Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1). For 29-31, months without that day deliver on their last day.
      */
     @JsonProperty("dayOfMonth")
     public Optional<Integer> getDayOfMonth() {
@@ -152,7 +152,7 @@ public final class Cadence {
         _FinalStage dayOfWeek(DayOfWeek dayOfWeek);
 
         /**
-         * <p>Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1)</p>
+         * <p>Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1). For 29-31, months without that day deliver on their last day.</p>
          */
         _FinalStage dayOfMonth(Optional<Integer> dayOfMonth);
 
@@ -226,7 +226,7 @@ public final class Cadence {
         }
 
         /**
-         * <p>Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1)</p>
+         * <p>Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1). For 29-31, months without that day deliver on their last day.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -236,7 +236,7 @@ public final class Cadence {
         }
 
         /**
-         * <p>Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1)</p>
+         * <p>Day of the month to deliver, 1-31 (used when frequency is MONTHLY, defaults to 1). For 29-31, months without that day deliver on their last day.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "dayOfMonth", nulls = Nulls.SKIP)

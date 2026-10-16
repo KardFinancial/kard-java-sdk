@@ -1,3 +1,15 @@
+## 32.0.1 - 2026-10-16
+* chore: clarify dayOfMonth Javadoc for months with fewer days
+* Update the `dayOfMonth` field documentation in `Cadence` to note that
+* for values 29–31, months that don't have that day will deliver on their
+* last day instead. This is a documentation-only change with no impact on
+* public API signatures or runtime behavior.
+* Key changes:
+* Updated `getDayOfMonth()` Javadoc to document end-of-month fallback behavior
+* Updated `_FinalStage.dayOfMonth(Optional<Integer>)` interface Javadoc with the same clarification
+* Updated builder implementation overrides with consistent Javadoc
+* 🌿 Generated with Fern
+
 ## 32.0.0 - 2026-10-16
 ### Breaking Changes
 * **`EmailPlacementAttributes` builder** — a new mandatory `CreatedAtStage` is now inserted between `CadenceStage` and `_FinalStage`; existing call chains that called `.cadence(...).build()` or chained optional setters directly after `.cadence(...)` will not compile. Add `.createdAt(offsetDateTime)` before `.build()`.
